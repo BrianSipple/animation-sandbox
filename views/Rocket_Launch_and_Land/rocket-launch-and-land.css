@@ -1,0 +1,61 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; }
+
+.scene-wrapper {
+  background-color: coral; }
+
+.launch-container {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  text-align: center; }
+
+.rocket {
+  fill: yellow;
+  stroke: none; }
+  .rocket > * {
+    stroke: none; }
+
+.rocket-wrapper {
+  position: absolute;
+  margin: 0 auto;
+  left: 25%;
+  right: 25%;
+  bottom: 0;
+  width: 300px;
+  height: 400px; }
+
+.rocket-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center; }
+
+.rocket-exhaust-container {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  position: relative; }
+  .rocket-exhaust-container .cloud-svg {
+    position: absolute;
+    transform: scale(0);
+    left: 10%;
+    right: 10%;
+    opacity: 0; }
+    .rocket-exhaust-container .cloud-svg.def {
+      display: none; }
+
+.fuselage > *,
+.thruster > *,
+.wings > * {
+  fill: yellow;
+  stroke: none;
+  stroke-width: 0; }
+
+/*# sourceMappingURL=rocket-launch-and-land.css.map */

@@ -1,0 +1,10 @@
+.person {
+  fill: none;
+  stroke: blue; }
+  .person.woman {
+    stroke: pink; }
+
+.house {
+  fill: #fc52ff; }
+
+/*# sourceMappingURL=people.css.map */

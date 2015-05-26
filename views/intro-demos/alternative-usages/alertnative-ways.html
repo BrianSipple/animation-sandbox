@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="alertnative-ways.scss">
+<div class="svg-fallback"></div>
+
+<object type="image/svg+xml" data="img/Eye_inline_styles.svg" class="svg-obj">
+    Give me a CSS background-image fallback!
+</object>
+
+<p>Inlining base64 dataURI SVG data </p>
+<img
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNTguMiAxNjAuNyI+PGVsbGlwc2UgZmlsbD0iI0U2RTZFNiIgY3g9IjE3OS4xIiBjeT0iODAuMyIgcng9IjE3OS4xIiByeT0iODAuMyIvPjxlbGxpcHNlIGZpbGw9IiNDMEQ3MzAiIGN4PSIxNzkuMSIgY3k9IjgwLjMiIHJ4PSI3OS41IiByeT0iODAuMyIvPjxlbGxpcHNlIGN4PSIxNzkuMSIgY3k9IjgwLjMiIHJ4PSIxOCIgcnk9IjY1Ii8+PC9zdmc+">
+
+<p>Inlining with non-base64 dataURI (probably better for SVG: https://css-tricks.com/probably-dont-base64-svg/)</p>
+<img
+    src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.2 160.7"><ellipse fill="#E6E6E6" cx="179.1" cy="80.3" rx="179.1" ry="80.3"/><ellipse fill="#C0D730" cx="179.1" cy="80.3" rx="79.5" ry="80.3"/><ellipse cx="179.1" cy="80.3" rx="18" ry="65"/></svg>'>
+
+
+<p>Creating SVG by using Base64 URIs in CSS</p>
+<div class="base64-logo"></div>
+
+<p>Creating SVG by using non-Base64 data URIs in CSS</p>
+<div class="dataURI-logo"></div>

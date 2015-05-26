@@ -1,0 +1,15 @@
+circle {
+  fill: #a8f5be;
+  stroke: none; }
+
+polygon.star {
+  fill: #ffcb3d;
+  stroke: #ff525a; }
+polygon.weird {
+  fill: #3dff74;
+  fill-opacity: 0.5;
+  stroke: green;
+  stroke-width: 2px;
+  stroke-linejoin: round; }
+
+/*# sourceMappingURL=shapes-demo.css.map */

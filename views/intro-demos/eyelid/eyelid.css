@@ -1,0 +1,13 @@
+.logo {
+  display: block;
+  text-indent: -9999px;
+  height: 400px;
+  width: 600px; }
+  .logo:not(.nav) .iris {
+    fill: #df41fb; }
+  .logo:not(.nav) .iris:hover {
+    fill: rgba(223, 65, 251, 0.5); }
+  .logo:not(.nav) .pupil:hover {
+    filter: url(#pupilFilter); }
+
+/*# sourceMappingURL=eyelid.css.map */

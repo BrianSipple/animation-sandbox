@@ -1,0 +1,15 @@
+[class^="page-section_"] {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-section_view-map {
+    height: 650px;
+    width: 100%;
+}
+
+.page-section_main-content {
+    height: 100vh;
+}

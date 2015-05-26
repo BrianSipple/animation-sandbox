@@ -1,0 +1,33 @@
+<svg width="100" height="100" viewBox="0 0 100 100">
+    <g id="square">
+        <rect x="0" y="0" width="30" height="30" stroke="none" fill="yellow"></rect>
+    </g>
+
+    <use xlink:href="#square" transform="translate(30, 30)"></use>
+</svg>
+
+<p>
+    WARNING: A scaling transformation never changes a graphic object’s grid
+    coordinates or its stroke width; rather, it changes the size of the coordinate
+    system (grid) with respect to the canvas.
+</p>
+
+<svg width="200" height="200" viewBox="0 0 200 200">
+    <g id="square">
+        <rect x="10" y="10" width="30" height="30" stroke="black" stroke-width="2px" fill="yellow"></rect>
+    </g>
+
+    <use xlink:href="#square" transform="scale(2)"></use>
+</svg>
+<h3>Notice how scaling not only changes the height and width here, but everything: stroke-width, x and y offsets, etc</h3>
+
+<svg width="200" height="200" viewBox="0 0 200 200">
+    <g id="square">
+        <rect x="10" y="10" height="20" width="20"></rect>
+    </g>
+
+    <use xlink:href="#square" transform="scale(3, 1.5)"></use>
+</svg>
+<cite>Different scaling for x and y coordinates</cite>
+
+

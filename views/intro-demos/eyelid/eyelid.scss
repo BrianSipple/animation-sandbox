@@ -1,0 +1,29 @@
+$logo-width_primary: 600px;
+$logo-height_primary: 400px;
+
+.logo {
+    display: block;
+    text-indent: -9999px;
+    height: $logo-height_primary;
+    width: $logo-width_primary;
+
+
+    &:not(.nav) {
+        .iris {
+            fill: hsla(291, 96%, 62%, 1.0);
+        }
+
+        .iris:hover {
+            fill: hsla(291, 96%, 62%, 0.5);
+        }
+
+        .pupil:hover {
+            filter: url(#pupilFilter);
+        }
+    }
+}
+
+
+
+
+

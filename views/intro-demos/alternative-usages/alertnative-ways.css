@@ -1,0 +1,21 @@
+.base64-logo, .dataURI-logo {
+  background-position: top left;
+  background-size: contain;
+  background-repeat: no-repeat; }
+
+.svg-fallback {
+  display: none; }
+  .svg-fallback.no-svg {
+    background-image: url("../../img/Eye.png"); }
+
+.base64-logo {
+  width: 600px;
+  height: 400px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNTguMiAxNjAuNyI+PGVsbGlwc2UgZmlsbD0iI0U2RTZFNiIgY3g9IjE3OS4xIiBjeT0iODAuMyIgcng9IjE3OS4xIiByeT0iODAuMyIvPjxlbGxpcHNlIGZpbGw9IiNDMEQ3MzAiIGN4PSIxNzkuMSIgY3k9IjgwLjMiIHJ4PSI3OS41IiByeT0iODAuMyIvPjxlbGxpcHNlIGN4PSIxNzkuMSIgY3k9IjgwLjMiIHJ4PSIxOCIgcnk9IjY1Ii8+PC9zdmc+"); }
+
+.dataURI-logo {
+  width: 600px;
+  height: 400px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.2 160.7"><ellipse fill="#E6E6E6" cx="179.1" cy="80.3" rx="179.1" ry="80.3"/><ellipse fill="#C0D730" cx="179.1" cy="80.3" rx="79.5" ry="80.3"/><ellipse cx="179.1" cy="80.3" rx="18" ry="65"/></svg>'); }
+
+/*# sourceMappingURL=alertnative-ways.css.map */

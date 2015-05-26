@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,2BAAwB;EACpB,mBAAmB,EAAE,QAAQ;EAC7B,eAAe,EAAE,OAAO;EACxB,iBAAiB,EAAE,SAAS;;ACEhC,aAAc;EACV,OAAO,EAAE,IAAI;EAEb,oBAAS;IACL,gBAAgB,EAAE,wBAAwB;;AAKlD,YAAa;EACT,KAAK,EAbY,KAAK;EActB,MAAM,EAbY,KAAK;EAevB,gBAAgB,EAAE,iXAAiX;;AAGvY,aAAc;EACV,KAAK,EApBY,KAAK;EAqBtB,MAAM,EApBY,KAAK;EAsBvB,gBAAgB,EAAE,2RAA2R",
+"sources": ["../../../styles/_base-placeholders.scss","alertnative-ways.scss"],
+"names": [],
+"file": "alertnative-ways.css"
+}

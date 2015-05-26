@@ -1,0 +1,48 @@
+
+
+<svg height="240px" width="240px"
+     viewBox="0 0 240 240"
+     xmlns="http://www.w3.org/2000/svg">
+    <title>Grouped Drawing With defs</title>
+    <desc>A Group of Different People Types</desc>
+
+    <!-- Because the groups will be within the < defs > element, they will not be drawn on the
+    screen right away and will serve as a “template” for future use. -->
+
+    <defs>
+        <g id="house">
+            <desc>House with door</desc>
+            <rect x="0" y="41" width="60" height="60"></rect>
+            <polyline points="0 41, 30 0, 60 41"></polyline>
+            <polyline points="30 101, 30 71, 44 71, 44 101"></polyline>
+        </g>
+
+        <g id="man">
+            <desc>Male stick figure</desc>
+            <circle cx="10" cy="10" r="10"></circle>
+            <line x1="10" y1="20" x2="10" y2="44"></line>
+            <polyline points="1 58, 10 44, 19 58"></polyline>
+            <polyline points="1 24, 10 30, 19 24"></polyline>
+        </g>
+
+        <g id="woman">
+            <desc>Female stick figure</desc>
+            <circle cx="10" cy="10" r="10"></circle>
+            <polyline points="10 20, 10 34, 0 44, 20 44, 10 34"></polyline>
+            <line x1="4" y1="58" x2="8" y2="44"></line>
+            <line x1="12" y1="44" x2="16" y2="58"></line>
+            <polyline points="1 24, 10 30, 19 24"></polyline>
+        </g>
+
+        <g id="couple">
+            <desc>Male and female stick figures</desc>
+            <use xlink:href="#man" x="0" y="0"></use>
+            <use xlink:href="#woman" x="25" y="0"></use>
+        </g>
+    </defs>
+
+    <use class="house" xlink:href="#house" x="0" y="0"></use>
+    <use class="person" xlink:href="#man" x="80" y="10"></use>
+    <use class="person woman" xlink:href="#woman" x="120" y="10"></use>
+
+</svg>

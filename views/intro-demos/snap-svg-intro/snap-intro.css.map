@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,IAAK;EACD,OAAO,EAAE,KAAK;EACd,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,KAAK;;AAGjB,UAAW;EACP,UAAU,EAAE,MAAM",
+"sources": ["snap-intro.scss"],
+"names": [],
+"file": "snap-intro.css"
+}

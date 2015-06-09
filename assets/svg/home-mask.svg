@@ -1,0 +1,18 @@
+<svg version="1.1"
+     xmlns="http://www.w3.org/2000/svg"
+     id="clippingMask"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <defs>
+        <mask id="mask">
+            <text x="0" y="100" id="Home" fill="#33FFFF"
+                  style="font-size: 120px;
+                         font-family: Blue Highway, Arial Black, sans-serif;">
+                HOME
+            </text>
+        </mask>
+    </defs>
+
+    <use xlink:href="#Home"></use>
+
+</svg>

@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="jump-loader.css">
+
+<svg class="svg-def">
+    <defs>
+
+        <!-- a glow that takes on the stroke color of the object it's applied to -->
+        <filter id="strokeGlow" x="-10" y="-10" width="250" height="150">
+
+            <feOffset in="StrokePaint" dx="0" dy="0" result="centeredOffset"></feOffset>
+
+            <feGaussianBlur in="centeredOffset" stdDeviation="2" result="blur1"></feGaussianBlur>
+            <feGaussianBlur in="centeredOffset" stdDeviation="5" result="blur2"></feGaussianBlur>
+            <feGaussianBlur in="centeredOffset" stdDeviation="15" result="blur3"></feGaussianBlur>
+
+            <feMerge>
+                <!-- this contains the offset blurred image -->
+                <feMergeNode in="blur1"></feMergeNode>
+                <feMergeNode in="blur2"></feMergeNode>
+                <feMergeNode in="blur3"></feMergeNode>
+
+                <!-- this contains the element that the filter is applied to -->
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+
+    </defs>
+</svg>
+
+
+<div class="main-view-container">
+
+    <div class="loader-container">
+
+        <svg id="loader" xmlns="http://www.w3.org/2000/svg" width="250px" height="200px" viewBox="0 0 250 200">
+            <path id="jump" fill="none" stroke="#33FFFF" stroke-width="10" stroke-linecap="round" stroke-miterlimit="10"
+                  d="M55.5 98.5c0-35.3 31.3-64 70-64s70 28.7 70 64"></path>
+
+            <g fill="none" stroke-width="1" stroke="#33FFFF" stroke-linecap="round" stroke-miterlimit="10">
+                <ellipse id="circleL" cx="55.2" cy="102.5" rx="21.7" ry="5.5"></ellipse>
+                <ellipse id="circleR" cx="195.2" cy="103.5" rx="21.7" ry="5.5"></ellipse>
+            </g>
+        </svg>
+
+
+    </div>
+
+</div>
+
+
+<script src="../../../js/lib/plugins/base-plugins.js"></script>
+<script src="../../../js/lib/plugins/css-plugins.js"></script>
+
+<script src="../../../vendor/gsap/src/minified/plugins/DrawSVGPlugin.min.js"></script>
+<script src="../../../vendor/gsap/src/minified/TweenMax.min.js"></script>
+<script src="jump-loader.js"></script>

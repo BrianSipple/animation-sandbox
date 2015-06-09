@@ -25,13 +25,15 @@
 
     // Fallback to use PNGs instead of SVGs
     // NOTE: Modernizr still needs to be included in the head of the markup
-    if (!Modernizr.svg) {
+    if (typeof Modernizr !== 'undefined') {
+        if (!Modernizr.svg) {
 
-        var svgs = document.querySelectorAll('img[src$=".svg"]');
+            var svgs = document.querySelectorAll('img[src$=".svg"]');
 
-        [].prototype.forEach.call(svgs, function (elem) {
-            elem.src = elem.src.replace(/\.svg$/, '.png');
-        });
+            [].prototype.forEach.call(svgs, function (elem) {
+                elem.src = elem.src.replace(/\.svg$/, '.png');
+            });
+        }
     }
 }());
 

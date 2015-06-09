@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,QAAS;EACL,QAAQ,EAAE,QAAQ;EAClB,KAAK,EAAE,CAAC;EACR,MAAM,EAAE,CAAC;;AAGb,aAAc;EACV,IAAI,EAAE,6CAA6C;EACnD,kBAAkB,EAAE,wCAAwC",
+"sources": ["text-effects.scss"],
+"names": [],
+"file": "text-effects.css"
+}

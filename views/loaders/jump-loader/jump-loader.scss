@@ -1,0 +1,22 @@
+@import '../../../styles/application';
+
+$loader-svg-width: 250px;
+$loader-svg-height: 200px;
+
+.main-view-container {
+    background-color: hsla(150, 2%, 16%, 1);
+}
+
+.loader-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -$loader-svg-width / 2;
+    margin-top: -$loader-svg-height / 2;
+}
+
+.reflection {
+    transform-origin: 50% 110%;
+    transform: scaleY(-1);
+    opacity: 0.09;
+}

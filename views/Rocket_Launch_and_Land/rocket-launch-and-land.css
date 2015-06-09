@@ -24,11 +24,12 @@ body {
 
 .rocket-wrapper {
   position: absolute;
-  margin: 0 auto;
-  left: 25%;
-  right: 25%;
-  bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  left: 50%;
+  bottom: 100px;
   width: 300px;
+  margin-left: -150px;
   height: 400px; }
 
 .rocket-container {
@@ -37,19 +38,53 @@ body {
   height: 100%;
   text-align: center; }
 
-.rocket-exhaust-container {
-  width: 100%;
-  height: 100%;
+/*
+ * Origin of the exhaust animation. This moves upward
+ * with the rocket
+*/
+.exhaust-wrapper {
+  position: absolute;
+  left: 50%;
+  /*
+  width: $rocket-width;
+  height: $rocket-height;
+  */
+  margin-left: -150px;
+  width: 300px; }
+  .exhaust-wrapper.climb {
+    border: 2px solid black;
+    /* for debugging only :) */
+    height: 100%;
+    bottom: 100px; }
+  .exhaust-wrapper.platform {
+    border: 2px solid green;
+    /* for debugging only :) */
+    top: calc(100% - 100px); }
+
+.cloud-svg {
+  position: absolute;
+  bottom: 0;
+  transform: scale(0);
+  left: 10%;
+  right: 10%;
+  opacity: 0; }
+  .cloud-svg.def {
+    display: none; }
+
+.exhaust-container {
+  position: relative;
   overflow: visible;
-  position: relative; }
-  .rocket-exhaust-container .cloud-svg {
-    position: absolute;
-    transform: scale(0);
-    left: 10%;
-    right: 10%;
-    opacity: 0; }
-    .rocket-exhaust-container .cloud-svg.def {
-      display: none; }
+  height: 100%;
+  width: 100%; }
+  .exhaust-container.climb {
+    transform: scaleY(0);
+    transform-origin: 50% bottom;
+    /* scale up from bottom */ }
+    .exhaust-container.climb .cloud-svg {
+      top: 0;
+      bottom: initial; }
+  .exhaust-container.platform .cloud-svg {
+    bottom: -100px; }
 
 .fuselage > *,
 .thruster > *,

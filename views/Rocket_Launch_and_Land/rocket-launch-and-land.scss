@@ -1,3 +1,9 @@
+$rocket-bottom-offset: 100px;
+$rocket-width: 300px;
+$rocket-height: 400px;
+
+$cloud-svg-width: 200px;
+
 body {
     width: 100vw;
     height: 100vh;
@@ -28,16 +34,15 @@ body {
     }
 }
 
-
-
 .rocket-wrapper {
     position: absolute;
-    margin: 0 auto;
-    left: 25%;
-    right: 25%;
-    bottom: 0;
-    width: 300px;
-    height: 400px;
+    margin-top: 0;
+    margin-bottom: 0;
+    left: 50%;
+    bottom: $rocket-bottom-offset;
+    width: $rocket-width;
+    margin-left: -0.5 * $rocket-width;
+    height: $rocket-height;
 }
 
 .rocket-container {
@@ -47,23 +52,72 @@ body {
     text-align: center;
 }
 
+/*
+ * Origin of the exhaust animation. This moves upward
+ * with the rocket
+*/
+.exhaust-wrapper {
+    position: absolute;
+    left: 50%;
+    /*
+    width: $rocket-width;
+    height: $rocket-height;
+    */
+    //height: 100%;
+    margin-left: -0.5 * $rocket-width;
+    width: $rocket-width;
 
-.rocket-exhaust-container {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
+
+    &.climb {
+        border: 2px solid black;  /* for debugging only :) */
+        height: 100%;
+        bottom: $rocket-bottom-offset;
+    }
+
+    &.platform {
+        border: 2px solid green;  /* for debugging only :) */
+        top: calc(100% - #{$rocket-bottom-offset});
+    }
+
+
+}
+
+.cloud-svg {
+    &.def {
+        display: none;
+    }
+    position: absolute;
+    bottom: 0;
+    transform: scale(0);
+    left: 10%;
+    right: 10%;
+    opacity: 0;
+}
+
+
+
+.exhaust-container {
+
     position: relative;
+    overflow: visible;
+    height: 100%;
+    width: 100%;
 
-    .cloud-svg {
-        &.def {
-            display: none;
+    &.climb {
+        transform: scaleY(0);
+        transform-origin: 50% bottom;  /* scale up from bottom */
+
+        .cloud-svg {
+            top: 0;
+            bottom: initial;
         }
 
-        position: absolute;  // animates to fixed
-        transform: scale(0);
-        left: 10%;
-        right: 10%;
-        opacity: 0;
+    }
+
+    &.platform {
+        .cloud-svg {
+            bottom: -1 * $cloud-svg-width / 2;
+        }
     }
 }
 

@@ -1,0 +1,16 @@
+line {
+    stroke-width: 4px;
+
+    &:nth-child(1) {
+        stroke: hsla(200, 41%, 55%, 1);
+    }
+    &:nth-child(2) {
+        stroke: hsla(42, 100%, 62%, 1);
+    }
+    &:nth-child(3) {
+        stroke: hsla(22, 100%, 58%, 1);
+    }
+    &:nth-child(4) {
+        stroke: hsla(357, 100%, 66%, 1)
+    }
+}

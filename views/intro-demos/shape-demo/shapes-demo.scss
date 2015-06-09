@@ -1,0 +1,21 @@
+circle {
+    fill: hsla(137, 79%, 81%, 1);
+    stroke: none;
+}
+
+polygon {
+
+    &.star {
+        fill: hsla(44, 100%, 62%, 1);
+        stroke: hsla(357, 100%, 66%, 1);
+    }
+
+    &.weird {
+        fill: hsla(137, 100%, 62%, 1.0);
+        fill-opacity: 0.5;
+        stroke: green;
+        stroke-width: 2px;
+        stroke-linejoin: round;
+    }
+}
+

@@ -1,0 +1,11 @@
+<svg id="loader" xmlns="http://www.w3.org/2000/svg" width="250px" height="200px" viewBox="0 0 250 200">
+
+  <path id="jump" fill="none" stroke="#33FFFF" stroke-width="10" stroke-linecap="round" stroke-miterlimit="10" d="M55.5 98.5c0-35.3 31.3-64 70-64s70 28.7 70 64"/>
+
+
+  <g stroke-width="1" stroke="#33FFFF" stroke-linecap="round" stroke-miterlimit="10">
+    <ellipse id="circleL" cx="55.2" cy="102.5" rx="21.7" ry="5.5"/>
+    <ellipse id="circleR" cx="195.2" cy="103.5" rx="21.7" ry="5.5"/>
+  </g>
+
+</svg>

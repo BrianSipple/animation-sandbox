@@ -1,0 +1,133 @@
+$rocket-bottom-offset: 100px;
+$rocket-width: 300px;
+$rocket-height: 400px;
+
+$cloud-svg-width: 200px;
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.scene-wrapper {
+    background-color: coral;
+}
+
+.launch-container {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-align: center;
+}
+
+.rocket {
+    fill: yellow;
+    stroke: none;
+
+    > * {
+        stroke: none;
+    }
+}
+
+.rocket-wrapper {
+    position: absolute;
+    margin-top: 0;
+    margin-bottom: 0;
+    left: 50%;
+    bottom: $rocket-bottom-offset;
+    width: $rocket-width;
+    margin-left: -0.5 * $rocket-width;
+    height: $rocket-height;
+}
+
+.rocket-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+/*
+ * Origin of the exhaust animation. This moves upward
+ * with the rocket
+*/
+.exhaust-wrapper {
+    position: absolute;
+    left: 50%;
+    /*
+    width: $rocket-width;
+    height: $rocket-height;
+    */
+    //height: 100%;
+    margin-left: -0.5 * $rocket-width;
+    width: $rocket-width;
+
+
+    &.climb {
+        border: 2px solid black;  /* for debugging only :) */
+        height: 100%;
+        bottom: $rocket-bottom-offset;
+    }
+
+    &.platform {
+        border: 2px solid green;  /* for debugging only :) */
+        top: calc(100% - #{$rocket-bottom-offset});
+    }
+
+
+}
+
+.cloud-svg {
+    &.def {
+        display: none;
+    }
+    position: absolute;
+    bottom: 0;
+    transform: scale(0);
+    left: 10%;
+    right: 10%;
+    opacity: 0;
+}
+
+
+
+.exhaust-container {
+
+    position: relative;
+    overflow: visible;
+    height: 100%;
+    width: 100%;
+
+    &.climb {
+        transform: scaleY(0);
+        transform-origin: 50% bottom;  /* scale up from bottom */
+
+        .cloud-svg {
+            top: 0;
+            bottom: initial;
+        }
+
+    }
+
+    &.platform {
+        .cloud-svg {
+            bottom: -1 * $cloud-svg-width / 2;
+        }
+    }
+}
+
+.fuselage,
+.thruster,
+.wings {
+    > * {
+        fill: yellow;
+        stroke: none;
+        stroke-width: 0;
+    }
+
+}

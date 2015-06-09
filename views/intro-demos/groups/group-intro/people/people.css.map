@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,OAAQ;EACJ,IAAI,EAAE,IAAI;EACV,MAAM,EAAE,IAAI;EAEZ,aAAQ;IACP,MAAM,EAAE,IAAI;;AAIjB,MAAO;EACH,IAAI,EAAE,OACV",
+"sources": ["people.scss"],
+"names": [],
+"file": "people.css"
+}

@@ -1,0 +1,12 @@
+.person {
+    fill: none;
+    stroke: blue;
+
+    &.woman {
+     stroke: pink;
+    }
+}
+
+.house {
+    fill: hsla(299, 100%, 66%, 1)
+}

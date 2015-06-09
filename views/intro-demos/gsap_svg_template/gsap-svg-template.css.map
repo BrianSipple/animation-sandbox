@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,gBAAiB;EACb,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,KAAK;;AAGjB,MAAO;EACH,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI",
+"sources": ["gsap-svg-template.scss"],
+"names": [],
+"file": "gsap-svg-template.css"
+}

@@ -9,6 +9,7 @@ $loader-svg-height: 200px;
 
 .loader-container {
     position: absolute;
+    opacity: 0; /* animate into view */
     top: 50%;
     left: 50%;
     margin-left: -$loader-svg-width / 2;

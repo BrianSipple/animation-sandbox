@@ -293,6 +293,8 @@ body,
 
 .loader-container {
   position: absolute;
+  opacity: 0;
+  /* animate into view */
   top: 50%;
   left: 50%;
   margin-left: -125px;

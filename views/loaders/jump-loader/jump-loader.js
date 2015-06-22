@@ -19,7 +19,7 @@ window.onload = function () {
     setFilter('url("#strokeGlow")', jumpArcReflection);
 
 
-    var masterTL = new TimelineMax({repeat: -1});
+    var masterTL = new TimelineMax( {repeat: -1} );
 
 
     function jump() {

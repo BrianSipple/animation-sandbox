@@ -12,8 +12,12 @@ var BASE_ANIMATION_MULTIPLIER = 1,
     platformExhaustContainer = document.querySelector('.exhaust-container.platform'),
     cloudSVGOuter = document.querySelector('.cloud-svg.outer'),
     rocket = document.querySelector('.rocket-container .rocket'),
+    thrusters = rocket.querySelector('.thrusters'),
 
 //////////////// Constants ////////////////
+
+    LABEL__PLATFORM_EXHAUST = 'platform-exhaust',
+    LABEL__RATTLE_THRUSTERS = 'rattle-thrusters',
     NUM_EXHAUST_CLOUDS = 100,
 
     DURATION__ROCKET_LAUNCH = BASE_ANIMATION_MULTIPLIER * 4,
@@ -59,34 +63,38 @@ var BASE_ANIMATION_MULTIPLIER = 1,
         return [liftRocket, scaleUpExhaustContainer];
     },
 
-    fireExhaust = function fireExhaustLeft(cloud, duration, xDest, yDest) {
+    fireExhaust = function fireExhaust(cloud, duration, xDest, yDest) {
 
-        console.log("xDest: " + xDest);
-        console.log('yDest: ' + yDest);
+        //console.log("xDest: " + xDest);
+        //console.log('yDest: ' + yDest);
 
         var cloudOpacity = MathUtils.boundedRandom(.50, 1),
-            cloudScale = MathUtils.boundedRandom(.5, 1.2);
+            cloudScale = MathUtils.boundedRandom(.5, 1.2),
 
-        var emissionTween = TweenMax.to(
-            cloud,
-            duration,
-            {
-                bezier: {
-                    type: 'thru',
-                    values: [
-                        {x: '0px', y: '0px'},
-                        {x: (xDest * 0.28) + 'px', y: (yDest * 0.05) + 'px'},
-                        {x: (xDest * 0.87 + 'px'), y: (yDest * 0.57) + 'px'},
-                        {x: xDest + 'px', y: yDest + 'px'}
-                    ],
-                    curviness: 1,
-                    autoRotate: true
-                },
-                opacity: cloudOpacity,
-                scale: cloudScale
-                //transform: 'translate3d(' + xTrans + 'px, ' + yTrans + 'px, ' + '0)'
-            }
-        );
+            emissionTween =
+                TweenMax.to(
+                    cloud,
+                    duration,
+                    {
+                        bezier: {
+                            type: 'thru',
+                            values: [
+                                {x: '0px', y: '0px'},
+                                {x: (xDest * 0.09) + 'px', y: (yDest * 0.25) + 'px'},
+                                {x: (xDest * 0.50) + 'px', y: (yDest * 0.95) + 'px'},
+                                {x: xDest + 'px', y: yDest + 'px'}
+                            ],
+                            curviness: 1,
+                            autoRotate: true,
+                            ease: Power4.easeIn
+                        },
+                        opacity: cloudOpacity,
+                        scale: cloudScale,
+                        ease: Power0.easeNone
+                        //transform: 'translate3d(' + xTrans + 'px, ' + yTrans + 'px, ' + '0)'
+                    }
+                );
+
 
         //var toFixed = TweenMax.to(cloud, 0, { position: 'absolute' });
 
@@ -109,9 +117,6 @@ var BASE_ANIMATION_MULTIPLIER = 1,
             res = [];
         for (var i = 0; i < n; i++) {
 
-            //cloudSize = MathUtils.boundedRandom(20, 90);
-            //cloudWidth = 200;
-            //cloudHeight = 100;
             cloud = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
             cloud.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
             cloud.setAttribute('width', cloudSize + 'px');
@@ -131,10 +136,54 @@ var BASE_ANIMATION_MULTIPLIER = 1,
     },
 
 
+    rattleThrusters = function rattleThrusters() {
+
+        var tl = new TimelineMax({
+                repeat: 40
+            }),
+
+            rattleRight = TweenMax.to(
+                thrusters,
+                BASE_ANIMATION_MULTIPLIER * 0.01,
+                {
+                    x: '2%',
+                    //yoyo: true,
+                    ease: Linear.easeInCubic
+                }
+            ),
+
+            rattleLeft = TweenMax.to(
+                thrusters,
+                BASE_ANIMATION_MULTIPLIER * 0.01,
+                {
+                    x: '-2%',
+                    ease: Linear.easeInCubic
+                }
+            ),
+
+
+            reposition = TweenMax.to(
+                thrusters,
+                BASE_ANIMATION_MULTIPLIER * 0.01,
+                {
+                    x: '0',
+                    ease: Linear.easInCubic
+                }
+            );
+
+
+        tl.add(rattleRight);
+        tl.add(rattleLeft);
+        tl.add(reposition);
+        return tl;
+
+    },
+
+
     /**
      * Fire exhaust out from the platform before the rocket takes off.
      */
-    initPlatformExhaust = function initPlatformExhaust (duration) {
+    initPlatformExhaust = function initPlatformExhaust(duration) {
 
         var exhaustTL = new TimelineMax(),
             exhaustClouds = makeClouds(NUM_EXHAUST_CLOUDS, platformExhaustContainer),
@@ -157,16 +206,18 @@ var BASE_ANIMATION_MULTIPLIER = 1,
             xDest = WINDOW_WIDTH / 2;
             yDest = 0; // let's try 0 for now -- straight out
 
-            exhaustTL.add(fireExhaust(leftCloud, duration, -xDest, yDest), '-=' + nextExhaustOffset);
-            exhaustTL.add(fireExhaust(rightCloud, duration, xDest, yDest), '-=' + nextExhaustOffset);
+            exhaustTL.add(fireExhaust(leftCloud, duration, -xDest, yDest), '-=' + nextExhaustOffset, 'start');
+            exhaustTL.add(fireExhaust(rightCloud, duration, xDest, yDest), '-=' + nextExhaustOffset, 'start');
         }
+
+        exhaustTL.add( fadeClouds([leftClouds.reverse(), rightClouds.reverse()], duration) );
 
         exhaustTL.addLabel('exhaustTL__finish');
         return exhaustTL;
 
     },
 
-    initClimbExhaust = function initClimbExhaust() {
+    initClimbExhaust = function initClimbExhaust(duration) {
 
         var exhaustTL = new TimelineMax(),
             exhaustClouds = makeClouds(NUM_EXHAUST_CLOUDS, climbExhaustContainer),
@@ -177,8 +228,7 @@ var BASE_ANIMATION_MULTIPLIER = 1,
             rightCloud,
             xDest,
             yDest,
-            exhaustAnimationDuration = DURATION__ROCKET_LAUNCH,
-            nextExhaustOffset = exhaustAnimationDuration - 0.07,
+            nextExhaustOffset = duration - 0.07,
             numAnims = NUM_EXHAUST_CLOUDS / 2;
         for (var i = 0; i < numAnims; i++) {
 
@@ -188,12 +238,46 @@ var BASE_ANIMATION_MULTIPLIER = 1,
             xDest = WINDOW_WIDTH / 4;
             yDest = i * (WINDOW_HEIGHT / numAnims); // gradually increment the yDest
 
-            exhaustTL.add(fireExhaust(leftCloud, exhaustAnimationDuration, -xDest, yDest), '-=' + nextExhaustOffset);
-            exhaustTL.add(fireExhaust(rightCloud, exhaustAnimationDuration, xDest, yDest), '-=' + nextExhaustOffset);
+            exhaustTL.add(fireExhaust(leftCloud, duration, -xDest, yDest), '-=' + nextExhaustOffset);
+            exhaustTL.add(fireExhaust(rightCloud, duration, xDest, yDest), '-=' + nextExhaustOffset);
         }
+
+        //var fadeLeftClouds = TweenMax.staggerTo(
+        //        leftClouds,
+        //        duration,
+        //        { opactiy: 0 },
+        //        duration * 0.08
+        //    ),
+        //
+        //    fadeRightClouds = TweenMax.staggerTo(
+        //        rightClouds,
+        //        duration,
+        //        { opactiy: 0 },
+        //        duration * 0.08
+        //    );
+
+        exhaustTL.add( fadeClouds([leftClouds.reverse(), rightClouds.reverse()], duration) );
+        //exhaustTL.add([fadeLeftClouds, fadeRightClouds]);
+
         return exhaustTL;
     },
 
+    fadeClouds = function fadeClouds (cloudSets, duration) {
+
+        var tweens = [];
+
+        for (var i = 0, l = cloudSets.length; i < l; i++) {
+            tweens.push(
+                TweenMax.staggerTo(
+                    cloudSets[i],
+                    duration,
+                    { opacity: 0 },
+                    duration * 0.008
+                )
+            );
+        }
+        return tweens;
+    },
 
     initLaunch = function initLaunch() {
         debugger;
@@ -216,17 +300,10 @@ var masterTL = new TimelineMax({
 
 
 window.onload = function () {
-
-    //masterTL.add(initPlatformExhaust(DURATION__PLATFORM_EXHAUST), 'platform-exhaust');
-    //masterTL.add(initClimbExhaust(), 'exhaust', '-=' + DURATION__PLATFORM_EXHAUST);
-    //masterTL.add(initLaunch());
-    var platformExhaustTL = initPlatformExhaust(DURATION__PLATFORM_EXHAUST),
-        platformExhaustEndTime = AnimUtils.findLabelTime(platformExhaustTL, 'exhaustTL__finish');
-
-
-    masterTL.add(platformExhaustTL);
-    masterTL.add(initClimbExhaust(), platformExhaustEndTime);
-    masterTL.add(initLaunch());
+    masterTL.add(rattleThrusters(), LABEL__RATTLE_THRUSTERS);
+    masterTL.add(initPlatformExhaust(DURATION__PLATFORM_EXHAUST), LABEL__PLATFORM_EXHAUST);
+    masterTL.add(initClimbExhaust(DURATION__ROCKET_LAUNCH), LABEL__PLATFORM_EXHAUST);
+    masterTL.add(initLaunch(), LABEL__PLATFORM_EXHAUST + '+= 3');
 };
 
 

@@ -1,8 +1,78 @@
-$theme-color__primary: hsla(20, 84%, 52%, 1);
-
-$navbar-height: 96px;
-$navbar-logo-height: $navbar-height - 14px;
+$font-family-stack: Roboto, Arial, Helvetica, sans-serif;
+$font-size_root: 16px;
 
 
-$background-color_page__primary: hsla(0, 0%, 96%, 1.0);
-$background-color_content-area__primary: hsla(0, 100%, 100%, 1.0);
+
+/* ---------------------- Theme colors ---------------------- */
+$theme-color_primary__main: hsla(60, 29%, 96%, 1);
+$theme-color_primary__alternate: hsla(200, 18%, 46%, 1);
+
+$theme-color_accent__main: hsla(34, 100%, 50%, 1);
+$theme-color_accent__alternate: hsla(186, 100%, 50%, 1);
+
+
+
+$background-color_primary__page: hsla(0, 0%, 96%, 1);
+$background-color_primary__content: hsla(0, 100%, 100%, 1);
+
+
+
+
+
+/* ----------------------- Font colors and sizes ---------------------- */
+$font-size_md: 16px;
+
+/* White text on dark backgrounds */
+$font-color-white_primary-text__dark-background: hsla(0, 100%, 100%, 1);
+$font-color-white_icon__dark-background: hsla(0, 100%, 100%, 1);
+$font-color-white_button__dark-background: hsla(0, 100%, 100%, 1);
+$font-color-white_secondary-text__dark-background: hsla(0, 100%, 100%, .70);
+$font-color-white_disabled__dark-background: hsla(0, 100%, 100%, .30);
+$font-color-white_hint-text__dark-background: hsla(0, 100%, 100%, .30);
+$font-color-white_divider__dark-background: hsla(0, 100%, 100%, .12);
+
+/* Dark text on light backgrounds */
+$font-color-black_primary-text__light-background: hsla(0, 0%, 0%, .87);
+$font-color-black_icon__light-background: hsla(0, 0%, 0%, .54);
+$font-color-black_button__light-background: hsla(0, 0%, 0%, .54);
+$font-color-black_secondary-text__light-background: hsla(0, 0%, 0%, .54);
+$font-color-black_disabled__light-background: hsla(0, 0%, 0%, .26);
+$font-color-black_hint-text__light-background: hsla(0, 0%, 0%, .26);
+$font-color-black_divider__light-background: hsla(0, 0%, 0%, .12);
+
+$font-color-default: $font-color-black_primary-text__light-background;
+
+
+
+/* Base element styles */
+$button-height_default: 3em;
+$button-width_default: 6.2em;
+$button-width_fab: $button-height_default;
+$button-height_fab: $button-height_default;
+$button-color_primary: hsla(196, 83%, 31%, 1);
+
+
+$padding-wrapper_default: .3em .8em;
+
+
+
+/**
+ * Use with every animation and transition so we can have a
+ * global animation speed toggler (i.e., for visual UI testing)
+ */
+$animation-duration-multiplier: 1s;
+
+
+/*
+ * Easing functions
+ */
+$easings_ease-out-cubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+$easings_ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+
+
+
+$navbar-height: 64px;
+$footer-height: 64px;
+
+
+

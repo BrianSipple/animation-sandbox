@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="creeper-loader.css">
+<div class="main-view-container">
+
+    <div class="content-wrapper">
+
+        <svg id="areaContainer" xmlns="http://www.w3.org/2000/svg" width="100%" height="120px" viewBox="0 0 600 120">
+            <path id="l0" stroke="#383845" stroke-width="8" stroke-linecap="round"
+                  stroke-linejoin="round" stroke-miterlimit="10" fill="none"
+                  d="M350.5 110.5c0-55.3-22.4-100-50-100s-50 44.7-50 100">
+            </path>
+            <circle id="p0" cx="250.5" cy="110.5" r="7" stroke-width="0" fill="none"></circle>
+            <circle id="p1" cx="350.5" cy="110.5" r="7" stroke-width="0" fill="none"></circle>
+        </svg>
+
+        <!-- Invisible bezier point objects -->
+        <div class="control-point_mid"></div>
+        <div class="control-point_p0"></div>
+        <div class="control-point_p1"></div>
+    </div>
+
+</div>
+
+<script src="../../../vendor/gsap/src/minified/plugins/DrawSVGPlugin.min.js"></script>
+<script src="../../../vendor/gsap/src/minified/TweenMax.min.js"></script>
+<script src="creeper-loader.js"></script>

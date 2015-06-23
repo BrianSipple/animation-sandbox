@@ -90,6 +90,18 @@ nav, a, button {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+/* ---------------------- Theme colors ---------------------- */
+/* ----------------------- Font colors and sizes ---------------------- */
+/* White text on dark backgrounds */
+/* Dark text on light backgrounds */
+/* Base element styles */
+/**
+ * Use with every animation and transition so we can have a
+ * global animation speed toggler (i.e., for visual UI testing)
+ */
+/*
+ * Easing functions
+ */
 [class^="page-section_"] {
   width: 100%;
   height: 100vh;
@@ -133,18 +145,25 @@ nav, a, button {
   justify-content: flex-end; }
 
 html,
-body,
-.main-view-container {
-  width: 100vw;
-  height: 100vh;
+body {
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  overflow: hidden;
+  font-size: 16px;
+  background-color: whitesmoke; }
 
 .main-view-container {
-  background-color: whitesmoke;
-  overflow: hidden;
-  overflow-x: hidden;
-  overflow-y: scroll; }
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden; }
 
 .svg-def {
   position: absolute;

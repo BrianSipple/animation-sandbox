@@ -1,14 +1,14 @@
 @import 'application';
 
 
-.content-wrapper {
+[class^="content-wrapper"] {
     margin: 1em auto;
     height: 100%;
     width: 90%;
     max-width: 90%;
-    background-color: $background-color_content-area__primary;
+    background-color: $background-color_primary__content;
 
-    &.map {
+    &[class*="_link-map"] {
         overflow: hidden;
     }
 }

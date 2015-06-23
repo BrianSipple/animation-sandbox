@@ -1,0 +1,25 @@
+@import '../../../styles/application';
+
+$creeper-path-container-height: 120px;
+$creeper-width: 100px;
+
+.main-view-container {
+    background-color: springgreen;
+}
+
+.content-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+//.area-container {
+//    position: absolute;
+//    top: 50%;
+//    margin-top: -($creeper-path-container-height/2);
+//    width: 100%;
+//}
+
+
+
+

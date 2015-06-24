@@ -315,4 +315,7 @@ body {
   height: 100%;
   width: 100%; }
 
+#areaContainer {
+  opacity: 0; }
+
 /*# sourceMappingURL=creeper-loader.css.map */

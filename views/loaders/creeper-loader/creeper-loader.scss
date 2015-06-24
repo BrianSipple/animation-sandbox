@@ -13,12 +13,9 @@ $creeper-width: 100px;
     width: 100%;
 }
 
-//.area-container {
-//    position: absolute;
-//    top: 50%;
-//    margin-top: -($creeper-path-container-height/2);
-//    width: 100%;
-//}
+#areaContainer {
+    opacity: 0;  // animate opactiy on load after we're properly positioned
+}
 
 
 

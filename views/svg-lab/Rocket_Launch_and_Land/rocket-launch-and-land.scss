@@ -69,13 +69,13 @@ body {
 
 
     &.climb {
-        border: 2px solid black;  /* for debugging only :) */
+        //border: 2px solid black;  /* for debugging only :) */
         height: 100%;
         bottom: $rocket-bottom-offset;
     }
 
     &.platform {
-        border: 2px solid green;  /* for debugging only :) */
+        //border: 2px solid green;  /* for debugging only :) */
         top: calc(100% - #{$rocket-bottom-offset});
     }
 

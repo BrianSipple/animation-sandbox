@@ -52,13 +52,9 @@ body {
   margin-left: -150px;
   width: 300px; }
   .exhaust-wrapper.climb {
-    border: 2px solid black;
-    /* for debugging only :) */
     height: 100%;
     bottom: 100px; }
   .exhaust-wrapper.platform {
-    border: 2px solid green;
-    /* for debugging only :) */
     top: calc(100% - 100px); }
 
 .cloud-svg {

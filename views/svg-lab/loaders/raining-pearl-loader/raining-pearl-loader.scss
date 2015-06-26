@@ -1,0 +1,32 @@
+@import '../../../../styles/application';
+
+
+$circle__width: 40px;
+$circle__height: 40px;
+$circle__color: hsla(120, 100%, 60%, 1);
+
+body {
+    background-color: hsla(211, 21%, 22%, 1);
+}
+
+.chain__outer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.chain__inner {
+    overflow-y: visible;
+    overflow-x: hidden;
+    overflow: visible;
+}
+
+.circle {
+    fill: $circle__color;
+    width: $circle__width;
+    height: $circle__height;
+}

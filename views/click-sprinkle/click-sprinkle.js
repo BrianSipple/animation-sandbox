@@ -39,17 +39,24 @@
     function initShapes () {
 
         var
-            circle,
+            circleSVG,
+            svgUse,
             outwardDistance = circleWidth + (circleWidth * 0.15);  // add some additional padding proportional to the circle width
         for (var i = 0; i < 6; i++) {
 
-            circle = document.createElement('div');
-            circle.classList.add('shape-set__outer');
-            circle.classList.add('shape-set__outer--circle');
-            circle.style.transform = 'rotate(' + ( (i * (360 / 6)) ) + 'deg) translateY( -' + outwardDistance + 'px)';
+            circleSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            circleSVG.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+            circleSVG.classList.add('shape-set__outer');
+            circleSVG.classList.add('shape-set__outer--circle');
+            circleSVG.style.transform = 'rotate(' + ( (i * (360 / 6)) ) + 'deg) translateY( -' + outwardDistance + 'px)';
 
-            outerCircleElems.push(circle);  // store references
-            outerCirclesFrag.appendChild(circle);  // build the fragment to be injected
+            svgUse = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+            svgUse.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#circleSVG');
+            circleSVG.appendChild(svgUse);
+
+
+            outerCircleElems.push(circleSVG);  // store references
+            outerCirclesFrag.appendChild(circleSVG);  // build the fragment to be injected
 
         }
         shapeSet.appendChild(outerCirclesFrag);

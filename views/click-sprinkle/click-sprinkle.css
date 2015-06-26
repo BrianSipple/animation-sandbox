@@ -334,10 +334,10 @@ body {
   margin-left: -20px; }
 
 .shape-set__center {
-  background-color: white; }
+  fill: white; }
 
 .shape-set__outer {
-  background-color: #33ff33; }
+  fill: #33ff33; }
 
 .alert {
   position: absolute;

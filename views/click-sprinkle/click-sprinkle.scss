@@ -5,6 +5,8 @@ $shape-set__height: 300px;
 
 $circle__width: 40px;
 $circle__height: 40px;
+$circle__color--center: hsla(0, 100%, 100%, 1.0);
+$circle__color--outer: hsla(120, 100%, 60%, 1);
 
 body {
     background-color: hsla(211, 21%, 22%, 1);
@@ -37,10 +39,10 @@ body {
 }
 
 .shape-set__center {
-    background-color: hsla(0, 100%, 100%, 1.0);
+    fill: $circle__color--center;
 }
 .shape-set__outer {
-    background-color: hsla(120, 100%, 60%, 1);
+    fill: $circle__color--outer;
 }
 
 .alert {

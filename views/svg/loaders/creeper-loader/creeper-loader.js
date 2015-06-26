@@ -20,6 +20,8 @@
 
         ANIMATION_DURATION_MULTIPLIER = 0.5,
 
+        pointMoveDelay = ANIMATION_DURATION_MULTIPLIER * 0.5,
+
         masterTl = new TimelineMax({
             repeatDelay: 0,
             repeat: -1,
@@ -116,7 +118,7 @@
         );
     }
 
-    function calibratePoints () {
+    function followThroughPathPoints () {
         TweenMax.set(
             pathPoint0,
             {
@@ -140,8 +142,7 @@
         updateLine();
     }
 
-    function startMotion () {
-
+    function walkControlPoints () {
         masterTl.add(
             TweenMax.to(
                 controlPointP0,
@@ -193,8 +194,8 @@
 
     window.addEventListener('load', function () {
         init();
-        startMotion();
-        calibratePoints();
+        walkControlPoints();
+        followThroughPathPoints();
 
         // Hook updateLine() into TweenMax's RAF loop
         TweenMax.ticker.addEventListener('tick', updateLine);

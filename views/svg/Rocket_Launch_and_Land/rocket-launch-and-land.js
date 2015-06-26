@@ -65,8 +65,8 @@ var BASE_ANIMATION_MULTIPLIER = 1,
 
     fireExhaust = function fireExhaust(cloud, duration, xDest, yDest) {
 
-        //console.log("xDest: " + xDest);
-        //console.log('yDest: ' + yDest);
+        console.log("xDest: " + xDest);
+        console.log('yDest: ' + yDest);
 
         var cloudOpacity = MathUtils.boundedRandom(.50, 1),
             cloudScale = MathUtils.boundedRandom(.5, 1.2),
@@ -226,38 +226,22 @@ var BASE_ANIMATION_MULTIPLIER = 1,
 
         var leftCloud,
             rightCloud,
-            xDest,
+            xDest = WINDOW_WIDTH / 4,
             yDest,
             nextExhaustOffset = duration - 0.07,
-            numAnims = NUM_EXHAUST_CLOUDS / 2;
+            numAnims = NUM_EXHAUST_CLOUDS / 2,
+            yMultiplier = WINDOW_HEIGHT / numAnims;
         for (var i = 0; i < numAnims; i++) {
 
             leftCloud = leftClouds[i];
             rightCloud = rightClouds[i];
 
-            xDest = WINDOW_WIDTH / 4;
-            yDest = i * (WINDOW_HEIGHT / numAnims); // gradually increment the yDest
+            yDest = i * (yMultiplier); // gradually increment the yDest
 
             exhaustTL.add(fireExhaust(leftCloud, duration, -xDest, yDest), '-=' + nextExhaustOffset);
             exhaustTL.add(fireExhaust(rightCloud, duration, xDest, yDest), '-=' + nextExhaustOffset);
         }
-
-        //var fadeLeftClouds = TweenMax.staggerTo(
-        //        leftClouds,
-        //        duration,
-        //        { opactiy: 0 },
-        //        duration * 0.08
-        //    ),
-        //
-        //    fadeRightClouds = TweenMax.staggerTo(
-        //        rightClouds,
-        //        duration,
-        //        { opactiy: 0 },
-        //        duration * 0.08
-        //    );
-
         exhaustTL.add( fadeClouds([leftClouds.reverse(), rightClouds.reverse()], duration) );
-        //exhaustTL.add([fadeLeftClouds, fadeRightClouds]);
 
         return exhaustTL;
     },
@@ -300,10 +284,17 @@ var masterTL = new TimelineMax({
 
 
 window.onload = function () {
-    masterTL.add(rattleThrusters(), LABEL__RATTLE_THRUSTERS);
-    masterTL.add(initPlatformExhaust(DURATION__PLATFORM_EXHAUST), LABEL__PLATFORM_EXHAUST);
-    masterTL.add(initClimbExhaust(DURATION__ROCKET_LAUNCH), LABEL__PLATFORM_EXHAUST);
-    masterTL.add(initLaunch(), LABEL__PLATFORM_EXHAUST + '+= 3');
+
+    var
+        thrusterTl = rattleThrusters(),
+        platformExhaustTl = initPlatformExhaust(DURATION__PLATFORM_EXHAUST),
+        climbExhaustTl = initClimbExhaust(DURATION__ROCKET_LAUNCH),
+        rocketLaunchTl = initLaunch();
+
+    masterTL.add(thrusterTl, LABEL__RATTLE_THRUSTERS);
+    masterTL.add(platformExhaustTl, LABEL__PLATFORM_EXHAUST);
+    masterTL.add(climbExhaustTl, LABEL__PLATFORM_EXHAUST);  // From what I can tell, using the same label stacks them right after the clouds that appear while on the platform
+    masterTL.add(rocketLaunchTl, LABEL__PLATFORM_EXHAUST + '+= 3');
 };
 
 

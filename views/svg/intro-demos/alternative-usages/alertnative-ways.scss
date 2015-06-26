@@ -1,4 +1,4 @@
-@import '../../../styles/base-placeholders';
+@import '../../../../styles/application';
 
 $logo-width_primary: 600px;
 $logo-height_primary: 400px;
@@ -7,7 +7,7 @@ $logo-height_primary: 400px;
     display: none;
 
     &.no-svg {
-        background-image: url('../../img/Eye.png');
+        background-image: url('../../../../assets/img/Eye.png');
     }
 }
 

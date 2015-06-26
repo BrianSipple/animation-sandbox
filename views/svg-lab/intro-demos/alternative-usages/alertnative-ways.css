@@ -161,7 +161,8 @@ body {
   padding: 0;
   overflow: hidden;
   font-size: 16px;
-  background-color: whitesmoke; }
+  background-color: whitesmoke;
+  font-family: Roboto, Arial, Helvetica, sans-serif; }
 
 .main-view-container {
   position: relative;

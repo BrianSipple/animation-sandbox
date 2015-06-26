@@ -308,18 +308,41 @@ body {
   h2,
   h3 {
     page-break-after: avoid; } }
-circle {
-  fill: #a8f5be;
-  stroke: none; }
+body {
+  background-color: #2c3844; }
 
-polygon.star {
-  fill: #ffcb3d;
-  stroke: #ff525a; }
-polygon.weird {
-  fill: #3dff74;
-  fill-opacity: 0.5;
-  stroke: green;
-  stroke-width: 2px;
-  stroke-linejoin: round; }
+.shape-set {
+  width: 300px;
+  height: 300px; }
 
-/*# sourceMappingURL=shapes-demo.css.map */
+.shape-set__container {
+  position: relative; }
+
+.shape-set__center,
+.shape-set__outer {
+  position: absolute;
+  top: 50%;
+  left: 50%; }
+
+.shape-set__center--circle,
+.shape-set__outer--circle {
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  margin-left: -20px; }
+
+.shape-set__center {
+  background-color: white; }
+
+.shape-set__outer {
+  background-color: #33ff33; }
+
+.alert {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  color: white; }
+
+/*# sourceMappingURL=click-sprinkle.css.map */

@@ -82,21 +82,23 @@
 
     function setSparkle () {
 
+        var sparkleDuration = ANIMATION_DURATION_MULTIPLIER * 0.6;
+
         masterTl.add([
 
             TweenMax.fromTo(
                 centerCircle,
-                ANIMATION_DURATION_MULTIPLIER,
+                sparkleDuration,
                 { opacity: 0, scale: 0 },
                 { opacity: 1, scale: 1 }
             ),
 
             TweenMax.staggerFromTo(
                 outerCircleElems,
-                ANIMATION_DURATION_MULTIPLIER,
+                sparkleDuration,
                 { opacity: 0, scale: 0 },
                 { opacity: 1, scale: 1 },
-                ANIMATION_DURATION_MULTIPLIER / (outerCircleElems.length + 1)  // stagger by equal fraction of the total duration
+                sparkleDuration / (outerCircleElems.length + 1)  // stagger by equal fraction of the total duration
             )
         ]);
 

@@ -33,6 +33,20 @@
 
 
     /**
+     * Helper function to sort elements from top to bottom y position
+     */
+    function topToBottom(elemA, elemB) {
+        return elemA.getBoundingClientRect().top > elemB.getBoundingClientRect().top;  // lower values are higher up
+    }
+
+    /**
+     * Helper function to sort elements from bottom to top y position
+     */
+    function bottomToTop(elemA, elemB) {
+        return elemA.getBoundingClientRect().bottom < elemB.getBoundingClientRect().bottom;  // higher "bottom" are sorted in front
+    }
+
+    /**
      * Initialize the set of shapes around the center shape
      * Six shapes in a hexagonal pattern
      */
@@ -60,6 +74,9 @@
 
         }
         shapeSet.appendChild(outerCirclesFrag);
+
+        // sort references from top to bottom so that this is the order when we animate the list
+        outerCircleElems.sort(bottomToTop);
     }
 
 

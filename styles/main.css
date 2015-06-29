@@ -104,7 +104,6 @@ nav, a, button {
  */
 [class^="page-section_"] {
   width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column; }
 
@@ -112,7 +111,7 @@ nav, a, button {
   width: 100%; }
 
 .page-section_main-content {
-  height: 100vh; }
+  min-height: 100vh; }
 
 /**
  * Attribute API for declarative flexbox styling
@@ -310,22 +309,22 @@ body {
     page-break-after: avoid; } }
 [class^="content-wrapper"] {
   margin: 1em auto;
-  height: 100%;
   width: 90%;
+  padding: 0.3em 0.8em;
   max-width: 90%;
   background-color: white; }
   [class^="content-wrapper"][class*="_link-map"] {
     overflow: hidden; }
 
 .map-container {
-  padding: .3em .8em;
   text-align: center;
   width: 100%;
-  height: 100%;
   overflow: hidden;
   overflow-x: hidden;
   overflow-y: scroll; }
-  .map-container li {
+  .map-container ul {
+    text-align: center;
+    padding-left: 0;
     list-style-type: none; }
 
 ul.toggle-vis.hide li {

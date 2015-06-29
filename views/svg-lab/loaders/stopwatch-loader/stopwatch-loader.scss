@@ -1,0 +1,20 @@
+@import '../../../../styles/application';
+
+body {
+    background-color: hsla(210, 10%, 8%, 1);
+}
+
+/* Rim Glow Layer also serves as the click listener */
+#watchRimGlowLayer {
+    cursor: pointer;
+    z-index: 4;
+
+    &.animating {
+        cursor: default;
+    }
+}
+
+#loaderSVG {
+    width: 20em;
+    opacity: 0;   /* animate into view onload after we've positioned */
+}

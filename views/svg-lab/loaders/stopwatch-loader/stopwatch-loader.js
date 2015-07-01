@@ -4,7 +4,7 @@
     var loaderSVG = document.querySelector('#loaderSVG'),
         checkMarkPath = document.querySelector('#checkPath'),
         watchRimBackgroundLayer = document.querySelector('#watchRimBg'),
-        watchRimGlowLayer = document.querySelector('#watchRimGlowLayer'),
+        watchRimGlow = document.querySelector('#watchRimGlow'),
 
         watchThumbPiecesLayer = document.querySelector('#watchThumbPieces'),
         watchThumbTopBase = document.querySelector('#watchThumbTopBase'),
@@ -32,7 +32,8 @@
         DURATIONS = {
             makeWatchHand: ANIMATION_DURATION_MULTIPLIER * 0.4,
             makeWatchThumbs: ANIMATION_DURATION_MULTIPLIER * 0.45,
-            pressThumb: ANIMATION_DURATION_MULTIPLIER * 0.78,
+            addRimGlow: ANIMATION_DURATION_MULTIPLIER * 1.1,
+            pressThumb: ANIMATION_DURATION_MULTIPLIER * 0.12,
             runWatch: ANIMATION_DURATION_MULTIPLIER * 4.1,
             hideWatchThumbs: ANIMATION_DURATION_MULTIPLIER * 0.2,
             morphHandsToCheck: ANIMATION_DURATION_MULTIPLIER * 1.1
@@ -47,14 +48,16 @@
         LABELS = {
             makeWatchHand: 'makeWatchHand',
             makeWatchThumbs: 'makeWatchThumbs',
+            addRimGlow: 'addRimGlow',
             pressThumb: 'pressThumb',
+            glowComplete: 'glowComplete',
             loadComplete: 'loadComplete'
         },
 
         tlConfig = {
             repeat: 0,
             onComplete: function () {
-                watchRimGlowLayer.classList.remove(toggledClasses.animating);
+                watchRimGlow.classList.remove(toggledClasses.animating);
                 //animationPerformed = true;
             }
             // TODO: Handle resetting the icon at some point?
@@ -73,7 +76,6 @@
             opacity: 1
         }
     );
-
 
     /**
      * Arrow head rotates 180 degrees, scales down, then translates
@@ -114,7 +116,6 @@
     }
 
     function setupAnimation() {
-
         masterTl.set(checkMarkPath, {drawSVG: '58%, 58%'});
     }
 
@@ -134,7 +135,6 @@
             duration / 2,
             {drawSVG: '100%', ease: Back.easeOut.config(1.7)}
         );
-
         return tl;
     }
 
@@ -142,7 +142,7 @@
      * Press the top thumb... which will cause the glow filter
      * to propagate around the face.
      */
-    function pressThumbAndGlow(duration) {
+    function pressThumb(duration) {
 
         var thumbPressTl = new TimelineMax(),
             boundingRect = watchThumbTopBase.getBoundingClientRect(),
@@ -151,40 +151,59 @@
         // simultaneously undraw top thumb base and
         // follow through by down-shifting the thumb head
         thumbPressTl.add([
-            TweenMax.to(watchThumbTopBase, duration / 8, {drawSVG: '0%', onComplete: addRimGlow}),  // NOTE: Consider transorigin and scale down y
-            TweenMax.to(watchThumbTopHead, duration / 8, {y: '-=' + yDist})
+            TweenMax.to(
+                watchThumbTopBase,
+                duration * (1/8),
+                {
+                    drawSVG: '0%' // NOTE: Consider transorigin and scale down y
+                }),
+            TweenMax.to(watchThumbTopHead, duration, {y: '-=' + yDist})
         ]);
 
         // restore the thumb
         thumbPressTl.add([
-            TweenMax.to(watchThumbTopBase, duration / 8, {drawSVG: '100%'}),
-            TweenMax.to(watchThumbTopHead, duration / 8, {y: '+=' + yDist})
+            TweenMax.to(watchThumbTopBase, duration, {drawSVG: '100%'}),
+            TweenMax.to(watchThumbTopHead, duration, {y: '+=' + yDist})
         ]);
-
-        function addRimGlow() {
-
-            var rimGlowTl = new TimelineMax();
-
-            rimGlowTl.add(TweenMax.set(watchRimGlowLayer, {drawSVG: '0%'}));
-            rimGlowTl.add(TweenMax.set(watchRimGlowLayer, {opacity: 1}));
-            rimGlowTl.add(TweenMax.to(watchRimGlowLayer, duration, {drawSVG: '100%', ease: Linear.easeNone}));
-
-            return rimGlowTl;
-        }
 
         return thumbPressTl;
     }
 
-    function startWatch(duration) {
+    function addRimGlow(duration) {
+
+        var rimGlowTl = new TimelineMax();
+
+        rimGlowTl.add(TweenMax.set(watchRimGlow, {drawSVG: '0%'}));
+        rimGlowTl.add(TweenMax.set(watchRimGlow, {opacity: 1}));
+        rimGlowTl.add(
+            //TweenMax.fromTo(
+            //    watchRimGlowLayer, duration,
+            //    {drawSVG: '100% 0%'},
+            //    {drawSVG: '0% 100%', ease: Linear.easeNone }
+            //)
+            TweenMax.to(
+                watchRimGlow, duration, { drawSVG: '100%'}
+            )
+        );
+        return rimGlowTl;
+    }
+
+    function startWatch(duration, rimGlowTl) {
         var tl = new TimelineMax();
 
         tl.set(centerBase, {transformOrigin: '50% 90%'});
 
         tl.add([
-            TweenMax.to(centerBase, duration, {rotation: 360, ease: Linear.easeNone}),
+            TweenMax.to(centerBase, duration, {
+                rotation: 360,
+                ease: Linear.easeNone
+            }),
 
             // undraw the glow around the rim
-            TweenMax.to(watchRimGlowLayer, duration, {drawSVG: '0%', ease: Linear.easeNone})
+            //TweenMax.to(watchRimGlowLayer, 0.1, {drawSVG: '100% 0%'}),
+            //function () { rimGlowTl.reverse(0); }
+            TweenMax.to(watchRimGlow, duration, {drawSVG: '0%', ease: Linear.easeNone})
+
 
         ]);
 
@@ -266,12 +285,15 @@
     }
 
     function animateLoader() {
+        var rimGlowTl = addRimGlow(DURATIONS.addRimGlow);
         setupAnimation();
         masterTl.add(makeHand(DURATIONS.makeWatchHand), LABELS.makeWatchHand);
         masterTl.add(makeThumbs(DURATIONS.makeWatchThumbs), LABELS.makeWatchThumbs);
-        masterTl.add(pressThumbAndGlow(DURATIONS.pressThumb), LABELS.makeWatchThumbs + '+=0.35');
+        masterTl.add(rimGlowTl, LABELS.makeWatchThumbs + '+=0.35');
+        masterTl.addLabel(LABELS.addRimGlow);
+        masterTl.add(pressThumb(DURATIONS.pressThumb), LABELS.addRimGlow + '+=0.35');
         masterTl.addLabel(LABELS.pressThumb);
-        masterTl.add(startWatch(DURATIONS.runWatch), LABELS.pressThumb + '+=0.1');
+        masterTl.add(startWatch(DURATIONS.runWatch, rimGlowTl), LABELS.pressThumb + '+=0.1');
         masterTl.addLabel(LABELS.loadComplete);
         masterTl.add(
             [
@@ -284,10 +306,10 @@
 
 
     function init() {
-        watchRimGlowLayer.addEventListener('mouseup', function () {
+        watchRimGlow.addEventListener('mouseup', function () {
             if (!animationPerformed) {
                 animationPerformed = true;
-                watchRimGlowLayer.classList.add(toggledClasses.animating);
+                watchRimGlow.classList.add(toggledClasses.animating);
                 animateLoader();
             }
         }, false);

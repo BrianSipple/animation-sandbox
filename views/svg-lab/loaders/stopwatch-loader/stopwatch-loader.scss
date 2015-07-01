@@ -5,9 +5,11 @@ body {
 }
 
 /* Rim Glow Layer also serves as the click listener */
-#watchRimGlowLayer {
+#watchRimGlow {
     cursor: pointer;
     z-index: 4;
+    transform-origin: 50% 50%;
+    transform: rotateZ(-90deg) rotateX(180deg);   // Rotate so that SVG path starts at top of the watch and the length runs clockwise (the default, (i.e. trigonometric) start point is x-most point of the circle, with length running counterclockwise)
 
     &.animating {
         cursor: default;

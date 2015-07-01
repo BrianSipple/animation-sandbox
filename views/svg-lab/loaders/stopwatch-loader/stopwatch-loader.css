@@ -311,10 +311,12 @@ body {
   background-color: #121416; }
 
 /* Rim Glow Layer also serves as the click listener */
-#watchRimGlowLayer {
+#watchRimGlow {
   cursor: pointer;
-  z-index: 4; }
-  #watchRimGlowLayer.animating {
+  z-index: 4;
+  transform-origin: 50% 50%;
+  transform: rotateZ(-90deg) rotateX(180deg); }
+  #watchRimGlow.animating {
     cursor: default; }
 
 #loaderSVG {

@@ -6,6 +6,8 @@
         watchRimBackgroundLayer = document.querySelector('#watchRimBg'),
         watchRimGlow = document.querySelector('#watchRimGlow'),
 
+        clickable = document.querySelector('.click-listener');
+
         watchThumbPiecesLayer = document.querySelector('#watchThumbPieces'),
         watchThumbTopBase = document.querySelector('#watchThumbTopBase'),
         watchThumbTopHead = document.querySelector('#watchThumbTopHead'),
@@ -306,10 +308,10 @@
 
 
     function init() {
-        watchRimGlow.addEventListener('mouseup', function () {
+        clickable.addEventListener('mouseup', function () {
             if (!animationPerformed) {
                 animationPerformed = true;
-                watchRimGlow.classList.add(toggledClasses.animating);
+                clickable.classList.add(toggledClasses.animating);
                 animateLoader();
             }
         }, false);

@@ -8,16 +8,19 @@ $watch-color__primary: hsla(191, 15%, 22%, 1);
 $watch-color__glow--loading: hsla(205, 72%, 50%, 1);
 $watch-color__glow--complete: hsla(133, 100%, 66%, 1);
 
-/* Rim Glow Layer also serves as the click listener */
-#watchRimGlow {
+
+.click-listener {
     cursor: pointer;
-    z-index: 4;
-    transform-origin: 50% 50%;
-    transform: rotateZ(-90deg) rotateX(180deg);   // Rotate so that SVG path starts at top of the watch and the length runs clockwise (the default, (i.e. trigonometric) start point is x-most point of the circle, with length running counterclockwise)
 
     &.animating {
         cursor: default;
     }
+}
+
+#watchRimGlow {
+    z-index: 4;
+    transform-origin: 50% 50%;
+    transform: rotateZ(-90deg) rotateX(180deg);   // Rotate so that SVG path starts at top of the watch and the length runs clockwise (the default, (i.e. trigonometric) start point is x-most point of the circle, with length running counterclockwise)
 }
 
 .path--filled {

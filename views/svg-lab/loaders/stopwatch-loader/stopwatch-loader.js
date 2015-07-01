@@ -6,7 +6,7 @@
         watchRimBackgroundLayer = document.querySelector('#watchRimBg'),
         watchRimGlow = document.querySelector('#watchRimGlow'),
 
-        clickable = document.querySelector('.click-listener');
+        clickable = document.querySelector('.click-listener'),
 
         watchThumbPiecesLayer = document.querySelector('#watchThumbPieces'),
         watchThumbTopBase = document.querySelector('#watchThumbTopBase'),
@@ -27,7 +27,7 @@
         centerArrow = document.querySelector('#downloadIconArrow'),
         centerBase = document.querySelector('#downloadIconBase'),
 
-        animationPerformed = false,
+        isAnimating = false,
 
         ANIMATION_DURATION_MULTIPLIER = 1,
 
@@ -36,7 +36,7 @@
             makeWatchThumbs: ANIMATION_DURATION_MULTIPLIER * 0.45,
             addRimGlow: ANIMATION_DURATION_MULTIPLIER * 1.1,
             pressThumb: ANIMATION_DURATION_MULTIPLIER * 0.12,
-            runWatch: ANIMATION_DURATION_MULTIPLIER * 4.1,
+            runWatch: ANIMATION_DURATION_MULTIPLIER * 3.1,
             hideWatchThumbs: ANIMATION_DURATION_MULTIPLIER * 0.2,
             morphHandsToCheck: ANIMATION_DURATION_MULTIPLIER * 1.1
         },
@@ -57,12 +57,7 @@
         },
 
         tlConfig = {
-            repeat: 0,
-            onComplete: function () {
-                watchRimGlow.classList.remove(toggledClasses.animating);
-                //animationPerformed = true;
-            }
-            // TODO: Handle resetting the icon at some point?
+            repeat: 0, // TODO: Handle resetting the icon at some point?
         },
 
         masterTl = new TimelineMax(tlConfig);
@@ -141,8 +136,7 @@
     }
 
     /**
-     * Press the top thumb... which will cause the glow filter
-     * to propagate around the face.
+     * Press the top thumb
      */
     function pressThumb(duration) {
 
@@ -157,7 +151,7 @@
                 watchThumbTopBase,
                 duration * (1/8),
                 {
-                    drawSVG: '0%' // NOTE: Consider transorigin and scale down y
+                    drawSVG: '0%'
                 }),
             TweenMax.to(watchThumbTopHead, duration, {y: '-=' + yDist})
         ]);
@@ -171,22 +165,16 @@
         return thumbPressTl;
     }
 
+    /**
+     * Propagate the glow filter around the watch face.
+     */
     function addRimGlow(duration) {
 
         var rimGlowTl = new TimelineMax();
 
         rimGlowTl.add(TweenMax.set(watchRimGlow, {drawSVG: '0%'}));
         rimGlowTl.add(TweenMax.set(watchRimGlow, {opacity: 1}));
-        rimGlowTl.add(
-            //TweenMax.fromTo(
-            //    watchRimGlowLayer, duration,
-            //    {drawSVG: '100% 0%'},
-            //    {drawSVG: '0% 100%', ease: Linear.easeNone }
-            //)
-            TweenMax.to(
-                watchRimGlow, duration, { drawSVG: '100%'}
-            )
-        );
+        rimGlowTl.add(TweenMax.to(watchRimGlow, duration, { drawSVG: '100%'}));
         return rimGlowTl;
     }
 
@@ -279,14 +267,17 @@
                 checkMarkPath,
                 duration * 0.4,
                 { opacity: 1, drawSVG: '50% 50%'},  // meet in middle
-                { drawSVG: '100%'}                  // draw out from middle
+                {
+                    drawSVG: '100%', // draw out from middle
+                    onComplete: resetTl
+                }
             )
         );
-
         return tl;
     }
 
     function animateLoader() {
+
         var rimGlowTl = addRimGlow(DURATIONS.addRimGlow);
         setupAnimation();
         masterTl.add(makeHand(DURATIONS.makeWatchHand), LABELS.makeWatchHand);
@@ -303,14 +294,21 @@
                 morphHandsToCheck(DURATIONS.morphHandsToCheck)
             ],
             LABELS.loadComplete + '+=0.2'
-        )
+        );
+
     }
 
+    function resetTl () {
+        clickable.classList.remove(toggledClasses.animating);
+        isAnimating = false;
+
+        // TODO: Return the button to its original state here
+    }
 
     function init() {
         clickable.addEventListener('mouseup', function () {
-            if (!animationPerformed) {
-                animationPerformed = true;
+            if (!isAnimating) {
+                isAnimating = true;
                 clickable.classList.add(toggledClasses.animating);
                 animateLoader();
             }

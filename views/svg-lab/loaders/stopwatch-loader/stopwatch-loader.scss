@@ -4,6 +4,9 @@ body {
     background-color: hsla(210, 10%, 8%, 1);
 }
 
+$watch-color__primary: hsla(191, 15%, 22%, 1);
+$watch-color__glow: hsla(133, 100%, 66%, 1);
+
 /* Rim Glow Layer also serves as the click listener */
 #watchRimGlow {
     cursor: pointer;
@@ -14,6 +17,16 @@ body {
     &.animating {
         cursor: default;
     }
+}
+
+.path--filled {
+    fill: $watch-color__primary;
+}
+.path--stroked {
+    stroke: $watch-color__primary;
+}
+.path--filtered {
+    stroke: $watch-color__glow;
 }
 
 #loaderSVG {

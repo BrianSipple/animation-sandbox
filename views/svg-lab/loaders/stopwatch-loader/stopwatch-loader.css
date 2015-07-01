@@ -319,6 +319,15 @@ body {
   #watchRimGlow.animating {
     cursor: default; }
 
+.path--filled {
+  fill: #303d41; }
+
+.path--stroked {
+  stroke: #303d41; }
+
+.path--filtered {
+  stroke: #52ff77; }
+
 #loaderSVG {
   width: 20em;
   opacity: 0;

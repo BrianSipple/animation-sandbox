@@ -5,7 +5,8 @@ body {
 }
 
 $watch-color__primary: hsla(191, 15%, 22%, 1);
-$watch-color__glow: hsla(133, 100%, 66%, 1);
+$watch-color__glow--loading: hsla(205, 72%, 50%, 1);
+$watch-color__glow--complete: hsla(133, 100%, 66%, 1);
 
 /* Rim Glow Layer also serves as the click listener */
 #watchRimGlow {
@@ -26,7 +27,13 @@ $watch-color__glow: hsla(133, 100%, 66%, 1);
     stroke: $watch-color__primary;
 }
 .path--filtered {
-    stroke: $watch-color__glow;
+    stroke: $watch-color__glow--loading;
+}
+
+#checkPath {
+    &.path--filtered {
+        stroke: $watch-color__glow--complete;
+    }
 }
 
 #loaderSVG {

@@ -1,0 +1,25 @@
+.tooltip {
+    background-image: url('../../../assets/svg/tooltip.svg');
+    background-position: center;
+    background-size: contain;
+    border: none;
+    outline: none;
+    color: $font-color-white_button__dark-background;
+    fill: hsla(0, 0%, 0%, 0.77);
+    text-align: center;
+    transition: scale 0.3s $easings_ease-out-cubic,
+                opacity 0.3s $easings_ease-out-cubic;
+    transform: scaleY(0);
+
+    width: inherit;
+    line-height: 1.4em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &.visible {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}

@@ -110,10 +110,11 @@ nav, a, button {
    Author's custom styles
    ========================================================================== */
 
-@import 'base-variables';
-@import 'base-placeholders';
-@import 'page-sections';
-@import 'flex-layout';
+@import 'base/base-variables';
+@import 'base/base-placeholders';
+@import 'layouts/page-sections';
+@import 'layouts/flex-layout';
+@import 'components/components';
 
 html,
 body {

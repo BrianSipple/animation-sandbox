@@ -1,0 +1,49 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Samuel L. GSAP</title>
+    <meta name="description" content="SVG Lab">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="../../styles/normalize.css">
+    <link rel="stylesheet" href="samuel-l-gsap.css">
+    <script src="../../vendor/modernizer/modernizr.js"></script>
+
+</head>
+<body>
+
+<div class="main-view-container">
+
+    <section class="content">
+
+        <div class="wrapper wrapper--text-output">
+            <div class="text-container">
+                <!-- Start this floated off to the right. On load, we'll inject our SamuelLIpsum and slide the div left -->
+                <div class="text"></div>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper--slider-toggle">
+            <button class="button button--timeline-toggle">
+                Say <em>What</em> Again!
+                <span class="tooltip">I dare you!</span>
+            </button>
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<script src="../../vendor/gsap/src/minified/TweenMax.min.js"></script>
+<script src="samuel-l-gsap.js"></script>
+
+
+</body>
+</html>

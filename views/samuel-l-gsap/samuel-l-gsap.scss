@@ -1,46 +1,74 @@
 @import '../../styles/application';
 
 body {
-    background-color: hsla(188, 18%, 32%, 1);
+    background-color: hsla(6, 100%, 62%, 1);
 }
 
+.content {
+    height: auto;
+    text-align: center;
+    font-size: 1rem;
+    max-width: 100%;
+    width: 80%;
+}
 
-@media screen {
+.wrapper {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+}
 
-    .content {
-        height: auto;
-        text-align: center;
-        font-size: 1rem;
-        max-width: 100%;
-        width: 100%;
+.wrapper--text-output {
+    padding: 0 0 3em 0;
+}
+
+.text-container {
+    font-size: 2rem;
+    position: relative;
+    width: 100%;
+    height: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: hsla(0, 0%, 0%, 1.0);
+}
+
+.text {
+    color: hsla(50, 99%, 61%, 1);
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5em;
+    white-space: nowrap;
+}
+
+.button--timeline-toggle {
+    @extend %button;
+    background-color: hsla(50, 99%, 61%, 1);
+    width: 290px;
+    height: $button-height_default;
+    border: none;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+
+    [class*="button-text"] {
+        font-size: 1.1em;
+        color: hsla(0, 0%, 0%, 1.0);
+        opacity: 0;
+        display: none;
+        margin-top: 0.6em;
+
+        &.visible {
+            opacity: 1;
+            display: block;
+        }
     }
 
-    .wrapper {
-        display: block;
-        width: 100%;
-        max-width: 100%;
-    }
-    .wrapper--text-output {
-        padding: 0 0 3em 0;
-    }
-
-    .text-container {
-        font-size: 2rem;
-        position: relative;
-        width: 100%;
-        height: 2em;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border-radius: 10%;
-        overflow: hidden;
-        background-color: hsla(0, 0%, 0%, 0.79);
-    }
-    .text {
-        color: hsla(180, 100%, 50%, 1.0);
-        position: absolute;
-        //right: 100%;
-    }
 }
 
 @media screen and (min-width: 1200px) {
@@ -49,12 +77,14 @@ body {
         width: 80%;
     }
 }
+
 @media screen and (min-width: 900px) {
     .content {
         font-size: 0.9rem;
         //width: 70%;
     }
 }
+
 @media screen and (min-width: 600px) {
     .content {
         font-size: 0.75rem;

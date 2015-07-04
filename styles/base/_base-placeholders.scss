@@ -3,3 +3,32 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+%button {
+    height: $button-height_default;
+    width: $button-width_default;
+    padding: 0.3em 0.8em;
+    border: 1px solid $button-color_primary;
+    background-color: $button-color_primary;
+    background-image: linear-gradient(
+            hsla(0, 0%, 100%, .2),
+            transparent
+    );
+    border-radius: .2em;
+    box-shadow: 0 .05em .25em hsla(0, 0%, 0%, 0.5);
+    color: hsla(0, 100%, 100%, 1);
+    text-shadow: 0 -.05em .05em hsla(0, 0%, 0%, 0.5);
+    font-size: 1.25em;
+    line-height: 1.5em;
+}
+
+%button__fab {
+    width: $button-width_fab;
+    height: $button-height_fab;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    background-color: $button-color_primary;
+    box-shadow: 0 0.5em .25em hsla(0, 0%, 0%, 0.5);
+    font-size: 1.25em;
+}

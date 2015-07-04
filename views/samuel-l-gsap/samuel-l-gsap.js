@@ -5,6 +5,8 @@
         slidingTextContainer = mainContentContainer.querySelector('.text-container'),
         slidingTextElem = slidingTextContainer.querySelector('.text'),
         animationToggleButton = mainContentContainer.querySelector('.button--timeline-toggle'),
+        buttonPauseText = animationToggleButton.querySelector('.button-text--pause'),
+        buttonResumeText = animationToggleButton.querySelector('.button-text--resume'),
 
         slipsums = [],// Samuel L.-Ipsums... parsed out of our JSON on-load
         numSlipsums,
@@ -15,7 +17,7 @@
 
         ANIMATION_DURATION_MULTIPLIER = 1,
         DURATIONS = {
-            slideText: ANIMATION_DURATION_MULTIPLIER * 6
+            slideText: ANIMATION_DURATION_MULTIPLIER * 50
         },
 
         slideTextTlOpts = {
@@ -54,17 +56,16 @@
      */
     function generateMoreText(tl) {
 
-        TweenMax.set(slidingTextElem, {x: '100%'});
+        TweenMax.set(slidingTextElem, {x: '0%'});
         var
             idx = boundedRandom(numSlipsums),
             slipSum = slipsums[idx];
 
-        //slidingTextElem.textContent += slipSum;   // QUESTION: Better to just keep adding it to the end? I'm thinking so both perfwise and for the appearance of the rendered text
         slidingTextElem.textContent = slipSum;
         tl.add(triggerSlide(DURATIONS.slideText));
+        //tl.addPause('-=' + DURATIONS.slideText/2);
 
         function triggerSlide(duration) {
-            debugger;
             var tween = TweenMax.to(slidingTextElem, duration, {x: '-100%', ease: Linear.easeNone});
             return tween;
         }
@@ -72,11 +73,15 @@
 
 
     function resumeSlide() {
+        buttonPauseText.classList.add('visible');
+        buttonResumeText.classList.remove('visible');
         masterTL.resume();
 
     }
 
     function pauseSlide() {
+        buttonResumeText.classList.add('visible');
+        buttonPauseText.classList.remove('visible');
         masterTL.pause();
     }
 

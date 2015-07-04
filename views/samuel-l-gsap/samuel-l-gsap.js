@@ -17,7 +17,7 @@
 
         ANIMATION_DURATION_MULTIPLIER = 1,
         DURATIONS = {
-            slideText: ANIMATION_DURATION_MULTIPLIER * 50
+            slideText: ANIMATION_DURATION_MULTIPLIER * 40
         },
 
         slideTextTlOpts = {

@@ -5,12 +5,12 @@
 
         ANIMATION_DURATION_MULTIPLIER = 1;
 
-    //debugger;
+    debugger;
     TweenMax.set(
         leafContainer,
         {
             position: 'absolute',
-            right: 0,
+            left: '90%',
             top: '10%',
             transformOrigin: '50% 50%'
         }
@@ -25,9 +25,9 @@
         // change occurs due to the lift....
         var fallPath = {
             flutter1: [
-                {left: '-=0', top: '-=0', rotationY: 0, rotationX: 0, rotationZ: 0},
-                {left: '-=25%', top: '-=10%', rotationY: 0, rotationX: '-=20%', rotationZ: '-=20%'},
-                {left: '-=25%', top: '+=20%', rotationY: 0, rotationX: '+=40%', rotationZ: '+=40%'}
+                {left: '90%', top: '10%', rotationY: 0, rotationX: 0, rotationZ: 0},
+                {left: '50%', top: '15%', rotationY: 0, rotationX: -45, rotationZ: 30},
+                {left: '50%', top: '10%', rotationY: 30, rotationX: 45, rotationZ: -30}
             ],
             flutter2: []
         };

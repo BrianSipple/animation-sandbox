@@ -7,6 +7,7 @@
         animationToggleButton = mainContentContainer.querySelector('.button--timeline-toggle'),
         buttonPauseText = animationToggleButton.querySelector('.button-text--pause'),
         buttonResumeText = animationToggleButton.querySelector('.button-text--resume'),
+        elementSizes = {},   // filled during batch querying
 
         slipsums = [],// Samuel L.-Ipsums... parsed out of our JSON on-load
         numSlipsums,
@@ -17,7 +18,7 @@
 
         ANIMATION_DURATION_MULTIPLIER = 1,
         DURATIONS = {
-            slideText: ANIMATION_DURATION_MULTIPLIER * 40
+            slideText: ANIMATION_DURATION_MULTIPLIER * 39
         },
 
         slideTextTlOpts = {
@@ -27,6 +28,7 @@
         },
 
         masterTL = new TimelineMax();
+
 
 
     TweenMax.set(
@@ -40,6 +42,14 @@
         }
     );
 
+    /**
+     * Batch up any queries for element sizes that we'll be interested in
+     */
+    function querySizes () {
+        var textContainerBoundingRect = slidingTextContainer.getBoundingClientRect();
+
+        elementSizes.textContainerWidth = textContainerBoundingRect.right - textContainerBoundingRect.left;
+    }
 
 
     function boundedRandom(min, max) {
@@ -55,15 +65,14 @@
      * Choose a random slipSum and fill up our sliding text element
      */
     function generateMoreText(tl) {
-
         TweenMax.set(slidingTextElem, {x: '0%'});
+        TweenMax.set(slidingTextElem, {x: '+=' + elementSizes.textContainerWidth});
         var
             idx = boundedRandom(numSlipsums),
             slipSum = slipsums[idx];
 
         slidingTextElem.textContent = slipSum;
         tl.add(triggerSlide(DURATIONS.slideText));
-        //tl.addPause('-=' + DURATIONS.slideText/2);
 
         function triggerSlide(duration) {
             var tween = TweenMax.to(slidingTextElem, duration, {x: '-100%', ease: Linear.easeNone});
@@ -71,20 +80,11 @@
         }
     }
 
-
-    function resumeSlide() {
-        buttonPauseText.classList.add('visible');
-        buttonResumeText.classList.remove('visible');
-        masterTL.resume();
-
+    function toggleTextSlide () {
+        buttonPauseText.classList.toggle('visible');
+        buttonResumeText.classList.toggle('visible');
+        masterTL.paused(!masterTL.paused());
     }
-
-    function pauseSlide() {
-        buttonResumeText.classList.add('visible');
-        buttonPauseText.classList.remove('visible');
-        masterTL.pause();
-    }
-
 
     function parseJSON(path) {
         return new Promise(function (resolve, reject) {
@@ -140,24 +140,24 @@
 
     function init() {
 
-        animationToggleButton.disabled = true;  // lock until we load
+        querySizes();
 
+        animationToggleButton.disabled = true;  // lock until we load
         getSlipsums().then(function () {
             masterTL.add(initSlideTextTL());
             animationToggleButton.disabled = false;
         });
 
         animationToggleButton.addEventListener('mouseup', function () {
-
-            isTextAnimating ? resumeSlide() : pauseSlide();
-            isTextAnimating = !isTextAnimating;
-
+            toggleTextSlide();
         }, false);
     }
 
     window.addEventListener('load', function () {
         init();
-
+    }, false);
+    window.addEventListener('resize', function () {
+        querySizes();
     }, false);
 
 }(window));

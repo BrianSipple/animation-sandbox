@@ -42,7 +42,6 @@
 
     };
 
-    exports.AnimUtils = exports.AnimUtils || {};
-    exports.AnimUtils.findLabelTime = AnimUtils.findLabelTime;
+    exports.AnimUtils = AnimUtils;
 
 }( (typeof exports === 'undefined') ? window : exports));

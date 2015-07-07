@@ -1,10 +1,7 @@
 @import '../../../styles/application';
 
 .svg-container {
-    //margin: 1em auto;
+    opacity: 0;   // animate into view on load
     width: 20%;
 }
-//
-//#leafSVG {
-//
-//}
+

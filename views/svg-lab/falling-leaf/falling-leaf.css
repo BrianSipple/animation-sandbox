@@ -329,6 +329,7 @@ body {
   h3 {
     page-break-after: avoid; } }
 .svg-container {
+  opacity: 0;
   width: 20%; }
 
 /*# sourceMappingURL=falling-leaf.css.map */

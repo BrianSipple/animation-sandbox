@@ -9,9 +9,6 @@
 
 
 
-
-
-    debugger;
     TweenMax.set(
         leafContainer,
         {
@@ -85,7 +82,6 @@
         };
 
         for (var phase in fallPath) {
-            debugger;
             if (fallPath.hasOwnProperty(phase)) {
                 fallTl.add(
                     TweenMax.to(
@@ -99,49 +95,6 @@
                 );
             }
         }
-        //
-        //fallTl.add(
-        //    TweenMax.to(
-        //        leafContainer,
-        //        TOTAL_FALL_DURATION / numFallPhases,
-        //        {
-        //            bezier: {values: fallPath.phase1},
-        //            ease: Power3.easeOut
-        //        }
-        //    )
-        //);
-        //
-        //fallTl.add(
-        //    TweenMax.to(
-        //        leafContainer,
-        //        TOTAL_FALL_DURATION / numFallPhases,
-        //        {
-        //            bezier: {values: fallPath.phase2 },
-        //            ease: Power3.easeOut
-        //        }
-        //    )
-        //);
-        //fallTl.add(
-        //    TweenMax.to(
-        //        leafContainer,
-        //        TOTAL_FALL_DURATION / numFallPhases,
-        //        {
-        //            bezier: { values: fallPath.phase3 },
-        //            ease: Power3.easeOut
-        //        }
-        //    )
-        //);
-        //fallTl.add(
-        //    TweenMax.to(
-        //        leafContainer,
-        //        TOTAL_FALL_DURATION / numFallPhases,
-        //        {
-        //            bezier: { values: fallPath.phase4 },
-        //            ease: Power3.easeOut
-        //        }
-        //    )
-        //);
-
 
     }
 

@@ -330,6 +330,17 @@ body {
     page-break-after: avoid; } }
 .svg-container {
   opacity: 0;
-  width: 20%; }
+  width: 20%;
+  z-index: 1; }
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  top: 60%;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-color: #995e1e;
+  background-image: linear-gradient(transparent, #8a9998); }
 
 /*# sourceMappingURL=falling-leaf.css.map */

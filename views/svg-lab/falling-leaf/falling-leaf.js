@@ -58,59 +58,89 @@
                 {left: '57.5%', top: '25%', rotationY: 0, rotationX: -80, rotationZ: -75}
             ],
             phase4: [
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0},
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0},
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0}
+                {left: '59%', top: '37%', rotationY: 0, rotationX: -70, rotationZ: -85},
+                {left: '40%', top: '44%', rotationY: 0, rotationX: -35, rotationZ: 0},
+                {left: '24%', top: '37%', rotationY: 0, rotationX: 0, rotationZ: 10},
+                {left: '20%', top: '33%', rotationY: 0, rotationX: -10, rotationZ: 80}
             ],
             phase5: [
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0},
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0},
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0}
+                {left: '25%', top: '43%', rotationY: 0, rotationX: -15, rotationZ: 75},
+                {left: '30%', top: '46%', rotationY: 0, rotationX: -20, rotationZ: 25},
+                {left: '51.5%', top: '49%', rotationY: 0, rotationX: -30, rotationZ: -5},
+                {left: '56%', top: '47.5%', rotationY: 0, rotationX: -50, rotationZ: -75}
             ],
             phase6: [
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0},
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0},
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0}
+                {left: '51%', top: '57.5%', rotationY: 0, rotationX: -20, rotationZ: -45},
+                {left: '50%', top: '64%', rotationY: 0, rotationX: 0, rotationZ: -45},
+                {left: '42.5%', top: '66%', rotationY: 0, rotationX: -50, rotationZ: 0},
+                {left: '34%', top: '62%', rotationY: 0, rotationX: -30, rotationZ: 80}
             ],
             phase7: [
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0},
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0},
-                {left: '', top: '', rotationY: 0, rotationX: 0, rotationZ: 0}
+                {left: '33.5%', top: '62.5%', rotationY: 0, rotationX: -25, rotationZ: 0},
+                {left: '33%', top: '64%', rotationY: 0, rotationX: -20, rotationZ: 0},
+                {left: '32.5%', top: '64%', rotationY: 0, rotationX: -10, rotationZ: -25},
+                {left: '31.5%', top: '66%', rotationY: 0, rotationX: 0, rotationZ: 8},
+                {left: '31.5%', top: '70%', rotationY: 0, rotationX: 0, rotationZ: 0}
             ]
         };
 
-        fallTl.add(
-            TweenMax.to(
-                leafContainer,
-                TOTAL_FALL_DURATION / numFallPhases,
-                {
-                    bezier: {values: fallPath.phase1},
-                    ease: Power3.easeOut
-                }
-            )
-        );
-
-        fallTl.add(
-            TweenMax.to(
-                leafContainer,
-                TOTAL_FALL_DURATION / numFallPhases,
-                {
-                    bezier: {values: fallPath.phase2 },
-                    ease: Power3.easeOut
-                }
-            )
-        );
-
-        fallTl.add(
-            TweenMax.to(
-                leafContainer,
-                TOTAL_FALL_DURATION / numFallPhases,
-                {
-                    bezier: { values: fallPath.phase3 },
-                    ease: Power3.easeOut
-                }
-            )
-        );
+        for (var phase in fallPath) {
+            debugger;
+            if (fallPath.hasOwnProperty(phase)) {
+                fallTl.add(
+                    TweenMax.to(
+                        leafContainer,
+                        TOTAL_FALL_DURATION / numFallPhases,
+                        {
+                            bezier: {values: fallPath[phase]},
+                            ease: Power1.easeInOut
+                        }
+                    )
+                );
+            }
+        }
+        //
+        //fallTl.add(
+        //    TweenMax.to(
+        //        leafContainer,
+        //        TOTAL_FALL_DURATION / numFallPhases,
+        //        {
+        //            bezier: {values: fallPath.phase1},
+        //            ease: Power3.easeOut
+        //        }
+        //    )
+        //);
+        //
+        //fallTl.add(
+        //    TweenMax.to(
+        //        leafContainer,
+        //        TOTAL_FALL_DURATION / numFallPhases,
+        //        {
+        //            bezier: {values: fallPath.phase2 },
+        //            ease: Power3.easeOut
+        //        }
+        //    )
+        //);
+        //fallTl.add(
+        //    TweenMax.to(
+        //        leafContainer,
+        //        TOTAL_FALL_DURATION / numFallPhases,
+        //        {
+        //            bezier: { values: fallPath.phase3 },
+        //            ease: Power3.easeOut
+        //        }
+        //    )
+        //);
+        //fallTl.add(
+        //    TweenMax.to(
+        //        leafContainer,
+        //        TOTAL_FALL_DURATION / numFallPhases,
+        //        {
+        //            bezier: { values: fallPath.phase4 },
+        //            ease: Power3.easeOut
+        //        }
+        //    )
+        //);
 
 
     }

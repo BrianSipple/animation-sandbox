@@ -1,26 +1,28 @@
 (function (window) {
 
-    var leafContainer = document.querySelector('.svg-container'),
-        leafSVG = leafContainer.querySelector('#leafSVG'),
+    var sceneSVGContainer = document.querySelector('.svg-container--scene'),
+        leafSVGContainer = document.querySelector('.svg-container--leaf'),
+        leafSVG = leafSVGContainer.querySelector('#leaf'),
 
         TOTAL_FALL_DURATION = 10,
         numFallPhases = 8,
-        leafStartParams = {left: '60%', top: '5%', rotationZ: -60 };
+
+        xExtent = -100,   // x extent during the fall
+        yExtent = 180,    // y extent during the fall (like... you know.. the ground)
+
+        fallTl = new TimelineMax();
 
 
 
     TweenMax.set(
-        leafContainer,
+        sceneSVGContainer,
         {
-            position: 'absolute',
-            left: leafStartParams.left,
-            top: leafStartParams.top,
-            rotationZ: leafStartParams.rotationZ,
-            opacity: 1,
-            transformOrigin: '50% 50%'
+            top: '50%',
+            left: '50%',
+            xPercent: -50,
+            yPercent: -50
         }
     );
-
 
     /**
      * Animate the falling leaf. Some notes...
@@ -31,53 +33,51 @@
      */
     function fall() {
 
-        var fallTl = new TimelineMax();
-
         // Setup the paths of each "phase" (a path of motion before a complete directional
         // shift occurs due to the lift....
         var fallPath = {
             // We'll use "thru" tweening for our paths. The bezier plugin treats the initial starting point
             // as the first anchor of the path.
             phase1: [
-                {left: '57%', top: '8%', rotationY: 0, rotationX: 5, rotationZ: 0},
-                {left: '53%', top: '5%', rotationY: 0, rotationX: 10, rotationZ: 30}
+                {x: (xExtent * .0625) + 'px', y: (yExtent * .03) + 'px', rotationY: 0, rotationX: 5, rotationZ: 0},
+                {x: (xExtent * .125) + 'px', y: 0 + 'px', rotationY: 0, rotationX: 10, rotationZ: 30}
             ],
             phase2: [
-                {left: '50%', top: '7%', rotationY: 0, rotationX: 20, rotationZ: -60},
-                {left: '46%', top: '9%', rotationY: 0, rotationX: 25, rotationZ: -10},
-                {left: '36%', top: '13%', rotationY: 0, rotationX: 50, rotationZ: 5},
-                {left: '30%', top: '10%', rotationY: 0, rotationX: 80, rotationZ: 80}
+                {x: (xExtent * .25) + 'px', y: (yExtent * .07) + 'px', rotationY: 0, rotationX: 20, rotationZ: -60},
+                {x: (xExtent * .375) + 'px', y: (yExtent * .145) + 'px', rotationY: 0, rotationX: 25, rotationZ: -10},
+                {x: (xExtent * .70) + 'px', y: (yExtent * .175) + 'px', rotationY: 0, rotationX: 50, rotationZ: 5},
+                {x: (xExtent * .775) + 'px', y: (yExtent * .05) + 'px', rotationY: 0, rotationX: 80, rotationZ: 80}
             ],
             phase3: [
-                {left: '36%', top: '21%', rotationY: 0, rotationX: 0, rotationZ: 81},
-                {left: '46%', top: '31%', rotationY: 0, rotationX: -10, rotationZ: -9},
-                {left: '59%', top: '28%', rotationY: 0, rotationX: -60, rotationZ: -57},
-                {left: '57.5%', top: '25%', rotationY: 0, rotationX: -80, rotationZ: -75}
+                {x: (xExtent * .585) + 'px', y: (yExtent * .22) + 'px', rotationY: 0, rotationX: 0, rotationZ: 81},
+                {x: (xExtent * .31) + 'px', y: (yExtent * .36) + 'px', rotationY: 0, rotationX: -10, rotationZ: -9},
+                {x: (xExtent * .125) + 'px', y: (yExtent * .38) + 'px', rotationY: 0, rotationX: -60, rotationZ: -57},
+                {x: (xExtent * .0625) + 'px', y:  (yExtent * .27) + 'px', rotationY: 0, rotationX: -80, rotationZ: -75}
             ],
             phase4: [
-                {left: '59%', top: '37%', rotationY: 0, rotationX: -70, rotationZ: -85},
-                {left: '40%', top: '44%', rotationY: 0, rotationX: -35, rotationZ: 0},
-                {left: '24%', top: '37%', rotationY: 0, rotationX: 0, rotationZ: 10},
-                {left: '20%', top: '33%', rotationY: 0, rotationX: -10, rotationZ: 80}
+                {x: (xExtent * .045) + 'px', y: (yExtent * .45) + 'px', rotationY: 0, rotationX: -70, rotationZ: -85},
+                {x: (xExtent * .445) + 'px', y: (yExtent * .62) + 'px', rotationY: 0, rotationX: -35, rotationZ: 0},
+                {x: (xExtent * .925) + 'px', y: (yExtent * .50) + 'px', rotationY: 0, rotationX: 0, rotationZ: 10},
+                {x: (xExtent * .98) + 'px', y: (yExtent * .42) + 'px', rotationY: 0, rotationX: -10, rotationZ: 80}
             ],
             phase5: [
-                {left: '25%', top: '43%', rotationY: 0, rotationX: -15, rotationZ: 75},
-                {left: '30%', top: '46%', rotationY: 0, rotationX: -20, rotationZ: 25},
-                {left: '51.5%', top: '49%', rotationY: 0, rotationX: -30, rotationZ: -5},
-                {left: '56%', top: '47.5%', rotationY: 0, rotationX: -50, rotationZ: -75}
+                {x: (xExtent * .9325) + 'px', y: (yExtent * .60) + 'px', rotationY: 0, rotationX: -15, rotationZ: 75},
+                {x: (xExtent * .62) + 'px', y: (yExtent * .68) + 'px', rotationY: 0, rotationX: -20, rotationZ: 25},
+                {x: (xExtent * .21) + 'px', y: (yExtent * .6875) + 'px', rotationY: 0, rotationX: -30, rotationZ: -5},
+                {x: 0 + 'px', y: (yExtent * .67) + 'px', rotationY: 0, rotationX: -50, rotationZ: -75}
             ],
             phase6: [
-                {left: '51%', top: '57.5%', rotationY: 0, rotationX: -20, rotationZ: -45},
-                {left: '50%', top: '64%', rotationY: 0, rotationX: 0, rotationZ: -45},
-                {left: '42.5%', top: '66%', rotationY: 0, rotationX: -50, rotationZ: 0},
-                {left: '34%', top: '62%', rotationY: 0, rotationX: -30, rotationZ: 80}
+                {x: (xExtent * .10) + 'px', y: (yExtent * .855) + 'px', rotationY: 0, rotationX: -20, rotationZ: -45},
+                {x: (xExtent * .25) + 'px', y: (yExtent * .92) + 'px', rotationY: 0, rotationX: 0, rotationZ: -45},
+                {x: (xExtent * .44) + 'px', y: (yExtent * .95) + 'px', rotationY: 0, rotationX: -50, rotationZ: 0},
+                {x: (xExtent * .66) + 'px', y: (yExtent * .89) + 'px', rotationY: 0, rotationX: -30, rotationZ: 80}
             ],
             phase7: [
-                {left: '33.5%', top: '62.5%', rotationY: 0, rotationX: -25, rotationZ: 0},
-                {left: '33%', top: '64%', rotationY: 0, rotationX: -20, rotationZ: 0},
-                {left: '32.5%', top: '64%', rotationY: 0, rotationX: -10, rotationZ: -25},
-                {left: '31.5%', top: '66%', rotationY: 0, rotationX: 0, rotationZ: 8},
-                {left: '31.5%', top: '70%', rotationY: 0, rotationX: 0, rotationZ: 0}
+                {x: (xExtent * .70) + 'px', y: (yExtent * .89) + 'px', rotationY: 0, rotationX: -25, rotationZ: 0},
+                {x: (xExtent * .68) + 'px', y: (yExtent * .91) + 'px', rotationY: 0, rotationX: -20, rotationZ: 0},
+                {x: (xExtent * .67) + 'px', y: (yExtent * .94) + 'px', rotationY: 0, rotationX: -10, rotationZ: -25},
+                {x: (xExtent * .69) + 'px', y: (yExtent * .9575) + 'px', rotationY: 0, rotationX: 0, rotationZ: 8},
+                {x: (xExtent * .70) + 'px', y: yExtent + 'px', rotationY: 0, rotationX: 0, rotationZ: 0}
             ]
         };
 
@@ -85,20 +85,28 @@
             if (fallPath.hasOwnProperty(phase)) {
                 fallTl.add(
                     TweenMax.to(
-                        leafContainer,
+                        leafSVG,
                         TOTAL_FALL_DURATION / numFallPhases,
                         {
-                            bezier: {values: fallPath[phase]},
-                            ease: Power1.easeInOut
+                            bezier: {
+                                type: 'thru',
+                                values: fallPath[phase]
+                            },
+                            //onUpdate: function () {
+                            //  debugger;
+                            //},
+                            ease: Linear.easeNone  // QUESTION: could this be the best, since the path interpolation itself creates an organic speed
                         }
                     )
                 );
+                //fallTl.addPause();
             }
         }
 
     }
 
     function init() {
+        TweenMax.set([sceneSVGContainer, leafSVGContainer], { opacity: 1 });
         fall();
     }
 

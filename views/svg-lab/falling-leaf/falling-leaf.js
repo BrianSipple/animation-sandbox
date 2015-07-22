@@ -92,10 +92,11 @@
                                 type: 'thru',
                                 values: fallPath[phase]
                             },
-                            //onUpdate: function () {
-                            //  debugger;
-                            //},
-                            ease: Linear.easeNone  // QUESTION: could this be the best, since the path interpolation itself creates an organic speed
+                            onUpdate: function () {
+                              debugger;
+                            },
+                            ease: Linear.easeNone,  // QUESTION: could this be the best, since the path interpolation itself creates an organic speed
+                            data: 'Tween for ' + phase.toString()
                         }
                     )
                 );

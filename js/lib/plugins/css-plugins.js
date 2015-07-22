@@ -37,17 +37,15 @@
         return false;
     };
 
+
     /**
      * Set the filter property for an element, accounting for both
      * 'webkitFilter' and 'filter'
-     *
-     * example: setFilter('url("/svg/filters/gooey-effects.svg#goo")', menuContainerElem);
      */
     var setFilter = function setFilter (path, elem) {
         elem.style.filter = path;
         elem.style.webkitFilter = path;
     };
-
 
 
     var api = {
@@ -56,7 +54,7 @@
         setFilter: setFilter
     };
 
-    BS.compose(exports, api);
+    compose(exports, api);
 
 }(typeof exports === 'undefined' ? window : exports));
 

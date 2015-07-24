@@ -46,9 +46,9 @@ body {
   position: absolute;
   left: 50%;
   /*
-  width: $rocket-width;
-  height: $rocket-height;
-  */
+    width: $rocket-width;
+    height: $rocket-height;
+    */
   margin-left: -150px;
   width: 300px; }
   .exhaust-wrapper.climb {
@@ -88,5 +88,3 @@ body {
   fill: yellow;
   stroke: none;
   stroke-width: 0; }
-
-/*# sourceMappingURL=rocket-launch-and-land.css.map */

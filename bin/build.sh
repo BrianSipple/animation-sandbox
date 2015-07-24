@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo 'Converting sass to css'
-sass styles/main.scss styles/main.css
+node-sass styles/main.scss styles/main.css
 echo 'Sass task complete'
 
 echo 'autoprefixing CSS'

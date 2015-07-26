@@ -160,9 +160,10 @@ nav, a, button {
   flex-direction: column;
   justify-content: center;
   align-items: center; }
-  .tooltip.visible {
-    transform: scaleY(1);
-    opacity: 1; }
+
+.tooltip.visible {
+  transform: scaleY(1);
+  opacity: 1; }
 
 html,
 body {
@@ -324,43 +325,51 @@ body {
   display: block;
   width: 68px;
   height: 68px;
-  border: 1px solid red;
   /******************************* Initial path and bun styles *******************************/
   /************************************************************/
   /**************************** MENU CLOSED ********************************/
   /************************************************************/
   /************************** MENU OPEN **********************************/ }
-  .ic-hamburger .ic-hamburger__top-bun,
-  .ic-hamburger .ic-hamburger__bottom-bun {
-    position: absolute;
-    display: block;
-    height: 4px;
-    width: 36px;
-    border-radius: 2px;
-    background-color: #ffba9e;
-    /* Starting animation values */
-    transform-origin: 34px 2px;
-    transform: rotate(0deg);
-    transition: all 0.5s cubic-bezier(0.8, -1.1, 0.5, 1.9); }
-  .ic-hamburger .ic-hamburger__path {
-    stroke: #ffba9e;
-    stroke-linecap: round;
-    transition: all 0.75s ease; }
-  .ic-hamburger .ic-hamburger__top-bun {
-    top: 19px;
-    left: 14px; }
-  .ic-hamburger .ic-hamburger__bottom-bun {
-    top: 40.8px;
-    left: 14px; }
-  .ic-hamburger.ic-hamburger--menu-closed .ic-hamburger__path {
-    stroke-dasharray: 1 100 32 300;
-    stroke-dashoffset: 101; }
-  .ic-hamburger.ic-hamburger--menu-open {
-    /************************************************************/ }
-    .ic-hamburger.ic-hamburger--menu-open .ic-hamburger__path {
-      stroke-dasharray: 1 100 109 300;
-      stroke-dashoffset: 1; }
-    .ic-hamburger.ic-hamburger--menu-open .ic-hamburger__top-bun {
-      transform: translateX(-4.5px) rotate(-45deg); }
-    .ic-hamburger.ic-hamburger--menu-open .ic-hamburger__bottom-bun {
-      transform: translateX(-4.5px) rotate(45deg); }
+
+.ic-hamburger .ic-hamburger__top-bun,
+.ic-hamburger .ic-hamburger__bottom-bun {
+  position: absolute;
+  display: block;
+  height: 4px;
+  width: 36px;
+  border-radius: 2px;
+  background-color: #ffba9e;
+  /* Starting animation values */
+  transform-origin: 34px 2px;
+  transform: rotate(0deg);
+  transition: all 0.5s cubic-bezier(0.8, -1.1, 0.5, 1.9); }
+
+.ic-hamburger .ic-hamburger__path {
+  stroke: #ffba9e;
+  stroke-linecap: round;
+  transition: all 0.75s ease; }
+
+.ic-hamburger .ic-hamburger__top-bun {
+  top: 19px;
+  left: 14px; }
+
+.ic-hamburger .ic-hamburger__bottom-bun {
+  top: 40.8px;
+  left: 14px; }
+
+.ic-hamburger.ic-hamburger--menu-closed .ic-hamburger__path {
+  stroke-dasharray: 1 100 32 300;
+  stroke-dashoffset: 101; }
+
+.ic-hamburger.ic-hamburger--menu-open {
+  /************************************************************/ }
+
+.ic-hamburger.ic-hamburger--menu-open .ic-hamburger__path {
+  stroke-dasharray: 1 100 187 300;
+  stroke-dashoffset: 1; }
+
+.ic-hamburger.ic-hamburger--menu-open .ic-hamburger__top-bun {
+  transform: translateX(-4.5px) rotate(-45deg); }
+
+.ic-hamburger.ic-hamburger--menu-open .ic-hamburger__bottom-bun {
+  transform: translateX(-4.5px) rotate(45deg); }

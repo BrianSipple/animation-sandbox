@@ -14,7 +14,6 @@ var hamburger = (function (window) {
         isMenuClosed = true;
 
     function toggleMenu () {
-        debugger;
         // Ideally... some other cool stuff to toggle a sidebar here
 
         // Toggle and animate the menu svg icon

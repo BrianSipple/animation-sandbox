@@ -6,13 +6,14 @@ $menu-icon__width: 68px;
 $menu-icon__height: 68px;
 
 $hamburger-dash__starting-size: 32;
-$hamburger-dash__end-size: 109;
+$hamburger-dash__end-size: 187;
 $hamburger__bun-height: 4px;
 $hamburger__bun-width: 36px;
 
 $duration__multiplier: 1s;
 $duration__path-toggle: $animation-duration-multiplier * 0.75;
 // 0.75s
+
 
 .main-view-container {
     background-color: $background-color;
@@ -27,7 +28,6 @@ $duration__path-toggle: $animation-duration-multiplier * 0.75;
     display: block;
     width: $menu-icon__width;
     height: $menu-icon__height;
-    border: 1px solid red;
 
     .ic-hamburger__top-bun,
     .ic-hamburger__bottom-bun {

@@ -1,4 +1,7 @@
 @import '../../../styles/application';
+@import url(http://fonts.googleapis.com/css?family=Shadows+Into+Light);
+
+$font-family-stack: 'MoonFlower', 'Shadows Into Light', cursive;
 
 $stroke-dash-max: 360;
 
@@ -16,7 +19,7 @@ $stroke-dash-max: 360;
 
 
 .main-view-container {
-    background-color: darkgray;    
+    background-color: hsla(0, 0%, 40%, 1);    
 }
 
 .scene {
@@ -36,7 +39,7 @@ $stroke-dash-max: 360;
     fill: none;    
     stroke: #8f82FF;
     stroke-miterlimit: 10;
-    font-family: 'MoonFlower';
+    font-family: $font-family-stack;
     font-size: 10em;
     stroke-width: .0225em;
     //letter-spacing: 15;
@@ -44,7 +47,7 @@ $stroke-dash-max: 360;
     //stroke-dashoffset: 0;
 
     &.drawing {
-        animation: DrawTextPath 8s $easings__ease-out-cubic;
+        animation: DrawTextPath 8s $easings_ease-out-cubic;
         animation-fill-mode: forwards;
     }
     

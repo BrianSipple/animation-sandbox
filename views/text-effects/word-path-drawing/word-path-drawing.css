@@ -7,6 +7,7 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
+@import url(http://fonts.googleapis.com/css?family=Shadows+Into+Light);
 html {
   color: #222;
   font-size: 1em;
@@ -320,7 +321,7 @@ body {
     stroke-dasharray: 100% 100%; } }
 
 .main-view-container {
-  background-color: darkgray; }
+  background-color: #666666; }
 
 .scene {
   width: 100%;
@@ -333,9 +334,9 @@ body {
   fill: none;
   stroke: #8f82FF;
   stroke-miterlimit: 10;
-  font-family: 'MoonFlower';
+  font-family: "MoonFlower", "Shadows Into Light", cursive;
   font-size: 10em;
   stroke-width: .0225em; }
   .row.drawing {
-    animation: DrawTextPath 4s ease-in;
+    animation: DrawTextPath 8s cubic-bezier(0.215, 0.61, 0.355, 1);
     animation-fill-mode: forwards; }

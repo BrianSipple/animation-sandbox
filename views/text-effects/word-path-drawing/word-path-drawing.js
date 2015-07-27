@@ -15,15 +15,13 @@ var demo = (function (window) {
     
         
     
-    function applyStaggeredDraw (rowSVG) {        
-        return setTimeout(function () {            
-            rowSVG.classList.add(CLASSES.drawingWord);            
-        }, 500);
+    function applyDrawEffect (rowSVG) {        
+      rowSVG.classList.add(CLASSES.drawingWord);            
     }
         
     
     function drawWords () {        
-        [].forEach.call(textRows, applyStaggeredDraw);        
+        [].forEach.call(textRows, applyDrawEffect);        
     }
     
     

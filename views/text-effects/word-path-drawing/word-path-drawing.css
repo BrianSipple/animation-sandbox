@@ -7,7 +7,7 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-@import url(http://fonts.googleapis.com/css?family=Shadows+Into+Light);
+@import url(http://fonts.googleapis.com/css?family=Amatic+SC);
 html {
   color: #222;
   font-size: 1em;
@@ -161,9 +161,10 @@ nav, a, button {
   flex-direction: column;
   justify-content: center;
   align-items: center; }
-  .tooltip.visible {
-    transform: scaleY(1);
-    opacity: 1; }
+
+.tooltip.visible {
+  transform: scaleY(1);
+  opacity: 1; }
 
 html,
 body {
@@ -334,9 +335,10 @@ body {
   fill: none;
   stroke: #8f82FF;
   stroke-miterlimit: 10;
-  font-family: "MoonFlower", "Shadows Into Light", cursive;
+  font-family: "MoonFlower", "Amatic SC", cursive;
   font-size: 10em;
   stroke-width: .0225em; }
-  .row.drawing {
-    animation: DrawTextPath 8s cubic-bezier(0.215, 0.61, 0.355, 1);
-    animation-fill-mode: forwards; }
+
+.row.drawing {
+  animation: DrawTextPath 8s cubic-bezier(0.215, 0.61, 0.355, 1);
+  animation-fill-mode: forwards; }

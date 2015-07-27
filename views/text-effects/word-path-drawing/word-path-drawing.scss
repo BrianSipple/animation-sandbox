@@ -1,0 +1,51 @@
+@import '../../../styles/application';
+
+$stroke-dash-max: 360;
+
+
+@keyframes DrawTextPath {
+    0% {
+       stroke-dasharray: 0 $stroke-dash-max;
+    }
+    100% {
+        //stroke-dasharray: $stroke-dash-max $stroke-dash-max;
+        stroke-dasharray: 100% 100%;
+    }        
+}
+
+
+
+.main-view-container {
+    background-color: darkgray;    
+}
+
+.scene {
+    width: 100%;
+    height: 100%;
+}
+
+.text-container {
+    width: 50%;
+}
+
+.text-content {
+    
+}
+
+.row {
+    fill: none;    
+    stroke: #8f82FF;
+    stroke-miterlimit: 10;
+    font-family: 'MoonFlower';
+    font-size: 10em;
+    stroke-width: .0225em;
+    //letter-spacing: 15;
+    //stroke-dasharray: 0 $stroke-dash-max 0 0;
+    //stroke-dashoffset: 0;
+
+    &.drawing {
+        animation: DrawTextPath 8s $easings__ease-out-cubic;
+        animation-fill-mode: forwards;
+    }
+    
+}

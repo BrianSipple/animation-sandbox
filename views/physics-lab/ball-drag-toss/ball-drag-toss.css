@@ -314,54 +314,36 @@ body {
   h3 {
     page-break-after: avoid; } }
 
-@keyframes Spin {
-  100% {
-    transform: rotate(1turn); } }
-
-@keyframes ShiftRadius {
-  50% {
-    border-radius: 50%; } }
-
-@keyframes ShiftWidth {
-  50% {
-    border-width: .3em; } }
-
-@keyframes ShiftColor {
-  33% {
-    color: #fe6f52; }
-  66% {
-    color: yellow; } }
-
-@keyframes ShiftScale {
-  33% {
-    transform: scale(1.1) rotateZ(120deg); }
-  66% {
-    transform: scale(0.9) rotateZ(240deg); }
-  100% {
-    transform: scale(1) rotateZ(360deg); } }
-
 .main-view-container {
-  background-color: #9ab7b7; }
+  background-color: rebeccapurple; }
 
-.loader-container {
+.scene {
   position: absolute;
+  width: 80%;
+  height: 90%;
+  background-color: dodgerblue;
+  border: 2px solid blue;
+  box-shadow: 0 0 3px 5px blue;
   top: 50%;
   left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  text-align: center; }
+  transform: translate3d(-50%, -50%, 0); }
 
-.loader-container .loader:before {
-  content: '';
-  display: block;
-  width: 4em;
-  height: 4em;
-  margin: 0 auto 1em;
-  border: 1.5em solid;
-  color: #ffe4bd;
-  box-sizing: border-box;
-  animation: 2.37s ShiftRadius, 3.57s ShiftColor, 2.77s ShiftWidth, 2.1s ShiftScale;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite; }
+.ball-container {
+  width: 100%;
+  height: 100%;
+  position: relative; }
 
-.loader-container .subtitle {
-  color: white; }
+.ball {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 10%;
+  height: 10%;
+  fill: #f6ff00;
+  stroke: none;
+  border-radius: 50%; }
+
+.slingshot {
+  stroke: black;
+  fill: none;
+  stroke-width: 2px; }

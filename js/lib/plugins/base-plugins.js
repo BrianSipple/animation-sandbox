@@ -72,6 +72,10 @@
                 return bound;
             };
         }
+        
+        exports.isNaN = function isNaN (value) {
+            return typeof value === 'number' && value !== value;
+        }
 
     }((typeof exports === 'undefined') ? window : exports));
 

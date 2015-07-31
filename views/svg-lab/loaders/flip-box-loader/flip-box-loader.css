@@ -15,13 +15,15 @@ body {
 
 .loader_cube {
   position: absolute; }
-  .loader_cube rect {
-    stroke: none;
-    fill: #FF4081; }
+
+.loader_cube rect {
+  stroke: none;
+  fill: #FF4081; }
 
 .loader_base {
   position: absolute; }
-  .loader_base line {
-    fill: none;
-    stroke: #3F51B5;
-    stroke-width: 1.5; }
+
+.loader_base line {
+  fill: none;
+  stroke: #3F51B5;
+  stroke-width: 1.5; }

@@ -19,8 +19,9 @@ body {
 .rocket {
   fill: yellow;
   stroke: none; }
-  .rocket > * {
-    stroke: none; }
+
+.rocket > * {
+  stroke: none; }
 
 .rocket-wrapper {
   position: absolute;
@@ -51,11 +52,13 @@ body {
     */
   margin-left: -150px;
   width: 300px; }
-  .exhaust-wrapper.climb {
-    height: 100%;
-    bottom: 100px; }
-  .exhaust-wrapper.platform {
-    top: calc(100% - 100px); }
+
+.exhaust-wrapper.climb {
+  height: 100%;
+  bottom: 100px; }
+
+.exhaust-wrapper.platform {
+  top: calc(100% - 100px); }
 
 .cloud-svg {
   position: absolute;
@@ -64,23 +67,27 @@ body {
   left: 10%;
   right: 10%;
   opacity: 0; }
-  .cloud-svg.def {
-    display: none; }
+
+.cloud-svg.def {
+  display: none; }
 
 .exhaust-container {
   position: relative;
   overflow: visible;
   height: 100%;
   width: 100%; }
-  .exhaust-container.climb {
-    transform: scaleY(0);
-    transform-origin: 50% bottom;
-    /* scale up from bottom */ }
-    .exhaust-container.climb .cloud-svg {
-      top: 0;
-      bottom: initial; }
-  .exhaust-container.platform .cloud-svg {
-    bottom: -100px; }
+
+.exhaust-container.climb {
+  transform: scaleY(0);
+  transform-origin: 50% bottom;
+  /* scale up from bottom */ }
+
+.exhaust-container.climb .cloud-svg {
+  top: 0;
+  bottom: initial; }
+
+.exhaust-container.platform .cloud-svg {
+  bottom: -100px; }
 
 .fuselage > *,
 .thruster > *,

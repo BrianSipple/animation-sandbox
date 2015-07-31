@@ -1,10 +1,14 @@
 line {
   stroke-width: 4px; }
-  line:nth-child(1) {
-    stroke: #5d9cbb; }
-  line:nth-child(2) {
-    stroke: #ffc53d; }
-  line:nth-child(3) {
-    stroke: #ff7729; }
-  line:nth-child(4) {
-    stroke: #ff525a; }
+
+line:nth-child(1) {
+  stroke: #5d9cbb; }
+
+line:nth-child(2) {
+  stroke: #ffc53d; }
+
+line:nth-child(3) {
+  stroke: #ff7729; }
+
+line:nth-child(4) {
+  stroke: #ff525a; }

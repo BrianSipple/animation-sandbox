@@ -174,9 +174,10 @@ nav, a, button {
   flex-direction: column;
   justify-content: center;
   align-items: center; }
-  .tooltip.visible {
-    transform: scaleY(1);
-    opacity: 1; }
+
+.tooltip.visible {
+  transform: scaleY(1);
+  opacity: 1; }
 
 html,
 body {
@@ -376,15 +377,17 @@ body {
   justify-content: center;
   align-items: center;
   outline: none; }
-  .button--timeline-toggle [class*="button-text"] {
-    font-size: 1.1em;
-    color: black;
-    opacity: 0;
-    display: none;
-    margin-top: 0.6em; }
-    .button--timeline-toggle [class*="button-text"].visible {
-      opacity: 1;
-      display: block; }
+
+.button--timeline-toggle [class*="button-text"] {
+  font-size: 1.1em;
+  color: black;
+  opacity: 0;
+  display: none;
+  margin-top: 0.6em; }
+
+.button--timeline-toggle [class*="button-text"].visible {
+  opacity: 1;
+  display: block; }
 
 @media screen and (min-width: 1200px) {
   .content {

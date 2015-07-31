@@ -1,8 +1,9 @@
 .person {
   fill: none;
   stroke: blue; }
-  .person.woman {
-    stroke: pink; }
+
+.person.woman {
+  stroke: pink; }
 
 .house {
   fill: #fc52ff; }

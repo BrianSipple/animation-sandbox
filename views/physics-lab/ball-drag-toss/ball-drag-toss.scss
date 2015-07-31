@@ -1,0 +1,43 @@
+@import '../../../styles/application';
+
+
+.main-view-container {
+    background-color: rebeccapurple;    
+}
+
+
+.scene {
+    position: absolute;
+    width: 80%;
+    height: 90%;
+    background-color: dodgerblue;
+    border: 2px solid blue;
+    box-shadow: 0 0 3px 5px blue;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.ball-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+
+.ball {
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 10%;
+    height: 10%;    
+    fill: hsla(62, 100%, 50%, 1);
+    stroke: none;
+    border-radius: 50%;
+}
+
+.slingshot {
+    stroke: black;
+    fill: none;
+    stroke-width: 2px;
+}

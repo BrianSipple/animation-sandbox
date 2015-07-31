@@ -165,9 +165,10 @@ nav, a, button {
   flex-direction: column;
   justify-content: center;
   align-items: center; }
-  .tooltip.visible {
-    transform: scaleY(1);
-    opacity: 1; }
+
+.tooltip.visible {
+  transform: scaleY(1);
+  opacity: 1; }
 
 html,
 body {
@@ -320,8 +321,9 @@ body {
 
 .svg-fallback {
   display: none; }
-  .svg-fallback.no-svg {
-    background-image: url("../../../../assets/img/Eye.png"); }
+
+.svg-fallback.no-svg {
+  background-image: url("../../../../assets/img/Eye.png"); }
 
 .base64-logo {
   width: 600px;

@@ -160,9 +160,10 @@ nav, a, button {
   flex-direction: column;
   justify-content: center;
   align-items: center; }
-  .tooltip.visible {
-    transform: scaleY(1);
-    opacity: 1; }
+
+.tooltip.visible {
+  transform: scaleY(1);
+  opacity: 1; }
 
 html,
 body {
@@ -318,8 +319,9 @@ body {
 
 .click-listener {
   cursor: pointer; }
-  .click-listener.animating {
-    cursor: default; }
+
+.click-listener.animating {
+  cursor: default; }
 
 #watchRimGlow {
   z-index: 4;

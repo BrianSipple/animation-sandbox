@@ -27,14 +27,16 @@
   align-items: center;
   height: 200px;
   margin: 0 1em; }
-  .rod .wire {
-    height: 150px;
-    width: 10px;
-    background-color: rebeccapurple; }
-  .rod .bearing {
-    height: 50px;
-    width: 50px;
-    background-color: hotpink; }
+
+.rod .wire {
+  height: 150px;
+  width: 10px;
+  background-color: rebeccapurple; }
+
+.rod .bearing {
+  height: 50px;
+  width: 50px;
+  background-color: hotpink; }
 
 .bearing {
   border-radius: 50%; }

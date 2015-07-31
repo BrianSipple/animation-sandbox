@@ -4,7 +4,7 @@
 
 @keyframes Spin {
     100% {
-        transform: rotateZ(1turn);    
+        transform: rotate(1turn);    
     }
 }
 
@@ -28,10 +28,21 @@
         color: hsla(10, 99%, 66%, 1);
     }
     66% {
-        yellow;
+        color: yellow;
     }
 }
 
+@keyframes ShiftScale {
+    33% {
+        transform: scale(1.1) rotateZ(120deg);
+    }
+    66% {
+        transform: scale(0.9) rotateZ(240deg);
+    }
+    100% {
+        transform: scale(1) rotateZ(360deg);
+    }
+}
 
 
 .main-view-container {
@@ -56,10 +67,11 @@
         color: hsla(36, 100%, 87%, 1);
         box-sizing: border-box;
         animation: 
-            1.1s Spin,
-            .9s ShiftRadius,
-            1.3s ShiftColor,
-            1.5s ShiftWidth;
+            //1.1s Spin,
+            2.37s ShiftRadius,
+            3.57s ShiftColor,
+            2.77s ShiftWidth,
+            2.1s ShiftScale;
         animation-timing-function: linear;
         animation-iteration-count: infinite;
     }

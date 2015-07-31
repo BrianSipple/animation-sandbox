@@ -1,11 +1,8 @@
 .main-svg-container {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-}
+  padding: 10px;
+  display: flex;
+  flex-direction: column; }
 
 .main-svg-container svg {
-    border: 2px solid orangered;
-    fill: hsla(65, 90%, 70%, 1.00);
-}
-
+  border: 2px solid orangered;
+  fill: #ecf76e; }

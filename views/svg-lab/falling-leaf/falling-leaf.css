@@ -160,9 +160,10 @@ nav, a, button {
   flex-direction: column;
   justify-content: center;
   align-items: center; }
-  .tooltip.visible {
-    transform: scaleY(1);
-    opacity: 1; }
+
+.tooltip.visible {
+  transform: scaleY(1);
+  opacity: 1; }
 
 html,
 body {
@@ -316,15 +317,17 @@ body {
 .svg-container {
   opacity: 0;
   position: relative; }
-  .svg-container .svg,
-  .svg-container .svg__outer {
-    position: absolute;
-    top: 0%;
-    left: 0%; }
-  .svg-container .svg__inner {
-    position: relative;
-    width: 100%;
-    height: 100%; }
+
+.svg-container .svg,
+.svg-container .svg__outer {
+  position: absolute;
+  top: 0%;
+  left: 0%; }
+
+.svg-container .svg__inner {
+  position: relative;
+  width: 100%;
+  height: 100%; }
 
 .svg-container--scene {
   width: 80%;

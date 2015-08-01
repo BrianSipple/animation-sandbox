@@ -26,7 +26,7 @@
                     x: Number(api.el.getAttribute('cx')),
                     y: Number(api.el.getAttribute('cy'))
                 };
-                api.radius = api.el.getAttribute('r');
+                api.radius = Number(api.el.getAttribute('r'));
 
                 api.velocity = params.velocity || {x: 10, y: 0};
                 api.mass = params.mass || 0.1;   // kg
@@ -80,26 +80,27 @@
                 
                 // Left boundary collision
                 if (api.position.x < api.radius) { 
+                    
                     api.velocity.x *= api.restitution;
-                    api.el.setAttribute('cx', api.radius);                    
+                    api.position.x = api.radius;
                 }
 
                 // Right boundary collision
-                if (api.position.x > boundaryWidth - this.radius) {
+                if (api.position.x > boundaryWidth - api.radius) {
                     api.velocity.x *= api.restitution;
-                    api.el.setAttribute('cx', boundaryWidth - api.radius);
+                    api.position.x = boundaryWidth - api.radius;
                 }
 
                 // Bottom boundary collision
                 if (api.position.y > boundaryHeight - api.radius) {          
                     api.velocity.y *= api.restitution;
-                    api.el.setAttribute('cy', boundaryHeight - api.radius);
+                    api.position.y = boundaryHeight - api.radius;
                 }
                 
                 // Top boundary collision
                 if (api.position.y < api.radius) {
                     api.velocity.y *= api.restitution;
-                    api.el.setAttribute('cy', api.radius);
+                    api.position.y = api.radius;
                 }
             };
 

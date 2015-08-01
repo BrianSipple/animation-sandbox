@@ -111,8 +111,6 @@ var demo = (function (exports) {
                
         sceneContainerElem.addEventListener('mouseup', function (ev) {
             
-            console.log('Mouse Up!');
-            console.log('Event code on mouse up:' + ev.which);
             if (ev.which === Mouse.CODES.mouseUp) {
                 debugger;
                 Mouse.isDown = false;
@@ -123,13 +121,8 @@ var demo = (function (exports) {
         
         
         sceneContainerElem.addEventListener('mousemove', function (ev) { 
-            console.log('Mouse Move');
-            console.log('Is Mouse Down?... :' + Mouse.isDown);
-            console.log('Event code on mouseMove:' + ev.which);
             if (ev.which === Mouse.CODES.mouseMove && Mouse.isDown) {                
                 
-                console.log('Mouse is down -- extending the line');
-                                
                 Mouse.setPositionInScene(ev, sceneContainerRect);
                 Slingshot.extendLineOnPull(Mouse.x, Mouse.y);
             }
@@ -139,7 +132,6 @@ var demo = (function (exports) {
         sceneContainerElem.addEventListener('mousedown', function (ev) {
             
             //debugger;
-            console.log(ev.which);
             
             if (ev.which === Mouse.CODES.mouseDown) {
                 
@@ -167,9 +159,8 @@ var demo = (function (exports) {
         elapsedTimeMs = currentTime - previousTime;
         
         if (!Mouse.isDown) {
-            // Compute all kinds of magic
-            
-            
+            // Compute motion
+                        
             // Drag force: Fd = -1/2 * Cd * A * rho * v * v
             Fx = -0.5 * Cd * A * rho * 
                 ballObj.velocity.x * ballObj.velocity.x *
@@ -187,12 +178,14 @@ var demo = (function (exports) {
             ay = ag + (Fy / ballObj.mass); 
             
             // Integrate to get velocity (velocity is the time-derivative of acceleration)
-            ballObj.velocity.x += (ax * (elapsedTimeMs / 1000) );
-            ballObj.velocity.y += (ay * (elapsedTimeMs / 1000) );
+            //ballObj.velocity.x += (ax * frameRate);
+            ballObj.velocity.x += (ax * (elapsedTimeMs/metersPerPixel) );
+            ballObj.velocity.y += (ay * (elapsedTimeMs / metersPerPixel) );
             
             // Integrate to get position (position is the velocity derivative) 
-            ballObj.position.x += (ballObj.velocity.x * (elapsedTimeMs / 1000) * metersPerPixel);
-            ballObj.position.y += (ballObj.velocity.y * (elapsedTimeMs / 1000) * metersPerPixel);    
+            //ballObj.position.x += (ballObj.velocity.x * frameRate * metersPerPixel);
+            ballObj.position.x += (ballObj.velocity.x * (elapsedTimeMs / metersPerPixel) * metersPerPixel);
+            ballObj.position.y += (ballObj.velocity.y * (elapsedTimeMs / metersPerPixel) * metersPerPixel);    
             
             ballObj.move();
         }

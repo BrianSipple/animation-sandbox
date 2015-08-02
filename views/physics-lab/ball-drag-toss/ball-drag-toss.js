@@ -179,7 +179,7 @@ var demo = (function (exports) {
             
             // Integrate to get velocity (velocity is the time-derivative of acceleration)
             //ballObj.velocity.x += (ax * frameRate);
-            ballObj.velocity.x += (ax * (elapsedTimeMs/metersPerPixel) );
+            ballObj.velocity.x += (ax * (elapsedTimeMs / metersPerPixel) );
             ballObj.velocity.y += (ay * (elapsedTimeMs / metersPerPixel) );
             
             // Integrate to get position (position is the velocity derivative) 

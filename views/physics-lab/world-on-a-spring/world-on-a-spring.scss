@@ -1,0 +1,106 @@
+@import '../../../styles/application';
+
+$font-color__primary: hsla(91, 97%, 54%, 1);
+
+.main-view-container {
+    background-color: hsla(233, 15%, 25%, 1);        
+    position: relative;
+    color: $font-color__primary;
+}
+
+.scene__container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    height: 80%;
+    transform: translate3d(-50%, -50%, 0);        
+}
+
+.scene__svg-container {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    margin: 1em auto;
+}
+
+
+.scene__svg-container, 
+.svg,
+.globe-container {
+    overflow: visible !important;
+}
+
+
+
+.scene__controller {
+    
+    margin: 1em auto;    
+    padding: 0.75em 2em;
+    position: relative;
+    text-align: center;
+
+}
+
+
+
+.form-container {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;  
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    
+    .form-item-group {
+        padding: 1em 0;
+        clear: both;
+        font-size: 1rem;
+        width: 50%;
+    }
+    label {
+        float: left;        
+    }
+    input {
+        float: right;
+        clear: both;
+        margin-left: 2em;
+        width: 42%;
+        
+    }
+}
+
+
+/* SVG Objects */
+#base {
+    fill: hsla(46, 75%, 66%, 1);    
+}
+
+#spring {    
+    stroke: $font-color__primary;
+}
+
+/* Ellipse */
+#water {
+    fill: url(#gradient-radial__earth-blue);
+}
+
+/* Path */
+#land {
+    fill: #37573D;
+}
+
+#title {
+    fill: $font-color__primary;
+}
+
+

@@ -1,0 +1,25 @@
+<svg class="svg-def" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="gradient-radial__earth-blue" cx="50" cy="50" r="50" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#FFF"/>
+        <stop offset=".029" stop-color="#FAFCFE"/>
+        <stop offset=".063" stop-color="#ECF3F9"/>
+        <stop offset=".1" stop-color="#D5E5F2"/>
+        <stop offset=".12" stop-color="#C5DBED"/>
+        <stop offset=".162" stop-color="#97ABC1"/>
+        <stop offset=".205" stop-color="#70829B"/>
+        <stop offset=".249" stop-color="#4F607B"/>
+        <stop offset=".294" stop-color="#364562"/>
+        <stop offset=".34" stop-color="#233251"/>
+        <stop offset=".387" stop-color="#192746"/>
+        <stop offset=".437" stop-color="#152343"/>
+        <stop offset=".602" stop-color="#152545"/>
+        <stop offset=".695" stop-color="#132B4E"/>
+        <stop offset=".77" stop-color="#11355B"/>
+        <stop offset=".835" stop-color="#0E446F"/>
+        <stop offset=".894" stop-color="#0A5788"/>
+        <stop offset=".944" stop-color="#056CA5"/>
+        <stop offset="1" stop-color="#9FD8FF"/>
+      </radialGradient>
+    </defs>
+</svg>

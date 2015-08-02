@@ -103,9 +103,7 @@ nav, a, button {
  * Easing functions
  */
 [class^="page-section_"] {
-  width: 100%;
-  display: flex;
-  flex-direction: column; }
+  width: 100%; }
 
 .page-section_view-map {
   width: 100%; }
@@ -160,9 +158,10 @@ nav, a, button {
   flex-direction: column;
   justify-content: center;
   align-items: center; }
-  .tooltip.visible {
-    transform: scaleY(1);
-    opacity: 1; }
+
+.tooltip.visible {
+  transform: scaleY(1);
+  opacity: 1; }
 
 html,
 body {

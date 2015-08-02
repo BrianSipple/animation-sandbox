@@ -13,6 +13,9 @@
     }
 }
 
+.main-view-container {
+    min-width: 500px;
+}
 
 .map-container {
     text-align: center;
@@ -43,4 +46,9 @@ ul {
             }
         }
     }
+}
+
+
+.page__header {
+    padding: 0.5em 1.25em;          
 }

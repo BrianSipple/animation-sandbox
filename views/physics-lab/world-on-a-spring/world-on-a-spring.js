@@ -325,13 +325,10 @@ var demo = (function (exports) {
         frequencyOutputElem.textContent = Math.abs(Base.frequency);
         
         massInput.value = Math.abs(Globe.mass);
-        massOutputElem.textContent = Math.abs(Globe.mass);
-                    
+        massOutputElem.textContent = Math.abs(Globe.mass);                    
     }
     
-    
-    
-    
+        
     function init () {        
         addEventListeners();
         initUI();

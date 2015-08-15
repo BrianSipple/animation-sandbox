@@ -35,29 +35,32 @@
 
                         <defs>
 
-                            <clipPath class="cut-off-path" id="cut-off-path--liquid-1">
-                                <path id="LiquidInside1Mask" display="none" fill="#F8876E" d="M387 415h49v77h-49z"/>
+                            <clipPath class="liquid-mask" id="liquid-mask--liquid-1">
+                                <!--
+                                <rect id="LiquidInside1Mask" fill="#F8876E" x="387" y="415" d="M387 415h49v77h-49z"/>
+                                -->
+                                <rect id="LiquidInside1Mask" fill="#F8876E" x="387" y="415" width="49" height="77"></rect>
                             </clipPath>
 
-                            <clipPath class="cut-off-path" id="cut-off-path--liquid-2">
-                                <path id="LiquidInside2Mask" display="none" fill="#F8876E" d="M446 451h20v43h-20z"/>
+                            <clipPath class="liquid-mask" id="liquid-mask--liquid-2">
+                                <rect id="LiquidInside2Mask" fill="#F8876E" x="446" y="451" width="20" height="43"/>
                             </clipPath>
 
-                            <clipPath class="cut-off-path" id="cut-off-path--liquid-3">
-                                <path id="LiquidInside3Mask" display="none" fill="#F8876E" d="M493 452h17v39h-17z"/>
+                            <clipPath class="liquid-mask" id="liquid-mask--liquid-3">
+                                <rect id="LiquidInside3Mask" fill="#F8876E" x="493" y="452" width="17" height="39"/>
                             </clipPath>
 
-                            <clipPath class="cut-off-path" id="cut-off-path--liquid-4">
-                                <path id="LiquidInside4Mask" display="none" fill="#F8876E" d="M614 602h69v48h-69z"/>
+                            <clipPath class="liquid-mask" id="liquid-mask--liquid-4">
+                                <rect id="LiquidInside4Mask" fill="#F8876E" x="614" y="602" width="69" height="48"/>
                             </clipPath>
 
-                            <clipPath class="cut-off-path" id="cut-off-path--liquid-5">
-                                <path id="LiquidInside5Mask" display="none" fill="#F8876E" d="M707 563h69v91h-69z"/>
+                            <clipPath class="liquid-mask" id="liquid-mask--liquid-5">
+                                <rect id="LiquidInside5Mask" fill="#F8876E" x="707" y="563" width="69" height="91"/>
                             </clipPath>
-                                                                                                                                                         <clipPath class="cut-off-path" id="cut-off-path--liquid-6">
-                                <path id="LiquidInside6Mask" display="none" fill="#F8876E" d="M835 608h15v43h-15z"/>
-                            </clipPath>                                                                                                                                                                                                                                                 <clipPath class="cut-off-path" id="cut-off-path--liquid-7">
-                                <path id="LiquidInside7Mask" display="none" fill="#F8876E" d="M875 608h12v43h-12z"/>
+                                                                                                                                                         <clipPath class="liquid-mask" id="liquid-mask--liquid-6">
+                                <rect id="LiquidInside6Mask" fill="#F8876E" x="835" y="608" width="15" height="43"/>
+                            </clipPath>                                                                                                                                                                                                                                                 <clipPath class="liquid-mask" id="liquid-mask--liquid-7">
+                                <rect id="LiquidInside7Mask" fill="#F8876E" x="875" y="608" width="12" height="43"/>
                             </clipPath>
                             
                                                            
@@ -67,7 +70,7 @@
                       <g id="_x3C_Group_x3E_">
                         <path fill="#FFF" d="M420 445.5V414h-18v31.5c-9 3.6-16.2 12.7-16.2 23.4 0 13.8 11.3 25.1 25.2 25.1 13.9 0 25.3-11.2 25.3-25.1-.1-10.7-7.3-19.8-16.3-23.4z"/>
                         <path fill="none" stroke="#294C67" stroke-width="4" stroke-miterlimit="10" d="M420 445.5V414h-18v31.5c-9 3.6-16.2 12.7-16.2 23.4 0 13.8 11.3 25.1 25.2 25.1 13.9 0 25.3-11.2 25.3-25.1-.1-10.7-7.3-19.8-16.3-23.4z"/>
-                        <path id="LiquidInside1" fill="#F8876E" d="M416 449v-31h-10v31c-9.1 1.9-16 10.3-16 20 0 11 10 21 21 21s21-10 21-21c0-9.7-6.9-18.1-16-20z"/>
+                        <path id="LiquidInside1" clip-path="url(#liquid-mask--liquid-1)" fill="#F8876E" d="M416 449v-31h-10v31c-9.1 1.9-16 10.3-16 20 0 11 10 21 21 21s21-10 21-21c0-9.7-6.9-18.1-16-20z"/>
                       </g>
 
                       <path fill="#FFF" stroke="#294C67" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M778 557h-72v77c0 13.3 10.7 24 24 24h24c13.3 0 24-10.7 24-24v-77z"/>
@@ -373,6 +376,7 @@
         <script src="js/lib/base-plugins.js"></script>
 
         <!-- Vendor files -->
+        <script src="vendor/gsap/src/uncompressed/plugins/DrawSVGPlugin.js"></script>
         <script src="vendor/gsap/src/minified/TweenMax.min.js"></script>
 
 

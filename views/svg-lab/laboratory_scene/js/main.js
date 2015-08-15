@@ -7,6 +7,8 @@ var app = (function (exports) {
             coinSVG: '#Coin',
             mainBulbSVG: '#MainBulb',
             liquidSVGs: '.liquid',
+            liquidMasks: '.liquid-mask',
+            liquidMaskIdPrefix: '#liquid-mask--liquid-'   // add number
         },
         
         DURATIONS = {
@@ -21,6 +23,8 @@ var app = (function (exports) {
         coinSVG = mainSVG.querySelector(SELECTORS.coinSVG),
         mainBulbSVG = mainSVG.querySelector(SELECTORS.mainBulbSVG),
         liquidSVGs = mainSVG.querySelectorAll(SELECTORS.liquidSVGs),
+        liquidMasks = mainSVG.querySelectorAll(SELECTORS.liquidMasks),
+        liquid1Mask = mainSVG.querySelector(SELECTORS.liquidMaskIdPrefix + '1'),
         
         
         clearTL,
@@ -42,8 +46,9 @@ var app = (function (exports) {
                 y: 124
             }
         );
-        clearTL.set(mainBulbSVG, {fill: '#FFFFFF'});
-        clearTL.set(liquidSVGs, {stroke: '#FFFFFF'});
+        clearTL.set(mainBulbSVG, { fill: '#FFFFFF' });
+        clearTL.set(liquidSVGs, { stroke: '#FFFFFF' });
+        clearTL.set(liquid1Mask, { attr: { y: 400 } });
         
 
         

@@ -8,7 +8,7 @@ var app = (function (exports) {
             mainBulbSVG: '#MainBulb',
             liquidSVGs: '.liquid',
             liquidMasks: '.liquid-mask',
-            liquidMaskIdPrefix: '#liquid-mask--liquid-'   // add number
+            liquidMaskDefs: '.liquid-mask__def'
         },
         
         DURATIONS = {
@@ -24,12 +24,28 @@ var app = (function (exports) {
         mainBulbSVG = mainSVG.querySelector(SELECTORS.mainBulbSVG),
         liquidSVGs = mainSVG.querySelectorAll(SELECTORS.liquidSVGs),
         liquidMasks = mainSVG.querySelectorAll(SELECTORS.liquidMasks),
-        liquid1Mask = mainSVG.querySelector(SELECTORS.liquidMaskIdPrefix + '1'),
+        liquidMaskDefs = mainSVG.querySelectorAll(SELECTORS.liquidMaskDefs),
+        liquid1MaskDef = mainSVG.querySelector(SELECTORS.liquidMaskDefs + '-1'),
         
         
         clearTL,
         masterTL;
     
+    
+    /**
+     * Helper to remove the liquid from each flask by tweening the <defs> that each 
+     * liquid mask path is using. 
+     */
+    function removeLiquidsFromFlasks(tl) {
+        
+        var liquidMaskDef,
+            yPosToSet;
+        for (var i = 0; i < liquidMaskDefs.length; i++) {
+            liquidMaskDef = liquidMaskDefs.item(i);
+            yPosToSet = Number(liquidMaskDef.getAttribute('y')) + Number(liquidMaskDef.getAttribute('height'));
+            tl.set(liquidMaskDef, {attr: { y: yPosToSet } });
+        }
+    }
     
     
     function clearStage () {
@@ -48,31 +64,11 @@ var app = (function (exports) {
         );
         clearTL.set(mainBulbSVG, { fill: '#FFFFFF' });
         clearTL.set(liquidSVGs, { stroke: '#FFFFFF' });
-        clearTL.set(liquid1Mask, { attr: { y: 400 } });
-        
-
-        
-        
-        
+        removeLiquidsFromFlasks(clearTL);        
+                            
         return clearTL;
     }
     
-    
-//    /**
-//     * Convert the liquid references to an actual array,
-//     * then sort them ascending based on id
-//     */
-//    function sortLiquids () {
-//        liquidSVGs = [].slice.call(liquidSVGs);  
-//        
-//        liquidSVGs.sort(function (elem1, elem2) {
-//            return 
-//                elem1.getAttribute('id').replace(/[^0-9]/g, '') > 
-//                elem2.getAttribute('id').replace(/[^0-9]/g, '');
-//        });
-//        
-//        debugger;
-//    }
     
     function init () {
         

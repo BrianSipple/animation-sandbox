@@ -1,0 +1,25 @@
+.menu {
+
+  flex: 1;
+  min-width: 100%;
+  max-width: 100%;
+
+  @media screen and (min-width: #{map_get($map__breakpoint-sizes, 'x-large')} ) {
+    padding-bottom: 6em;
+
+    &.menu--genres {
+      min-width: 58%;
+      max-width: 58%;
+      width: 58%;
+    }
+
+    &.menu--recent-sessions {
+      min-width: 42%;
+      max-width: 42%;
+      width: 42%;
+    }
+
+  }
+}
+
+

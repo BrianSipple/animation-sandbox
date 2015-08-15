@@ -1,0 +1,31 @@
+.table {
+  line-height: 1.5;
+  border: none;
+  text-align: left;
+  width: 100%;
+
+  thead tr {
+    border: none;
+    border-bottom: 2px solid hsla(253, 6%, 71%, 1);
+  }
+
+  th {
+    text-align: left;
+    font-weight: 600;
+    color: $font-color__primary-text--black-on-light-background;
+    padding: 1rem;
+    white-space: nowrap;
+    border: none;
+  }
+
+  tr td {
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid hsla(180, 1%, 85%, 1);
+    border-top: 1px solid hsla(180, 1%, 85%, 1);
+    padding: 1.2rem 1rem;
+    vertical-align: middle;
+
+  }
+
+}

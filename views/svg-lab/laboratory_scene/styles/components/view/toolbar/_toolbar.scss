@@ -1,0 +1,14 @@
+.toolbar {
+    @extend %toolbar;
+
+    .toolbar__items {
+        margin: 0 0.8em;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: $navbar__height;
+        max-height: $navbar__height;
+        width: 100%;
+    }
+}

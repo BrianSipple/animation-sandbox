@@ -1,0 +1,33 @@
+$pre__width: 500px;
+
+.pre {
+  width: $pre__width;
+  padding: $padding__content;
+  font-size: 0.9em;
+  line-height: 1rem;
+  background-color: transparentize($theme-color__accent--alt-light, 0.7);
+  border-radius: 10px;
+  @include BoxShadowHelper(3);
+
+  text-transform: none;
+  font-family: $font-family-stack__pre;
+
+  /* commented-out in favor of fluid expansion
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  */
+
+  overflow: auto;
+  transition: width 0.3 * $anim-duration__multiplier $easing__ease-out-cubic;
+
+  &:hover {
+    position: relative;
+    width: $pre__width * 1.5;
+    z-index: 10;
+  }
+
+  // Allow for insertion of arbitrary spans to represent one standalone line
+  span.p {
+    display: block;
+  }
+}

@@ -1,0 +1,1283 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
+/* ---------------------- Theme colors ---------------------- */
+/* Surprise me */
+/* ----------------------- Fonts, font sizes, font colors ---------------------- */
+/* White text on dark backgrounds */
+/* Dark text on light backgrounds */
+/* ----------------------- Base padding ---------------------- */
+/* ----------------------- Base element styles ----------------------- */
+/**
+ * Use with every animation and transition so we can have a
+ * global animation speed toggler (i.e., for visual UI testing)
+ */
+/*
+ * Easing functions
+ */
+.btn-link:not(.btn-link--holo), .btn:not(.btn--holo) {
+  height: 4.8rem;
+  width: 4.8rem;
+  padding: 0.4em 0.9em;
+  outline: none;
+  border: 1px solid #00ff91;
+  background-color: #00ff91;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+  border-radius: .2em;
+  box-shadow: 0 0.05em 0.25em rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 -0.05em 0.05em rgba(0, 0, 0, 0.5);
+  font-size: 1.25em;
+  line-height: 2.4rem;
+  text-align: center;
+  display: block; }
+
+.btn-link.btn-link--holo, .btn.btn--holo {
+  height: 4.8rem;
+  width: 4.8rem;
+  padding: 0.4em 0.9em;
+  outline: none;
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.25em;
+  line-height: 2.4rem;
+  text-align: center;
+  display: block; }
+
+/**
+ * A link styled as a button
+ */
+.btn-link:not(.btn-link--holo) {
+  text-decoration: none; }
+
+.btn-link.btn-link--holo {
+  text-decoration: none; }
+
+.btn-fab {
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background-color: #00ff91;
+  box-shadow: 0 0.5em 0.25em rgba(0, 0, 0, 0.5);
+  font-size: 1.25em; }
+
+.toolbar, .navbar {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 64px;
+  background-color: #4dffb2;
+  max-width: 100%;
+  width: 100%;
+  font-size: 2.0rem;
+  position: relative; }
+
+/**
+ * Default helper styles when displaying an image via
+ * the background-image property and we want to guarantee
+ * that the size is contained
+ */
+/**
+ * Default helper styles when displaying an image via
+ * the background-image property and we want to guarantee
+ * that the size covers the container
+ */
+/* ----------------------------------------------------------------------------------------------------
+ * Breakpoint maps -- referecened by mixins that
+ * dynamically create media queries
+ * ----------------------------------------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------------------------------
+ * Maps for use in our font-size mixin
+ * Keys are the breakpoints, font-sizes (occassionally with line heights) are the corresponding values
+ * ----------------------------------------------------------------------------------------------------
+ */
+/**
+ * @param $fs-map -- key-value pair with size variables or literals as keys,
+ * and a value consisting of either a font-size, or a (font-size, line-height) list
+ */
+/* Utility function for mixin font-size */
+/* ---------------------------------------------------------------------------------------------------- */
+/**
+ * Attribute API for declarative flexbox styling
+ */
+[layout] {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center; }
+
+[layout="horizontal"],
+[layout="row"] {
+  flex-direction: row; }
+
+[layout="vertical"],
+[layout="column"] {
+  flex-direction: column; }
+
+[layout-align="space-around"] {
+  justify-content: space-around; }
+
+[layout-align="space-between"] {
+  justify-content: space-between; }
+
+[layout-align="center"] {
+  justify-content: center; }
+
+[layout-align="start"] {
+  justify-content: flex-start; }
+
+[layout-align="end"] {
+  justify-content: flex-end; }
+
+.toolbar .toolbar__items {
+  margin: 0 0.8em;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 64px;
+  max-height: 64px;
+  width: 100%; }
+
+.hero {
+  height: 536px;
+  max-height: 536px;
+  background-color: #779aa6;
+  border-bottom: 1.5px solid #00a7f5;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.7); }
+
+.hero .hero__backdrop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.2), transparent); }
+
+.hero .hero__description {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  width: 27.5rem; }
+
+.hero .hero__svg-container {
+  width: 268px;
+  height: 268px;
+  position: absolute;
+  left: 15%;
+  top: 50%;
+  margin-top: -134px; }
+
+.menu {
+  flex: 1;
+  min-width: 100%;
+  max-width: 100%; }
+
+@media screen and (min-width: 64em) {
+  .menu {
+    padding-bottom: 6em; }
+  .menu.menu--genres {
+    min-width: 58%;
+    max-width: 58%;
+    width: 58%; }
+  .menu.menu--recent-sessions {
+    min-width: 42%;
+    max-width: 42%;
+    width: 42%; } }
+
+.navbar {
+  position: fixed;
+  z-index: 100; }
+
+.navbar .navbar__logo {
+  font-size: 1.5em;
+  flex: 1; }
+
+.navbar .navbar__logo a {
+  color: #00a7f5; }
+
+.navbar .navbar__links {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
+
+.navbar a {
+  color: white;
+  text-decoration: none; }
+
+.sidenav {
+  height: 100%;
+  width: 324px;
+  max-width: 324px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  text-align: center;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  /* Initialize to negative x position */ }
+
+.sidenav .list-heading {
+  cursor: pointer; }
+
+.sidenav header {
+  height: 64px;
+  width: 100%; }
+
+.sidenav li {
+  left: 0;
+  list-style-type: none;
+  width: 100%;
+  transition: transform 0.75s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.75s cubic-bezier(0.215, 0.61, 0.355, 1), z-index 0.75s cubic-bezier(0.215, 0.61, 0.355, 1); }
+
+.sidenav li.heading {
+  font-size: 1.5em; }
+
+.sidenav li a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0.8em;
+  text-decoration: none;
+  cursor: pointer; }
+
+.sidenav ul {
+  position: relative;
+  padding-left: 0;
+  text-align: center;
+  list-style-type: none;
+  margin: 0;
+  border: none;
+  border-top: 1.2px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1.2px solid rgba(0, 0, 0, 0.2); }
+
+.sidenav ul.collapse {
+  /**
+       * Roll all child <li's> except for the first
+       */ }
+
+.sidenav ul.collapse li {
+  position: absolute;
+  z-index: -1;
+  transform: translate(0, -100%);
+  opacity: 0; }
+
+.sidenav ul.expand li {
+  position: initial;
+  z-index: 1;
+  transform: translate(0, 0);
+  opacity: 1; }
+
+.sidenav.collapse {
+  transform: translate3d(-100%, 0, 0); }
+
+.sidenav.activated {
+  animation: SlideInFromLeft 0.7s;
+  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  animation-fill-mode: forwards; }
+
+.sidenav.deactivated {
+  animation: SlideOutLeft 0.7s;
+  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  animation-fill-mode: forwards; }
+
+.page {
+  padding-top: 64px;
+  min-height: 100vh; }
+
+.page .page__title-container {
+  margin-bottom: 3.5em; }
+
+.page .page__title {
+  margin-top: 1.15em;
+  color: #00ff91; }
+
+.page .page__hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.23), transparent);
+  margin: 0 auto;
+  width: 75%; }
+
+.page .page__fine-print {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  color: #b8b8b8;
+  margin: 0 1.5em;
+  width: 40%;
+  text-align: left; }
+
+.page-section {
+  width: 100%;
+  display: block;
+  position: relative;
+  text-align: center; }
+
+.page-section > div {
+  overflow: hidden; }
+
+.page-section__hero {
+  min-height: 536px;
+  max-width: 100%; }
+
+.page-section__footnote {
+  font-size: 0.8em;
+  position: absolute;
+  bottom: 1em;
+  right: 1em; }
+
+.tab-selectors {
+  background-color: #00ff91;
+  color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  height: 48px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background-color 0.3s linear; }
+
+.tab-selectors .tab-selectors__content {
+  height: 100%;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 1; }
+
+.tab-selectors .tab-selectors__tab-list {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.tab-selectors .tab {
+  position: relative;
+  padding: 0 0.75em;
+  overflow: hidden;
+  cursor: pointer;
+  height: 100%;
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  flex-basis: 0.000000001px;
+  align-items: center; }
+
+.tab-selectors .tab .tab__link {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.62);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%; }
+
+.tab-selectors .tab.active .tab__link {
+  color: #00a7f5; }
+
+.panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%; }
+
+.panel .panel__item {
+  height: 20em;
+  margin: 1em;
+  text-align: center;
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.panel .panel__item > div {
+  margin: 0.75em auto; }
+
+.panel .panel__content {
+  max-width: 100%;
+  max-height: 100%;
+  flex: 1; }
+
+@media screen and (max-width: 43.75em) {
+  .panel {
+    flex-direction: column;
+    flex-wrap: wrap; } }
+
+.footer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  min-height: 64px;
+  text-align: center;
+  transform: translateY(100%); }
+
+.footer .footer__items {
+  display: flex;
+  width: 100%; }
+
+.footer .footer__item {
+  flex: 1; }
+
+.icon-fab {
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  height: 44px;
+  background-color: #00ff91;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%; }
+
+.heading {
+  font-size: 3.5rem;
+  color: #212121; }
+
+.heading__title {
+  text-align: left;
+  color: #212121;
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.subtitle {
+  display: block;
+  font-size: 1.2rem;
+  margin: 0;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7); }
+
+@media screen and (max-width: 43.75em) {
+  .subtitle {
+    font-size: 1.6rem; } }
+
+.table {
+  line-height: 1.5;
+  border: none;
+  text-align: left;
+  width: 100%; }
+
+.table thead tr {
+  border: none;
+  border-bottom: 2px solid #b3b1b9; }
+
+.table th {
+  text-align: left;
+  font-weight: 600;
+  color: #212121;
+  padding: 1rem;
+  white-space: nowrap;
+  border: none; }
+
+.table tr td {
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #d8d9d9;
+  border-top: 1px solid #d8d9d9;
+  padding: 1.2rem 1rem;
+  vertical-align: middle; }
+
+.pre {
+  width: 500px;
+  padding: 1.5em 2.25em;
+  font-size: 0.9em;
+  line-height: 1rem;
+  background-color: rgba(26, 182, 255, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  text-transform: none;
+  font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+  /* commented-out in favor of fluid expansion
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  */
+  overflow: auto;
+  transition: width 0.3s cubic-bezier(0.215, 0.61, 0.355, 1); }
+
+.pre:hover {
+  position: relative;
+  width: 750px;
+  z-index: 10; }
+
+.pre span.p {
+  display: block; }
+
+.db-widget {
+  width: 420px;
+  min-width: 420px;
+  height: 336px;
+  border-radius: 7.5px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 1em 1.5em;
+  overflow: none;
+  background-color: white;
+  color: #212121;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+
+.db-widget .db-widget__content,
+.db-widget .db-widget__header,
+.db-widget .db-widget__footer {
+  display: flex; }
+
+.db-widget .db-widget__header,
+.db-widget .db-widget__content {
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center; }
+
+.db-widget .db-widget__header {
+  border-top-left-radius: 7.5px;
+  border-top-right-radius: 7.5px;
+  height: 14%;
+  min-height: 14%;
+  color: white;
+  background-color: #00a7f5; }
+
+.db-widget .db-widget__content {
+  padding: 1.5em 2.25em;
+  flex-grow: 1; }
+
+.db-widget .db-widget__footer {
+  flex-direction: row;
+  justify-content: flex-end; }
+
+.db-widget .db-widget__footer .footer__item {
+  flex-grow: 1; }
+
+.db-widget .db-widget__primary-stat {
+  font-size: 3.5rem; }
+
+.db-widget .subtitle {
+  color: #737373; }
+
+.btn {
+  transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1); }
+
+.btn:hover {
+  transform: scale(1.08); }
+
+.form .form__component {
+  width: 100%; }
+
+.form .form__group {
+  margin-bottom: 0.8em; }
+
+.input .input__container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column; }
+
+.input .input__container--slider {
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center; }
+
+.input .input__container--slider label {
+  flex: 1; }
+
+.input .input__container--slider input {
+  flex: 3; }
+
+.input .input__container--slider output {
+  flex: 1; }
+
+.label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 0.32em;
+  font-weight: 700; }
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+/*
+ * A better looking default horizontal rule
+ */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; }
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle; }
+
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0; }
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical; }
+
+/*
+ * Catch-all for preventing accidental overflow of these elements
+ */
+img, object, embed, video {
+  max-width: 100%; }
+
+/**
+ * Min-width and min-height for tap-targets
+ */
+nav, a, button {
+  min-width: 44px;
+  min-height: 44px; }
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0; }
+
+html {
+  color: #212121;
+  /* sets the base font to 10px for better rem math */
+  font-size: 62.5%;
+  line-height: 1.4; }
+
+body {
+  font-size: 1.5rem;
+  line-height: 1.95rem;
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  background-color: whitesmoke;
+  font-family: Roboto, "Open Sans", Helvetica, Helvetica Neue, Arial, sans-serif; }
+
+@media screen and (min-width: 35em) {
+  body {
+    font-size: 1.6rem;
+    line-height: 2rem; } }
+
+@media screen and (min-width: 43.75em) {
+  body {
+    font-size: 1.6rem;
+    line-height: 2.2rem; } }
+
+@media screen and (min-width: 56.25em) {
+  body {
+    font-size: 1.75rem;
+    line-height: 2.40625rem; } }
+
+@media screen and (min-width: 90em) {
+  body {
+    font-size: 2rem;
+    line-height: 3rem; } }
+
+body, h1, h2, h3, h4, h5, h6 {
+  /* https://developer.mozilla.org/en-US/docs/Web/CSS/font-size-adjust */
+  font-size-adjust: 0.5; }
+
+h1 {
+  font-size: 3.2rem;
+  line-height: 4rem;
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */ }
+
+@media screen and (min-width: 30em) {
+  h1 {
+    font-size: 3.2rem;
+    line-height: 4rem; } }
+
+@media screen and (min-width: 35em) {
+  h1 {
+    font-size: 3.2rem;
+    line-height: 4rem; } }
+
+@media screen and (min-width: 43.75em) {
+  h1 {
+    font-size: 4rem;
+    line-height: 4.5rem; } }
+
+@media screen and (min-width: 50em) {
+  h1 {
+    font-size: 4.8rem;
+    line-height: 5.04rem; } }
+
+@media screen and (min-width: 56.25em) {
+  h1 {
+    font-size: 4.8rem;
+    line-height: 5.04rem; } }
+
+h2 {
+  font-size: 2.6rem;
+  line-height: 2.99999rem;
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */ }
+
+@media screen and (min-width: 30em) {
+  h2 {
+    font-size: 2.6rem;
+    line-height: 2.99999rem; } }
+
+@media screen and (min-width: 35em) {
+  h2 {
+    font-size: 2.6rem;
+    line-height: 2.99999rem; } }
+
+@media screen and (min-width: 43.75em) {
+  h2 {
+    font-size: 3.2rem;
+    line-height: 4rem; } }
+
+@media screen and (min-width: 50em) {
+  h2 {
+    font-size: 3.6rem;
+    line-height: 4.5rem; } }
+
+@media screen and (min-width: 56.25em) {
+  h2 {
+    font-size: 3.6rem;
+    line-height: 4.5rem; } }
+
+h3 {
+  font-size: 2.2rem;
+  line-height: 2.5rem;
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */ }
+
+@media screen and (min-width: 30em) {
+  h3 {
+    font-size: 2.2rem;
+    line-height: 2.5rem; } }
+
+@media screen and (min-width: 35em) {
+  h3 {
+    font-size: 2.2rem;
+    line-height: 2.5rem; } }
+
+@media screen and (min-width: 43.75em) {
+  h3 {
+    font-size: 2.4rem;
+    line-height: 3rem; } }
+
+@media screen and (min-width: 50em) {
+  h3 {
+    font-size: 2.8rem;
+    line-height: 3.5rem; } }
+
+@media screen and (min-width: 56.25em) {
+  h3 {
+    font-size: 2.8rem;
+    line-height: 3.5rem; } }
+
+h4 {
+  font-size: 1.8rem;
+  line-height: 2.0rem;
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */ }
+
+@media screen and (min-width: 30em) {
+  h4 {
+    font-size: 1.8rem;
+    line-height: 2.0rem; } }
+
+@media screen and (min-width: 35em) {
+  h4 {
+    font-size: 1.8rem;
+    line-height: 2.0rem; } }
+
+@media screen and (min-width: 43.75em) {
+  h4 {
+    font-size: 1.8rem;
+    line-height: 2.2rem; } }
+
+@media screen and (min-width: 50em) {
+  h4 {
+    font-size: 1.8rem;
+    line-height: 2.2rem; } }
+
+@media screen and (min-width: 56.25em) {
+  h4 {
+    font-size: 1.8rem;
+    line-height: 2.2rem; } }
+
+blockquote {
+  font-size: 2rem;
+  line-height: 2.5rem;
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+  /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+  /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */ }
+
+@media screen and (min-width: 30em) {
+  blockquote {
+    font-size: 2rem;
+    line-height: 2.5rem; } }
+
+@media screen and (min-width: 35em) {
+  blockquote {
+    font-size: 2rem;
+    line-height: 2.5rem; } }
+
+@media screen and (min-width: 43.75em) {
+  blockquote {
+    font-size: 2.4rem;
+    line-height: 3.5rem; } }
+
+@media screen and (min-width: 50em) {
+  blockquote {
+    font-size: 2.4rem;
+    line-height: 3.5rem; } }
+
+@media screen and (min-width: 56.25em) {
+  blockquote {
+    font-size: 2.4rem;
+    line-height: 3.5rem; } }
+
+h1, h2, h3, h4 {
+  font-weight: 700; }
+
+/**
+ * The mother of all top-level content wrappers.
+ */
+.master-content-wrapper {
+  position: relative;
+  width: 90vw;
+  margin: 0 auto;
+  max-width: 100vw;
+  min-height: 100%;
+  height: 100%; }
+
+/*
+ * Top-level wrapper styles for a column or container of...things
+ */
+.container,
+.column {
+  margin: 0 auto;
+  position: relative;
+  width: 85%;
+  max-width: 1265px;
+  text-align: left; }
+
+/*
+ * Sizing to juxtapose a small copy section against a larger body copy section
+ * Note that the font sizes add to 2rem, and the and line heights sume to 48px,
+ * which is the same line height for 32px type when set to 1.5
+ */
+.copy__body {
+  font-size: 1.125em;
+  line-height: 1.5;
+  /* 27px */ }
+
+.copy__small {
+  font-size: 0.875em;
+  line-height: 1.5;
+  /* 21 px */ }
+
+.heading__subtitle {
+  margin-top: -1em; }
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+/*
+ * Hide visually and from screen readers:
+ * http://juicystudio.com/article/screen-readers-display-none.php
+ */
+.hidden {
+  display: none !important;
+  visibility: hidden; }
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto; }
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+.invisible {
+  visibility: hidden; }
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+
+.clearfix:after {
+  clear: both; }
+
+/* ==========================================================================
+   Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media screen and (min-width: 1480px) {
+  html {
+    font-size: 100%; } }
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster:
+                                      http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important; }
+  a,
+  a:visited {
+    text-decoration: underline; }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: ""; }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
+  /*
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+  thead {
+    display: table-header-group; }
+  tr,
+  img {
+    page-break-inside: avoid; }
+  img {
+    max-width: 100% !important; }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+  h2,
+  h3 {
+    page-break-after: avoid; } }
+
+.page-section__main-content {
+  height: 100%; }
+
+/* Import styles for view sections/pages here */
+body {
+  background-color: #7dcfde; }
+
+.lab .lab__title {
+  color: #2e4d66;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  text-align: center;
+  transform: translate3d(-50%, -150%, 0);
+  white-space: nowrap; }
+
+.lab #lab-svg {
+  position: absolute;
+  width: 900px;
+  height: 675px;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -54%, 0); }

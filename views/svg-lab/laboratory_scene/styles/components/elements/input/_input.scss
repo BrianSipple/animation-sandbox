@@ -1,0 +1,27 @@
+.input {
+
+  .input__container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input__container--slider {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    label {
+      flex: 1;
+    }
+    input {
+      flex: 3;
+    }
+    output {
+      flex: 1;
+    }
+  }
+
+}

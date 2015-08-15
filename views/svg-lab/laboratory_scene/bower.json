@@ -1,0 +1,19 @@
+{
+  "name": "Custom",
+  "version": "5.0.0",
+  "homepage": "https://github.com/BrianSipple/html5-boilerplate",
+  "authors": [
+    "Brian Sipple <Bsipple57@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "modernizer": "~2.8.2"
+  }
+}

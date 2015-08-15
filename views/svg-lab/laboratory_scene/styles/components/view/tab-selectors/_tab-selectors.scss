@@ -1,0 +1,70 @@
+$tab-selectors__height: 48px;
+$tab__font-color: hsla(0, 100%, 100%, 0.62);
+$tab__font-color--active: $theme-color__accent;
+
+$padding__tab: 0 0.75em;
+
+
+
+.tab-selectors {
+    background-color: $theme-color__primary;
+    color: hsla(0, 100%, 100%, 1.0);
+    box-shadow: 0 3px 6px hsla(0, 0%, 0%, 0.2);
+    display: flex;
+    align-items: center;
+    height: $tab-selectors__height;
+    font-size: 1.2rem;
+    font-weight: 500;
+    overflow: hidden;
+    -webkit-tap-highlight-color: hsla(0, 0%, 0%, 0.0);
+    user-select: none;
+    transition: background-color 0.3s linear;
+
+
+    .tab-selectors__content {
+        height: 100%;
+        position: relative;
+        white-space: nowrap;
+        overflow: hidden;
+        flex: 1;
+    }
+
+    .tab-selectors__tab-list {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .tab {
+        position: relative;
+        padding: $padding__tab;
+        overflow: hidden;
+        cursor: pointer;
+        height: 100%;
+        display: inline-flex;
+        flex: 1;
+        justify-content: center;
+        flex-basis: 0.000000001px;
+        align-items: center;
+
+
+        .tab__link {
+            text-decoration: none;
+            color: $tab__font-color;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+        }
+
+        &.active {
+            .tab__link {
+                color: $tab__font-color--active;
+            }
+        }
+    }
+}

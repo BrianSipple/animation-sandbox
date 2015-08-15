@@ -1,0 +1,45 @@
+$hero__height: $hero__height;
+$hero__primary-image-height: $hero__height / 2;
+
+.hero {
+    height: $hero__height;
+    max-height: $hero__height;
+    background-color: $hero__background-color;
+    border-bottom: 1.5px solid $theme-color__accent;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    font-size: 2rem;
+    color: $font-color__secondary-text--white-on-dark-background;
+
+    .hero__backdrop {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            hsla(0, 0%, 100%, .2), transparent
+        );
+    }
+
+    .hero__description {
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        right: 5%;
+        width: 27.5rem;
+        //margin-top: -($hero__height/2);
+        //margin-left: -1 * calc(100% / 2);
+    }
+
+    .hero__svg-container {
+        width: $hero__primary-image-height;
+        height: $hero__primary-image-height;
+        position: absolute;
+        left: 15%;
+        top: 50%;
+        margin-top: -($hero__primary-image-height / 2);
+    }
+
+
+
+}

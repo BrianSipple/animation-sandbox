@@ -1,0 +1,151 @@
+@mixin BoxShadowHelper($z-depth: 1) {
+
+    @if $z-depth == 1 {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.24);
+    } @else if $z-depth == 2 {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+        0 3px 6px rgba(0, 0, 0, 0.23);
+    } @else if $z-depth == 3 {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+        0 6px 6px rgba(0, 0, 0, 0.23);
+    } @else if $z-depth == 4 {
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+        0 10px 10px rgba(0, 0, 0, 0.22);
+    } @else if $z-depth >= 5 {
+        box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30),
+        0 15px 12px rgba(0, 0, 0, 0.22);
+    } @else {
+        /* Apply level 1 styles as default */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.24);
+    }
+}
+
+/* ----------------------------------------------------------------------------------------------------
+ * Breakpoint maps -- referecened by mixins that
+ * dynamically create media queries
+ * ----------------------------------------------------------------------------------------------------*/
+$map__breakpoint-sizes: (
+    x-small: 30em,        /* Phone */
+    small: 35em,        /* Small tablet */
+    medium: 43.75em,   /* Average tablet */
+    medium-large: 50em, /* Small desktop */
+    large: 56.25em,    /* Medium desktop */
+    x-large: 64em,    /* Large desktop */
+    xx-large: 90em
+);
+
+
+/* ----------------------------------------------------------------------------------------------------
+ * Maps for use in our font-size mixin
+ * Keys are the breakpoints, font-sizes (occassionally with line heights) are the corresponding values
+ * ----------------------------------------------------------------------------------------------------
+ */
+$map__font-sizes--body: (
+
+    /* (font-size, line-height) */
+    null: (1.5rem, 1.95rem),
+    small: (1.6rem, 2.0rem), /* REM Multiplier: 1.25 */
+    medium: (1.6rem, 2.2rem), /* REM Multiplier: 1.375 */
+    large: (1.75rem, 2.40625rem), /* REM Multiplier: 1.375 */
+    xx-large: (2.0rem, 3.0rem)  /* REM Multiplier: 1.5 */
+);
+
+$map__font-sizes--h1: (
+
+    /* (font-size, line-height) */
+    null: (3.2rem, 4.0rem),
+    x-small: (3.2rem, 4.0rem),   /* REM Multiplier: 1.25 */
+    small: (3.2rem, 4.0rem),    /* REM Multiplier: 1.25 */
+    medium: (4.0rem, 4.5rem),  /* REM Multiplier: 1.125 */
+    medium-large: (4.8rem, 5.04rem), /* REM Multiplier: 1.05 */
+    large: (4.8rem, 5.04rem)
+);
+
+$map__font-sizes--h2: (
+
+    /* (font-size, line-height) */
+    null: (2.6rem, 2.99999rem),
+    x-small: (2.6rem, 2.99999rem),   /* REM Multiplier: 1.15384615 */
+    small: (2.6rem, 2.99999rem),    /* REM Multiplier: 1.15384615 */
+    medium: (3.2rem, 4.0rem),  /* REM Multiplier: 1.25 */
+    medium-large: (3.6rem, 4.5rem), /* REM Multiplier: 1.25 */
+    large: (3.6rem, 4.5rem), /* REM Multiplier: 1.25 */
+);
+
+$map__font-sizes--h3: (
+
+    /* (font-size, line-height) */
+    null: (2.2rem, 2.5rem),
+    x-small: (2.2rem, 2.5rem),   /* REM Multiplier: 1.13636364 */
+    small: (2.2rem, 2.5rem),    /* REM Multiplier: 1.13636364 */
+    medium: (2.4rem, 3.0rem),  /* REM Multiplier: 1.25 */
+    medium-large: (2.8rem, 3.5rem), /* REM Multiplier: 1.25 */
+    large: (2.8rem, 3.5rem), /* REM Multiplier: 1.25 */
+);
+
+$map__font-sizes--h4: (
+
+    /* (font-size, line-height) */
+    null: (1.8rem, 1.999999998rem),
+    x-small: (1.8rem, 1.999999998rem),   /* REM Multiplier: 1.11111111 */
+    small: (1.8rem, 1.999999998rem),    /* REM Multiplier: 1.11111111 */
+    medium: (1.8rem, 2.199999996rem),  /* REM Multiplier: 1.22222222 */
+    medium-large: (1.8rem, 2.199999996rem),  /* REM Multiplier: 1.22222222 */
+    large: (1.8rem, 2.199999996rem),  /* REM Multiplier: 1.22222222 */
+);
+
+$map__font-sizes--blockquote: (
+
+    /* (font-size, line-height) */
+    null: (2.0rem, 2.5rem),
+    x-small: (2.0rem, 2.5rem),   /* REM Multiplier: 1.25 */
+    small: (2.0rem, 2.5rem),   /* REM Multiplier: 1.25 */
+    medium: (2.4rem, 3.4999999920000002rem),  /* REM Multiplier: 1.45833333 */
+    medium-large: (2.4rem, 3.4999999920000002rem),  /* REM Multiplier: 1.45833333 */
+    large: (2.4rem, 3.4999999920000002rem),  /* REM Multiplier: 1.45833333 */
+);
+
+/**
+ * @param $fs-map -- key-value pair with size variables or literals as keys,
+ * and a value consisting of either a font-size, or a (font-size, line-height) list
+ */
+@mixin FontSize($fs-map, $breakpoint-sizes: $map__breakpoint-sizes) {
+    @each $breakpoint-size, $font-size in $fs-map {
+        @if $breakpoint-size == null {
+            @include MakeFontSize($font-size);
+        } @else {
+            /* If $font-size is a key that exists in
+             * $breakpoint-sizes, use the value to
+             * create a media query using the breakpoint */
+            @if map_has_key($breakpoint-sizes, $breakpoint-size) {
+                $breakpoint-size: map-get($breakpoint-sizes, $breakpoint-size);
+            }
+            /* If the $font-size is NOT in the $breakpoint-sizes map,
+             * we assume it's a literal value. This way, each map can mix and match
+             * keys and values as needed
+             */
+            @media screen and (min-width: $breakpoint-size) {
+                @include MakeFontSize($font-size);
+            }
+        }
+    }
+}
+
+
+/* Utility function for mixin font-size */
+@mixin MakeFontSize($font-size) {
+    @if (type_of($font-size) == 'list') {
+        // include both font-size and line-height
+        font-size: nth($font-size, 1);
+        @if (length($font-size) > 1) {
+            line-height: nth($font-size, 2);
+        }
+    }
+    @else {
+        font-size: $font-size;
+    }
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

@@ -1,0 +1,40 @@
+/**
+ * Attribute API for declarative flexbox styling
+ */
+
+[layout] {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+[layout="horizontal"],
+[layout="row"] {
+    flex-direction: row;
+}
+
+[layout="vertical"],
+[layout="column"] {
+    flex-direction: column;
+}
+
+[layout-align="space-around"] {
+    justify-content: space-around;
+}
+
+[layout-align="space-between"] {
+    justify-content: space-between;
+}
+
+[layout-align="center"] {
+    justify-content: center;
+}
+
+[layout-align="start"] {
+    justify-content: flex-start;
+}
+
+[layout-align="end"] {
+    justify-content: flex-end;
+}

@@ -1,0 +1,13 @@
+.icon-fab {
+    width: $tap-target__min-width;
+    min-width: $tap-target__min-width;
+    min-height: $tap-target__min-height;
+    height: $tap-target__min-height;
+    background-color: $theme-color__primary;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $font-color__button--white-on-dark-background;
+    border-radius: 50%;
+}

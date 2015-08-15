@@ -1,0 +1,111 @@
+%button {
+    height: $button__height;
+    width: $button__width;
+    padding: $padding__button;
+    outline: none;
+    border: 1px solid $button__color;
+    background-color: $button__color;
+    background-image: linear-gradient(
+            hsla(0, 0%, 100%, .2),
+            transparent
+    );
+    border-radius: .2em;
+    box-shadow: 0 .05em .25em hsla(0, 0%, 0%, 0.5);
+    color: $font-color__button--white-on-dark-background;
+    text-shadow: 0 -.05em .05em hsla(0, 0%, 0%, 0.5);
+    font-size: 1.25em;
+    line-height: 2.4rem;
+    text-align: center;
+    display: block;
+}
+
+%button--holo {
+    height: $button__height;
+    width: $button__width;
+    padding: $padding__button;
+    outline: none;
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+    color: $font-color__button--white-on-dark-background;
+    font-size: 1.25em;
+    line-height: 2.4rem;
+    text-align: center;
+    display: block;
+}
+
+/**
+ * A link styled as a button
+ */
+%button-link {
+    @extend %button;
+    text-decoration: none;
+}
+
+%button-link--holo {
+    @extend %button--holo;
+    text-decoration: none;
+}
+
+
+%button-fab {
+    width: $button-fab__width;
+    height: $button-fab__height;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    background-color: $button__color;
+    box-shadow: 0 0.5em .25em hsla(0, 0%, 0%, 0.5);
+    font-size: 1.25em;
+}
+
+
+
+%toolbar {
+    color: $font-color__primary-text--white-on-dark-background;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: $navbar__height;
+    background-color: $theme-color__primary--alt-light;
+    max-width: 100%;
+    width: 100%;
+    font-size: 2.0rem;
+    position: relative;
+}
+
+
+/**
+ * Default helper styles when displaying an image via
+ * the background-image property and we want to guarantee
+ * that the size is contained
+ */
+%centered-background-image--contain {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
+/**
+ * Default helper styles when displaying an image via
+ * the background-image property and we want to guarantee
+ * that the size covers the container
+ */
+%centered-background-image--cover {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+%absolute-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+}

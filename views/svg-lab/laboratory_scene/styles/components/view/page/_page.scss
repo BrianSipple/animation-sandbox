@@ -1,0 +1,37 @@
+.page {
+    padding-top: $navbar__height;     // Accounts for the 'fixed' nature of the navbar
+    min-height: 100vh;
+
+
+    .page__title-container {
+        margin-bottom: 3.5em;
+    }
+
+    .page__title {
+        margin-top: 1.15em;
+        color: $theme-color--primary;
+    }
+
+    .page__hr {
+        border: 0;
+        height: 1px;
+        //   background-image: linear-gradient(
+        //     hsla(0, 0%, 0%, 0.23) 25%, hsla(0, 0%, 0%, 0.23) 75%
+        //   );
+        background-image: linear-gradient(to right,
+            transparent, hsla(0, 0%, 0%, 0.23), transparent
+        );
+        margin: 0 auto;
+        width: 75%;
+    }
+
+    .page__fine-print {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+        color: $font-color__hint-text--black-on-light-background;
+        margin: 0 1.5em;
+        width: 40%;
+        text-align: left;
+    }
+}

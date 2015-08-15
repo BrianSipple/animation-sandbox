@@ -1,0 +1,26 @@
+@import '../../helpers/lab/lab-options';
+
+body {
+    background-color: $color__background;
+}
+
+.lab {
+    .lab__title {
+        color: $color__primary--alt-hue-dark;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        text-align: center;
+        transform: translate3d(-50%, -150%, 0);
+        white-space: nowrap;            
+    }
+    
+    #lab-svg {
+        position: absolute;
+        width: $lab-svg__width;
+        height: $lab-svg__height;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -54%, 0);
+    }
+}

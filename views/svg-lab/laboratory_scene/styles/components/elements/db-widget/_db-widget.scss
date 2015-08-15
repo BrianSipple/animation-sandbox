@@ -1,0 +1,67 @@
+$db-widget__width: 420px;
+$db-widget__height: $db-widget__width * .8;
+$db-widget__border-radius: 7.5px;
+
+.db-widget {
+  width: $db-widget__width;
+  min-width: $db-widget__width;
+  height: $db-widget__height;
+  border-radius: $db-widget__border-radius;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 1em 1.5em;
+  overflow: none;
+  background-color: $background-color__content--primary;
+  color: $font-color__primary-text--black-on-light-background;
+
+  .db-widget__content,
+  .db-widget__header,
+  .db-widget__footer {
+    display: flex;
+  }
+
+  .db-widget__header,
+  .db-widget__content {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+
+  .db-widget__header {
+    border-top-left-radius: $db-widget__border-radius;
+    border-top-right-radius: $db-widget__border-radius;
+    height: 14%;
+    min-height: 14%;
+    color: $font-color__primary-text--white-on-dark-background;
+    background-color: $theme-color__accent;
+  }
+  .db-widget__content {
+    padding: $padding__content;
+    flex-grow: 1;
+  }
+
+  .db-widget__footer {
+    flex-direction: row;
+    justify-content: flex-end;
+
+    .footer__item {
+      flex-grow: 1;
+    }
+  }
+
+  .db-widget__primary-stat {
+    font-size: 3.5rem;
+  }
+
+  .subtitle {
+    color: $font-color__secondary-text--black-on-light-background;
+  }
+
+
+
+  @include BoxShadowHelper(3);
+
+}

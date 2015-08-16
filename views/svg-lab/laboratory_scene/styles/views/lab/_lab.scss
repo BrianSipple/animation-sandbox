@@ -11,6 +11,7 @@ body {
         left: 50%;
         top: 50%;
         text-align: center;
+        opacity: 0;  // animate in on intro
         transform: translate3d(-50%, -150%, 0);
         white-space: nowrap;            
     }
@@ -22,5 +23,13 @@ body {
         top: 50%;
         left: 50%;
         transform: translate3d(-50%, -54%, 0);
+    }
+    
+    #BulbIdea,
+    #Brian,
+    #Coin,
+    #Stage {    
+        visibility: hidden;
+        opacity: 0;
     }
 }

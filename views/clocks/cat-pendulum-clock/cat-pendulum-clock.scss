@@ -1,0 +1,32 @@
+@import '../../../styles/application';
+
+$background-color: hsla(189, 59%, 68%, 1);
+
+.main-view-container {
+    background-color: $background-color;        
+}
+
+.scene {
+    width: 80%;
+    height: 80%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+#Clock {
+    width: 100%;
+    height: 100%;
+    position: relative;    
+}
+
+#Tail {
+    transform-origin: 50% 0%;
+}
+
+.clock-hand__base,
+.eyelid {
+    transform-origin: 50% 50%;
+}
+

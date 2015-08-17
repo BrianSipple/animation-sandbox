@@ -2,7 +2,8 @@ var app = (function (exports) {
 
     
     var 
-        SELECTORS = {            
+        SELECTORS = {           
+            mainSceneContainer: '.lab',
             mainSVG: '#lab-svg',            
             Brian: '#Brian',
             BrianSmile: '#Smile',
@@ -30,7 +31,10 @@ var app = (function (exports) {
             elementScaling: 0.3,
             fadeInOrOut: 0.5,
             slideElemsInOrOut: 0.8,
-            brianSmile: 0.33
+            brianSmile: 0.33,
+            brianZoomOut: 1,
+            stageReveal: 1,
+            colorChange: 0.5
         },
         
         EASINGS = {
@@ -41,6 +45,7 @@ var app = (function (exports) {
         },
         
         COLORS = {
+            background: '#7dcfdd',
             machine: {
                 background: '#c6d7df',
                 raisedGroves: '#7c99a2'
@@ -48,10 +53,11 @@ var app = (function (exports) {
         },
         
         LABELS = {
-            sceneIntro: 'scene-intro'
+            sceneIntro: 'scene-intro',
+            brianHasAppeared: 'brian-has-appeared'
         },
         
-        
+        mainSceneContainer = document.querySelector(SELECTORS.mainSceneContainer),
         mainSVG = document.querySelector(SELECTORS.mainSVG),
         BrianSVG = mainSVG.querySelector(SELECTORS.Brian),
         BrianSmileSVG = mainSVG.querySelector(SELECTORS.BrianSmile),
@@ -151,6 +157,8 @@ var app = (function (exports) {
     }
     
     
+    
+    
     function animateInBrian () {        
         return TweenMax.to(
             BrianSVG,
@@ -173,10 +181,22 @@ var app = (function (exports) {
             { scale: 1, ease: EASINGS.default }
         );
     }
+    function animateBrianToOriginalPosition () {
+        return TweenMax.to(
+            BrianSVG,
+            DURATIONS.brianZoomOut,
+            {x: '0%', scale: 1, ease: EASINGS.default}
+        );
+    }
     
-    
-    
-    
+    function unfurlMainStageMask () {
+        return TweenMax.to(
+            stageMask,
+            DURATIONS.stageReveal,
+            {x: '0%', ease: EASINGS.default}
+        );
+    }
+                
     function introduceScene () {
         
         introTL = new TimelineMax();  
@@ -186,6 +206,11 @@ var app = (function (exports) {
         introTL.add(brianAnim);
         introTL.add(slideInTitle(), '-=' + brianAnim.duration() / 2);
         introTL.add(makeBrianSmile(), '+0.8');
+        introTL.add(LABELS.brianHasAppeared);
+        
+        introTL.add(animateBrianToOriginalPosition(), LABELS.brianHasAppeared + '+=1');        
+        introTL.add(unfurlMainStageMask(), LABELS.brianHasAppeared + '+=1');
+        introTL.to(mainSceneContainer, DURATIONS.colorChange, { backgroundColor: COLORS.background }, LABELS.brianHasAppeared + '+=1');
                 
         return introTL;        
     }

@@ -1,3 +1,6 @@
+/* ---------------------- Base colors ---------------------- */
+$white: hsla(0, 100%, 100%, 1.0);
+
 /* ---------------------- Theme colors ---------------------- */
 $theme-color__primary: hsla(154, 100%, 50%, 1);
 $theme-color__primary--alt-light: hsla(154, 100%, 65%, 1);
@@ -11,7 +14,7 @@ $theme-color__special: hsla(61, 100%, 50%, 1);  /* Surprise me */
 
 
 $background-color__page--primary: hsla(0, 0%, 96%, 1);
-$background-color__content--primary: hsla(0, 100%, 100%, 1);
+$background-color__content--primary: $white;
 
 
 
@@ -25,8 +28,8 @@ $font-size__root: 1.6rem;
 $font-size__md: 1.6rem;
 
 /* White text on dark backgrounds */
-$font-color__primary-text--white-on-dark-background: hsla(0, 100%, 100%, 1);
-$font-color__icon--white-on-dark-background: hsla(0, 100%, 100%, 1);
+$font-color__primary-text--white-on-dark-background: $white;
+$font-color__icon--white-on-dark-background: $white;
 $font-color__button--white-on-dark-background: hsla(0, 100%, 100%, 0.7);
 $font-color__secondary-text--white-on-dark-background: hsla(0, 100%, 100%, .70);
 $font-color__disabled--white-on-dark-background: hsla(0, 100%, 100%, .30);

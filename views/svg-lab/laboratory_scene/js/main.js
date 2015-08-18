@@ -29,6 +29,7 @@ var app = (function (exports) {
         
         DURATIONS = {
             elementScaling: 0.3,
+            elementRepositioning: 0.45,
             fadeInOrOut: 0.5,
             slideElemsInOrOut: 0.8,
             brianSmile: 0.33,
@@ -41,7 +42,8 @@ var app = (function (exports) {
             default: Power4.easeInOut,
             elementScaling: Power4.easeInOut,
             slideInOrOut: Power4.easeInOut,            
-            fadeInOrOut: Power3.easeOut
+            fadeInOrOut: Power3.easeOut,
+            colorChange: Power0.easeNone
         },
         
         COLORS = {
@@ -54,7 +56,9 @@ var app = (function (exports) {
         
         LABELS = {
             sceneIntro: 'scene-intro',
-            brianHasAppeared: 'brian-has-appeared'
+            brianHasAppeared: 'brian-has-appeared',
+            titleShiftingUp: 'title-shifing-up',
+            titleTextHasChanged: 'title-text-has-changed'
         },
         
         mainSceneContainer = document.querySelector(SELECTORS.mainSceneContainer),
@@ -189,13 +193,25 @@ var app = (function (exports) {
         );
     }
     
+    function fadeOutTitleText () {
+        return TweenMax.to(mainTitleElem, DURATIONS.fadeInOrOut, { autoAlpha: 0 });
+    }
+    
+    function shiftBackgroundColorToPrimary () {
+        return TweenMax.to(
+            mainSceneContainer, 
+            DURATIONS.colorChange, 
+            { backgroundColor: COLORS.background, ease: EASINGS.colorChange }
+        );
+    }
+    
     function unfurlMainStageMask () {
         return TweenMax.to(
             stageMask,
             DURATIONS.stageReveal,
             {x: '0%', ease: EASINGS.default}
         );
-    }
+    }    
                 
     function introduceScene () {
         
@@ -208,9 +224,38 @@ var app = (function (exports) {
         introTL.add(makeBrianSmile(), '+0.8');
         introTL.add(LABELS.brianHasAppeared);
         
+        
         introTL.add(animateBrianToOriginalPosition(), LABELS.brianHasAppeared + '+=1');        
+        introTL.add(fadeOutTitleText(), LABELS.brianHasAppeared + '+=1')
         introTL.add(unfurlMainStageMask(), LABELS.brianHasAppeared + '+=1');
-        introTL.to(mainSceneContainer, DURATIONS.colorChange, { backgroundColor: COLORS.background }, LABELS.brianHasAppeared + '+=1');
+        introTL.add(shiftBackgroundColorToPrimary(), LABELS.brianHasAppeared + '+=1');
+        
+        
+        introTL.set(mainTitleElem, {y: '-=100px', text: 'Welcome to my Animation Laboratory'});
+        introTL.addLabel(LABELS.titleTextHasChanged);
+                 
+        
+        introTL.to(
+            mainTitleElem, 
+            DURATIONS.fadeInOrOut, 
+            { autoAlpha: 1, y: '+=20px', ease: EASINGS.fadeInOrOut }, 
+            LABELS.titleTextHasChanged
+        );
+        
+        introTL.to(
+            mainTitleElem, 
+            DURATIONS.fadeInOrOut, 
+            { autoAlpha: 0, y: '+=10px', ease: EASINGS.fadeInOrOut },
+            '+=2.5'
+        );
+        
+        introTL.set(mainTitleElem, {y: '-=30px', text: 'Let\'s have some fun!' });
+        introTL.to(mainTitleElem, DURATIONS.fadeInOrOut, { autoAlpha: 1, y: '+=20', ease: EASINGS.fadeInOrOut });
+        introTL.to(mainTitleElem, DURATIONS.fadeInOrOut, { autoAlpha: 0, y: '+=10', ease: EASINGS.fadeInOrOut }, '+=2.5');
+        
+        introTL.to(stageSVG, DURATIONS.fadeInOrOut, {autoAlpha: 1, ease: Power0.none }, '-=' + DURATIONS.fadeInOrOut);
+        
+        
                 
         return introTL;        
     }

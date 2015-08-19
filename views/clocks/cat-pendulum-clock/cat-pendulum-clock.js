@@ -64,7 +64,7 @@ var app = (function (exports) {
             J: 0,
             
             initFromSVGs: function initFromSVGs (svgElem, containerSVGElem) {
-                debugger;
+                //debugger;
                 
                 var 
                     boundingRect = svgElem.getBoundingClientRect(),
@@ -121,41 +121,48 @@ var app = (function (exports) {
             },
             
             animate: function animate () {
-                debugger;
+                //debugger;
                             
                 // Subtract an extra PI/2 to account for the fact that we start in the downward (PI/2 rad) postion 
                 var rotation = (this.theta - (Math.PI / 2)) / 2;
                 
                 if (this.maxTheta) {
-                    if (this.theta > this.maxTheta) {
-                        rotation = ( rotation / (Math.PI/4) ) * this.maxTheta;
-                        console.log('New Rotation: ' + rotation);
-                    
-                    } else if (this.theta < -this.maxTheta) {
-                        rotation = ( rotation / (Math.PI/4) ) * -this.maxTheta;
-                        console.log('New Rotation: ' + rotation);
-                    }
+                    debugger;
+                    rotation = this.maxTheta * -Math.cos(this.theta);
+//                    if (this.theta > this.maxTheta) {
+//                        rotation = ( rotation / (Math.PI/4) ) * this.maxTheta;
+//                        //rotation = (this.maxTheta - (Math.PI / 2)) / 2;
+//                        console.log('New Rotation: ' + rotation);
+//                    
+//                    } else if (this.theta < -this.maxTheta) {
+//                        rotation = ( rotation / (Math.PI/4) ) * -this.maxTheta;
+//                        //rotation = -(this.maxTheta - (Math.PI / 2)) / 2;
+//                        console.log('New Rotation: ' + rotation);
+//                    }
                 }
                                                    
                 var 
-                    newXOffset = (this.width/2) + (this.length * Math.cos(this.theta)),
-                    xIncrement = newXOffset - this.pos.cx;
+                    newXOffset = (this.width/2) + (this.length * Math.cos(this.theta));
+                    //xIncrement = newXOffset - this.pos.cx;
                 
                 // Handle cases where we're bounding the x offset
-                if (this.maxXOffset) {
-                    debugger;
-                    if (xIncrement > this.maxXOffset) {
-                        xIncrement = ( xIncrement / (this.swingSpan / 2) ) * this.maxXOffset;
-                        
-                    } else if (xIncrement < -this.maxXOffset) {
-                        xIncrement = ( xIncrement / (this.swingSpan / 2) ) * -this.maxXOffset;
-                    }
+                if (this.maxXOffset) {                    
+                    //debugger;
+                    newXOffset = this.maxXOffset * Math.cos(this.theta);
+//                    if (newXOffset > this.maxXOffset) {
+//                        //newXOffset = ( newXOffset / (this.swingSpan / 2) ) * this.maxXOffset;
+//                        //newXOffset = this.maxXOffset;
+//                        newXOffset = this.maxXOffset * Math.cos(this.theta);
+//                        
+//                    } else if (newXOffset < -this.maxXOffset) {
+//                        //newXOffset = ( newXOffset / (this.swingSpan / 2) ) * -this.maxXOffset;
+//                        //newXOffset = -this.maxXOffset;
+//                        newXOffset = this.maxXOffset * Math.cos(this.theta);
+//                    }
                 }
-                
-                
-                
+                                                
                 // update the state -- then set it on the element
-                this.pos.cx = newXOffset;
+                this.pos.cx += newXOffset;
                 
                 
                 console.log('New X Offset: ' + newXOffset);
@@ -305,12 +312,12 @@ var app = (function (exports) {
      * motion of the eyelid, but restrict its angle to a tighter span
      * due to the nature of its position / alignment within the eyeball
      */
-    function restrictEyelidMotion (thetaLimit) {
+    function restrictEyelidMotion (thetaLimit, xOffsetLimit) {
         RightEyelid.maxTheta = thetaLimit;
-        RightEyelid.maxXOffset = RightEyelid.swingSpan / 2.5;
+        RightEyelid.maxXOffset = xOffsetLimit;
         
         LeftEyelid.maxTheta = thetaLimit;
-        LeftEyelid.maxXOffset = LeftEyelid.swingSpan / 2.5;
+        LeftEyelid.maxXOffset = xOffsetLimit;
     }
     
             
@@ -332,7 +339,7 @@ var app = (function (exports) {
     
     function init () {                                
         initPendulumObjects();        
-        restrictEyelidMotion(Math.PI/10);
+        restrictEyelidMotion(Math.PI/20, LeftEyelid.swingSpan / 4.75);
         initClockHands();
         computeClockHandThetas(previousTime);
         runTheClock();

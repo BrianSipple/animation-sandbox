@@ -87,7 +87,7 @@ var app = (function (exports) {
              * BOTH calculated relative to time.
              */
             updateState: function updateState (elapsedTimeMS) {
-                debugger;
+                //debugger;
                 var deltaT = elapsedTimeMS / 1000;  // MS to seconds
                 deltaT = adjustDeltaToHandleCrazyTimeWarping(deltaT);
 
@@ -122,27 +122,9 @@ var app = (function (exports) {
             
             animate: function animate () {
                 debugger;
-                //this.currentLeftX += (this.swingSpan / 2) + (this.length * Math.cos(this.theta));
-                //this.currentLeftX += this.length * Math.cos(this.theta);
-                //this.currentLeftX = this.startingLeftX + ( ( Math.cos(this.theta) * (this.swingSpan/2) ) - this.width);
-                
-                var 
-                    newX = this.pos.cx + (this.length * Math.cos(this.theta)),
-                    xIncrement = newX - this.pos.cx;                        
-                
-                console.log('Animated el: ' + this.el);
-                console.log('Previous CX: ' + this.pos.cx);
-                console.log('New CX: ' + newX);
-                console.log('Computed Rotation: ' + this.theta);
-                console.log('Max Angle: ' + this.maxTheta);
-                
-                // update the state -- then set it on the element
-                this.pos.cx = newX;
-                
+                            
                 // Subtract an extra PI/2 to account for the fact that we start in the downward (PI/2 rad) postion 
                 var rotation = (this.theta - (Math.PI / 2)) / 2;
-                
-                
                 
                 if (this.maxTheta) {
                     if (this.theta > this.maxTheta) {
@@ -154,10 +136,33 @@ var app = (function (exports) {
                         console.log('New Rotation: ' + rotation);
                     }
                 }
+                                                   
+                var 
+                    newXOffset = (this.width/2) + (this.length * Math.cos(this.theta)),
+                    xIncrement = newXOffset - this.pos.cx;
+                
+                // Handle cases where we're bounding the x offset
+                if (this.maxXOffset) {
+                    debugger;
+                    if (xIncrement > this.maxXOffset) {
+                        xIncrement = ( xIncrement / (this.swingSpan / 2) ) * this.maxXOffset;
+                        
+                    } else if (xIncrement < -this.maxXOffset) {
+                        xIncrement = ( xIncrement / (this.swingSpan / 2) ) * -this.maxXOffset;
+                    }
+                }
+                
+                
+                
+                // update the state -- then set it on the element
+                this.pos.cx = newXOffset;
+                
+                
+                console.log('New X Offset: ' + newXOffset);
                 
                 
                 this.el.style.transform = 
-                    'translateX(' + xIncrement + 'px) ' +
+                    'translateX(' + newXOffset + 'px) ' +
                     //'rotateZ(' + this.theta + 'rad)';
                     'rotateZ(' + rotation + 'rad)';
             }        
@@ -185,7 +190,7 @@ var app = (function (exports) {
             },
             
             animate: function animate () {
-                debugger;
+                //debugger;
                 this.el.style.transform = 'rotateZ(' + this.theta + 'rad)';
             }
             
@@ -300,9 +305,12 @@ var app = (function (exports) {
      * motion of the eyelid, but restrict its angle to a tighter span
      * due to the nature of its position / alignment within the eyeball
      */
-    function restrictEyelidTheta (thetaLimit) {
+    function restrictEyelidMotion (thetaLimit) {
         RightEyelid.maxTheta = thetaLimit;
+        RightEyelid.maxXOffset = RightEyelid.swingSpan / 2.5;
+        
         LeftEyelid.maxTheta = thetaLimit;
+        LeftEyelid.maxXOffset = LeftEyelid.swingSpan / 2.5;
     }
     
             
@@ -310,7 +318,7 @@ var app = (function (exports) {
                 
         requestAnimationFrame(runTheClock);
         
-        debugger;
+        //debugger;
         
         currentTime = new Date();
         elapsedTimeMS = currentTime.getTime() - previousTime.getTime();  // elapsed time in ms b/w frames
@@ -324,7 +332,7 @@ var app = (function (exports) {
     
     function init () {                                
         initPendulumObjects();        
-        restrictEyelidTheta(Math.PI/10);
+        restrictEyelidMotion(Math.PI/10);
         initClockHands();
         computeClockHandThetas(previousTime);
         runTheClock();

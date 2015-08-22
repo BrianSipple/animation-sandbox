@@ -1,6 +1,92 @@
 @import '../../helpers/lab/lab-options';
 
 
+@keyframes FlickerBulbYellow {
+    
+    //TODO: Consider toggleing the timing for a supercool flicker
+    8.333333333333334% {
+        fill: white;
+    }
+    16.666667% {
+        fill: $idea-bulb__flicker-color--yellow-1;
+    }
+    25% {
+        fill: white; 
+    }
+    33.333333% {
+        fill: $idea-bulb__flicker-color--yellow-2;
+    }
+    41.66666666666667% {
+        fill: white;
+    }
+    50% {
+        fill: $idea-bulb__flicker-color--yellow-3;
+    }
+    58.333333333333336% {
+        fill: white;
+    }
+    66.6666666% {
+        fill: $idea-bulb__flicker-color--yellow-4;
+    }
+    75% {
+        fill: white;
+    }
+    83.3333333% {
+        fill: $idea-bulb__flicker-color--yellow-5;
+    }
+    91.66666666666667% {
+        fill: white;
+    }
+    100% {
+        fill: $idea-bulb__flicker-color--yellow-6;
+    }  
+}
+
+
+@keyframes FlickerBulbGreen {
+    
+    //TODO: Consider toggleing the timing for supercool flicker
+    8.333333333333334% {
+        fill: white;
+    }
+    16.666667% {
+        fill: $idea-bulb__flicker-color--green-1;
+    }
+    25% {
+        fill: white; 
+    }
+    33.333333% {
+        fill: $idea-bulb__flicker-color--green-2;
+    }
+    41.66666666666667% {
+        fill: white;
+    }
+    50% {
+        fill: $idea-bulb__flicker-color--green-3;
+    }
+    58.333333333333336% {
+        fill: white;
+    }
+    66.6666666% {
+        fill: $idea-bulb__flicker-color--green-4;
+    }
+    75% {
+        fill: white;
+    }
+    83.3333333% {
+        fill: $idea-bulb__flicker-color--green-5;
+    }
+    91.66666666666667% {
+        fill: white;
+    }
+    100% {
+        fill: $idea-bulb__flicker-color--green-6;
+    } 
+}
+
+
+
+
 .lab {
     height: 100%;
     background-color: $white;  /* Animate to the pre-defined background color on intro */
@@ -32,4 +118,21 @@
         visibility: hidden;
         opacity: 0;
     }
+    
+    
+    #BulbIdeaLight {
+        &.is-flickering--yellow {
+            animation: FlickerBulbYellow;
+            animation-duration: 0.8s;
+            animation-iteration-count: 3;
+        }
+        &.is-flickering--green {
+            animation: FlickerBulbGreen;
+            animation-duration: 0.8s;
+            animation-iteration-count: 3;
+            animation-fill-mode: forwards;
+            
+        }
+    }
+    
 }

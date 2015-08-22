@@ -1,0 +1,135 @@
+$background-color: hsla(19, 23%, 32%, 1);
+
+
+/**
+ * The whole atom itself
+ */
+$atom__diameter--hydrogen: 7.8125rem;
+$atom-diameter__carbon: $atom__diameter--hydrogen * 1.5714285;
+$atom-diameter__nitrogen: $atom__diameter--hydrogen * 1.7428571428;
+$atom-diameter__oxygen: $atom__diameter--hydrogen * 1.857142857142;
+$atom-diameter__phosphorus: $atom__diameter--hydrogen * 2.6;
+$atom-diameter__calcium: $atom__diameter--hydrogen * 2.7142857142;
+$atom__border-width: 0.3rem;
+$atom__padding: 2rem;
+
+
+
+/**
+ * Atom Particles (electrons, protons, neutrons)
+ */
+$atom-nucleus-particle__diameter: $atom__diameter--hydrogen / 6;
+$atom-nucleus-particle__diameter--inner: $atom-nucleus-particle__diameter * 0.66667;
+$atom-nucleus-particle__glow-radius: 0.8rem;
+$atom-nucleus-particle__bg-gradient--proton: 
+    radial-gradient(circle center, hsla(5, 84%, 57%, 1) 50%, hsla(358, 75%, 84%, 1));
+$atom-nucleus-particle__bg-gradient--neutron: 
+    radial-gradient(circle center, hsla(90, 80%, 46%, 1) 50%, hsla(92, 82%, 78%, 1));
+
+
+$atom-electron__diameter: $atom-nucleus-particle__diameter * 0.8;
+$atom-electron__diameter--inner: $atom-electron__diameter * 0.66667;
+$atom-electron__border-width: 1rem;
+$atom-electron__color: hsla(191, 95%, 75%, 1);
+$atom-electron__glow-radius: $atom-nucleus-particle__glow-radius / 2;
+
+
+
+/**
+ * Atom orbit paths 
+ */
+$atom-oribit-path__thickness: 0.4rem;
+$atom-oribit-path__color: white;
+
+$atom__yRotation: 73deg;
+$atom--zTilt: 45deg;
+$atom-electron__orbit-duration: 2.0s;
+
+$atom-electron-1__color--dark: hsla(57, 99%, 61%, 1);
+$atom-electron-1__color--light: HSLA(56, 100%, 72%, 1);
+    
+$atom-electron-2__color--dark: hsla(14, 72%, 60%, 1);
+$atom-electron-2__color--light: hsla(42, 92%, 74%, 1);
+    
+$atom-electron-3__color--dark: hsla(227, 11%, 34%, 1)
+$atom-electron-3__color--light: hsla(227, 17%, 61%, 1)
+    
+$atom-electron-4__color--dark: hsla(263, 96%, 68%, 1)
+$atom-electron-4__color--light: hsla(253, 87%, 85%, 1);  
+
+
+/**
+ * Compute orbit parameters for our 4 different possible elliptical orbits
+ */
+$atom-electron-orbits-map: (
+    1: (
+        background: radial-gradient(
+            circle center, 
+            $atom-electron-1__color--dark 50%,
+            $atom-electron-1__color--light
+        ),
+        orbitDuration: $atom-electron__orbit-duration,
+        semiMajorAxisLength: 4,  // n
+        semiMinorAxisLength: 4,  // k
+        tilt: $atom--zTilt,
+        startRotation: 0deg
+    ),
+    2: (
+        background: radial-gradient(
+            circle center, 
+            $atom-electron-2__color--dark 50%,
+            $atom-electron-2__color--light
+        ),
+        orbitDuration: $atom-electron__orbit-duration,
+        semiMajorAxisLength: 4,
+        semiMinorAxisLength: 3,
+        tilt: $atom--zTilt,
+        startRotation: 45deg
+    ),
+    3: (
+        background: radial-gradient(
+            circle center, 
+            $atom-electron-3__color--dark 50%,
+            $atom-electron-3__color--light
+        ),
+        orbitDuration: $atom-electron__orbit-duration,
+        semiMajorAxisLength: 4,
+        semiMinorAxisLength: 2,
+        tilt: $atom--zTilt,
+        startRotation: 90deg
+    ),
+    4: (
+        background: radial-gradient(
+            circle center, 
+            $atom-electron-4__color--dark 50%,
+            $atom-electron-4__color--light
+        ),
+        orbitDuration: $atom-electron__orbit-duration,
+        semiMajorAxisLength: 4,
+        semiMinorAxisLength: 1,
+        tilt: $atom--zTilt,
+        startRotation: 135deg
+    )    
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

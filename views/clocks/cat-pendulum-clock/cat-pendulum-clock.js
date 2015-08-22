@@ -73,12 +73,10 @@ var app = (function (exports) {
                 this.el = svgElem;
                 this.length = boundingRect.height;
                 this.width = boundingRect.width;
-                //this.startingLeftX = this.currentLeftX = boundingRect.left;
                 this.pos.cx = boundingRect.left + ( (boundingRect.right - boundingRect.left) / 2);
                 
                 this.swingSpan = containerBoundingRect.width;
                 this.J = this.mass * (this.length * this.length);  // moment of inertia
-                //this.J = this.mass * (this.length * this.length / this.length);
             },
             
             /**
@@ -129,36 +127,14 @@ var app = (function (exports) {
                 if (this.maxTheta) {
                     debugger;
                     rotation = this.maxTheta * -Math.cos(this.theta);
-//                    if (this.theta > this.maxTheta) {
-//                        rotation = ( rotation / (Math.PI/4) ) * this.maxTheta;
-//                        //rotation = (this.maxTheta - (Math.PI / 2)) / 2;
-//                        console.log('New Rotation: ' + rotation);
-//                    
-//                    } else if (this.theta < -this.maxTheta) {
-//                        rotation = ( rotation / (Math.PI/4) ) * -this.maxTheta;
-//                        //rotation = -(this.maxTheta - (Math.PI / 2)) / 2;
-//                        console.log('New Rotation: ' + rotation);
-//                    }
                 }
                                                    
-                var 
-                    newXOffset = (this.width/2) + (this.length * Math.cos(this.theta));
-                    //xIncrement = newXOffset - this.pos.cx;
+                var newXOffset = (this.width/2) + (this.length * Math.cos(this.theta));
                 
                 // Handle cases where we're bounding the x offset
                 if (this.maxXOffset) {                    
                     //debugger;
                     newXOffset = this.maxXOffset * Math.cos(this.theta);
-//                    if (newXOffset > this.maxXOffset) {
-//                        //newXOffset = ( newXOffset / (this.swingSpan / 2) ) * this.maxXOffset;
-//                        //newXOffset = this.maxXOffset;
-//                        newXOffset = this.maxXOffset * Math.cos(this.theta);
-//                        
-//                    } else if (newXOffset < -this.maxXOffset) {
-//                        //newXOffset = ( newXOffset / (this.swingSpan / 2) ) * -this.maxXOffset;
-//                        //newXOffset = -this.maxXOffset;
-//                        newXOffset = this.maxXOffset * Math.cos(this.theta);
-//                    }
                 }
                                                 
                 // update the state -- then set it on the element
@@ -197,7 +173,6 @@ var app = (function (exports) {
             },
             
             animate: function animate () {
-                //debugger;
                 this.el.style.transform = 'rotateZ(' + this.theta + 'rad)';
             }
             
@@ -324,8 +299,6 @@ var app = (function (exports) {
     function runTheClock () {
                 
         requestAnimationFrame(runTheClock);
-        
-        //debugger;
         
         currentTime = new Date();
         elapsedTimeMS = currentTime.getTime() - previousTime.getTime();  // elapsed time in ms b/w frames

@@ -1263,6 +1263,58 @@ h1, h2, h3, h4 {
   height: 100%; }
 
 /* Import styles for view sections/pages here */
+@keyframes FlickerBulbYellow {
+  8.333333333333334% {
+    fill: white; }
+  16.666667% {
+    fill: #d18829; }
+  25% {
+    fill: white; }
+  33.333333% {
+    fill: #fbd893; }
+  41.66666666666667% {
+    fill: white; }
+  50% {
+    fill: #f9c643; }
+  58.333333333333336% {
+    fill: white; }
+  66.6666666% {
+    fill: #d79237; }
+  75% {
+    fill: white; }
+  83.3333333% {
+    fill: #fdf0bf; }
+  91.66666666666667% {
+    fill: white; }
+  100% {
+    fill: #fefce7; } }
+
+@keyframes FlickerBulbGreen {
+  8.333333333333334% {
+    fill: white; }
+  16.666667% {
+    fill: #3a6327; }
+  25% {
+    fill: white; }
+  33.333333% {
+    fill: #406f2a; }
+  41.66666666666667% {
+    fill: white; }
+  50% {
+    fill: #2a491d; }
+  58.333333333333336% {
+    fill: white; }
+  66.6666666% {
+    fill: #64a942; }
+  75% {
+    fill: white; }
+  83.3333333% {
+    fill: #87e75a; }
+  91.66666666666667% {
+    fill: white; }
+  100% {
+    fill: #64a942; } }
+
 .lab {
   height: 100%;
   background-color: white;
@@ -1292,3 +1344,14 @@ h1, h2, h3, h4 {
 .lab #Stage {
   visibility: hidden;
   opacity: 0; }
+
+.lab #BulbIdeaLight.is-flickering--yellow {
+  animation: FlickerBulbYellow;
+  animation-duration: 0.8s;
+  animation-iteration-count: 3; }
+
+.lab #BulbIdeaLight.is-flickering--green {
+  animation: FlickerBulbGreen;
+  animation-duration: 0.8s;
+  animation-iteration-count: 3;
+  animation-fill-mode: forwards; }

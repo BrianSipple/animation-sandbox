@@ -1,0 +1,14 @@
+@import 'atom-options';
+
+
+@mixin circle($atom-diameter) {
+    display: block;
+    content: '';
+    width: $atom-diameter;
+    height: $atom-diameter;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    
+}

@@ -1,0 +1,128 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Atomic Slider</title>
+    <meta name="description" content="SVG Lab">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="../../styles/normalize.css">
+    <link rel="stylesheet" href="atomic-slider.css">
+    <script src="../../vendor/modernizer/modernizr.js"></script>
+
+</head>
+<body>
+
+<div class="scene">
+
+    <h1 class="main-title">Atoms of the Human Body</h1>
+   
+    <div class="main-display-container">
+     
+        <div class="atom atom--carbon">
+
+            <div class="atom__nucleus">
+                <div class="atom-particle__nucleus atom-particle__nucleus--proton"></div>
+                <div class="atom-particle__nucleus atom__nucleus--proton"></div>
+                <div class="atom-particle__nucleus atom__nucleus--proton"></div>
+                <div class="atom-particle__nucleus atom__nucleus--neutron"></div>
+                <div class="atom-particle__nucleus atom__nucleus--neutron"></div>
+                <div class="atom-particle__nucleus atom__nucleus--neutron"></div>
+            </div>
+          
+          <div class="atom__orbit-path atom__orbit-path-1 atom__orbit-path--visible"></div>
+          <div class="atom__orbit-path atom__orbit-path-2 atom__orbit-path--visible"></div>
+          <div class="atom__orbit-pathatom__orbit-path-3 atom__orbit-path--visible"></div>
+          <div class="atom__orbit-path atom__orbit-path-4 atom__orbit-path--visible"></div>
+          
+          <div class="atom__orbit-path atom__orbit-path-1 atom__orbit-path--foreground"></div>
+            <div class="electron electron-1"></div>
+            <div class="electron electron-2"></div>
+          
+          <div class="atom__orbit-path atom__orbit-path-2 atom__orbit-path--foreground"></div>
+            <div class="electron electron-3"></div>
+            <div class="electron electron-4"></div>
+          
+          <div class="atom__orbit-path atom__orbit-path-3 atom__orbit-path--foreground"></div>
+            <div class="electron electron-5"></div>
+            <div class="electron electron-6"></div>          
+          
+          <div class="atom__orbit-path atom__orbit-path-4 atom__orbit-path--foreground"></div>
+            <div class="electron electron-7"></div>
+            <div class="electron electron-8"></div>
+                     
+        </div>
+
+        <div class="atom-data">
+            <span class="atom-data__symbol"></span>
+            <span class="atom-data__atomic-number"></span>
+            <span class="atom-data__atomic-weight"></span>
+            <span class="atom-data__atomic-radius"></span>
+            <span class="atom-data__protons"></span>
+            <span class="atom-data__neutrons"></span>
+            <span class="atom-data__electrons"></span>
+        </div>
+    
+    
+        
+        
+    </div>
+    
+           
+    <div class="tab-selectors tab-selectors--underlined">
+        <div class="tab-selectors__content">
+           <ul class="tab-selectors__tab-list">
+
+                <li class="tab"
+                    data-active-atom="hydrogen">
+                    Hydrogen
+                </li>
+                <li class="tab active"
+                    data-active-atom="carbon">
+                    Carbon
+                </li>                
+                <li class="tab"
+                    data-active-atom="nitrogen">
+                    Nitrogen
+                </li>
+                <li class="tab"
+                    data-active-atom="oxygen">
+                    Oxygen
+                </li>
+                <li class="tab"
+                    data-active-atom="phosphorus">
+                    Phosphorus
+                </li> 
+                <li class="tab"
+                    data-active-atom="sulfur">
+                    Calcium
+                </li>                                
+
+            </ul>
+
+        </div>
+    </div>
+    
+    <p class="description">
+        Almost 99% of the mass of the human body is made up of six elements: 
+        oxygen, carbon, hydrogen, nitrogen, calcium, and phosphorus. 
+        <br />
+        Select one above to see it in action! 
+    </p>
+
+
+</div>
+
+
+<script src="../../../js/lib/plugins/base-plugins.js"></script>
+
+
+<script src="atomic-slider.js"></script>
+
+
+</body>
+</html>

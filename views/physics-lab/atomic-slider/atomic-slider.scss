@@ -1,0 +1,151 @@
+@import '../../styles/applicaion';
+@import './atom-options';
+@import './atom-mixins';
+
+
+body {
+    background-color: $background-color;
+}
+
+
+.scene {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+
+.main-title {
+    text-align: center;
+}
+
+.main-display-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.atom {
+    position: relative;
+    border-radius: 50%;
+    border: $atom__border-width solid $electron__color;
+    padding: $atom__padding;
+}
+
+.atom,
+.atom__orbit-path {
+    
+    &.atom--hydrogen {
+        width: $atom__diameter--hydrogen;
+        height: $atom__diameter--hydrogen;        
+    }
+    &.atom--carbon {
+        width: $atom__diameter--carbon;
+        height: $atom__diameter--carbon;        
+    }
+    &.atom--nitrogen {
+        width: $atom__diameter--nitrogen;
+        height: $atom__diameter--nitrogen;        
+    }
+    &.atom--oxygen {
+        width: $atom__diameter--oxygen;
+        height: $atom__diameter--oxygen;        
+    }    
+    &.atom--phosphorus {
+        width: $atom__diameter--phosphorus;
+        height: $atom__diameter--phosphorus;        
+    }
+    &.atom--calcium {
+        width: $atom__diameter--calcium;
+        height: $atom__diameter--calcium;        
+    }              
+}
+
+
+.atom-particle,
+.atom-particle:before {
+    display: block;
+    content: ''; 
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+
+.atom-particle__nucleus,
+.atom-particle__nucleus:before {
+            
+    /* Dynamically inserted when atom is selected */
+    &.atom-particle__nucleus--proton {
+        background-image: $nucleus__background-gradient--proton;        
+    }
+    &.atom-particle__nucleus--neutron {
+        background-image: $nucleus__background-gradient--neutron;
+    }    
+}
+
+.atom-particle__nucleus {
+    width: $atom-particle__diameter--nucleus;
+    height: $atom-particle__diameter--nucleus;
+    
+    &:before {
+        width: $atom-particle-inner__diameter--nucleus;
+        height: $atom-particle-inner__diameter--nucleus;
+    }
+}
+
+
+
+.atom-particle__electron {
+    
+    transform-style: preserve-3d;
+    
+    &:after {
+        width: $atom-particle__diameter--electron;
+        height: $atom-particle__diameter--electron;        
+    }    
+    &:before {
+        width: $atom-particle-inner__diameter--electron;
+        height: $atom-particle-inner__diameter--electron;
+    }
+}
+
+
+/**
+ * Elipitcal orbit paths for our electrons
+ */
+.atom__orbit-path {
+    position: absolute;
+    border: $atom-oribit-path__thickness solid transparent;
+    transform-style: preserve-3d;
+    
+    &.atom__orbit-path__visible {
+        border-radius: 50%;
+        border-color: $atom-oribit-path__color;          
+    }    
+}
+
+
+.atom__orbit-path__visible {
+    &.atom__orbit-path--1 {
+        transform: rotateZ(0deg) rotateY()
+    }
+    &.atom__orbit-path--2 {
+        transform: rotateZ(45deg) rotateY()
+    }
+    &.atom__orbit-path--3 {
+        transform: rotateZ(90deg) rotateY()
+    }
+    &.atom__orbit-path--4 {
+        transform: rotateZ(135deg) rotateY()
+    }    
+}
+        
+
+

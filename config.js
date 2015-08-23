@@ -1,5 +1,5 @@
 System.config({
-  "baseURL": "/",
+  "baseURL": "./",
   "transpiler": "babel",
   "babelOptions": {
     "optional": [
@@ -41,4 +41,3 @@ System.config({
     }
   }
 });
-

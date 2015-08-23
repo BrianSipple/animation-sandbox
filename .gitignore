@@ -25,6 +25,7 @@ node_modules
 
 # JSPM
 jspm_packages/
+
 .loaderversions
 
 # Dist and tmp folders for production

@@ -73,8 +73,26 @@
             };
         }
         
-        exports.isNaN = function isNaN (value) {
-            return typeof value === 'number' && value !== value;
+        if (!Number.prototype.isNan) {
+            
+            exports.isNaN = function isNaN (value) {
+                return typeof value === 'number' && value !== value;
+            };
+        }
+        
+        if (!exports.getAbsoluteUrl) {
+            exports.getAbsoluteUrl = (function getAbsoluteUrl (url) {
+                
+                var a;
+                
+                return function (url) {
+                    if (!a) {
+                        a = document.createElement('a');
+                    }
+                    a.href = url;                    
+                    return a.href;
+                };                                                    
+            })();
         }
 
     }((typeof exports === 'undefined') ? window : exports));

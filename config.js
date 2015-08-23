@@ -10,7 +10,8 @@ System.config({
     "*": "*.js",
     "github:*": "vendor/github/*.js",
     "npm:*": "vendor/npm/*.js",
-    "vendor": "vendor/"
+    "vendor": "vendor/",
+    "views": "views/"
   }
 });
 

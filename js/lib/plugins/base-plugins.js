@@ -92,8 +92,8 @@
                     a.href = url;
                     return a.href;
                 };
-            };
-        })();
+            })();
+        }
 
         if (!exports.getProjectPrefix) {
 

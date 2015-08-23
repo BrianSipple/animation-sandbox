@@ -62,8 +62,8 @@
     } else {
       importPrefix = '';
     }
-
-    System.import('./lightbulb')
+    System.baseUrl = './';
+    System.import('lightbulb')
         .then(function (mod) {
             var appRunner = mod.default();
 

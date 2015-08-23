@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
     <link rel="stylesheet" href="lightbulb.css">
     <!-- Place favicon.ico in the root directory -->
-    
+
 </head>
 <body>
 
@@ -56,10 +56,17 @@
 <script src="../../../config.js"></script>
 <script>
     debugger;
-    System.import('views/svg-lab/lightbulb/lightbulb')
-        .then(function (mod) {            
-            var appRunner = mod.default();  
-                            
+    var importPrefix;
+    if ( !!~getAbsoluteUrl().indexOf('www.sipple.io') ) {
+      importPrefix = getProjectPrefix() + '/';
+    } else {
+      importPrefix = '';
+    }
+
+    System.import(importPrefix + 'views/svg-lab/lightbulb/lightbulb')
+        .then(function (mod) {
+            var appRunner = mod.default();
+
             debugger;
             if (appRunner) {
                 appRunner();

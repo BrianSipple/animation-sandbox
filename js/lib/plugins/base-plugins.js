@@ -81,7 +81,7 @@
         }
         
         if (!exports.getAbsoluteUrl) {
-            exports.getAbsoluteUrl = (function getAbsoluteUrl (url) {
+            exports.getAbsoluteUrl = function getAbsoluteUrl (url) {
                 
                 var a;
                 
@@ -92,7 +92,18 @@
                     a.href = url;                    
                     return a.href;
                 };                                                    
-            })();
+            };
+        }
+        
+        if (!exports.getProjectPrefix) {
+            
+            /**
+             * Helper for getting the project's deployment route prefix
+             */
+            exports.getProjectPrefix = function getProjectPrefix () {                
+                var firstSingleSlashIdx = getAbsoluteUrl().search(/[^\/\/]\/[^\/\/]/) + 1;                
+                return getAbsoluteUrl().substr(firstSingleSlashIdx).split('/')[1];                
+            }
         }
 
     }((typeof exports === 'undefined') ? window : exports));

@@ -55,14 +55,7 @@
 <script src="../../../vendor/system.js"></script>
 <script src="../../../config.js"></script>
 <script>
-    debugger;
-    var importPrefix;
-    if ( !!~getAbsoluteUrl().indexOf('www.sipple.io') ) {
-      importPrefix = getProjectPrefix() + '/';
-    } else {
-      importPrefix = '';
-    }
-    System.import(importPrefix + 'views/svg-lab/lightbulb/lightbulb')
+    System.import('views/svg-lab/lightbulb/lightbulb')
         .then(function (mod) {
             var appRunner = mod.default();
 

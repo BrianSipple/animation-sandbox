@@ -1,5 +1,13 @@
+debugger;
+var importPrefix;
+if ( !!~getAbsoluteUrl().indexOf('www.sipple.io') ) {
+  importPrefix = getProjectPrefix() + '/';
+} else {
+  importPrefix = '/';
+}
+
 System.config({
-  "baseURL": "/",
+  "baseURL": importPrefix,
   "transpiler": "babel",
   "babelOptions": {
     "optional": [

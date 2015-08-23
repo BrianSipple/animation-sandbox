@@ -1,0 +1,17 @@
+{
+  "jspm": {
+    "directories": {
+      "packages": "vendor"
+    },
+    "dependencies": {
+      "css": "github:systemjs/plugin-css@^0.1.13",
+      "modernizr": "github:Modernizr/Modernizr@^2.8.3",
+      "normalize.css": "github:necolas/normalize.css@^3.0.3"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.1.13",
+      "babel-runtime": "npm:babel-runtime@^5.1.13",
+      "core-js": "npm:core-js@^0.9.4"
+    }
+  }
+}

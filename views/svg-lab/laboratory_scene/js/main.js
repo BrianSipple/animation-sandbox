@@ -18,19 +18,22 @@ var app = (function (exports) {
             liquidMasks: '.liquid-mask',
             liquidMaskDefs: '.liquid-mask__def',
             openingTubeSVG: '#OpeningTube',
-            generatorBulbInner: '.generator__bulb-inner',
+            genBulbInner: '.generator__bulb-inner',
             genProgressMeterBkg: '#GeneratorMeterBackground',            
             genProgressMeterTrack: '#GeneratorMeterTrack',
             genProgressMeterSlider: '#GeneratorMeterSlider',
-            genEnergyMeter: '#GeneratorEnergyMeter',
+            genPointer: '#GeneratorPointer',
+            genEnergyMeterBkg: '#GeneratorEnergyMeterBkg',
+            genEnergyMeterLine: '#GeneratorEnergyMeterLine',
             genStatusLights: '.generator__status-light',
             printerLights: '.printer__light',
-            printerPaper: '#PrinterPaper',
+            printerPaper: '#PrinterPaper',            
             mainStatusLight: '#MainStatusLight'
         },
         
         DURATIONS = {
             elementScaling: 0.3,
+            bumpElement: 0.6,
             elementRepositioning: 0.45,
             fadeInOrOut: 0.5,
             flashOut: 0.25,
@@ -41,6 +44,7 @@ var app = (function (exports) {
             colorChange: 0.5,
             bulbFlickering: 2.4,
             coinToss: 6.0,
+            lightFlip: 0.1,
             machineShakeIteration: 0.06
             
         },
@@ -58,16 +62,29 @@ var app = (function (exports) {
             machine: {
                 background: '#c6d7df',
                 raisedGroves: '#7c99a2'
+            },
+            generator: {
+                indicatorPhases: [
+                    '#F8876E', // red
+                    '#F8AD43', // golden yellow                   
+                    '#5AB783'  // green
+                ],
+                energyMeter: {
+                    background: '#5AB783',
+                    line: '#448962'
+                }
             }
         },
         
         LABELS = {
-            sceneIntro: 'scene-intro',
-            sceneIdea: 'scene-idea',
+            sceneIntro: 'scene__intro',
+            sceneIdea: 'scene__idea',
+            sceneMachineStart: 'scene__machine-start',  
             brianHasAppeared: 'brian-has-appeared',
             brianIsSmiling: 'brian-is-smiling',            
             titleShiftingUp: 'title-shifing-up',
             titleTextHasChanged: 'title-text-has-changed',
+            coinTossStarting: 'coin-toss-starting',
             coinLandedInMachine: 'coin-landed-in-machine'
         },
         
@@ -92,12 +109,14 @@ var app = (function (exports) {
         liquidMaskDefs = mainSVG.querySelectorAll(SELECTORS.liquidMaskDefs),
         openingTubeSVG = mainSVG.querySelector(SELECTORS.openingTubeSVG),
         //liquid1MaskDef = mainSVG.querySelector(SELECTORS.liquidMaskDefs + '-1'),
-        generatorBulbInnerSVGs = mainSVG.querySelectorAll(SELECTORS.generatorBulbInner),
-        generatorProgressMeterBkgSVG = mainSVG.querySelector(SELECTORS.genProgressMeterBkg),
-        generatorProgressMeterTrackSVG = mainSVG.querySelector(SELECTORS.genProgressMeterTrack),
-        generatorProgressMeterSliderSVG = mainSVG.querySelector(SELECTORS.genProgressMeterSlider),
-        generatorEnergyMeterSVG = mainSVG.querySelector(SELECTORS.genEnergyMeter),
-        generatorStatusLightSVGs = mainSVG.querySelectorAll(SELECTORS.genStatusLights),
+        genBulbInnerSVGs = mainSVG.querySelectorAll(SELECTORS.genBulbInner),
+        genProgressMeterBkgSVG = mainSVG.querySelector(SELECTORS.genProgressMeterBkg),
+        genProgressMeterTrackSVG = mainSVG.querySelector(SELECTORS.genProgressMeterTrack),
+        genProgressMeterSliderSVG = mainSVG.querySelector(SELECTORS.genProgressMeterSlider),
+        genEnergyMeterBkgSVG = mainSVG.querySelector(SELECTORS.genEnergyMeterBkg),
+        genEnergyMeterLineSVG = mainSVG.querySelector(SELECTORS.genEnergyMeterLine),
+        genPointerSVG = mainSVG.querySelector(SELECTORS.genPointer),
+        genStatusLightSVGs = mainSVG.querySelectorAll(SELECTORS.genStatusLights),
         printerLightSVGs = mainSVG.querySelectorAll(SELECTORS.printerLights),
         mainStatusLightSVG = mainSVG.querySelector(SELECTORS.mainStatusLight),
         printerPaperSVG = mainSVG.querySelector(SELECTORS.printerPaper),
@@ -106,6 +125,7 @@ var app = (function (exports) {
         clearTL,
         introTL,
         ideaTL,
+        machineStartTL,
         masterTL;
         
     /**
@@ -157,14 +177,14 @@ var app = (function (exports) {
         clearTL.set(stageSVG, {autoAlpha: 0.5});
         clearTL.set(stageMask, {x: 932});
                         
-        clearTL.set(generatorBulbInnerSVGs, {fill: '#FFFFFF'});        
-        clearTL.set(generatorProgressMeterTrackSVG, { stroke: COLORS.machine.raisedGroves });
+        clearTL.set(genBulbInnerSVGs, {fill: '#FFFFFF'});        
+        clearTL.set(genProgressMeterTrackSVG, { stroke: COLORS.machine.raisedGroves });
         
         clearTL.set(
             [
-                generatorProgressMeterBkgSVG,
-                generatorEnergyMeterSVG,
-                generatorStatusLightSVGs,
+                genProgressMeterBkgSVG,
+                genEnergyMeterBkgSVG,
+                genStatusLightSVGs,
                 printerLightSVGs,
                 mainStatusLightSVG
             ],
@@ -175,7 +195,10 @@ var app = (function (exports) {
         clearTL.set(printerPaperSVG, {y: '+=55'});
         
         // Set the generator's progress slider to its starting position
-        clearTL.set(generatorProgressMeterSliderSVG, {x: '-=27'});
+        clearTL.set(genProgressMeterSliderSVG, {x: '-=27'});
+        
+        // Set the generator pointer to left-most point on its axis
+        clearTL.set(genPointerSVG, {rotation: -45, transformOrigin: 'bottom center' });
                                         
         return clearTL;
     }
@@ -190,12 +213,12 @@ var app = (function (exports) {
         opts = opts || {};
                         
         var 
-            yDistUp = opts.yDistUp || 30,
+            yDistUp = opts.yDistUp || 40,
             yDistDown1 = opts.yDistDown1 || 20,
             yDistDown2 = opts.yDistDown2 || 20,
-            newText = opts.newText || '',
-            labelIn = opts.labelIn,
-            labelOut = opts.labelOut;
+            newText = opts.newText || '',            
+            labelOut = opts.labelOut || '',
+            labelIn = opts.labelIn || '';
         
         debugger;
         
@@ -416,6 +439,7 @@ var app = (function (exports) {
         ideaTL.set(ideaBulbLight, {className: '+=' + CLASSES.bulbFlickeringGreen});
         
         popBulbBehindHead();
+        ideaTL.addLabel(LABELS.coinTossStarting);
         tossCoinIntoMachine();
         ideaTL.addLabel(LABELS.coinLandedInMachine);
         
@@ -424,20 +448,73 @@ var app = (function (exports) {
             yDistDown1: 10,
             yDistDown2: 20,
             newText: 'Just add JavaScript!',
-            labelOut: '-=' + (DURATIONS.coinToss * 0.91667),
-            labelIn: '-=' + ( (DURATIONS.coinToss * 0.5833))
+            //labelOut: '-=' + Number(DURATIONS.coinToss),
+            labelOut: LABELS.coinTossStarting,
+            labelIn: LABELS.coinTossStarting + '+=' + Number(DURATIONS.coinToss * 0.5833)
+            //labelIn: '-=' + Number(DURATIONS.coinToss * 0.5833)
+            
         });
         
-        ideaTL.to(
-            mainTitleElem,
-            DURATIONS.fadeInOrOut,
-            {y: '+=20', autoAlpha: 0, ease: EASINGS.default },
-            LABELS.coinLandedInMachine + '-=' + (DURATIONS.coinToss * 0.2)
-        );
+//        ideaTL.to(
+//            mainTitleElem,
+//            DURATIONS.fadeInOrOut,
+//            {y: '+=20', autoAlpha: 0, ease: EASINGS.default },
+//            LABELS.coinLandedInMachine + '-=' + (DURATIONS.coinToss * 0.2)
+//        );
         
         shakeMachineOpening();
         
         return ideaTL;
+    }
+    
+    function startMachine () {
+        machineStartTL = new TimelineMax();
+        
+        function flickMeter () {
+            machineStartTL.to(
+                genPointerSVG,
+                DURATIONS.bumpElement * 3.5,
+                {rotation: 20, ease: EASINGS.default}
+            );
+        }
+        
+        function activateGeneratorStatusLights () {
+            
+            COLORS.generator.indicatorPhases.forEach(function (color, idx) {
+                machineStartTL.staggerTo(
+                    genStatusLightSVGs,
+                    DURATIONS.lightFlip,
+                    {fill: color},
+                    0.1
+                );
+            });        
+        }
+        
+        function activateGeneratorMeters () {
+            machineStartTL.to(
+                genEnergyMeterBkgSVG,
+                DURATIONS.colorChange,
+                {fill: COLORS.generator.energyMeter.background}                
+            );
+            machineStartTL.to(
+                genEnergyMeterLineSVG,
+                DURATIONS.colorChange,
+                { fill: COLORS.generator.energyMeter.line }
+            );
+            machineStartTL.to(
+                genProgressMeterSliderSVG,
+                DURATIONS.bumpElement * 2,
+                { x: '-10px', ease: EASINGS.default }
+            );
+        }
+        
+        flickMeter();
+        activateGeneratorStatusLights();
+        activateGeneratorMeters();
+        
+        
+        return machineStartTL;
+        
     }
     
     
@@ -446,6 +523,9 @@ var app = (function (exports) {
         masterTL.add(clearStage());
         masterTL.add(introduceScene(), LABELS.sceneIntro);
         masterTL.add(conjureUpIdea(), LABELS.sceneIdea);
+        masterTL.add(startMachine(), LABELS.sceneMachineStart);
+        
+        masterTL.seek(LABELS.sceneMachineStart + '-=1');
     }
     
     return {

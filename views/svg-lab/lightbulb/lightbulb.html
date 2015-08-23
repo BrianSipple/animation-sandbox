@@ -63,7 +63,7 @@
       importPrefix = '';
     }
 
-    System.import(importPrefix + 'views/svg-lab/lightbulb/lightbulb')
+    System.import('./lightbulb')
         .then(function (mod) {
             var appRunner = mod.default();
 

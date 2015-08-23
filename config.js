@@ -8,10 +8,10 @@ System.config({
   },
   "paths": {
     "*": "*.js",
-    "github:*": "vendor/github/*.js",
-    "npm:*": "vendor/npm/*.js",
-    "vendor": "vendor/",
-    "views": "views/"
+    "github:*": "./vendor/github/*.js",
+    "npm:*": "./vendor/npm/*.js",
+    "vendor": "./vendor/",
+    "views": "./views/"
   }
 });
 

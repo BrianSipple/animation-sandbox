@@ -1,13 +1,13 @@
 debugger;
-var importPrefix;
+var baseProjectURL;
 if ( !!~getAbsoluteUrl().indexOf('www.sipple.io') ) {
-  importPrefix = getProjectPrefix() + '/';
+  baseProjectURL = '/' + getProjectPrefix() + '/';
 } else {
-  importPrefix = '/';
+  baseProjectURL = '/';
 }
 
 System.config({
-  "baseURL": importPrefix,
+  "baseURL": baseProjectURL,
   "transpiler": "babel",
   "babelOptions": {
     "optional": [
@@ -17,9 +17,9 @@ System.config({
   "paths": {
     "*": "*.js",
     "github:*": "./vendor/github/*.js",
-    "npm:*": "./vendor/npm/*.js",
-    "vendor": "./vendor/",
-    "views": "./views/"
+    "npm:*": "vendor/npm/*.js",
+    "vendor": "vendor/",
+    "views": "views/"
   }
 });
 

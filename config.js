@@ -1,4 +1,3 @@
-debugger;
 var baseProjectURL;
 if ( !!~getAbsoluteUrl().indexOf('www.sipple.io') ) {
   baseProjectURL = '/' + getProjectPrefix() + '/';

@@ -1,0 +1,26 @@
+<svg class="svg-def" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="blurredDropShadow">
+            <feGaussianBlur in="SourceAlpha"
+                            result="blurOutput"
+                            stdDeviation="4">
+            </feGaussianBlur>
+            <feOffset in="blurOutput" 
+                      out="dropBlurOutput" 
+                      dx="5" 
+                      dy="5">
+            </feOffset>
+            <feComposite operator="over" 
+                         in="SourceGraphic"
+                         in2="dropBlurOutput"
+                         result="final">
+            </feComposite>
+        </filter>
+        
+        <filter id="surroundingBlur" x="-200%" y="-200%" width="400%" height="400%">
+            <feGaussianBlur class="blur-node" in="SourceGraphic" stdDeviation="70"></feGaussianBlur>
+        </filter>
+        
+    </defs>
+
+</svg>

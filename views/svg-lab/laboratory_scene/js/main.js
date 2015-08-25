@@ -72,7 +72,12 @@ var app = (function (exports) {
                 energyMeter: {
                     background: '#5AB783',
                     line: '#448962'
-                }
+                },
+                bulbSet: [
+                    '#F8876E', // red
+                    '#F8AD43', // golden yellow                   
+                    '#5AB783'  // green  
+                ]
             }
         },
         
@@ -80,12 +85,15 @@ var app = (function (exports) {
             sceneIntro: 'scene__intro',
             sceneIdea: 'scene__idea',
             sceneMachineStart: 'scene__machine-start',  
+            
             brianHasAppeared: 'brian-has-appeared',
             brianIsSmiling: 'brian-is-smiling',            
             titleShiftingUp: 'title-shifing-up',
             titleTextHasChanged: 'title-text-has-changed',
             coinTossStarting: 'coin-toss-starting',
-            coinLandedInMachine: 'coin-landed-in-machine'
+            coinLandedInMachine: 'coin-landed-in-machine',
+            generatorIsRunning: 'generator-is-running'
+            
         },
         
         CLASSES = {
@@ -223,7 +231,7 @@ var app = (function (exports) {
         debugger;
         
         tl.to(mainTitleElem, DURATIONS.fadeInOrOut, {autoAlpha: 0, y: '+=' + yDistDown1, ease: EASINGS.fadeInOrOut}, labelOut);
-        tl.set(mainTitleElem, { y: '-=' + yDistUp, text: newText });
+        tl.set(mainTitleElem, { y: '-=' + yDistUp, text: newText, immediateRender: false });
         tl.to(mainTitleElem, DURATIONS.fadeInOrOut, {autoAlpha: 1, y: '+=' + yDistDown2, ease: EASINGS.fadeInOrOut}, labelIn);      
     }
     
@@ -474,43 +482,69 @@ var app = (function (exports) {
             machineStartTL.to(
                 genPointerSVG,
                 DURATIONS.bumpElement * 3.5,
-                {rotation: 20, ease: EASINGS.default}
+                {rotation: 20, ease: EASINGS.default}                
             );
         }
         
         function activateGeneratorStatusLights () {
             
+            var currentLabelOffset = 0;
             COLORS.generator.indicatorPhases.forEach(function (color, idx) {
+                
                 machineStartTL.staggerTo(
                     genStatusLightSVGs,
                     DURATIONS.lightFlip,
                     {fill: color},
-                    0.1
+                    LABELS.generatorIsRunning + '+=' + currentLabelOffset
                 );
+                
+                currentLabelOffset += 0.5;
             });        
         }
         
-        function activateGeneratorMeters () {
+        function activateGeneratorMeters (label) {
             machineStartTL.to(
                 genEnergyMeterBkgSVG,
                 DURATIONS.colorChange,
-                {fill: COLORS.generator.energyMeter.background}                
+                { fill: COLORS.generator.energyMeter.background },
+                LABELS.generatorIsRunning + '+=1.2'
             );
             machineStartTL.to(
                 genEnergyMeterLineSVG,
                 DURATIONS.colorChange,
-                { fill: COLORS.generator.energyMeter.line }
+                { fill: COLORS.generator.energyMeter.line },
+                LABELS.generatorIsRunning + '+=1.2'
             );
             machineStartTL.to(
                 genProgressMeterSliderSVG,
                 DURATIONS.bumpElement * 2,
-                { x: '-10px', ease: EASINGS.default }
+                { x: '-10px', ease: EASINGS.default },
+                LABELS.generatorIsRunning + '+=1.4'
             );
         }
         
+        function activateGeneratorBulbs (label) {
+            
+            var currentLabelOffset = 2.6;
+            [].forEach.call(genBulbInnerSVGs, function (bulbSVG, idx) {
+               
+                machineStartTL.to(
+                   bulbSVG,
+                   DURATIONS.colorChange,
+                   { fill: COLORS.generator.bulbSet[idx], ease: EASINGS.colorChange },
+                   LABELS.generatorIsRunning + '+=' + currentLabelOffset
+                ); 
+                
+                currentLabelOffset += DURATIONS.colorChange;
+                
+            });
+        }
+        
+        machineStartTL.addLabel(LABELS.generatorIsRunning);
         flickMeter();
         activateGeneratorStatusLights();
         activateGeneratorMeters();
+        activateGeneratorBulbs();
         
         
         return machineStartTL;

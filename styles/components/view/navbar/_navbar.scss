@@ -1,0 +1,26 @@
+.navbar {
+
+  @extend %toolbar;
+  position: fixed;
+  z-index: 100;
+
+  .navbar__logo {
+    font-size: 1.5em;
+    flex: 1;
+    a {
+        color: $theme-color__accent;
+    }
+  }
+
+  .navbar__links {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  a {
+    color: $font-color__primary-text--white-on-dark-background;
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,22 @@
+.page-section {
+    width: 100%;
+    display: block;
+    position: relative;
+    text-align: center;
+
+    > div {
+        overflow: hidden;
+    }
+}
+
+.page-section__hero {
+    min-height: $hero__height;
+    max-width: 100%;
+}
+
+.page-section__footnote {
+    font-size: 0.8em;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+}

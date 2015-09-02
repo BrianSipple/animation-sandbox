@@ -1,151 +1,403 @@
-@import '../../styles/applicaion';
+@import '../../../styles/application';
+@import '../../../styles/helpers/helpers';
 @import './atom-options';
 @import './atom-mixins';
+@import './atom-animations';
 
 
-body {
-    background-color: $background-color;
-}
+$background-color: hsla(19, 23%, 32%, 1);
+$theme-color__primary: hsla(266, 62%, 38%, 1);
+$theme-color__accent: hsla(330, 81%, 70%, 1);
 
 
-.scene {
+
+%absolute-centered {
     position: absolute;
-    width: 90%;
-    height: 90%;
     top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
 }
 
+body {
+    background-color: $background-color;
+}
+
+.scene {
+    position: relative;
+    width: 80vw;
+    height: 100%;
+    padding: 0 1.75rem;
+    overflow: auto;
+}
 
 .main-title {
     text-align: center;
+    color: $theme-color__accent;
 }
 
 .main-display-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center;    
+    max-width: 100%;
+    flex-flow: wrap;
 }
 
-.atom {
-    position: relative;
-    border-radius: 50%;
-    border: $atom__border-width solid $electron__color;
-    padding: $atom__padding;
-}
 
-.atom,
-.atom__orbit-path {
+
+.atom__container {    
+    //flex-grow: 4;    
+    display: flex;
+    order: -1;
+    flex-direction: column;
+    align-items: center; 
+    position: relative;  
     
-    &.atom--hydrogen {
-        width: $atom__diameter--hydrogen;
-        height: $atom__diameter--hydrogen;        
+    &.atom--hydrogen {        
+        &,
+        .atom {                    
+            width: $atom__diameter--hydrogen;
+            height: $atom__diameter--hydrogen;        
+        }
     }
     &.atom--carbon {
-        width: $atom__diameter--carbon;
-        height: $atom__diameter--carbon;        
+        &,
+        .atom {                    
+            width: $atom__diameter--carbon;
+            height: $atom__diameter--carbon;        
+        }       
     }
     &.atom--nitrogen {
-        width: $atom__diameter--nitrogen;
-        height: $atom__diameter--nitrogen;        
+        &,
+        .atom {                    
+            width: $atom__diameter--nitrogen;
+            height: $atom__diameter--nitrogen;        
+        }        
     }
     &.atom--oxygen {
-        width: $atom__diameter--oxygen;
-        height: $atom__diameter--oxygen;        
+        &,
+        .atom {                    
+            width: $atom__diameter--oxygen;
+            height: $atom__diameter--oxygen;        
+        }     
     }    
     &.atom--phosphorus {
-        width: $atom__diameter--phosphorus;
-        height: $atom__diameter--phosphorus;        
+        &,
+        .atom {                    
+            width: $atom__diameter--phosphorus;
+            height: $atom__diameter--phosphorus;        
+        }       
     }
     &.atom--calcium {
-        width: $atom__diameter--calcium;
-        height: $atom__diameter--calcium;        
-    }              
+        &,
+        .atom {                    
+            width: $atom__diameter--calcium;
+            height: $atom__diameter--calcium;        
+        }        
+    }
 }
 
 
-.atom-particle,
-.atom-particle:before {
-    display: block;
-    content: ''; 
+.data-pane {
+    flex-shrink: 0;
+    flex-grow: 1;
+    min-width: 25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+
+.tab-selectors {    
+    margin: 2em auto;
+    background-color: $theme-color__primary;
+    
+    .tab-selectors__tab-list {
+        flex-basis: 90%;
+    }
+    
+    .tab__link {
+        color: $theme-color__accent;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+}
+
+
+.atom {
+    @extend %absolute-centered;    
     border-radius: 50%;
+    border: $atom__border-width solid $atom-particle__border-color;
+    transition: 
+        width $animation-duration__scale-size,
+        height $animation-duration__scale-size;
+    transition-timing-function: $easing__ease-out-cubic--bounce-25;
+    
+}
+
+
+.atom__content {
+    position: relative;
+    width: calc(100% - #{$atom__padding});
+    height: calc(100% - #{$atom__padding});
     top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
 }
 
+.atom__orbit-path {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border: $atom-orbit-path__thickness solid transparent;
+    transform-style: preserve-3d;
+    
+    &.atom__orbit-path--visible {
+        border-radius: 50%;
+        border-color: $atom-orbit-path__color;
+    }
+}
+
+
+
+.atom__nucleus--container {
+    @extend %absolute-centered;
+}
+.atom__nucleus {
+    position: relative;    
+}
+
+.atom-particle__nucleus {
+    
+    @include circle($atom-particle__diameter--nucleus);
+    @extend %absolute-centered; 
+
+            
+    &:after {
+        @include circle($atom-particle__diameter--nucleus + $atom-particle__glow-radius--nucleus);
+        @extend %absolute-centered;
+        opacity: 0.15;
+    }
+    
+    &.visible {
+        
+        //transform: scale(1) translate3d(-50%, -50%, 0);
+                
+        @for $i from 1 through 36 {
+                                    
+            $zRotation: ( ($i % $nucleus__layer-density) / $nucleus__layer-density ) * (pi() * 2);
+            $currentLayer: ceil($i / $nucleus__layer-density);
+            $centerOffsetPercentage: -( ( $currentLayer * 25 ) + 50 ) / 100;
+                                    
+            @keyframes NucleusPopIn#{$i} {
+                0% {
+                    transform:                     
+                        translate3d(-50%, -50%, 0)
+                        rotateZ( #{$zRotation}rad )                        
+                        scale(0);
+                }                                
+                80% {
+                    transform:
+                        translate3d(-50%, -50%, 0)
+                        rotateZ( #{$zRotation}rad )
+                        translate3d(0, percentage($centerOffsetPercentage), 0)
+                        scale(1.8);
+                }
+                100% {
+                    // Keep everything else -- just bring back the scale
+                    transform:
+                        translate3d(-50%, -50%, 0)
+                        rotateZ( #{$zRotation}rad )
+                        translate3d(0, percentage($centerOffsetPercentage), 0)
+                        scale(1);
+                }                
+            }
+            
+            &.atom-particle__nucleus-#{($i)} {                
+
+                animation: NucleusPopIn#{($i)} $animation-duration__scale-size linear;
+                animation-fill-mode: forwards;
+                color: #{$zRotation}rad;
+                box-shadow: $centerOffsetPercentage;
+            }            
+        }    
+        
+    }
+}
 
 .atom-particle__nucleus,
 .atom-particle__nucleus:before {
             
     /* Dynamically inserted when atom is selected */
-    &.atom-particle__nucleus--proton {
-        background-image: $nucleus__background-gradient--proton;        
+    &.proton {
+        background-image: $proton__bg-gradient;        
     }
-    &.atom-particle__nucleus--neutron {
-        background-image: $nucleus__background-gradient--neutron;
+    &.neutron {
+        background-image: $neutron__bg-gradient;
     }    
 }
 
-.atom-particle__nucleus {
-    width: $atom-particle__diameter--nucleus;
-    height: $atom-particle__diameter--nucleus;
-    
-    &:before {
-        width: $atom-particle-inner__diameter--nucleus;
-        height: $atom-particle-inner__diameter--nucleus;
-    }
+
+.electron--container {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
-
-
-.atom-particle__electron {
-    
+.electron {    
     transform-style: preserve-3d;
     
+    &:before,
     &:after {
-        width: $atom-particle__diameter--electron;
-        height: $atom-particle__diameter--electron;        
-    }    
-    &:before {
-        width: $atom-particle-inner__diameter--electron;
-        height: $atom-particle-inner__diameter--electron;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: 50%;
     }
-}
-
-
-/**
- * Elipitcal orbit paths for our electrons
- */
-.atom__orbit-path {
-    position: absolute;
-    border: $atom-oribit-path__thickness solid transparent;
-    transform-style: preserve-3d;
     
-    &.atom__orbit-path__visible {
-        border-radius: 50%;
-        border-color: $atom-oribit-path__color;          
+    &:before {
+        @include circle($electron__diameter + $electron__glow-radius);
+    }    
+
+    &:after {        
+        @include circle($electron__diameter);
+        border-color: $atom-particle__border-color;
     }    
 }
 
 
-.atom__orbit-path__visible {
-    &.atom__orbit-path--1 {
-        transform: rotateZ(0deg) rotateY()
-    }
-    &.atom__orbit-path--2 {
-        transform: rotateZ(45deg) rotateY()
-    }
-    &.atom__orbit-path--3 {
-        transform: rotateZ(90deg) rotateY()
-    }
-    &.atom__orbit-path--4 {
-        transform: rotateZ(135deg) rotateY()
-    }    
-}
+@each $shellNum, $shellValues in $Atom-electron-orbits__map {
+    // tilt each orbit
+    .atom__orbit-path-#{$shellNum} {
+        &.atom__orbit-path--visible {
+            transform: 
+                translate3d(-50%, -50%, 0)
+                rotateZ(map-get($shellValues, 'tilt'))
+                rotateY($atom__yRotation);
+        }
         
+        &.atom__orbit-path--foreground {
+            transform: 
+                translate3d(-50%, -50%, 0)
+                translateZ(10rem)
+                rotateZ(map-get($shellValues, 'tilt'))
+                rotateY($atom__yRotation);
+        }
+    }
+    
+    $startingRotation: map-get($shellValues, 'startingRotation');
+    
+    // animate each electron to rotate around the orbit
+    @keyframes RotateAroundShell#{$shellNum} {
+
+        0% {
+            transform: 
+                rotate($startingRotation + 0deg) 
+                translate(-50%) 
+                rotate(-$startingRotation - 0deg);
+        }
+        100% {
+            transform: 
+                rotate($startingRotation + 360deg)
+                translate(-50%)
+                rotate(-$startingRotation - 360deg);
+        }        
+    }    
+    
+    @keyframes ScaleIn#{$shellNum} {
+        
+        0% {        
+            transform:                 
+                translate(-50%, -50%)
+                rotateY(-$atom__yRotation)
+                rotateZ(-1 * map-get($shellValues, 'tilt'))
+                scale(0);
+        }        
+        80% {
+            transform: 
+                translate(-50%, -50%)
+                rotateY(-$atom__yRotation)
+                rotateZ(-1 * map-get($shellValues, 'tilt'))
+                scale(1.9);            
+        }
+        100% {
+            transform: 
+                translate(-50%, -50%)
+                rotateY(-$atom__yRotation)
+                rotateZ(-1 * map-get($shellValues, 'tilt'))
+                scale(1);
+                    
+        }
+    }
+    
+    .atom__orbit-path-#{$shellNum} {
+        .electron {
+            
+            &.visible {                
+                // NOTE: If the animation-name interpolation occurred before a comma, we'd need
+                // to wrap the interpolation in parentheses due to a current libsass bug:
+                // https://github.com/sass/libsass/issues/1277
+                animation-name: RotateAroundShell#{$shellNum};
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                animation-duration: map-get($shellValues, 'orbitDuration');
+                
+
+                &:before,
+                &:after {
+                    animation: ScaleIn#{$shellNum} $animation-duration__scale-size;
+                    animation-timing-function: $easing__ease-out-cubic--bounce-25;
+                    //animation-delay: 3s;
+                    transform: 
+                        translate(-50%, -50%)
+                        rotateY(-$atom__yRotation)
+                        rotateZ(-1 * map-get($shellValues, 'tilt'));     
+                }
+
+                &:before {
+                    background: map-get($shellValues, 'background');
+                    opacity: 0.3;
+                }
+                &:after {
+                    background: map-get($shellValues, 'background');
+                }
+            }
+            
+        }        
+    }    
+} 
 
 
+@media screen and (max-width: 770px) {
+    .scene {
+        width: 100%;
+    }
+    
+    // Wrap data pane under the atom and place
+    // it to the right of the (now-vertical) tab selectors
+    .atom__container {
+        flex-basis: 100%;
+    }
+    .tab-selectors {
+        order: 2;  
+        height: 100%;
+        flex-basis: 20%;
+        
+        .tab-selectors__tab-list {
+            flex-direction: column;
+        }
+        .tab {
+            flex-direction: column;
+            flex-basis: 100%;
+        }
+    }
+
+    .data-pane {
+        order: 3;
+    }
+}

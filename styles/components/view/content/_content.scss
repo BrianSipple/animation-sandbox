@@ -1,0 +1,10 @@
+/*
+ * An arbitrary block of content
+ */
+.content {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  background-color: $background-color__content--primary;
+  z-index: 5;
+}

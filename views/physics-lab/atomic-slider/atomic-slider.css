@@ -1,5 +1,1294 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
+/* ---------------------- Theme colors ---------------------- */
+/* ----------------------- Font colors and sizes ---------------------- */
+/* White text on dark backgrounds */
+/* Dark text on light backgrounds */
+/* Base element styles */
+/**
+ * Use with every animation and transition so we can have a
+ * global animation speed toggler (i.e., for visual UI testing)
+ */
+/*
+ * Easing functions
+ */
+/**
+ * Attribute API for declarative flexbox styling
+ */
+[layout] {
+  width: 100%;
+  display: flex; }
+
+[layout="horizontal"],
+[layout="row"] {
+  flex-direction: row; }
+
+[layout="vertical"],
+[layout="column"] {
+  flex-direction: column; }
+
+[layout-align="space-around"] {
+  justify-content: space-around; }
+
+[layout-align="space-between"] {
+  justify-content: space-between; }
+
+[layout-align="center"] {
+  justify-content: center; }
+
+[layout-align="start"] {
+  justify-content: flex-start; }
+
+[layout-align="end"] {
+  justify-content: flex-end; }
+
+.tab-selectors {
+  background-color: #f8f8f2;
+  color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background-color 0.3s linear; }
+
+.tab-selectors .tab-selectors__content {
+  height: 100%;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-direction: row;
+  flex: 1; }
+
+.tab-selectors .tab-selectors__tab-list {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.tab-selectors .tab {
+  position: relative;
+  padding: 0 0.75em;
+  overflow: hidden;
+  cursor: pointer;
+  height: 100%;
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  flex-basis: 0.000000001px;
+  align-items: center; }
+
+.tab-selectors .tab .tab__link {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.62);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%; }
+
+.tab-selectors .tab.active .tab__link {
+  color: #ff9100; }
+
+/* Ideally, this would be the top-level class on a <ul> */
+.item-list {
+  list-style-type: none;
+  padding-left: 0; }
+
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4; }
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+/*
+ * A better looking default horizontal rule
+ */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; }
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle; }
+
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0; }
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical; }
+
+/*
+ * Catch-all for preventing accidental overflow of these elements
+ */
+img, object, embed, video {
+  max-width: 100%; }
+
+/**
+ * Min-width and min-height for tap-targets
+ */
+nav, a, button {
+  min-width: 48px;
+  min-height: 48px; }
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+/* ---------------------- Theme colors ---------------------- */
+/* ----------------------- Font colors and sizes ---------------------- */
+/* White text on dark backgrounds */
+/* Dark text on light backgrounds */
+/* Base element styles */
+/**
+ * Use with every animation and transition so we can have a
+ * global animation speed toggler (i.e., for visual UI testing)
+ */
+/*
+ * Easing functions
+ */
+[class^="page-section_"] {
+  width: 100%; }
+
+.page-section_view-map {
+  width: 100%; }
+
+.page-section_main-content {
+  min-height: 100vh; }
+
+/**
+ * Attribute API for declarative flexbox styling
+ */
+[layout] {
+  width: 100%;
+  display: flex; }
+
+[layout="horizontal"],
+[layout="row"] {
+  flex-direction: row; }
+
+[layout="vertical"],
+[layout="column"] {
+  flex-direction: column; }
+
+[layout-align="space-around"] {
+  justify-content: space-around; }
+
+[layout-align="space-between"] {
+  justify-content: space-between; }
+
+[layout-align="center"] {
+  justify-content: center; }
+
+[layout-align="start"] {
+  justify-content: flex-start; }
+
+[layout-align="end"] {
+  justify-content: flex-end; }
+
+.tab-selectors {
+  background-color: #f8f8f2;
+  color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background-color 0.3s linear; }
+
+.tab-selectors .tab-selectors__content {
+  height: 100%;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-direction: row;
+  flex: 1; }
+
+.tab-selectors .tab-selectors__tab-list {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.tab-selectors .tab {
+  position: relative;
+  padding: 0 0.75em;
+  overflow: hidden;
+  cursor: pointer;
+  height: 100%;
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  flex-basis: 0.000000001px;
+  align-items: center; }
+
+.tab-selectors .tab .tab__link {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.62);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%; }
+
+.tab-selectors .tab.active .tab__link {
+  color: #ff9100; }
+
+/* Ideally, this would be the top-level class on a <ul> */
+.item-list {
+  list-style-type: none;
+  padding-left: 0; }
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  background-color: whitesmoke;
+  font-family: Roboto, Arial, Helvetica, sans-serif; }
+
+.main-view-container {
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden; }
+
+.svg-def {
+  position: absolute;
+  width: 0;
+  height: 0; }
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+/*
+ * Hide visually and from screen readers:
+ * http://juicystudio.com/article/screen-readers-display-none.php
+ */
+.hidden {
+  display: none !important;
+  visibility: hidden; }
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto; }
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+.invisible {
+  visibility: hidden; }
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+
+.clearfix:after {
+  clear: both; }
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster:
+                                          http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important; }
+  a,
+  a:visited {
+    text-decoration: underline; }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+  /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: ""; }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
+  /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+  thead {
+    display: table-header-group; }
+  tr,
+  img {
+    page-break-inside: avoid; }
+  img {
+    max-width: 100% !important; }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+  h2,
+  h3 {
+    page-break-after: avoid; } }
+
+/**
+ * Colors
+ */
+/**
+ * The whole atom itself
+ */
+/**
+ * Atom Particle Dimensions (electrons, protons, neutrons)
+ */
+/**
+ * Atom orbit paths 
+ */
+/**
+ * Compute orbit parameters for our 4 different possible elliptical orbits
+ */
+/**
+ * Options for composing the nucleus
+ */
+/**
+ * Colors
+ */
+/**
+ * The whole atom itself
+ */
+/**
+ * Atom Particle Dimensions (electrons, protons, neutrons)
+ */
+/**
+ * Atom orbit paths 
+ */
+/**
+ * Compute orbit parameters for our 4 different possible elliptical orbits
+ */
+/**
+ * Options for composing the nucleus
+ */
+.atom, .atom__nucleus--container, .atom-particle__nucleus, .atom-particle__nucleus:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0); }
+
+body {
+  background-color: #644b3f; }
+
+.scene {
+  position: relative;
+  width: 80vw;
+  height: 100%;
+  padding: 0 1.75rem;
+  overflow: auto; }
+
+.main-title {
+  text-align: center;
+  color: #f075b3; }
+
 .main-display-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  flex-flow: wrap; }
+
+.atom__container {
+  display: flex;
+  order: -1;
+  flex-direction: column;
+  align-items: center;
+  position: relative; }
+
+.atom__container.atom--hydrogen,
+.atom__container.atom--hydrogen .atom {
+  width: 10.8125rem;
+  height: 10.8125rem; }
+
+.atom__container.atom--carbon,
+.atom__container.atom--carbon .atom {
+  width: 16.99107rem;
+  height: 16.99107rem; }
+
+.atom__container.atom--nitrogen,
+.atom__container.atom--nitrogen .atom {
+  width: 18.84464rem;
+  height: 18.84464rem; }
+
+.atom__container.atom--oxygen,
+.atom__container.atom--oxygen .atom {
+  width: 20.08036rem;
+  height: 20.08036rem; }
+
+.atom__container.atom--phosphorus,
+.atom__container.atom--phosphorus .atom {
+  width: 28.1125rem;
+  height: 28.1125rem; }
+
+.atom__container.atom--calcium,
+.atom__container.atom--calcium .atom {
+  width: 29.34821rem;
+  height: 29.34821rem; }
+
+.data-pane {
+  flex-shrink: 0;
+  flex-grow: 1;
+  min-width: 25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center; }
+
+.tab-selectors {
+  margin: 2em auto;
+  background-color: #59259d; }
+
+.tab-selectors .tab-selectors__tab-list {
+  flex-basis: 90%; }
+
+.tab-selectors .tab__link {
+  color: #f075b3;
+  font-size: 0.9rem;
+  text-transform: uppercase; }
+
+.atom {
+  border-radius: 50%;
+  border: 0.3rem solid rgba(255, 255, 255, 0.4);
+  transition: width 0.45s, height 0.45s;
+  transition-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15); }
+
+.atom__content {
+  position: relative;
+  width: calc(100% - 2rem);
+  height: calc(100% - 2rem);
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0); }
+
+.atom__orbit-path {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 0.4rem solid transparent;
+  transform-style: preserve-3d; }
+
+.atom__orbit-path.atom__orbit-path--visible {
+  border-radius: 50%;
+  border-color: white; }
+
+.atom__nucleus {
+  position: relative; }
+
+.atom-particle__nucleus {
+  display: block;
+  content: '';
+  width: 1.08125rem;
+  height: 1.08125rem;
+  border-radius: 50%; }
+
+.atom-particle__nucleus:after {
+  display: block;
+  content: '';
+  width: 2.70312rem;
+  height: 2.70312rem;
+  border-radius: 50%;
+  opacity: 0.15; }
+
+@keyframes NucleusPopIn1 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) translate3d(0, -75%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) translate3d(0, -75%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-1 {
+  animation: NucleusPopIn1 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 0.78648rad;
+  box-shadow: -0.75; }
+
+@keyframes NucleusPopIn2 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) translate3d(0, -75%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) translate3d(0, -75%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-2 {
+  animation: NucleusPopIn2 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 1.57296rad;
+  box-shadow: -0.75; }
+
+@keyframes NucleusPopIn3 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) translate3d(0, -75%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) translate3d(0, -75%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-3 {
+  animation: NucleusPopIn3 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 2.35944rad;
+  box-shadow: -0.75; }
+
+@keyframes NucleusPopIn4 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) translate3d(0, -75%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) translate3d(0, -75%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-4 {
+  animation: NucleusPopIn4 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 3.14593rad;
+  box-shadow: -0.75; }
+
+@keyframes NucleusPopIn5 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) translate3d(0, -75%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) translate3d(0, -75%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-5 {
+  animation: NucleusPopIn5 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 3.93241rad;
+  box-shadow: -0.75; }
+
+@keyframes NucleusPopIn6 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) translate3d(0, -75%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) translate3d(0, -75%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-6 {
+  animation: NucleusPopIn6 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 4.71889rad;
+  box-shadow: -0.75; }
+
+@keyframes NucleusPopIn7 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) translate3d(0, -75%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) translate3d(0, -75%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-7 {
+  animation: NucleusPopIn7 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 5.50537rad;
+  box-shadow: -0.75; }
+
+@keyframes NucleusPopIn8 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) translate3d(0, -75%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) translate3d(0, -75%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-8 {
+  animation: NucleusPopIn8 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 0rad;
+  box-shadow: -0.75; }
+
+@keyframes NucleusPopIn9 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) translate3d(0, -100%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) translate3d(0, -100%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-9 {
+  animation: NucleusPopIn9 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 0.78648rad;
+  box-shadow: -1; }
+
+@keyframes NucleusPopIn10 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) translate3d(0, -100%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) translate3d(0, -100%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-10 {
+  animation: NucleusPopIn10 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 1.57296rad;
+  box-shadow: -1; }
+
+@keyframes NucleusPopIn11 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) translate3d(0, -100%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) translate3d(0, -100%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-11 {
+  animation: NucleusPopIn11 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 2.35944rad;
+  box-shadow: -1; }
+
+@keyframes NucleusPopIn12 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) translate3d(0, -100%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) translate3d(0, -100%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-12 {
+  animation: NucleusPopIn12 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 3.14593rad;
+  box-shadow: -1; }
+
+@keyframes NucleusPopIn13 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) translate3d(0, -100%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) translate3d(0, -100%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-13 {
+  animation: NucleusPopIn13 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 3.93241rad;
+  box-shadow: -1; }
+
+@keyframes NucleusPopIn14 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) translate3d(0, -100%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) translate3d(0, -100%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-14 {
+  animation: NucleusPopIn14 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 4.71889rad;
+  box-shadow: -1; }
+
+@keyframes NucleusPopIn15 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) translate3d(0, -100%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) translate3d(0, -100%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-15 {
+  animation: NucleusPopIn15 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 5.50537rad;
+  box-shadow: -1; }
+
+@keyframes NucleusPopIn16 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) translate3d(0, -100%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) translate3d(0, -100%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-16 {
+  animation: NucleusPopIn16 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 0rad;
+  box-shadow: -1; }
+
+@keyframes NucleusPopIn17 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) translate3d(0, -125%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) translate3d(0, -125%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-17 {
+  animation: NucleusPopIn17 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 0.78648rad;
+  box-shadow: -1.25; }
+
+@keyframes NucleusPopIn18 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) translate3d(0, -125%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) translate3d(0, -125%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-18 {
+  animation: NucleusPopIn18 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 1.57296rad;
+  box-shadow: -1.25; }
+
+@keyframes NucleusPopIn19 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) translate3d(0, -125%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) translate3d(0, -125%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-19 {
+  animation: NucleusPopIn19 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 2.35944rad;
+  box-shadow: -1.25; }
+
+@keyframes NucleusPopIn20 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) translate3d(0, -125%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) translate3d(0, -125%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-20 {
+  animation: NucleusPopIn20 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 3.14593rad;
+  box-shadow: -1.25; }
+
+@keyframes NucleusPopIn21 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) translate3d(0, -125%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) translate3d(0, -125%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-21 {
+  animation: NucleusPopIn21 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 3.93241rad;
+  box-shadow: -1.25; }
+
+@keyframes NucleusPopIn22 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) translate3d(0, -125%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) translate3d(0, -125%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-22 {
+  animation: NucleusPopIn22 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 4.71889rad;
+  box-shadow: -1.25; }
+
+@keyframes NucleusPopIn23 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) translate3d(0, -125%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) translate3d(0, -125%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-23 {
+  animation: NucleusPopIn23 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 5.50537rad;
+  box-shadow: -1.25; }
+
+@keyframes NucleusPopIn24 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) translate3d(0, -125%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) translate3d(0, -125%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-24 {
+  animation: NucleusPopIn24 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 0rad;
+  box-shadow: -1.25; }
+
+@keyframes NucleusPopIn25 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) translate3d(0, -150%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) translate3d(0, -150%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-25 {
+  animation: NucleusPopIn25 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 0.78648rad;
+  box-shadow: -1.5; }
+
+@keyframes NucleusPopIn26 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) translate3d(0, -150%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) translate3d(0, -150%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-26 {
+  animation: NucleusPopIn26 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 1.57296rad;
+  box-shadow: -1.5; }
+
+@keyframes NucleusPopIn27 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) translate3d(0, -150%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) translate3d(0, -150%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-27 {
+  animation: NucleusPopIn27 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 2.35944rad;
+  box-shadow: -1.5; }
+
+@keyframes NucleusPopIn28 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) translate3d(0, -150%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) translate3d(0, -150%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-28 {
+  animation: NucleusPopIn28 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 3.14593rad;
+  box-shadow: -1.5; }
+
+@keyframes NucleusPopIn29 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) translate3d(0, -150%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.93241rad) translate3d(0, -150%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-29 {
+  animation: NucleusPopIn29 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 3.93241rad;
+  box-shadow: -1.5; }
+
+@keyframes NucleusPopIn30 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) translate3d(0, -150%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(4.71889rad) translate3d(0, -150%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-30 {
+  animation: NucleusPopIn30 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 4.71889rad;
+  box-shadow: -1.5; }
+
+@keyframes NucleusPopIn31 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) translate3d(0, -150%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(5.50537rad) translate3d(0, -150%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-31 {
+  animation: NucleusPopIn31 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 5.50537rad;
+  box-shadow: -1.5; }
+
+@keyframes NucleusPopIn32 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) translate3d(0, -150%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0rad) translate3d(0, -150%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-32 {
+  animation: NucleusPopIn32 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 0rad;
+  box-shadow: -1.5; }
+
+@keyframes NucleusPopIn33 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) translate3d(0, -175%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0.78648rad) translate3d(0, -175%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-33 {
+  animation: NucleusPopIn33 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 0.78648rad;
+  box-shadow: -1.75; }
+
+@keyframes NucleusPopIn34 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) translate3d(0, -175%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(1.57296rad) translate3d(0, -175%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-34 {
+  animation: NucleusPopIn34 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 1.57296rad;
+  box-shadow: -1.75; }
+
+@keyframes NucleusPopIn35 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) translate3d(0, -175%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(2.35944rad) translate3d(0, -175%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-35 {
+  animation: NucleusPopIn35 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 2.35944rad;
+  box-shadow: -1.75; }
+
+@keyframes NucleusPopIn36 {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) scale(0); }
+  80% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) translate3d(0, -175%, 0) scale(1.8); }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotateZ(3.14593rad) translate3d(0, -175%, 0) scale(1); } }
+
+.atom-particle__nucleus.visible.atom-particle__nucleus-36 {
+  animation: NucleusPopIn36 0.45s linear;
+  animation-fill-mode: forwards;
+  color: 3.14593rad;
+  box-shadow: -1.75; }
+
+.atom-particle__nucleus,
+.atom-particle__nucleus:before {
+  /* Dynamically inserted when atom is selected */ }
+
+.atom-particle__nucleus.proton,
+.atom-particle__nucleus:before.proton {
+  background-image: radial-gradient(circle at center, #545194 50%, #9998cd); }
+
+.atom-particle__nucleus.neutron,
+.atom-particle__nucleus:before.neutron {
+  background-image: radial-gradient(circle at center, #378190 50%, #95cbd0); }
+
+.electron--container {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
+.electron {
+  transform-style: preserve-3d; }
+
+.electron:before,
+.electron:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 50%; }
+
+.electron:before {
+  display: block;
+  content: '';
+  width: 1.67594rem;
+  height: 1.67594rem;
+  border-radius: 50%; }
+
+.electron:after {
+  display: block;
+  content: '';
+  width: 0.865rem;
+  height: 0.865rem;
+  border-radius: 50%;
+  border-color: rgba(255, 255, 255, 0.4); }
+
+.atom__orbit-path-1.atom__orbit-path--visible {
+  transform: translate3d(-50%, -50%, 0) rotateZ(-45deg) rotateY(73deg); }
+
+.atom__orbit-path-1.atom__orbit-path--foreground {
+  transform: translate3d(-50%, -50%, 0) translateZ(10rem) rotateZ(-45deg) rotateY(73deg); }
+
+@keyframes RotateAroundShell1 {
+  0% {
+    transform: rotate(0deg) translate(-50%) rotate(0deg); }
+  100% {
+    transform: rotate(360deg) translate(-50%) rotate(-360deg); } }
+
+@keyframes ScaleIn1 {
+  0% {
+    transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(45deg) scale(0); }
+  80% {
+    transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(45deg) scale(1.9); }
+  100% {
+    transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(45deg) scale(1); } }
+
+.atom__orbit-path-1 .electron.visible {
+  animation-name: RotateAroundShell1;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: 2s; }
+
+.atom__orbit-path-1 .electron.visible:before,
+.atom__orbit-path-1 .electron.visible:after {
+  animation: ScaleIn1 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(45deg); }
+
+.atom__orbit-path-1 .electron.visible:before {
+  background: radial-gradient(circle at center, #fef439 50%, #fff570);
+  opacity: 0.3; }
+
+.atom__orbit-path-1 .electron.visible:after {
+  background: radial-gradient(circle at center, #fef439 50%, #fff570); }
+
+.atom__orbit-path-2.atom__orbit-path--visible {
+  transform: translate3d(-50%, -50%, 0) rotateZ(0deg) rotateY(73deg); }
+
+.atom__orbit-path-2.atom__orbit-path--foreground {
+  transform: translate3d(-50%, -50%, 0) translateZ(10rem) rotateZ(0deg) rotateY(73deg); }
+
+@keyframes RotateAroundShell2 {
+  0% {
+    transform: rotate(45deg) translate(-50%) rotate(-45deg); }
+  100% {
+    transform: rotate(405deg) translate(-50%) rotate(-405deg); } }
+
+@keyframes ScaleIn2 {
+  0% {
+    transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(0deg) scale(0); }
+  80% {
+    transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(0deg) scale(1.9); }
+  100% {
+    transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(0deg) scale(1); } }
+
+.atom__orbit-path-2 .electron.visible {
+  animation-name: RotateAroundShell2;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: 2s; }
+
+.atom__orbit-path-2 .electron.visible:before,
+.atom__orbit-path-2 .electron.visible:after {
+  animation: ScaleIn2 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(0deg); }
+
+.atom__orbit-path-2 .electron.visible:before {
+  background: radial-gradient(circle at center, #e27250 50%, #fad580);
+  opacity: 0.3; }
+
+.atom__orbit-path-2 .electron.visible:after {
+  background: radial-gradient(circle at center, #e27250 50%, #fad580); }
+
+.atom__orbit-path-3.atom__orbit-path--visible {
+  transform: translate3d(-50%, -50%, 0) rotateZ(45deg) rotateY(73deg); }
+
+.atom__orbit-path-3.atom__orbit-path--foreground {
+  transform: translate3d(-50%, -50%, 0) translateZ(10rem) rotateZ(45deg) rotateY(73deg); }
+
+@keyframes RotateAroundShell3 {
+  0% {
+    transform: rotate(90deg) translate(-50%) rotate(-90deg); }
+  100% {
+    transform: rotate(450deg) translate(-50%) rotate(-450deg); } }
+
+@keyframes ScaleIn3 {
+  0% {
+    transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(-45deg) scale(0); }
+  80% {
+    transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(-45deg) scale(1.9); }
+  100% {
+    transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(-45deg) scale(1); } }
+
+.atom__orbit-path-3 .electron.visible {
+  animation-name: RotateAroundShell3;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: 2s; }
+
+.atom__orbit-path-3 .electron.visible:before,
+.atom__orbit-path-3 .electron.visible:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible:before {
+  background: radial-gradient(circle at center, #265625 50%, #c5e1c1);
+  opacity: 0.3; }
+
+.atom__orbit-path-3 .electron.visible:after {
+  background: radial-gradient(circle at center, #265625 50%, #c5e1c1); }
+
+@media screen and (max-width: 770px) {
+  .scene {
+    width: 100%; }
+  .atom__container {
+    flex-basis: 100%; }
+  .tab-selectors {
+    order: 2;
+    height: 100%;
+    flex-basis: 20%; }
+  .tab-selectors .tab-selectors__tab-list {
+    flex-direction: column; }
+  .tab-selectors .tab {
+    flex-direction: column;
+    flex-basis: 100%; }
+  .data-pane {
+    order: 3; } }

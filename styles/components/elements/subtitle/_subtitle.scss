@@ -1,0 +1,11 @@
+.subtitle {
+    display: block;
+    font-size: 1.2rem;
+    margin: 0;
+    font-style: italic;
+    color: $font-color__secondary-text--white-on-dark-background;
+
+    @media screen and (max-width: #{map_get($map__breakpoint-sizes, 'medium')}) {
+      font-size: 1.6rem;
+    }
+}

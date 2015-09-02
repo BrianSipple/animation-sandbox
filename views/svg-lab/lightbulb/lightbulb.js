@@ -25,7 +25,8 @@ let lightbulb = function lightbulb () {
 
             EASINGS = {
                 default: Power4.easeInOut,
-                linear: Power0.easeNone
+                linear: Power0.easeNone,
+                initialWireCharging: Power4.easeOut
             },
 
             LABELS = {
@@ -51,13 +52,13 @@ let lightbulb = function lightbulb () {
             },
 
             DURATIONS = {
-                initialWireCharging: 1.2,
-                chargeFlicker1: 1.2,
-                chargeFlicker2: 0.7,
-                chargeFlicker3: 1.7,
-                chargeFlicker4: 0.3,
-                chargeFlicker5: 0.9,
-                chargeFlicker6: 1.2
+                initialWireCharging: 3.2,
+                chargeFlicker1: .012,
+                chargeFlicker2: .007,
+                chargeFlicker3: .017,
+                chargeFlicker4: .003,
+                chargeFlicker5: .009,
+                chargeFlicker6: .012
             },
 
             COLORS = {
@@ -188,11 +189,15 @@ let lightbulb = function lightbulb () {
                 wireChargeTL.to(
                     energyWireUnlitSVG,
                     DURATIONS.initialWireCharging,
-                    { stroke: COLORS.chargingOrange, ease: Power0.easeNone },
+                    { stroke: COLORS.chargingOrange, ease: EASINGS.initialWireCharging },
                     LABELS.wireChargeStart
                 );
                 
-                wireChargeTL.set(bulbInnerChargingSVG, {scale: 1}, LABELS.wireChargeStart);
+                wireChargeTL.set(
+                    bulbInnerChargingSVG,
+                    { scale: 1 },
+                    LABELS.wireChargeStart
+                );
                 
                 setBulbLighting(
                     wireChargeTL, 
@@ -203,9 +208,8 @@ let lightbulb = function lightbulb () {
                     LABELS.wireChargeStart
                 );
 
-                return wireChargeTL;
+                return wireChargeTL;                
             },
-
 
             
             /**
@@ -218,7 +222,7 @@ let lightbulb = function lightbulb () {
             flickerToFullCharge = () => {
                 
                 let 
-                    flickerToFullTL = new TimelineMax({delay: 2}),                
+                    flickerToFullTL = new TimelineMax(),                
                     
                     /**
                      * Makes a timelime that coordinates a flickering of the bulb
@@ -227,7 +231,11 @@ let lightbulb = function lightbulb () {
                         
                         let
                             drawSVGValue = percentage + '% ' + (100-percentage) + '%',
-                            flickerInstanceTL = new TimelineMax();
+                            flickerInstanceTL = new TimelineMax({
+                                repeat: 100,
+                                delay: 0.2,
+                                reapeatDelay: 0
+                            });
                         
                         
                         // scale down the inner charging layer and scale up the lit layer (in 
@@ -260,12 +268,24 @@ let lightbulb = function lightbulb () {
                         
                     };
                 
-                flickerToFullTL.add(makeFlickerInstance(20, DURATIONS.chargeFlicker1, LABELS.chargeFlicker1), LABELS.chargeFlicker1Complete);
-                flickerToFullTL.add(makeFlickerInstance(40, DURATIONS.chargeFlicker2, LABELS.chargeFlicker2), '+2');
-                flickerToFullTL.add(makeFlickerInstance(60, DURATIONS.chargeFlicker3, LABELS.chargeFlicker3), '+5');
-                flickerToFullTL.add(makeFlickerInstance(70, DURATIONS.chargeFlicker4, LABELS.chargeFlicker4), '+7');
-                flickerToFullTL.add(makeFlickerInstance(80, DURATIONS.chargeFlicker5, LABELS.chargeFlicker5), '+9');
-                flickerToFullTL.add(makeFlickerInstance(99, DURATIONS.chargeFlicker6, LABELS.chargeFlicker6), '+10');                                
+//                var
+//                    flickerIntensity,
+//                    flickerInstanceTL;
+//                for (var i = 0; i < 10; i++) {
+//                    
+//                    flickerIntensity = (i+1) * 10;
+//                    flickerInstanceTL = makeFlickerInstance(
+//                        flickerIntensity,
+//                    );
+//                    
+//                }
+                
+                flickerToFullTL.add(makeFlickerInstance(20, DURATIONS.chargeFlicker1, LABELS.chargeFlicker1));
+                flickerToFullTL.add(makeFlickerInstance(40, DURATIONS.chargeFlicker2, LABELS.chargeFlicker2));
+                flickerToFullTL.add(makeFlickerInstance(60, DURATIONS.chargeFlicker3, LABELS.chargeFlicker3));
+                flickerToFullTL.add(makeFlickerInstance(70, DURATIONS.chargeFlicker4, LABELS.chargeFlicker4));
+                flickerToFullTL.add(makeFlickerInstance(80, DURATIONS.chargeFlicker5, LABELS.chargeFlicker5));
+                flickerToFullTL.add(makeFlickerInstance(99, DURATIONS.chargeFlicker6, LABELS.chargeFlicker6));                                
                 
                 return flickerToFullTL;                
             },
@@ -284,8 +304,10 @@ let lightbulb = function lightbulb () {
             letThereBeLight = function letThereBeLight() {
                       
                 masterTL.add(setScene());
-                masterTL.add(chargeWire(), LABELS.phaseWireIsCharging);
-                masterTL.add(flickerToFullCharge(), LABELS.phaseFlickeringToFullLight);
+                masterTL.add(chargeWire());
+                masterTL.addLabel(LABELS.phaseWireIsCharging);
+                masterTL.add(flickerToFullCharge());
+                masterTL.addLabel(LABELS.phaseFlickeringToFullLight);
                 //masterTL.add(illuminateBulb(), LABELS.phaseFullChargeReached + '+=0.18');
                 //masterTL.add(flickerBulbAtRandom(), LABELS.phaseBulbOnAndFlickering);
                 masterTL.play();

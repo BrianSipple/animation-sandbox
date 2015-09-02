@@ -1,0 +1,6 @@
+@import 'fact';
+@import 'pow';
+
+@function pi() {
+  @return 3.1459265359;
+}

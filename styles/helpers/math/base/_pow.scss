@@ -1,0 +1,17 @@
+@function pow($number, $exp) {
+  $value: 1;  // base case if $exp is 0
+
+  @if ($exp > 0) {
+    @for $i from 1 through $exp {
+      $value: $value * $number;
+    }
+  }
+
+  // negative exponents just take the same value as the denominator of 1
+  @else if ($exp < 0) {
+    @for $i from 1 through -$exp {
+      $value: $value / $number;
+    }
+  }
+  @return $value;
+}

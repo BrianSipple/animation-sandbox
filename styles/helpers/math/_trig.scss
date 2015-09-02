@@ -1,0 +1,42 @@
+@import 'base/base';
+
+
+@function rad($angle) {
+  $unit: unit($angle);
+  $unitlessAngleVal: $angle / ($angle * 0 + 1);
+
+  // If the angle has degress as a unit, convert to radians
+  @if ($unit == deg) {
+    $unitlessAngleVal: $unitlessAngleVal / 180 * pi();
+  }
+  @return $unitlessAngleVal;
+}
+
+
+@function sin($angle) {
+  $sin: 0;
+  $angle: rad($angle);
+
+  // Go through multiple iterations
+  @for $i from 0 through 10 {
+    $sin: $sin + pow(-1, $i) * pow($angle, (2 * $i + 1)) / fact(2 * $i + 1);
+  }
+  @return $sin;
+}
+
+
+@function cosine($angle) {
+  $cos: 0;
+  $angle: rad($angle);
+
+  // Go through multiple iterations
+  @for $i from 0 through 10 {
+    $cos: $cos + pow(-1, $i) * pow($angle, 2 * $i) / fact(2 * $i);
+  }
+  @return $cos;
+}
+
+
+@function tangent($angle) {
+  @return sin($angle) / cos($angle);
+}

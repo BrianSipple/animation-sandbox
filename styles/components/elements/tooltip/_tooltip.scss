@@ -7,8 +7,8 @@
     color: $font-color-white_button__dark-background;
     fill: hsla(0, 0%, 0%, 0.77);
     text-align: center;
-    transition: scale 0.3s $easings_ease-out-cubic,
-                opacity 0.3s $easings_ease-out-cubic;
+    transition: scale 0.3s $easing__ease-out-cubic,
+                opacity 0.3s $easing__ease-out-cubic;
     transform: scaleY(0);
 
     width: inherit;

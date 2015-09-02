@@ -1,121 +1,135 @@
-$background-color: hsla(19, 23%, 32%, 1);
+/**
+ * Colors
+ */
+$proton__color--light: hsla(241, 35%, 70%, 1);
+$proton__color--dark: hsla(242, 29%, 45%, 1);
+    
+$neutron__color--light: hsla(185, 39%, 70%, 1);
+$neutron__color--dark: hsla(190, 45%, 39%, 1);
+    
+
+$electron-1__color--dark: hsla(57, 99%, 61%, 1);
+$electron-1__color--light: hsla(56, 100%, 72%, 1);
+    
+$electron-2__color--dark: hsla(14, 72%, 60%, 1);
+$electron-2__color--light: hsla(42, 92%, 74%, 1);
+
+$electron-3__color--dark: hsla(118, 40%, 24%, 1);
+$electron-3__color--light: hsla(114, 34%, 82%, 1); 
+    
+$electron-4__color--dark: hsla(227, 11%, 34%, 1);
+$electron-4__color--light: hsla(227, 17%, 61%, 1);
+    
+
+
+$proton__bg-gradient: 
+    radial-gradient(circle at center, $proton__color--dark 50%, $proton__color--light);
+$neutron__bg-gradient: 
+    radial-gradient(circle at center, $neutron__color--dark 50%, $neutron__color--light);
+
+$atom-particle__border-color: hsla(0, 100%, 100%, 0.4);
 
 
 /**
  * The whole atom itself
  */
-$atom__diameter--hydrogen: 7.8125rem;
-$atom-diameter__carbon: $atom__diameter--hydrogen * 1.5714285;
-$atom-diameter__nitrogen: $atom__diameter--hydrogen * 1.7428571428;
-$atom-diameter__oxygen: $atom__diameter--hydrogen * 1.857142857142;
-$atom-diameter__phosphorus: $atom__diameter--hydrogen * 2.6;
-$atom-diameter__calcium: $atom__diameter--hydrogen * 2.7142857142;
+$atom__diameter--hydrogen: 10.8125rem;
+$atom__diameter--carbon: $atom__diameter--hydrogen * 1.5714285;
+$atom__diameter--nitrogen: $atom__diameter--hydrogen * 1.7428571428;
+$atom__diameter__oxygen: $atom__diameter--hydrogen * 1.857142857142;
+$atom__diameter__phosphorus: $atom__diameter--hydrogen * 2.6;
+$atom__diameter--calcium: $atom__diameter--hydrogen * 2.7142857142;
 $atom__border-width: 0.3rem;
 $atom__padding: 2rem;
 
 
 
 /**
- * Atom Particles (electrons, protons, neutrons)
+ * Atom Particle Dimensions (electrons, protons, neutrons)
  */
-$atom-nucleus-particle__diameter: $atom__diameter--hydrogen / 6;
-$atom-nucleus-particle__diameter--inner: $atom-nucleus-particle__diameter * 0.66667;
-$atom-nucleus-particle__glow-radius: 0.8rem;
-$atom-nucleus-particle__bg-gradient--proton: 
-    radial-gradient(circle center, hsla(5, 84%, 57%, 1) 50%, hsla(358, 75%, 84%, 1));
-$atom-nucleus-particle__bg-gradient--neutron: 
-    radial-gradient(circle center, hsla(90, 80%, 46%, 1) 50%, hsla(92, 82%, 78%, 1));
+$atom-particle__diameter--nucleus: $atom__diameter--hydrogen / 10;
+$atom-particle__glow-radius--nucleus: $atom-particle__diameter--nucleus * 1.5;
 
-
-$atom-electron__diameter: $atom-nucleus-particle__diameter * 0.8;
-$atom-electron__diameter--inner: $atom-electron__diameter * 0.66667;
-$atom-electron__border-width: 1rem;
-$atom-electron__color: hsla(191, 95%, 75%, 1);
-$atom-electron__glow-radius: $atom-nucleus-particle__glow-radius / 2;
+$electron__diameter: $atom-particle__diameter--nucleus * 0.8;
+$electron__border-width: 1rem;
+$electron__glow-radius: $atom-particle__glow-radius--nucleus / 2;
 
 
 
 /**
  * Atom orbit paths 
  */
-$atom-oribit-path__thickness: 0.4rem;
-$atom-oribit-path__color: white;
+$atom-orbit-path__thickness: 0.4rem;
+$atom-orbit-path__color: white;
 
 $atom__yRotation: 73deg;
-$atom--zTilt: 45deg;
-$atom-electron__orbit-duration: 2.0s;
+$atom__z-tilt-spacing: 45deg;
+$atom__z-tilt-start: -45deg;
+$electron__orbit-duration: 2.0s;
 
-$atom-electron-1__color--dark: hsla(57, 99%, 61%, 1);
-$atom-electron-1__color--light: HSLA(56, 100%, 72%, 1);
-    
-$atom-electron-2__color--dark: hsla(14, 72%, 60%, 1);
-$atom-electron-2__color--light: hsla(42, 92%, 74%, 1);
-    
-$atom-electron-3__color--dark: hsla(227, 11%, 34%, 1)
-$atom-electron-3__color--light: hsla(227, 17%, 61%, 1)
-    
-$atom-electron-4__color--dark: hsla(263, 96%, 68%, 1)
-$atom-electron-4__color--light: hsla(253, 87%, 85%, 1);  
 
 
 /**
  * Compute orbit parameters for our 4 different possible elliptical orbits
  */
-$atom-electron-orbits-map: (
+$Atom-electron-orbits__map: (
     1: (
         background: radial-gradient(
-            circle center, 
-            $atom-electron-1__color--dark 50%,
-            $atom-electron-1__color--light
+            circle at center, 
+            $electron-1__color--dark 50%,
+            $electron-1__color--light
         ),
-        orbitDuration: $atom-electron__orbit-duration,
+        orbitDuration: $electron__orbit-duration,
         semiMajorAxisLength: 4,  // n
         semiMinorAxisLength: 4,  // k
-        tilt: $atom--zTilt,
-        startRotation: 0deg
+        tilt: $atom__z-tilt-start,
+        startingRotation: 0deg
     ),
     2: (
         background: radial-gradient(
-            circle center, 
-            $atom-electron-2__color--dark 50%,
-            $atom-electron-2__color--light
+            circle at center, 
+            $electron-2__color--dark 50%,
+            $electron-2__color--light
         ),
-        orbitDuration: $atom-electron__orbit-duration,
+        orbitDuration: $electron__orbit-duration,
         semiMajorAxisLength: 4,
         semiMinorAxisLength: 3,
-        tilt: $atom--zTilt,
-        startRotation: 45deg
+        tilt: $atom__z-tilt-start + ($atom__z-tilt-spacing * 1),
+        startingRotation: 45deg
     ),
     3: (
         background: radial-gradient(
-            circle center, 
-            $atom-electron-3__color--dark 50%,
-            $atom-electron-3__color--light
+            circle at center, 
+            $electron-3__color--dark 50%,
+            $electron-3__color--light
         ),
-        orbitDuration: $atom-electron__orbit-duration,
+        orbitDuration: $electron__orbit-duration,
         semiMajorAxisLength: 4,
         semiMinorAxisLength: 2,
-        tilt: $atom--zTilt,
-        startRotation: 90deg
+        tilt: $atom__z-tilt-start + ($atom__z-tilt-spacing * 2),
+        startingRotation: 90deg
     ),
-    4: (
-        background: radial-gradient(
-            circle center, 
-            $atom-electron-4__color--dark 50%,
-            $atom-electron-4__color--light
-        ),
-        orbitDuration: $atom-electron__orbit-duration,
-        semiMajorAxisLength: 4,
-        semiMinorAxisLength: 1,
-        tilt: $atom--zTilt,
-        startRotation: 135deg
-    )    
-)
+//    4: (
+//        background: radial-gradient(
+//            circle at center, 
+//            $electron-4__color--dark 50%,
+//            $electron-4__color--light
+//        ),
+//        orbitDuration: $electron__orbit-duration,
+//        semiMajorAxisLength: 4,
+//        semiMinorAxisLength: 1,
+//        tilt: $atom__z-tilt-start + ($atom__z-tilt-spacing * 3),
+//        startingRotation: 135deg
+//    )    
+);
 
 
 
 
-
+/**
+ * Options for composing the nucleus
+ */
+$nucleus__layer-density: 8;
 
 
 

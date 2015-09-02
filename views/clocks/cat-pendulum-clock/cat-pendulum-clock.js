@@ -6,6 +6,7 @@ var app = (function (exports) {
         SELECTORS = {
             clockSVG: '#Clock',
             clockBodySVG: '#ClockBody',
+            clockFaceSVG: '#ClockFace',
             tailSVG: '#Tail',
             leftEyeSVG: '#EyeLeft',
             leftEyelidSVG: '#EyelidLeft',
@@ -19,6 +20,7 @@ var app = (function (exports) {
             
         clockSVG = document.querySelector(SELECTORS.clockSVG),
         clockBodySVG = clockSVG.querySelector(SELECTORS.clockBodySVG),
+        clockFaceSVG = clockSVG.querySelector(SELECTORS.clockFaceSVG),
         tailSVG = clockSVG.querySelector(SELECTORS.tailSVG),
         leftEyeSVG = clockSVG.querySelector(SELECTORS.leftEyeSVG),
         leftEyelidSVG = clockSVG.querySelector(SELECTORS.leftEyelidSVG),
@@ -39,6 +41,8 @@ var app = (function (exports) {
         
         // Timing
         previousTime = new Date(),
+        currentTimeZone,
+        currentTimeZoneOffsetMins,
         currentTime,
         elapsedTimeMS,
         
@@ -125,7 +129,6 @@ var app = (function (exports) {
                 var rotation = (this.theta - (Math.PI / 2)) / 2;
                 
                 if (this.maxTheta) {
-                    debugger;
                     rotation = this.maxTheta * -Math.cos(this.theta);
                 }
                                                    
@@ -133,7 +136,6 @@ var app = (function (exports) {
                 
                 // Handle cases where we're bounding the x offset
                 if (this.maxXOffset) {                    
-                    //debugger;
                     newXOffset = this.maxXOffset * Math.cos(this.theta);
                 }
                                                 
@@ -141,12 +143,11 @@ var app = (function (exports) {
                 this.pos.cx += newXOffset;
                 
                 
-                console.log('New X Offset: ' + newXOffset);
+                //console.log('New X Offset: ' + newXOffset);
                 
                 
                 this.el.style.transform = 
                     'translateX(' + newXOffset + 'px) ' +
-                    //'rotateZ(' + this.theta + 'rad)';
                     'rotateZ(' + rotation + 'rad)';
             }        
         },
@@ -159,21 +160,50 @@ var app = (function (exports) {
         ClockHandProto = {
             el: undefined,
             clockBaseEl: undefined,
-            theta: Math.PI / 2, // (Math.PI / 2 == noon, 0 == 3:00)
+            semiMajorAxisLength: 0,
+            semiMinorAxisLength: 0,
+            currentTimeStamp: undefined,
+            theta: Math.PI / 2, // (Math.PI / 2 ==> 3:00 , Math.PI == 6:00)
             
-            initFromSVGs: function initFromSVGs (mainSVG, clockBaseSVG) {
+            initFromSVGs: function initFromSVGs (mainSVG, clockBaseSVG, clockFaceSVG) {
               
                 this.el = mainSVG;
                 this.clockBaseEl = clockBaseSVG;
                 
+                var 
+                    clockFaceRect = clockFaceSVG.getBoundingClientRect(),
+                    clockFaceHeight = clockFaceRect.height,
+                    clockFaceWidth = clockFaceRect.width;
+                
+                if (clockFaceHeight >= clockFaceWidth) {
+                    this.semiMajorAxisLength = clockFaceHeight;
+                    this.semiMinorAxisLength = clockFaceWidth;
+                    
+                } else {
+                    this.semiMajorAxisLength = clockFaceWidth;
+                    this.semiMinorAxisLength = clockFaceHeight;
+                }
+                                                        
                 var yTransOriginPercentage = 
                     100 - ( Number(this.clockBaseEl.getAttribute('r')) / this.el.getBBox().height );
                             
                 this.el.style.transformOrigin = ('50% ' + yTransOriginPercentage + '%');
             },
             
-            animate: function animate () {
-                this.el.style.transform = 'rotateZ(' + this.theta + 'rad)';
+            animate: function animate () { 
+                
+                var thetaAdjustmentFactor = 1;
+                
+                // TODO: Compute proper rotation adjustment for angles on an elipse.
+                
+//                    ( 1 - (this.theta * (Math.PI / 2) ) ) * (this.semiMajorAxisLength / this.semiMinorAxisLength);
+//                    (   
+//                        this.theta * ( (Math.PI / 2) / (this.semiMajorAxisLength / this.semiMinorAxisLength) ) * 
+//                        Math.PI/2
+//                    );
+                
+                debugger;                                
+                this.el.style.transform = 'rotateZ(' + (this.theta * thetaAdjustmentFactor) + 'rad)';
             }
             
         },
@@ -188,30 +218,34 @@ var app = (function (exports) {
         var 
             hours = time.getHours(),
             minutes = time.getMinutes(),
-            seconds = time.getSeconds();
+            seconds = time.getSeconds(),
+            
+            theta = ( (hours % 12) + (minutes / 60) + (seconds / 3600) ) 
+                * 30 
+                * (Math.PI / 180);
+                //- Math.PI / 2;
         
-        return ( (hours % 12) + (minutes / 60) + (seconds / 3600) ) 
-            * 30 
-            * (Math.PI / 180) 
-            - Math.PI / 2;
+        return theta;
     }
     
     function computeMinuteHandTheta (time) {
-        
+        debugger;
         var 
             minutes = time.getMinutes(),
-            seconds = time.getSeconds();
+            seconds = time.getSeconds(),
         
-        return ( ((minutes / 60 * 12) % 12) + (seconds / 60) )
-            * 30
-            * (Math.PI / 180)
-            - Math.PI / 2;            
+            theta = ( (minutes + (seconds / 60)) / 60 ) * (Math.PI * 2);
+        
+        console.log('New minute hand theta: ' + theta);
+        return theta;
     }
     
-    function computeClockHandThetas (time) {
+    function computeClockHandThetas (time) {        
+        HourHand.theta = computeHourHandTheta(time); 
+        HourHand.currentTimeStamp = time;
         
-        HourHand.theta = computeHourHandTheta(time);         
-        MinuteHand.theta = computeMinuteHandTheta(time);
+        MinuteHand.theta = computeMinuteHandTheta(time);        
+        MinuteHand.currentTimeStamp = time;
     }
     
     function performPendulumAnimations () {
@@ -277,8 +311,8 @@ var app = (function (exports) {
     }
     
     function initClockHands () { 
-        HourHand.initFromSVGs(hourHandSVG, hourHandBaseSVG);
-        MinuteHand.initFromSVGs(minuteHandSVG, minuteHandBaseSVG);        
+        HourHand.initFromSVGs(hourHandSVG, hourHandBaseSVG, clockFaceSVG);
+        MinuteHand.initFromSVGs(minuteHandSVG, minuteHandBaseSVG, clockFaceSVG);        
     }
     
     
@@ -294,8 +328,7 @@ var app = (function (exports) {
         LeftEyelid.maxTheta = thetaLimit;
         LeftEyelid.maxXOffset = xOffsetLimit;
     }
-    
-            
+                
     function runTheClock () {
                 
         requestAnimationFrame(runTheClock);

@@ -1,4 +1,117 @@
-/*! HTML5 Boilerplate v5.0.0 | MIT License | http://h5bp.com/ */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
+/* ---------------------- Theme colors ---------------------- */
+/* ----------------------- Font colors and sizes ---------------------- */
+/* White text on dark backgrounds */
+/* Dark text on light backgrounds */
+/* Base element styles */
+/**
+ * Use with every animation and transition so we can have a
+ * global animation speed toggler (i.e., for visual UI testing)
+ */
+/*
+ * Easing functions
+ */
+.button--timeline-toggle {
+  height: 3em;
+  width: 6.2em;
+  padding: 0.3em 0.8em;
+  border: 1px solid #0d6e91;
+  background-color: #0d6e91;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+  border-radius: .2em;
+  box-shadow: 0 0.05em 0.25em rgba(0, 0, 0, 0.5);
+  color: white;
+  text-shadow: 0 -0.05em 0.05em rgba(0, 0, 0, 0.5);
+  font-size: 1.25em;
+  line-height: 1.5em; }
+
+/**
+ * Attribute API for declarative flexbox styling
+ */
+[layout] {
+  width: 100%;
+  display: flex; }
+
+[layout="horizontal"],
+[layout="row"] {
+  flex-direction: row; }
+
+[layout="vertical"],
+[layout="column"] {
+  flex-direction: column; }
+
+[layout-align="space-around"] {
+  justify-content: space-around; }
+
+[layout-align="space-between"] {
+  justify-content: space-between; }
+
+[layout-align="center"] {
+  justify-content: center; }
+
+[layout-align="start"] {
+  justify-content: flex-start; }
+
+[layout-align="end"] {
+  justify-content: flex-end; }
+
+.tab-selectors {
+  background-color: #f8f8f2;
+  color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background-color 0.3s linear; }
+
+.tab-selectors .tab-selectors__content {
+  height: 100%;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-direction: row;
+  flex: 1; }
+
+.tab-selectors .tab-selectors__tab-list {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.tab-selectors .tab {
+  position: relative;
+  padding: 0 0.75em;
+  overflow: hidden;
+  cursor: pointer;
+  height: 100%;
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  flex-basis: 0.000000001px;
+  align-items: center; }
+
+.tab-selectors .tab .tab__link {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.62);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%; }
+
+.tab-selectors .tab.active .tab__link {
+  color: #ff9100; }
+
+/* Ideally, this would be the top-level class on a <ul> */
+.item-list {
+  list-style-type: none;
+  padding-left: 0; }
+
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
@@ -155,27 +268,62 @@ nav, a, button {
 [layout-align="end"] {
   justify-content: flex-end; }
 
-.tooltip {
-  background-image: url("../../../assets/svg/tooltip.svg");
-  background-position: center;
-  background-size: contain;
-  border: none;
-  outline: none;
+.tab-selectors {
+  background-color: #f8f8f2;
   color: white;
-  fill: rgba(0, 0, 0, 0.77);
-  text-align: center;
-  transition: scale 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-  transform: scaleY(0);
-  width: inherit;
-  line-height: 1.4em;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background-color 0.3s linear; }
+
+.tab-selectors .tab-selectors__content {
+  height: 100%;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-direction: row;
+  flex: 1; }
+
+.tab-selectors .tab-selectors__tab-list {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.tab-selectors .tab {
+  position: relative;
+  padding: 0 0.75em;
+  overflow: hidden;
+  cursor: pointer;
+  height: 100%;
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  flex-basis: 0.000000001px;
+  align-items: center; }
+
+.tab-selectors .tab .tab__link {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.62);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; }
+  width: 100%; }
 
-.tooltip.visible {
-  transform: scaleY(1);
-  opacity: 1; }
+.tab-selectors .tab.active .tab__link {
+  color: #ff9100; }
+
+/* Ideally, this would be the top-level class on a <ul> */
+.item-list {
+  list-style-type: none;
+  padding-left: 0; }
 
 html,
 body {

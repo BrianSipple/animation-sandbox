@@ -361,13 +361,12 @@ body {
 
                 &:before {
                     background: map-get($shellValues, 'background');
-                    opacity: 0.3;
+                    //opacity: 0.3;
                 }
                 &:after {
-                    background: map-get($shellValues, 'background');
+                    //background: map-get($shellValues, 'background');
                 }
-            }
-            
+            }            
         }        
     }    
 } 

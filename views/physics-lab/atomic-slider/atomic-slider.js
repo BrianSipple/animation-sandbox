@@ -258,6 +258,7 @@ let
         }
                 
         for (let electronElem of ATOMS[currentAtomKey].electronElems) {
+            
             electronElem.classList.remove(CLASSES.particleHidden);
             electronElem.classList.add(CLASSES.particleVisible);
         }

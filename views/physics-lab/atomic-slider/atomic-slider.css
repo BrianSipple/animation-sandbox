@@ -1123,11 +1123,11 @@ body {
 
 .atom-particle__nucleus.proton,
 .atom-particle__nucleus:before.proton {
-  background-image: radial-gradient(circle at center, #545194 50%, #9998cd); }
+  background-image: radial-gradient(circle at center, #545194 20%, #9998cd); }
 
 .atom-particle__nucleus.neutron,
 .atom-particle__nucleus:before.neutron {
-  background-image: radial-gradient(circle at center, #378190 50%, #95cbd0); }
+  background-image: radial-gradient(circle at center, #378190 20%, #95cbd0); }
 
 .electron--container {
   position: relative;
@@ -1192,11 +1192,7 @@ body {
   transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(45deg); }
 
 .atom__orbit-path-1 .electron.visible:before {
-  background: radial-gradient(circle at center, #fef439 50%, #fff570);
-  opacity: 0.3; }
-
-.atom__orbit-path-1 .electron.visible:after {
-  background: radial-gradient(circle at center, #fef439 50%, #fff570); }
+  background: radial-gradient(circle at center, #fef439 20%, #fff570); }
 
 .atom__orbit-path-2.atom__orbit-path--visible {
   transform: translate3d(-50%, -50%, 0) rotateZ(0deg) rotateY(73deg); }
@@ -1231,11 +1227,7 @@ body {
   transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(0deg); }
 
 .atom__orbit-path-2 .electron.visible:before {
-  background: radial-gradient(circle at center, #e27250 50%, #fad580);
-  opacity: 0.3; }
-
-.atom__orbit-path-2 .electron.visible:after {
-  background: radial-gradient(circle at center, #e27250 50%, #fad580); }
+  background: radial-gradient(circle at center, #e27250 20%, #fad580); }
 
 .atom__orbit-path-3.atom__orbit-path--visible {
   transform: translate3d(-50%, -50%, 0) rotateZ(45deg) rotateY(73deg); }
@@ -1270,11 +1262,7 @@ body {
   transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(-45deg); }
 
 .atom__orbit-path-3 .electron.visible:before {
-  background: radial-gradient(circle at center, #265625 50%, #c5e1c1);
-  opacity: 0.3; }
-
-.atom__orbit-path-3 .electron.visible:after {
-  background: radial-gradient(circle at center, #265625 50%, #c5e1c1); }
+  background: radial-gradient(circle at center, #6ee51f 20%, #c5e1c1); }
 
 @media screen and (max-width: 770px) {
   .scene {

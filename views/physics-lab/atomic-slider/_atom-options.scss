@@ -14,7 +14,7 @@ $electron-1__color--light: hsla(56, 100%, 72%, 1);
 $electron-2__color--dark: hsla(14, 72%, 60%, 1);
 $electron-2__color--light: hsla(42, 92%, 74%, 1);
 
-$electron-3__color--dark: hsla(118, 40%, 24%, 1);
+$electron-3__color--dark: hsla(96, 79%, 51%, 1);
 $electron-3__color--light: hsla(114, 34%, 82%, 1); 
     
 $electron-4__color--dark: hsla(227, 11%, 34%, 1);
@@ -23,9 +23,17 @@ $electron-4__color--light: hsla(227, 17%, 61%, 1);
 
 
 $proton__bg-gradient: 
-    radial-gradient(circle at center, $proton__color--dark 50%, $proton__color--light);
+    radial-gradient(
+        circle at center, 
+        $proton__color--dark 20%, 
+        $proton__color--light
+    );
 $neutron__bg-gradient: 
-    radial-gradient(circle at center, $neutron__color--dark 50%, $neutron__color--light);
+    radial-gradient(
+        circle at center, 
+        $neutron__color--dark 20%, 
+        $neutron__color--light
+    );
 
 $atom-particle__border-color: hsla(0, 100%, 100%, 0.4);
 
@@ -76,7 +84,7 @@ $Atom-electron-orbits__map: (
     1: (
         background: radial-gradient(
             circle at center, 
-            $electron-1__color--dark 50%,
+            $electron-1__color--dark 20%,
             $electron-1__color--light
         ),
         orbitDuration: $electron__orbit-duration,
@@ -88,7 +96,7 @@ $Atom-electron-orbits__map: (
     2: (
         background: radial-gradient(
             circle at center, 
-            $electron-2__color--dark 50%,
+            $electron-2__color--dark 20%,
             $electron-2__color--light
         ),
         orbitDuration: $electron__orbit-duration,
@@ -100,7 +108,7 @@ $Atom-electron-orbits__map: (
     3: (
         background: radial-gradient(
             circle at center, 
-            $electron-3__color--dark 50%,
+            $electron-3__color--dark 20%,
             $electron-3__color--light
         ),
         orbitDuration: $electron__orbit-duration,
@@ -112,7 +120,7 @@ $Atom-electron-orbits__map: (
 //    4: (
 //        background: radial-gradient(
 //            circle at center, 
-//            $electron-4__color--dark 50%,
+//            $electron-4__color--dark 20%,
 //            $electron-4__color--light
 //        ),
 //        orbitDuration: $electron__orbit-duration,

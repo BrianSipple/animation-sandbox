@@ -28,7 +28,11 @@ var app = (function (exports) {
             genStatusLights: '.generator__status-light',
             printerLights: '.printer__light',
             printerPaper: '#PrinterPaper',            
-            mainStatusLight: '#MainStatusLight'
+            mainStatusLight: '#MainStatusLight',
+            
+            tubeLiquids: {
+                tubeLiquid1: '#Liquid1'
+            }
         },
         
         DURATIONS = {
@@ -45,7 +49,8 @@ var app = (function (exports) {
             bulbFlickering: 2.4,
             coinToss: 6.0,
             lightFlip: 0.1,
-            machineShakeIteration: 0.06
+            machineShakeIteration: 0.06,
+            tubeFill: 2.0
             
         },
         
@@ -54,7 +59,8 @@ var app = (function (exports) {
             elementScaling: Power4.easeInOut,
             slideInOrOut: Power4.easeInOut,            
             fadeInOrOut: Power3.easeOut,
-            colorChange: Power0.easeNone
+            colorChange: Power0.easeNone,
+            tubeFill: Power0.easeNone
         },
         
         COLORS = {
@@ -78,13 +84,15 @@ var app = (function (exports) {
                     '#F8AD43', // golden yellow                   
                     '#5AB783'  // green  
                 ]
-            }
+            },
+            tubeLiquid: '#F8876E'
         },
         
         LABELS = {
             sceneIntro: 'scene__intro',
-            sceneIdea: 'scene__idea',
-            sceneMachineStart: 'scene__machine-start',  
+            sceneIdeaHad: 'scene__idea',
+            sceneMachineStarted: 'scene__machine-start',  
+            sceneTubesFilled: 'scene__tubes-filled',
             
             brianHasAppeared: 'brian-has-appeared',
             brianIsSmiling: 'brian-is-smiling',            
@@ -512,7 +520,7 @@ var app = (function (exports) {
             machineStartTL.to(
                 genEnergyMeterLineSVG,
                 DURATIONS.colorChange,
-                { fill: COLORS.generator.energyMeter.line },
+                { stroke: COLORS.generator.energyMeter.line },
                 LABELS.generatorIsRunning + '+=1.2'
             );
             machineStartTL.to(
@@ -544,22 +552,71 @@ var app = (function (exports) {
         flickMeter();
         activateGeneratorStatusLights();
         activateGeneratorMeters();
-        activateGeneratorBulbs();
+        activateGeneratorBulbs();    
+        
+        return machineStartTL;        
+    }
+    
+    function fillMachineTubes () {
+        
+        var fillTubesTL = new TimelineMax();
+        
+        function drawTube(tubeSVG, duration) {
+            
+            var tubeLength = tubeSVG.getTotalLength();
+            
+//            fillTubesTL.set(
+//                tubeSVG,
+//                { 
+//                    strokeDasharray: tubeLength, 
+//                    strokeDashoffset: tubeLength, 
+//                    immediateRender: false 
+//                }
+//            );
+            
+            // TODO: Compare using the timeline with and without setImmediateRender vs
+            // just using raw TweenMax
+            TweenMax.set(
+                tubeSVG,
+                { strokeDasharray: tubeLength, strokeDashoffset: tubeLength }
+            );
+            
+            fillTubesTL.set(
+                liquidSVGs,
+                { stroke: COLORS.tubeLiquid }
+            );
+            fillTubesTL.to(
+                tubeSVG,
+                duration,
+                { strokeDashoffset: 0, ease: EASINGS.tubeFill }
+            );
+                
+        }                            
+        
+        drawTube(
+            document.querySelector(SELECTORS.tubeLiquids.tubeLiquid1),
+            DURATIONS.tubeFill
+        );
         
         
-        return machineStartTL;
         
+        return fillTubesTL;
     }
     
     
     function init () {        
         masterTL = new TimelineMax();        
         masterTL.add(clearStage());
-        masterTL.add(introduceScene(), LABELS.sceneIntro);
-        masterTL.add(conjureUpIdea(), LABELS.sceneIdea);
-        masterTL.add(startMachine(), LABELS.sceneMachineStart);
+        masterTL.add(introduceScene());
+        masterTL.addLabel(LABELS.sceneIntro);
+        masterTL.add(conjureUpIdea());
+        masterTL.addLabel(LABELS.sceneIdeaHad);
+        masterTL.add(startMachine());
+        masterTL.addLabel(LABELS.sceneMachineStarted);
+        masterTL.add(fillMachineTubes());
+        masterTL.addLabel(LABELS.sceneTubesFilled);
         
-        masterTL.seek(LABELS.sceneMachineStart + '-=1');
+        masterTL.seek(LABELS.sceneMachineStarted + '-=1');
     }
     
     return {

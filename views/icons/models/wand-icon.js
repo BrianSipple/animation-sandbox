@@ -4,11 +4,11 @@ import Icon from './icon';
 
 const
   SELECTORS = {
-    motionTrailSVGS: '.wand__motion-trail',
+    motionTrailSVGs: '.wand__motion-trail',
     motionTrail1SVG: '.wand__motion-trail-1',
     motionTrail2SVG: '.wand__motion-trail-2',
     motionTrail3SVG: '.wand__motion-trail-3',
-    wandBodySVG: '#WandBody',
+    wandBodySVG: '.wand__body',
   },
 
   EASINGS = {
@@ -21,16 +21,17 @@ const
   DURATIONS = {
     flickWandDown: 0.25,
     flickWandBack: 0.7
-  },
-
-  DOM_REFS = {
-    wandBodySVG: document.querySelector(SELECTORS.wandBodySVG),
-    wandMotionTrailSVGs: document.querySelectorAll(SELECTORS.motionTrailSVGS)
   };
 
-let WandIcon = () => {
+
+let WandIcon = (svgElem) => {
 
     let wandIcon = Icon();
+    wandIcon.svgElem = svgElem;
+    wandIcon.DOM_REFS = {};
+
+    wandIcon.DOM_REFS['wandBodySVG'] = wandIcon.svgElem.querySelector(SELECTORS.wandBodySVG);
+    wandIcon.DOM_REFS['wandMotionTrailSVGs'] = wandIcon.svgElem.querySelectorAll(SELECTORS.motionTrailSVGs);
 
     wandIcon.flickWand = function flickWand () {
       let TL = new TimelineMax();
@@ -38,18 +39,18 @@ let WandIcon = () => {
       // Set the transOrigin (center of gravity) to be near the
       // bottom part of the handle
       debugger;
-      TL.set(DOM_REFS.wandBodySVG, { transformOrigin: '5% 95% 0' }); // TODO: Get a more exact measuremnt for center of gravity
+      TL.set(this.DOM_REFS.wandBodySVG, { transformOrigin: '5% 95% 0' }); // TODO: Get a more exact measuremnt for center of gravity
 
       // down...
       TL.to(
-        DOM_REFS.wandBodySVG,
+        this.DOM_REFS.wandBodySVG,
         DURATIONS.flickWandDown,
         {rotation: '+=45', ease: EASINGS.flickWandDown }
       );
 
       // ...and back
       TL.to(
-        DOM_REFS.wandBodySVG,
+        this.DOM_REFS.wandBodySVG,
         DURATIONS.flickWandBack,
         {rotation: '-=45', ease: EASINGS.flickWandBack }
       );
@@ -60,18 +61,18 @@ let WandIcon = () => {
 
       let TL = new TimelineMax();
 
-      TL.set(DOM_REFS.wandMotionTrailSVGs, { opacity: 1, drawSVG: false, });
+      TL.set(this.DOM_REFS.wandMotionTrailSVGs, { opacity: 1, drawSVG: false, });
 
       // down....
       TL.to(
-        DOM_REFS.wandMotionTrailSVGs,
+        this.DOM_REFS.wandMotionTrailSVGs,
         DURATIONS.flickWandDown,
         { drawSVG: '0% 95%', ease: EASINGS.flickWandDown }
       );
 
       // ...and back
       TL.to(
-        DOM_REFS.wandMotionTrailSVGs,
+        this.DOM_REFS.wandMotionTrailSVGs,
         DURATIONS.flickWandBack,
         { drawSVG: false, ease: EASINGS.flickWandBack }
       );

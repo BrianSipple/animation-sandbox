@@ -23,9 +23,11 @@ let
      */
     masterTL: null,
 
-    isAnimating: false,    
+    isAnimating: false,
 
     LABEL: undefined,
+
+    DOM_REFS: undefined,
 
     IconError: function IconError(msg) {
       let err = {
@@ -43,17 +45,12 @@ let
       options = options || {};
 
       if (!options.id) {
-        throw IconError(`a DOM id is required`);
+        throw new Error(this.IconError(`a DOM id is required`));
       }
       this.id = options.id;
 
-      if (!options.svgElem) {
-        throw IconError(`a reference to a DOM svg elem is required`);
-      }
-      this.svgElem = options.svgElem;
-
       if (!options.masterTL) {
-        throw IconError(`a master timeline is needed to add this icon's timeline to`);
+        throw new Error(this.IconError(`a master timeline is needed to add this icon's timeline to`));
       }
       this.masterTL = options.masterTL;
 

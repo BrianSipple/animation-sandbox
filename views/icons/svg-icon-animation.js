@@ -8,10 +8,20 @@ let app = function app () {
       SELECTORS = {
         iconGridContainer: '.grid',
         iconsRootSVG: '.grid__svg-container',
-        wandIconSVG: '#WandIcon'
       },
 
-      idToIconMap = {},
+      SVG_METADATA = {
+        wand1: {
+          id: '#WandIcon1',
+          obj: WandIcon(document.querySelector('#WandIcon1')),
+          tlLabel: 'wand-icon-1-animating'
+        },
+        wand2: {
+          id: '#WandIcon2',
+          obj: WandIcon(document.querySelector('#WandIcon2')),
+          tlLabel: 'wand-icon-2-animating'
+        }
+      },
 
       EASINGS = {
 
@@ -21,31 +31,14 @@ let app = function app () {
         wandIcon: 'wand-icon-animating'
       },
 
-      wandIcon,
+      // Cache a direct mapping from svg ids to their correspoinding objects
+      // that we can quickly reference during event handling
+      idToIconObjectMap = {},
 
       masterTL,
 
       iconGridContainerElem =
         document.querySelector(SELECTORS.iconGridContainer),
-
-      handleIconClick = function handleIconClick (ev) {
-        debugger;
-        let clickedEl = ev.target;
-
-        if (clickedEl.id && idToIconMap.hasOwnProperty(clickedEl.id)) {
-          idToIconMap[clickedEl.id].handleClick();
-        }
-      },
-
-      _wireUpIcon = function _wireUpIcon (iconObj, id, svgElem, label) {
-        let opts = {
-          id: id,
-          svgElem: svgElem,
-          masterTL: masterTL,
-          tlLabel: label
-        };
-        iconObj.init(opts);
-      },
 
       /**
        * Cache icon objects based on their id and sync their timelines
@@ -56,15 +49,25 @@ let app = function app () {
 
         masterTL = new TimelineMax();
 
-        wandIcon = WandIcon();
-        _wireUpIcon(
-          wandIcon,
-          SELECTORS.wandIconSVG,
-          document.querySelector(SELECTORS.wandIconSVG),
-          LABELS.wandIcon
-        );
+        let
+          iconObj,
+          iconMetaData,
+          iconOpts = {};
 
-        idToIconMap[SELECTORS.wandIconSVG] = wandIcon;
+        Object.keys(SVG_METADATA).forEach((metaDataKey) => {
+
+          iconMetaData = SVG_METADATA[metaDataKey];
+          iconObj = iconMetaData.obj;
+
+          iconOpts = {
+            id: iconMetaData.id,
+            masterTL: masterTL,
+            tlLabel: iconMetaData.tlLabel
+          };
+
+          iconObj.init(iconOpts);
+          idToIconObjectMap[iconMetaData.id] = iconObj; // cache here for quicker access on click
+        });
       },
 
       showIcons = function showIcons () {

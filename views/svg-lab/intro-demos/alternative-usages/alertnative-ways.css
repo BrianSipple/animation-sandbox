@@ -9,6 +9,9 @@
  * global animation speed toggler (i.e., for visual UI testing)
  */
 /*
+ * Base animation durations
+ */
+/*
  * Easing functions
  */
 .base64-logo, .dataURI-logo {
@@ -202,6 +205,9 @@ nav, a, button {
 /**
  * Use with every animation and transition so we can have a
  * global animation speed toggler (i.e., for visual UI testing)
+ */
+/*
+ * Base animation durations
  */
 /*
  * Easing functions

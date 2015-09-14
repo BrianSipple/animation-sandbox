@@ -12,59 +12,90 @@
 
 </head>
 <body>
-  
-    <svg class="svg-def" version="1.1" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="surroundingBlur" x="-200%" y="-200%" width="400%" height="400%">
-            <feGaussianBlur class="blur-node" in="SourceGraphic" stdDeviation="70"></feGaussianBlur>
-          </filter>
-        </defs>
-    </svg>    
+
+  <svg class="svg-def" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+
+        <filter id="surroundingBlur" x="-200%" y="-200%" width="400%" height="400%">
+          <feGaussianBlur class="blur-node" in="SourceGraphic" stdDeviation="70"></feGaussianBlur>
+        </filter>
+
+        <filter id="filter__thicken-and-twist">
+          <!-- "dialate" makes the source thicker. "erode" would make it thinner -->
+          <feMorphology radius="3" operator="dilate"></feMorphology>
+          <feTurbulence type="fractalNoise" baseFrequency="0.00017" numOctaves="1" result="warp"></feTurbulence>
+          <feDisplacementMap xChannelSelector="R"
+            yChannelSelector="G"
+            scale="60"
+            in="SourceGraphic"
+            in2="warp">
+          </feDisplacementMap>
+        </filter>
+
+      </defs>
+  </svg>
 
   <div class="scene">
-      <svg id="lightBulbContainer" class="svg-container" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 555.1 555.1">
-        <style>
-          .st0{fill:#F2E3B4;} .st1{fill:#E68A3A;} .st2{fill:#FFF3AA;} .st3{fill:none;stroke:#BFBFBF;stroke-width:5;stroke-miterlimit:10;} .st4{fill:#8D8F92;} .st5{fill:#231F20;} .st6{fill:#DEA343;} .st7{fill:none;stroke:#3C2011;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-        </style>
+    <svg id="lightBulbContainer" class="svg-container" xmlns="http://www.w3.org/2000/svg" viewBox="-27 119.9 555.1 555.1">
 
-        <g id="lightbulb">
-          
-         <path id="bulbInnerCharging" 
-                class="st1" 
-                filter="url(#surroundingBlur)"
-                d="M382 276.9c0-57.9-46.9-104.8-104.8-104.8S172.3 219 172.3 276.9c0 22.1 6.8 42.6 18.5 59.5l86.3 146.1 86.3-146.1c11.7-16.9 18.6-37.4 18.6-59.5z"/>
-         
-         <path id="bulbInnerLit" 
-                class="st2" 
-                filter="url(#surroundingBlur)"
-                d="M382 276.9c0-57.9-46.9-104.8-104.8-104.8S172.3 219 172.3 276.9c0 22.1 6.8 42.6 18.5 59.5l86.3 146.1 86.3-146.1c11.7-16.9 18.6-37.4 18.6-59.5z"/>
-          
-         <path id="bulbGlass" class="st3" d="M382 276.9c0-57.9-46.9-104.8-104.8-104.8S172.3 219 172.3 276.9c0 22.1 6.8 42.6 18.5 59.5l86.3 146.1 86.3-146.1c11.7-16.9 18.6-37.4 18.6-59.5z"/>
-        
-         <path id="lightBase" class="st4" d="M227 398.1l-.9 83.2 51 77.2 51-80.2v-80.2z"/>
-          
-         <g id="lightBaseGrooves">
-            <path class="st5" d="M229.6 415.2v8.6l95.1-4.3z"/>
-            <path class="st5" d="M229.6 422.2v8.6l95.1-4.3z"/>
-            <path class="st5" d="M229.6 429.2v8.6l95.1-4.3z"/>
-            <path class="st5" d="M229.6 436.2v8.6l95.1-4.3z"/>
-            <path class="st5" d="M229.6 443.2v8.6l95.1-4.3z"/>
-            <path class="st5" d="M229.6 450.2v8.6l95.1-4.3z"/>
-            <path class="st5" d="M229.6 457.2v8.6l95.1-4.3zM229.6 408.2v8.6l95.1-4.3z"/>
-          </g>
-          
-          <path id="lightBaseBottomTexture" class="st5" d="M309.9 497.8l-32.8 52.9-34-52.9z"/>
-          <path id="wireSupportLeft" class="st6" d="M237.9 398.1h-11.3l-4.5-74.1-20.3-71.7 28.3 71.8 6.2 21.9z"/>
-          <path id="wireSupportRight" class="st6" d="M317.3 398.1h11.2l4.6-74.1 20.3-71.7-28.4 71.8-6.1 21.9z"/>
+      <style>
+        .st1{fill:#FFF3AA;}
+        .st2{fill:none;stroke:#BFBFBF;stroke-width:5;stroke-miterlimit:10;}
+        .st3{fill:#8D8F92;}
+        .st4{fill:#231F20;}
+        .st5{fill:#DEA343;}
+        .energy-wire-path{fill:none;stroke:#3C2011;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+        .energy-wire-path--charged{fill:none;stroke:#FEF734;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+      </style>
 
-          <path id="energyWireUnlit" class="st7" d="M202.9 253.7l19.2 48.3 13.5-48.5 15.5 46.7 15.5-46.5 13.3 45.8 12.7-44.5 12.5 46.5 17-46.3 11.8 45.5 17.5-46.5"/>
-          
-          <!-- Declare the lit layer last because this will overlay the unlit layer when shown -->
-          <path id="energyWireLit" class="st7" d="M202.9 253.2l19.2 48.3 13.5-48.5 15.5 46.7 15.5-46.5 13.3 45.8 12.7-44.5 12.5 46.5 17-46.3 11.8 45.5 17.5-46.5"/>
+      <g id="lightbulb">
+
+        <path id="bulbInnerLight"
+              class="st0"
+              filter="url(#surroundingBlur)"
+              d="M355 396.8c0-57.9-46.9-104.8-104.8-104.8s-104.9 46.9-104.9 104.8c0 22.1 6.8 42.6 18.5 59.5l86.3 146.1 86.3-146.1c11.7-16.9 18.6-37.4 18.6-59.5z"/>
+
+        <!--
+        <path id="bulbInnerLit"
+              class="st1"
+              filter="url(#surroundingBlur)"
+              d="M355 396.8c0-57.9-46.9-104.8-104.8-104.8s-104.9 46.9-104.9 104.8c0 22.1 6.8 42.6 18.5 59.5l86.3 146.1 86.3-146.1c11.7-16.9 18.6-37.4 18.6-59.5z"/>
+        -->
+
+        <path id="bulbGlass" class="st2" d="M355 396.8c0-57.9-46.9-104.8-104.8-104.8s-104.9 46.9-104.9 104.8c0 22.1 6.8 42.6 18.5 59.5l86.3 146.1 86.3-146.1c11.7-16.9 18.6-37.4 18.6-59.5z"/>
+        <path id="lightBase" class="st3" d="M200 518l-.9 83.2 51 77.2 51-80.2V518z"/>
+
+        <g id="lightBaseGrooves">
+          <path class="st4" d="M202.6 535.1v8.6l95.1-4.3z"/>
+          <path class="st4" d="M202.6 542.1v8.6l95.1-4.3z"/>
+          <path class="st4" d="M202.6 549.1v8.6l95.1-4.3z"/>
+          <path class="st4" d="M202.6 556.1v8.6l95.1-4.3z"/>
+          <path class="st4" d="M202.6 563.1v8.6l95.1-4.3z"/>
+          <path class="st4" d="M202.6 570.1v8.6l95.1-4.3z"/>
+          <path class="st4" d="M202.6 577.1v8.6l95.1-4.3zm0-49v8.6l95.1-4.3z"/>
         </g>
-      </svg>
+
+        <path id="lightBaseBottomTexture" class="st4" d="M282.9 617.7l-32.8 52.9-34-52.9z"/>
+        <path id="wireSupportLeft" class="st5" d="M210.9 518h-11.3l-4.5-74.1-20.3-71.7 28.3 71.8 6.2 21.9z"/>
+        <path id="wireSupportRight" class="st5" d="M290.3 518h11.2l4.6-74.1 20.3-71.7L298 444l-6.1 21.9z"/>
+
+        <!-- Uncharged path is drawn first, as the charge path will varyingly cover it up -->
+        <g id="EnergyWire--uncharged">
+          <path class="energy-wire-path energy-wire-path--uncharged" filter="url(#filter__thicken-and-twist)" d="M216.7 397.9l-8.1-24.5-4.7 16.9m-28-16.7l19.2 48.3 8.8-31.6m49 29.1l-13.3-45.8-10.5 31.6m-12.4-7.3l7.4 22.2 5-14.9m46.6 0l4.7 14.9 7-22.2m12.3-7.6l8.4 31.6 18.3-48.3"/>
+          <path class="energy-wire-path energy-wire-path--uncharged" filter="url(#filter__thicken-and-twist)" d="M275.7 405.2l-10.1-31.6-12.7 45.8m46.8-29.1l-4.5-16.9-7.8 24.5"/>
+        </g>
+
+        <g id="EnergyWire--charged">
+          <path id="EnergyWire--charged-left" class="energy-wire-path energy-wire-path--charged" filter="url(#filter__thicken-and-twist)" d="M175.9 373.6l19.2 48.3 13.5-48.5 15.5 46.7 15.5-46.5 13.3 45.8"/>
+          <path id="EnergyWire--charged-right" class="energy-wire-path energy-wire-path--charged" filter="url(#filter__thicken-and-twist)" d="M252.9 419.4l12.7-45.8 14.8 46.5 14.8-46.7 12.9 48.5 18.3-48.3"/>
+        </g>
+
+      </g>
+    </svg>
+
 
   </div>
+
 
 
     <script src="../../../js/lib/plugins/base-plugins.js"></script>

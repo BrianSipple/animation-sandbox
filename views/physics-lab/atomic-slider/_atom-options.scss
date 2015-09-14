@@ -91,7 +91,8 @@ $Atom-electron-orbits__map: (
         semiMajorAxisLength: 4,  // n
         semiMinorAxisLength: 4,  // k
         tilt: $atom__z-tilt-start,
-        startingRotation: 0deg
+        startingRotation: 0deg,
+        numElectrons: 2
     ),
     2: (
         background: radial-gradient(
@@ -103,7 +104,8 @@ $Atom-electron-orbits__map: (
         semiMajorAxisLength: 4,
         semiMinorAxisLength: 3,
         tilt: $atom__z-tilt-start + ($atom__z-tilt-spacing * 1),
-        startingRotation: 45deg
+        startingRotation: 45deg,
+        numElectrons: 8                
     ),
     3: (
         background: radial-gradient(
@@ -115,7 +117,8 @@ $Atom-electron-orbits__map: (
         semiMajorAxisLength: 4,
         semiMinorAxisLength: 2,
         tilt: $atom__z-tilt-start + ($atom__z-tilt-spacing * 2),
-        startingRotation: 90deg
+        startingRotation: 90deg,
+        numElectrons: 18         
     ),
 //    4: (
 //        background: radial-gradient(

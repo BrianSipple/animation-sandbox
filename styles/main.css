@@ -9,6 +9,9 @@
  * global animation speed toggler (i.e., for visual UI testing)
  */
 /*
+ * Base animation durations
+ */
+/*
  * Easing functions
  */
 /**
@@ -78,7 +81,6 @@
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 48px;
   font-size: 1.2rem;
   font-weight: 500;
   overflow: hidden;
@@ -94,6 +96,11 @@
     position: relative;
     white-space: nowrap;
     overflow: hidden;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
         -ms-flex: 1;
@@ -156,6 +163,11 @@
       width: 100%; }
     .tab-selectors .tab.active .tab__link {
       color: #ff9100; }
+
+/* Ideally, this would be the top-level class on a <ul> */
+.item-list {
+  list-style-type: none;
+  padding-left: 0; }
 
 /*
  * What follows is the result of much research on cross-browser styling.
@@ -258,6 +270,9 @@ nav, a, button {
  * global animation speed toggler (i.e., for visual UI testing)
  */
 /*
+ * Base animation durations
+ */
+/*
  * Easing functions
  */
 [class^="page-section_"] {
@@ -336,7 +351,6 @@ nav, a, button {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 48px;
   font-size: 1.2rem;
   font-weight: 500;
   overflow: hidden;
@@ -352,6 +366,11 @@ nav, a, button {
     position: relative;
     white-space: nowrap;
     overflow: hidden;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
         -ms-flex: 1;
@@ -414,6 +433,11 @@ nav, a, button {
       width: 100%; }
     .tab-selectors .tab.active .tab__link {
       color: #ff9100; }
+
+/* Ideally, this would be the top-level class on a <ul> */
+.item-list {
+  list-style-type: none;
+  padding-left: 0; }
 
 html,
 body {

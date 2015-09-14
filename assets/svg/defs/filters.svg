@@ -1,26 +1,304 @@
 <svg class="svg-def" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <filter id="blurredDropShadow">
-            <feGaussianBlur in="SourceAlpha"
-                            result="blurOutput"
-                            stdDeviation="4">
-            </feGaussianBlur>
-            <feOffset in="blurOutput" 
-                      out="dropBlurOutput" 
-                      dx="5" 
-                      dy="5">
-            </feOffset>
-            <feComposite operator="over" 
-                         in="SourceGraphic"
-                         in2="dropBlurOutput"
-                         result="final">
-            </feComposite>
-        </filter>
-        
-        <filter id="surroundingBlur" x="-200%" y="-200%" width="400%" height="400%">
-            <feGaussianBlur class="blur-node" in="SourceGraphic" stdDeviation="70"></feGaussianBlur>
-        </filter>
-        
-    </defs>
+  <defs>
 
+    <filter id="blurredDropShadow">
+      <feGaussianBlur in="SourceAlpha"
+        result="blurOutput"
+        stdDeviation="4">
+      </feGaussianBlur>
+      <feOffset in="blurOutput"
+        out="dropBlurOutput"
+        dx="5"
+        dy="5">
+      </feOffset>
+      <feComposite operator="over"
+        in="SourceGraphic"
+        in2="dropBlurOutput"
+        result="final">
+      </feComposite>
+    </filter>
+
+    <filter id="surroundingBlur" x="-200%" y="-200%" width="400%" height="400%">
+      <feGaussianBlur class="blur-node" in="SourceGraphic" stdDeviation="70"></feGaussianBlur>
+    </filter>
+
+    <filter id="filter__thicken-and-twist">
+      <!-- "dilate" makes the source thicker. "erode" would make it thinner -->
+      <feMorphology radius="3" operator="dilate"></feMorphology>
+      <feTurbulence type="fractalNoise" baseFrequency="0.017" numOctaves="1" result="warp"></feTurbulence>
+      <feDisplacementMap xChannelSelector="R"
+        yChannelSelector="G"
+        scale="60"
+        in="SourceGraphic"
+        in2="warp">
+      </feDisplacementMap>
+    </filter>
+
+
+    <!-- feBlend can be used to combine "in" and "in2" channels -->
+    <filter id="composite-filter__cross-fade" filterUnits="userSpaceOnUse">
+      <feImage x="0"
+        y="0"
+        width="100px"
+        height="100px"
+        xlink:href="http://www.sipple.io/zeya/assets/img/eiffel-tower.png"
+        result="eiffel">
+      </feImage>
+      <feImage x="0"
+          y="0"
+          width="100px"
+          height="100px"
+          xlink:href="http://www.sipple.io/zeya/assets/img/tesseract-capsule.png"
+          result="tesseract" >
+        </feImage>
+
+          <!--
+          Setting the blend operator to "arithmetic" allows us to supply our own k1-k4 table values to produce composite blends
+        -->
+        <feComposite in="eiffel"
+          in2="tesseract"
+          operator="arithmetic"
+          result="MIXED_IMAGES"
+          k1="0" k2="0.3" k3="0.7" k4="0">
+        </feComposite>
+        <feMerge>
+
+          <!-- Accepts the composite by default -->
+          <feMergeNode></feMergeNode>
+
+          <!-- Contains the source graphic to render over the composite -->
+          <feMergeNode in="SourceGraphic"></feMergeNode>
+        </feMerge>
+      </filter>
+
+      <!-- ////// Turbulence filters for textures //////// -->
+      <filter id="filter__turbulence-weave">
+        <feTurbulence baseFrequency="0.25, .03" numOctaves="3" seed="1"></feTurbulence>
+        <feComponentTransfer result="GRAIN">
+          <feFuncR type="linear" slope="3"></feFuncR>
+        </feComponentTransfer>
+        <feFlood flood-color="brown"></feFlood>
+        <feMerge>
+          <feMergeNode></feMergeNode>
+          <feMergeNode in="GRAIN"></feMergeNode>
+        </feMerge>
+      </filter>
+
+
+      <filter id="filter__drop-shadow">
+        <feGaussianBlur stdDeviation="2" in="SourceAlpha"></feGaussianBlur>
+        <feOffset dx="4" dy="6" result="offsetBlur"></feOffset>
+        <feFlood floodColor="#777"></feFlood>
+
+        <!--
+        By default, the result of the flood becomes the next effect's "in" value, so neither of these attributes needs to be explicitly declared here
+        -->
+        <feComposite operator="in" in2="offsetBlur"></feComposite>
+        <feMerge>
+
+          <!-- Accepts the composite by default -->
+          <feMergeNode></feMergeNode>
+
+          <!-- Contains the source graphic to render over the composite -->
+          <feMergeNode in="SourceGraphic"></feMergeNode>
+        </feMerge>
+      </filter>
+
+
+      <filter id="blur--10">
+        <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+      </filter>
+
+      <filter id="blur--varying-direction">
+        <feGaussianBlur stdDeviation="6 1"></feGaussianBlur>
+      </filter>
+
+      <filter id="color-filter--no-op">
+        <feComponentTransfer>
+          <feFuncR type="identity" />
+          <feFuncG type="identity" />
+          <feFuncB type="identity" />
+          <feFuncA type="identity" />
+        </feComponentTransfer>
+      </filter>
+
+      <!-- Setting type to "discrete" allows us to posterize an image, clustering gradual color shifts into solid bands based on the step values specified in tableValues -->
+      <filter id="color-filter--posterize">
+        <feComponentTransfer>
+          <feFuncR type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1" />
+          <feFuncG type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1" />
+          <feFuncB type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1" />
+          <feFuncA type="discrete" tableValues="0 0.2 0.4 0.6 0.8 1" />
+        </feComponentTransfer>
+      </filter>
+
+      <!-- Replicating the CSS brightness effect -->
+      <filter id="color-filter--dim-brightness">
+        <feComponentTransfer>
+          <feFuncR type="linear" slope="0.5" />
+          <feFuncG type="linear" slope="0.5" />
+          <feFuncB type="linear" slope="0.5" />
+          <feFuncA type="linear" slope="0.5" />
+        </feComponentTransfer>
+      </filter>
+
+      <filter id="color-filter--extra-brightness">
+        <feComponentTransfer>
+          <feFuncR type="linear" slope="1.5" />
+          <feFuncG type="linear" slope="1.5" />
+          <feFuncB type="linear" slope="1.5" />
+          <feFuncA type="linear" slope="1.5" />
+        </feComponentTransfer>
+      </filter>
+
+      <filter id="color-filter--extra-brightness-negative-intercept">
+        <feComponentTransfer>
+          <feFuncR type="linear" slope="1.5" intercept="-0.4" />
+          <feFuncG type="linear" slope="1.5" intercept="-0.4" />
+          <feFuncB type="linear" slope="1.5" intercept="-0.4" />
+          <feFuncA type="linear" slope="1.5" intercept="-0.4" />
+        </feComponentTransfer>
+      </filter>
+
+      <!--
+      Setting the type to table lets us specify our own linear slope
+      based upon two table values
+    -->
+      <filter id="color-filter--opacity">
+        <feComponentTransfer>
+          <feFuncA type="table" tableValues="0 0.5" />
+        </feComponentTransfer>
+      </filter>
+
+      <filter id="color-filter--invert">
+        <feComponentTransfer>
+          <feFuncR type="table" tableValues="1 0" />
+          <feFuncG type="table" tableValues="1 0" />
+          <feFuncB type="table" tableValues="1 0" />
+        </feComponentTransfer>
+      </filter>
+
+        <!--
+        Gamma Correction: This function applies the following formula to produce a curve: ((amplitude × value^exponent) + offset).
+      -->
+      <filter id="color-filter--gamma-correction">
+        <feComponentTransfer>
+          <feFuncG type="gamma" amiplitude="1" exponent="0.5" />
+        </feComponentTransfer>
+      </filter>
+
+      <!--
+      An offset reduces the overall color for a value, similar to the way an intercept operates for a "linear" type filter
+      -->
+      <filter id="color-filter--gamma-correction-with-offset">
+        <feComponentTransfer>
+          <feFuncG type="gamma" amiplitude="1" exponent="0.5" offset="-0.1" />
+        </feComponentTransfer>
+      </filter>
+
+
+      <!-- ////////////////// Transfroming Colors with feColorMatrix ///////////////// -->
+
+      <filter id="color-filter--grayscale">
+        <feColorMatrix type="saturate" values="0" />
+      </filter>
+
+      <filter id="color-filter--saturate">
+        <feColorMatrix type="saturate" values="10" />
+      </filter>
+
+      <!--
+      Setting the type to hueRotate alters the angle along the color wheel, just like the hue-rotate() CSS function.
+      -->
+      <filter id="color-filter--hue-rotate">
+        <feColorMatrix type="hueRotate" values="180" />
+      </filter>
+
+      <filter id="color-filter--luminance-to-alpha">
+        <feColorMatrix type="luminanceToAlpha"></feColorMatrix>
+      </filter>
+
+      <!--
+      Setting the type to matrix allows us to transform colors directly. It specifies a 20-element transform whose rows correspond to red, green, blue, and alpha channels.
+      -->
+      <filter id="color-filter--sepia">
+        <feColorMatrix
+          type="matrix"
+          values=".343 .669 .119 0 0
+          .249 .626 .130 0 0
+          .172 .334 .111 0 0
+          .000 .000 .000 1 0">
+        </feColorMatrix>
+      </filter>
+
+      <!-- Dusk effect by reducing amount of green and blue -->
+      <filter id="color-filter--dusk">
+        <feColorMatrix type="matrix"
+          values="1.000 .000 .000 0 0
+          .000 .200 .000 0 0
+          .000 .000 .200 0 0
+          .000 .000 .000 1 0">
+        </feColorMatrix>
+      </filter>
+
+      <!-- /////////////// CONVOLUTION KERNEL MATRICES /////////////////// -->
+      <!--
+      Using convolution kernel matrices, we alter image resolution.
+
+      The `order` attribute declares a 3×3 box, which defines a matrix of 9 table values that must be reflected in the `kernelMatrix` attribute
+
+      The middle value is the WEIGHT of the pixel to modify,
+      and the others form a map of weights applied to its immediate neighbors
+      -->
+      <filter id="convolution-filter--sharpen">
+        <feConvolveMatrix order="3"
+          kernelMatrix=" 1  -1   1
+          -1  -1  -1
+          1  -1   1">
+        </feConvolveMatrix>
+      </filter>
+
+      <filter id="convolution-filter--sharpen-tenfold">
+        <feConvolveMatrix order="3"
+          kernelMatrix=" 1  -1    1
+          -1  -0.1 -1
+          1  -1    1">
+        </feConvolveMatrix>
+      </filter>
+
+      <filter id="convolution-filter--diagonal-emboss">
+        <feConvolveMatrix order="3"
+          kernelMatrix=" 9   0   0
+          0   1   0
+          0   0  -9">
+        </feConvolveMatrix>
+      </filter>
+
+      <!--
+      Convolution filters can also be used to highlight moats around high-contrast edges.
+
+      The order must be set to at least 5, and if fewer numbers are
+      expressed, the range of the calculation will be extended to each
+      adjacent neighbor's farthest neighbor.
+      -->
+      <filter id="convolution-filter__moat">
+        <feConvolveMatrix order="5"
+          kernelMatrix="-1  -1  -1
+          -1   7  -1
+          -1  -1  -1">
+        </feConvolveMatrix>
+      </filter>
+
+      <filter id="convolution-filter__moat--extreme-grey">
+        <feConvolveMatrix order="5"
+          kernelMatrix=" 1    1   1    1   1
+          1   -2  -2   -2   1
+          1   -2  .01  -2   1
+          1   -2  -2   -2   1
+          1    1   1    1   1">
+        </feConvolveMatrix>
+        <feColorMatrix type="luminanceToAlpha" />
+      </filter>
+
+  </defs>
 </svg>

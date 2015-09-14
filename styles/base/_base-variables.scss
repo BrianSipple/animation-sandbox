@@ -65,15 +65,21 @@ $animation-duration-multiplier: 1s;
 
 
 /*
+ * Base animation durations
+ */
+ $animation-duration__color-change: 0.45s;
+ $animation-duration__fade-toggle: 0.35s;
+
+
+
+/*
  * Easing functions
  */
 $easing__ease-out-cubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);
 $easing__ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-$easing__ease-out-cubic--bounce-25: cubic-bezier(.27, .78, .75, 2.15); 
+$easing__ease-out-cubic--bounce-25: cubic-bezier(.27, .78, .75, 2.15);
+
 
 
 $navbar-height: 64px;
 $footer-height: 64px;
-
-
-

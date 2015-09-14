@@ -9,6 +9,9 @@
  * global animation speed toggler (i.e., for visual UI testing)
  */
 /*
+ * Base animation durations
+ */
+/*
  * Easing functions
  */
 /**
@@ -197,6 +200,9 @@ nav, a, button {
 /**
  * Use with every animation and transition so we can have a
  * global animation speed toggler (i.e., for visual UI testing)
+ */
+/*
+ * Base animation durations
  */
 /*
  * Easing functions
@@ -1185,11 +1191,23 @@ body {
   animation-timing-function: linear;
   animation-duration: 2s; }
 
-.atom__orbit-path-1 .electron.visible:before,
-.atom__orbit-path-1 .electron.visible:after {
+.atom__orbit-path-1 .electron.visible.electron-0:before,
+.atom__orbit-path-1 .electron.visible.electron-0:after {
   animation: ScaleIn1 0.45s;
   animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
-  transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(45deg); }
+  transform: rotateZ(1rad) translate(-50%, -50%) rotateZ(-1rad) rotateY(-73deg) rotateZ(45deg); }
+
+.atom__orbit-path-1 .electron.visible.electron-1:before,
+.atom__orbit-path-1 .electron.visible.electron-1:after {
+  animation: ScaleIn1 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.99999rad) translate(-50%, -50%) rotateZ(0.99999rad) rotateY(-73deg) rotateZ(45deg); }
+
+.atom__orbit-path-1 .electron.visible.electron-2:before,
+.atom__orbit-path-1 .electron.visible.electron-2:after {
+  animation: ScaleIn1 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(1.00027rad) translate(-50%, -50%) rotateZ(-1.00027rad) rotateY(-73deg) rotateZ(45deg); }
 
 .atom__orbit-path-1 .electron.visible:before {
   background: radial-gradient(circle at center, #fef439 20%, #fff570); }
@@ -1220,11 +1238,59 @@ body {
   animation-timing-function: linear;
   animation-duration: 2s; }
 
-.atom__orbit-path-2 .electron.visible:before,
-.atom__orbit-path-2 .electron.visible:after {
+.atom__orbit-path-2 .electron.visible.electron-0:before,
+.atom__orbit-path-2 .electron.visible.electron-0:after {
   animation: ScaleIn2 0.45s;
   animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
-  transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(0deg); }
+  transform: rotateZ(1rad) translate(-50%, -50%) rotateZ(-1rad) rotateY(-73deg) rotateZ(0deg); }
+
+.atom__orbit-path-2 .electron.visible.electron-1:before,
+.atom__orbit-path-2 .electron.visible.electron-1:after {
+  animation: ScaleIn2 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.70634rad) translate(-50%, -50%) rotateZ(-0.70634rad) rotateY(-73deg) rotateZ(0deg); }
+
+.atom__orbit-path-2 .electron.visible.electron-2:before,
+.atom__orbit-path-2 .electron.visible.electron-2:after {
+  animation: ScaleIn2 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.00217rad) translate(-50%, -50%) rotateZ(0.00217rad) rotateY(-73deg) rotateZ(0deg); }
+
+.atom__orbit-path-2 .electron.visible.electron-3:before,
+.atom__orbit-path-2 .electron.visible.electron-3:after {
+  animation: ScaleIn2 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.7094rad) translate(-50%, -50%) rotateZ(0.7094rad) rotateY(-73deg) rotateZ(0deg); }
+
+.atom__orbit-path-2 .electron.visible.electron-4:before,
+.atom__orbit-path-2 .electron.visible.electron-4:after {
+  animation: ScaleIn2 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.99999rad) translate(-50%, -50%) rotateZ(0.99999rad) rotateY(-73deg) rotateZ(0deg); }
+
+.atom__orbit-path-2 .electron.visible.electron-5:before,
+.atom__orbit-path-2 .electron.visible.electron-5:after {
+  animation: ScaleIn2 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.70327rad) translate(-50%, -50%) rotateZ(0.70327rad) rotateY(-73deg) rotateZ(0deg); }
+
+.atom__orbit-path-2 .electron.visible.electron-6:before,
+.atom__orbit-path-2 .electron.visible.electron-6:after {
+  animation: ScaleIn2 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.0065rad) translate(-50%, -50%) rotateZ(-0.0065rad) rotateY(-73deg) rotateZ(0deg); }
+
+.atom__orbit-path-2 .electron.visible.electron-7:before,
+.atom__orbit-path-2 .electron.visible.electron-7:after {
+  animation: ScaleIn2 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.71247rad) translate(-50%, -50%) rotateZ(-0.71247rad) rotateY(-73deg) rotateZ(0deg); }
+
+.atom__orbit-path-2 .electron.visible.electron-8:before,
+.atom__orbit-path-2 .electron.visible.electron-8:after {
+  animation: ScaleIn2 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(1.00027rad) translate(-50%, -50%) rotateZ(-1.00027rad) rotateY(-73deg) rotateZ(0deg); }
 
 .atom__orbit-path-2 .electron.visible:before {
   background: radial-gradient(circle at center, #e27250 20%, #fad580); }
@@ -1255,11 +1321,119 @@ body {
   animation-timing-function: linear;
   animation-duration: 2s; }
 
-.atom__orbit-path-3 .electron.visible:before,
-.atom__orbit-path-3 .electron.visible:after {
+.atom__orbit-path-3 .electron.visible.electron-0:before,
+.atom__orbit-path-3 .electron.visible.electron-0:after {
   animation: ScaleIn3 0.45s;
   animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
-  transform: translate(-50%, -50%) rotateY(-73deg) rotateZ(-45deg); }
+  transform: rotateZ(1rad) translate(-50%, -50%) rotateZ(-1rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-1:before,
+.atom__orbit-path-3 .electron.visible.electron-1:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.93953rad) translate(-50%, -50%) rotateZ(-0.93953rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-2:before,
+.atom__orbit-path-3 .electron.visible.electron-2:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.76543rad) translate(-50%, -50%) rotateZ(-0.76543rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-3:before,
+.atom__orbit-path-3 .electron.visible.electron-3:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.49875rad) translate(-50%, -50%) rotateZ(-0.49875rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-4:before,
+.atom__orbit-path-3 .electron.visible.electron-4:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.17175rad) translate(-50%, -50%) rotateZ(-0.17175rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-5:before,
+.atom__orbit-path-3 .electron.visible.electron-5:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.17602rad) translate(-50%, -50%) rotateZ(0.17602rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-6:before,
+.atom__orbit-path-3 .electron.visible.electron-6:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.5025rad) translate(-50%, -50%) rotateZ(0.5025rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-7:before,
+.atom__orbit-path-3 .electron.visible.electron-7:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.76821rad) translate(-50%, -50%) rotateZ(0.76821rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-8:before,
+.atom__orbit-path-3 .electron.visible.electron-8:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.941rad) translate(-50%, -50%) rotateZ(0.941rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-9:before,
+.atom__orbit-path-3 .electron.visible.electron-9:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.99999rad) translate(-50%, -50%) rotateZ(0.99999rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-10:before,
+.atom__orbit-path-3 .electron.visible.electron-10:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.93803rad) translate(-50%, -50%) rotateZ(0.93803rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-11:before,
+.atom__orbit-path-3 .electron.visible.electron-11:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.76263rad) translate(-50%, -50%) rotateZ(0.76263rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-12:before,
+.atom__orbit-path-3 .electron.visible.electron-12:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.49499rad) translate(-50%, -50%) rotateZ(0.49499rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-13:before,
+.atom__orbit-path-3 .electron.visible.electron-13:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(-0.16748rad) translate(-50%, -50%) rotateZ(0.16748rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-14:before,
+.atom__orbit-path-3 .electron.visible.electron-14:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.18028rad) translate(-50%, -50%) rotateZ(-0.18028rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-15:before,
+.atom__orbit-path-3 .electron.visible.electron-15:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.50625rad) translate(-50%, -50%) rotateZ(-0.50625rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-16:before,
+.atom__orbit-path-3 .electron.visible.electron-16:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.771rad) translate(-50%, -50%) rotateZ(-0.771rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-17:before,
+.atom__orbit-path-3 .electron.visible.electron-17:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(0.94255rad) translate(-50%, -50%) rotateZ(-0.94255rad) rotateY(-73deg) rotateZ(-45deg); }
+
+.atom__orbit-path-3 .electron.visible.electron-18:before,
+.atom__orbit-path-3 .electron.visible.electron-18:after {
+  animation: ScaleIn3 0.45s;
+  animation-timing-function: cubic-bezier(0.27, 0.78, 0.75, 2.15);
+  transform: rotateZ(1.00027rad) translate(-50%, -50%) rotateZ(-1.00027rad) rotateY(-73deg) rotateZ(-45deg); }
 
 .atom__orbit-path-3 .electron.visible:before {
   background: radial-gradient(circle at center, #6ee51f 20%, #c5e1c1); }

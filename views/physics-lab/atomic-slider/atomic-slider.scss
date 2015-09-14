@@ -346,17 +346,32 @@ body {
                 animation-iteration-count: infinite;
                 animation-timing-function: linear;
                 animation-duration: map-get($shellValues, 'orbitDuration');
-                
 
-                &:before,
-                &:after {
-                    animation: ScaleIn#{$shellNum} $animation-duration__scale-size;
-                    animation-timing-function: $easing__ease-out-cubic--bounce-25;
-                    //animation-delay: 3s;
-                    transform: 
-                        translate(-50%, -50%)
-                        rotateY(-$atom__yRotation)
-                        rotateZ(-1 * map-get($shellValues, 'tilt'));     
+                
+                @for $i from 0 through map-get($shellValues, 'numElectrons') {
+
+                    $shellPerimeterPositionRadians: cosine( 
+                        (pi()*2) * 
+                        ($i / map-get($shellValues, 'numElectrons') )
+                    );   
+
+                    &.electron-#{$i} {
+                        
+                        &:before,
+                        &:after {
+                            
+                            animation: ScaleIn#{$shellNum} $animation-duration__scale-size;
+                            animation-timing-function: $easing__ease-out-cubic--bounce-25;
+
+                            // TODO: Figure out how to equally space electrons through transform params
+                            transform:                                 
+                                rotateZ(#{$shellPerimeterPositionRadians}rad)                                
+                                translate(-50%, -50%)
+                                rotateZ(-#{$shellPerimeterPositionRadians}rad)                                
+                                rotateY(-$atom__yRotation)
+                                rotateZ(-1 * map-get($shellValues, 'tilt')); 
+                        }
+                    }
                 }
 
                 &:before {
@@ -364,9 +379,9 @@ body {
                     //opacity: 0.3;
                 }
                 &:after {
-                    //background: map-get($shellValues, 'background');
                 }
-            }            
+            }
+            
         }        
     }    
 } 

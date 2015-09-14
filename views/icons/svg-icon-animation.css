@@ -452,19 +452,49 @@ body {
   h3 {
     page-break-after: avoid; } }
 
-.main-view-container {
-  background-color: #282a29; }
+.scene {
+  width: 80%;
+  height: 80%; }
 
-.loader-container {
-  position: absolute;
+.grid {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
+.grid.grid--top {
+  align-items: flex-start; }
+
+.grid.grid--center {
+  align-items: center; }
+
+.grid.grid--bottom {
+  align-items: flex-end; }
+
+.grid__cell {
+  position: relative;
+  flex: 1; }
+
+.grid__cell.grid-cell--top {
+  align-self: flex-start; }
+
+.grid__cell.grid-cell--center {
+  align-self: center; }
+
+.grid__cell.grid-cell--bottom {
+  align-self: flex-end; }
+
+.grid__svg-container {
   opacity: 0;
-  /* animate into view */
+  /*  animate in after DOM is built */
+  transition: opacity 0.35s cubic-bezier(0.215, 0.61, 0.355, 1);
+  width: 100%;
+  height: 100%;
+  position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -125px;
-  margin-top: -100px; }
+  transform: translate3d(-50%, -50%, 0); }
 
-.reflection {
-  transform-origin: 50% 110%;
-  transform: scaleY(-1);
-  opacity: 0.09; }
+.icon-fab {
+  width: 4.5rem;
+  height: 4.5rem; }

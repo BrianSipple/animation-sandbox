@@ -234,13 +234,13 @@ var app = (function (exports) {
             yDistDown1 = opts.yDistDown1 || 20,
             yDistDown2 = opts.yDistDown2 || 20,
             newText = opts.newText || '',
-            labelOut = opts.labelOut || '',
-            labelIn = opts.labelIn || '';
+            labelOut = opts.labelOut || null,
+            labelIn = opts.labelIn || '+=1';
 
         //debugger;
 
         tl.to(mainTitleElem, DURATIONS.fadeInOrOut, {autoAlpha: 0, y: '+=' + yDistDown1, ease: EASINGS.fadeInOrOut}, labelOut);
-        tl.set(mainTitleElem, { y: '-=' + yDistUp, text: newText, immediateRender: false });
+        tl.set(mainTitleElem, { y: '-=' + yDistUp, text: newText, immediateRender: false }, labelOut);
         tl.to(mainTitleElem, DURATIONS.fadeInOrOut, {autoAlpha: 1, y: '+=' + yDistDown2, ease: EASINGS.fadeInOrOut}, labelIn);
     }
 
@@ -405,7 +405,7 @@ var app = (function (exports) {
                 { x: 0, y: 120 }
             ];
 
-            ideaTL.set(coinSVG, { autoAlpha: 1, scale: 0.5 }, '+=0.3');
+            ideaTL.set(coinSVG, { autoAlpha: 1, scale: 0.5, immediateRender: false });
 
             ideaTL.to(
                 coinSVG,
@@ -465,19 +465,11 @@ var app = (function (exports) {
             yDistDown1: 10,
             yDistDown2: 20,
             newText: 'Just add JavaScript!',
-            //labelOut: '-=' + Number(DURATIONS.coinToss),
             labelOut: LABELS.coinTossStarting,
-            labelIn: LABELS.coinTossStarting + '+=' + Number(DURATIONS.coinToss * 0.5833)
-            //labelIn: '-=' + Number(DURATIONS.coinToss * 0.5833)
+            labelIn: LABELS.coinTossStarting + '+=' + Number(DURATIONS.coinToss * 0.3833)
 
         });
 
-//        ideaTL.to(
-//            mainTitleElem,
-//            DURATIONS.fadeInOrOut,
-//            {y: '+=20', autoAlpha: 0, ease: EASINGS.default },
-//            LABELS.coinLandedInMachine + '-=' + (DURATIONS.coinToss * 0.2)
-//        );
 
         shakeMachineOpening();
 
@@ -562,27 +554,33 @@ var app = (function (exports) {
 
         var
           fillTubesTL = new TimelineMax(),
-          currentTubeLength;
+          currentTubeLength,
 
-          // path lengths computed by
-          // calling .getTotalLength() on each of the tube liquidSVGs
-          // (ordered as the svg elements are marked up in the DOM)
-          // orderedLiquidLengths = [
-          //   131, 213, 228, 124, 124, 124, 101, 345, 393
-          // ];
-        debugger;
+          // Get a list of the liquid SVGs ordered by the number attached
+          // to their id.
+          orderedLiquidSVGs = [].slice.call(liquidSVGs).sort(
+              function sortLiquids(el1, el2) {
+                return (
+                  parseInt( el1.id.slice( el1.id.search( /[0-9]/ ) ) ) -
+                  parseInt( el2.id.slice(el2.id.search( /[0-9]/ ) ) )
+                );
+               }
+           );
+
+           fillStepLabels = [
+               'and SVG',
+               '...and a tween',
+               '...or two',
+               'and maybe a few more',
+               'Mixin a timeline',
+               'Draw up some easing functions',
+               'Wire up our DOM nodes',
+               'Now we\'re ready for the world'
+           ];
+
+
+
         function drawTube(tubeSVG, duration, liquidLength) {
-//            fillTubesTL.set(
-//                tubeSVG,
-//                {
-//                    strokeDasharray: tubeLength,
-//                    strokeDashoffset: tubeLength,
-//                    immediateRender: false
-//                }
-//            );
-
-            // TODO: Compare using the timeline with and without setImmediateRender vs
-            // just using raw TweenMax
             TweenMax.set(
                 tubeSVG,
                 { strokeDasharray: liquidLength, strokeDashoffset: liquidLength }
@@ -599,21 +597,22 @@ var app = (function (exports) {
             );
         }
 
-        // Get a list of the liquid SVGs ordered by the number attached
-        // to their id.
-        var orderedLiquidSVGs = [].slice.call(liquidSVGs).sort(function sortLiquids(el1, el2) {
-          return (
-            parseInt( el1.id.slice( el1.id.search( /[0-9]/ ) ) ) -
-            parseInt( el2.id.slice(el2.id.search( /[0-9]/ ) ) )
-          );
-        });
-
         orderedLiquidSVGs.forEach(function (liquidSVG, idx) {
           drawTube(
             liquidSVG,
             DURATIONS.tubeFill,
             liquidSVG.getTotalLength()
           );
+
+          fillTubesTL.addLabel('tube-fill--iter-' + idx);
+
+          changeTitleText(fillTubesTL, {
+              yDistUp: 30,
+              yDistDown1: 10,
+              yDistDown2: 20,
+              newText: fillStepLabels[idx],
+              labelIn: '+=2'
+          });
         });
 
         return fillTubesTL;
@@ -632,7 +631,7 @@ var app = (function (exports) {
         masterTL.add(fillMachineTubes());
         masterTL.addLabel(LABELS.sceneTubesFilled);
 
-        masterTL.seek(LABELS.sceneMachineStarted + '-=1');
+        masterTL.seek(LABELS.sceneIntro + '-=1');
     }
 
     return {

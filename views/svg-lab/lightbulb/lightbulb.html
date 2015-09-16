@@ -23,7 +23,7 @@
         <filter id="filter__thicken-and-twist">
           <!-- "dialate" makes the source thicker. "erode" would make it thinner -->
           <feMorphology radius="3" operator="dilate"></feMorphology>
-          <feTurbulence type="fractalNoise" baseFrequency="0.00017" numOctaves="1" result="warp"></feTurbulence>
+          <feTurbulence type="fractalNoise" baseFrequency="0.00017" numOctaves="3" result="warp"></feTurbulence>
           <feDisplacementMap xChannelSelector="R"
             yChannelSelector="G"
             scale="60"

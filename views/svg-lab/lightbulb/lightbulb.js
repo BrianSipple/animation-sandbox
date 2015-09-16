@@ -35,33 +35,12 @@ let lightbulb = function lightbulb () {
                 phaseFlickeringToFullLight: 'phase__flickering-to-full-light',
                 phaseBulbOnAndFlickering: 'phase__bulb-on-and-flickering',
 
-                wireChargeStart: 'wire-charge-is-starting',
-
-                chargeFlicker1: 'charge-flicker-1',
-                chargeFlicker2: 'charge-flicker-2',
-                chargeFlicker3: 'charge-flicker-3',
-                chargeFlicker4: 'charge-flicker-4',
-                chargeFlicker5: 'charge-flicker-5',
-                chargeFlicker6: 'charge-flicker-6',
-                chargeFlicker6: 'charge-flicker-7',
-
-                chargeFlicker1Complete: 'charge-flicker-1-complete',
-                chargeFlicker2Complete: 'charge-flicker-2-complete',
-                chargeFlicker3Complete: 'charge-flicker-3-complete',
-                chargeFlicker4Complete: 'charge-flicker-4-complete',
-                chargeFlicker5Complete: 'charge-flicker-5-complete',
-                chargeFlicker6Complete: 'charge-flicker-6-complete'
+                wireChargeStart: 'wire-charge-is-starting'
             },
 
             DURATIONS = {
                 initialWireCharging: 3.2,
-                chargeFlicker1: .012,
-                chargeFlicker2: .007,
-                chargeFlicker3: .017,
-                chargeFlicker4: .003,
-                chargeFlicker5: .009,
-                chargeFlicker6: .012,
-                chargeFlicker7: .007
+                bulbFlicker: .0025
             },
 
             COLORS = {
@@ -116,35 +95,6 @@ let lightbulb = function lightbulb () {
                 return 'unique-label-' + currentUniqueLabelNum++;
             },
 
-            // makeWireFilterToggleTween = function makeWireFilterToggleTween(isActive) {
-            //   debugger;
-            //   let
-            //     tween,
-            //     filterValue;
-            //
-            //   if (isActive) {
-            //     filterValue = 'url(#filter__thicken-and-twist)';
-            //   } else {
-            //     filterValue = '';
-            //   }
-            //
-            //   tween = TweenMax.set(
-            //     [].concat(
-            //       energyWireUnchargedSVGs,
-            //       energyWireChargedLeftSVG,
-            //       energyWireChargedRightSVG
-            //     ),
-            //     {
-            //       attr: {
-            //         filter: filterValue
-            //       },
-            //       immediateRender: false
-            //     }
-            //   );
-            //
-            //   return tween;
-            // },
-
             /**
              * Set the starting frequency value for
              * the wire's turbulence filter
@@ -167,8 +117,8 @@ let lightbulb = function lightbulb () {
              */
             setBulbLighting = function setBulbLighting (tl, elem, intensityFactor, hexColor, duration, label = getUniqueLabel()) {
 
-                //debugger;
                 let
+                    // tween the bulb opacity and fill color
                     bulbTween = TweenMax.to(
                         elem,
                         duration,
@@ -181,6 +131,7 @@ let lightbulb = function lightbulb () {
                         }
                     ),
 
+                    // tween the STD of the glow filter
                     glowTween = TweenMax.to(
                         bulbGlowFilterBlurNode,
                         duration,
@@ -191,10 +142,9 @@ let lightbulb = function lightbulb () {
                             ease: EASINGS.default
                         }
                     );
+
                 tl.add([glowTween, bulbTween], label);
             },
-
-
 
             setScene = function setScene () {
 
@@ -289,93 +239,155 @@ let lightbulb = function lightbulb () {
             flickerToFullCharge = function flickerToFullCharge () {
 
                 let
-                    flickerToFullTL = new TimelineMax(/*{onUpdate: debug}*/),
+                    maxWireTurbulence = DIMENSIONS.wireFilterTurbulence.endFrequency,
+                    tweenWireBackToNormal = function tweenWireBackToNormal (tl) {
+                        tl.to(
+                            energyWireFilterTurbulence,
+                            2.7,
+                            { attr: { baseFrequency: '0' }}
+                        );
+                    },
+
+                    flickerToFullTL = new TimelineMax({
+                        //onComplete: tweenWireBackToNormal,
+                        //onCompleteParams: ['{self}']
+                    }),
+
+                    createWireTurbulence = function createWireTurbulence(
+                        turbulenceFrequency,
+                        turbulenceDuration
+                    ) {
+                        console.log(turbulenceFrequency);
+                        console.log(turbulenceDuration);
+                        let
+                            turbulenceTL = new TimelineMax({
+                                repeatDelay: 0,
+                                repeat: 1,
+                                yoyo: true
+                            });
+
+                        turbulenceTL.to(
+                            energyWireFilterTurbulence,
+                            turbulenceDuration / 2,
+                            {
+                              onStart: function () {debugger;},
+                              attr: {
+                                baseFrequency: '' + turbulenceFrequency
+                              },
+                              ease: EASINGS.default
+                            }
+                        );
+
+                        return turbulenceTL;
+                    },
 
                     /**
                      * Makes a timelime that coordinates a flickering of the bulb
                      */
-                    makeFlickerBurst = function makeFlickerBurst (numFlickers, percentage, duration, color, label = getUniqueLabel()) {
-                        debugger;
+                    makeFlickerBurst = function makeFlickerBurst (
+                        numFlickers,
+                        percentage,
+                        color,
+                        flickerDelay = 0.2
+                    ) {
 
-                        let
-                            drawSVGValue = percentage + '%',
-
-                            wireTurbulenceFreq = (
-                              Number(DIMENSIONS.wireFilterTurbulence.endFrequency) *
-                              (percentage / 100)
-                            ),
-
-                            flickerBurstTL = new TimelineMax({
+                        let flickerBurstTL = new TimelineMax({
                                 repeat: numFlickers,
-                                delay: 0.2,
-                                reapeatDelay: 0
-                            });
-
-                        // scale down the inner charging layer and scale up the lit layer (in
-                        // advance of animating the lit layer's opacity)
+                                delay: flickerDelay,
+                                repeatDelay: 0
+                        });
 
                         flickerBurstTL.set(bulbInnerLightSVG, { autoAlpha: 0, scale: 0, fill: color, immediateRender: false });
-                        flickerBurstTL.add(resetWireTurbulence());
-
-                        flickerBurstTL.addLabel(label);
-
-                        // begin turbulancing(?) the wire
-                        flickerBurstTL.to(
-                          energyWireFilterTurbulence,
-                          duration,
-                          {
-                            attr: {
-                              baseFrequency: '' + wireTurbulenceFreq
-                            }
-                          },
-                          label
-                        )
 
                         // light up the bulb
                         flickerBurstTL.to(
                           bulbInnerLightSVG,
-                          duration,
+                          DURATIONS.bulbFlicker,
                           { autoAlpha: 0, scale: 1, fill: color },
-                          label
+                          0
                         );
 
-                        // draw left charge wire
-                        flickerBurstTL.to(
-                            energyWireChargedLeftSVG,
-                            duration,
-                            { drawSVG: percentage + '%', ease: EASINGS.default },
-                            label
-                        );
 
-                        // draw right charge wire
-                        flickerBurstTL.to(
-                            energyWireChargedRightSVG,
-                            duration,
-                            { drawSVG: '100% ' + (100 - percentage) + '%', ease: EASINGS.default },
-                            label
-                        );
-
+                        // handle fill and opacity changes as the bulb expands
                         setBulbLighting(
                             flickerBurstTL,
                             bulbInnerLightSVG,
                             percentage / 100,
                             color,
-                            duration,
-                            label
+                            DURATIONS.bulbFlicker,
+                            0
                         );
 
                         return flickerBurstTL;
+                    },
+
+                    makeWiresCharge = function makeWiresCharge (duration, percentage) {
+
+                        let wireChargeTL = new TimelineMax();
+
+                        wireChargeTL.to(
+                            energyWireChargedLeftSVG,
+                            duration,
+                            { drawSVG: percentage + '%', ease: EASINGS.default },
+                            0
+                        );
+
+                        wireChargeTL.to(
+                            energyWireChargedRightSVG,
+                            duration,
+                            { drawSVG: '100% ' + (100 - percentage) + '%', ease: EASINGS.default },
+                            0
+                        );
+
+                        return wireChargeTL;
                     };
 
-                flickerToFullTL.add(makeFlickerBurst(20, 20, DURATIONS.chargeFlicker1, COLORS.bulb.chargingYellow, LABELS.chargeFlicker1));
-                flickerToFullTL.add(makeFlickerBurst(100, 40, DURATIONS.chargeFlicker2, COLORS.bulb.chargingYellow, LABELS.chargeFlicker2));
-                flickerToFullTL.add(makeFlickerBurst(200, 60, DURATIONS.chargeFlicker3, COLORS.bulb.chargingYellow, LABELS.chargeFlicker3));
-                flickerToFullTL.add(makeFlickerBurst(40, 70, DURATIONS.chargeFlicker4, COLORS.bulb.chargingYellow, LABELS.chargeFlicker4));
-                flickerToFullTL.add(makeFlickerBurst(90, 80, DURATIONS.chargeFlicker5, COLORS.bulb.chargingYellow, LABELS.chargeFlicker5));
-                flickerToFullTL.add(makeFlickerBurst(100, 99, DURATIONS.chargeFlicker6, COLORS.bulb.chargingYellow, LABELS.chargeFlicker6));
 
-                // fin
-                flickerToFullTL.add(makeFlickerBurst(30, 100, DURATIONS.chargeFlicker7, COLORS.bulb.litYellow, LABELS.chargeFlicker7));
+                let
+                    flickerSequence = [
+                        { numFlickers: 301, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2, label: 'flicker-1'},
+                        { numFlickers: 333, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.9, label: 'flicker-2'},
+                        { numFlickers: 356, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.1, label: 'flicker-3'},
+                        { numFlickers: 332, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.12, label: 'flicker-4'},
+                        { numFlickers: 390, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 1.1, label: 'flicker-5'},
+                        { numFlickers: 300, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.45, label: 'flicker-6'},
+                        { numFlickers: 334, intensityPct: 100, color: COLORS.bulb.chargingYellow, delay: 0.31, label: 'flicker-7'},
+                        { numFlickers: 334, intensityPct: 100, color: COLORS.bulb.chargingYellow, delay: 0.1, label: 'flicker-8'},
+                        { numFlickers: 334, intensityPct: 100, color: COLORS.bulb.chargingYellow, delay: 0.05, label: 'flicker-9'},
+                        { numFlickers: 334, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, label: 'flicker-10'}
+                    ],
+
+                    totalSeqDuration,
+                    flickerBurstTL,
+                    wireChargeTL,
+                    wireTurbulenceTL;
+
+                for (let seq of flickerSequence) {
+                    debugger;
+
+                    totalSeqDuration = seq.numFlickers * DURATIONS.bulbFlicker;
+
+                    flickerBurstTL = makeFlickerBurst(
+                        seq.numFlickers,
+                        seq.intensityPct,
+                        seq.color,
+                        seq.delay
+                    );
+
+                    wireChargeTL = makeWiresCharge(
+                        totalSeqDuration,
+                        seq.intensityPct
+                    );
+
+                    wireTurbulenceTL = createWireTurbulence(
+                        maxWireTurbulence * (seq.intensityPct / 100),
+                        totalSeqDuration
+                    );
+
+                    flickerToFullTL.addLabel(seq.label);
+                    flickerToFullTL.add(flickerBurstTL, seq.label);                    
+                    flickerToFullTL.add([wireChargeTL, wireTurbulenceTL], seq.label + '+=' + seq.delay);
+                }
 
                 return flickerToFullTL;
             },
@@ -384,9 +396,6 @@ let lightbulb = function lightbulb () {
             flickerBulbAtRandom = function flickerBulbAtRandom () {
                 let flickerTL = new TimelineMax({ repeat: -1 });
             },
-
-
-
 
             /**
              * Main entry point for building and running our timelines

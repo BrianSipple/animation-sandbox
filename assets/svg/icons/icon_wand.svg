@@ -1,17 +1,17 @@
-<svg id="WandIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+<svg version="1.1" id="WandIcon" class="wand svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <style>
     .wand__motion-trail{
         fill:none;stroke:#000000; stroke-width:2; stroke-miterlimit:10; opacity: 0;
     }
   </style>
-  <g id="WandMotionTrails">
+  <g id="WandMotionTrails" class="wand__motion-trails">
     <!-- path order starts outwards and goes inwards -->
     <path id="MotionTrail1" class="wand__motion-trail wand__motion-trail-1" d="M37.9 13c10.7 8.7 9.6 25 9.6 25"/>
     <path id="MotionTrail2" class="wand__motion-trail wand__motion-trail-2" d="M33.9 13c10.7 8.7 9.6 25 9.6 25"/>
     <path id="MotionTrail3" class="wand__motion-trail wand__motion-trail-3" d="M28.9 13c10.7 8.7 9.6 25 9.6 25"/>
   </g>
-  <g id="WandBody">
-    <path id="handle" d="M13.6 33.2l-4.9 5.4c-.2.2-.1.5 0 .6l1.2 1.1c.2.2.5.1.6 0l4.4-4.8 19-21.8-.8-.7-19.5 20.2"/>
-    <path id="star" d="M33.5 9.5l3.6-1.9-.7 4 3 2.9-4.1.6-1.8 3.6-1.8-3.6-4.1-.6 3-2.9-.7-4 3.6 1.9z"/>
+  <g id="WandBody" class="wand__body">
+    <path id="handle" class="wand__handle" d="M13.6 33.2l-4.9 5.4c-.2.2-.1.5 0 .6l1.2 1.1c.2.2.5.1.6 0l4.4-4.8 19-21.8-.8-.7-19.5 20.2"/>
+    <path id="star" class="wand__star" d="M33.5 9.5l3.6-1.9-.7 4 3 2.9-4.1.6-1.8 3.6-1.8-3.6-4.1-.6 3-2.9-.7-4 3.6 1.9z"/>
   </g>
 </svg>

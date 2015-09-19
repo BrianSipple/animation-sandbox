@@ -370,10 +370,6 @@ let lightbulb = function lightbulb () {
                     wireChargeTL,
                     wireTurbulenceTL;
 
-                // let
-                //     flickerIter = 0,
-                //     positionFromStartLabel;
-
                 for (let seq of flickerSequence) {
 
                     totalSeqDuration = seq.numFlickers * DURATIONS.bulbFlicker;

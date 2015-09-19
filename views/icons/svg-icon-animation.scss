@@ -23,3 +23,8 @@
     width: 4.5rem;
     height: 4.5rem;
 }
+
+.svg-icon {
+    /* Make sure the entire icon fires the event */
+    pointer-events: all;
+}

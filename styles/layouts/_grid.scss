@@ -18,6 +18,7 @@
 
 .grid__cell {
   position: relative;
+  max-width: 100%;
   flex: 1;
 
   &.grid-cell--top {

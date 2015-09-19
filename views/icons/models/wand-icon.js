@@ -1,6 +1,6 @@
 import 'TweenMax';
 import 'DrawSVGPlugin';
-import Icon from './icon';
+import Icon from './base/_icon';
 
 const
   SELECTORS = {
@@ -28,17 +28,18 @@ let WandIcon = (svgElem) => {
 
     let wandIcon = Icon();
     wandIcon.svgElem = svgElem;
-    wandIcon.DOM_REFS = {};
 
-    wandIcon.DOM_REFS['wandBodySVG'] = wandIcon.svgElem.querySelector(SELECTORS.wandBodySVG);
-    wandIcon.DOM_REFS['wandMotionTrailSVGs'] = wandIcon.svgElem.querySelectorAll(SELECTORS.motionTrailSVGs);
+    wandIcon.DOM_REFS = {
+        wandBodySVG: wandIcon.svgElem.querySelector(SELECTORS.wandBodySVG),
+        wandMotionTrailSVGs: wandIcon.svgElem.querySelectorAll(SELECTORS.motionTrailSVGs)
+    };
 
     wandIcon.flickWand = function flickWand () {
       let TL = new TimelineMax();
 
       // Set the transOrigin (center of gravity) to be near the
       // bottom part of the handle
-      debugger;
+      //debugger;
       TL.set(this.DOM_REFS.wandBodySVG, { transformOrigin: '5% 95% 0' }); // TODO: Get a more exact measuremnt for center of gravity
 
       // down...
@@ -81,7 +82,7 @@ let WandIcon = (svgElem) => {
     };
 
     wandIcon.handleClick = function handleClick (ev) {
-      debugger;
+      //debugger;
       if (!this.isAnimating) {
 
         this.isAnimating = true;
@@ -94,9 +95,7 @@ let WandIcon = (svgElem) => {
           this.mainIconTL = new TimelineMax({
             // yoyo: true,
             // repeat: 1,
-            onComplete: function onIconAnimationTLComplete () {
-              this.isAnimating = false;
-            }.bind(this)
+            onComplete: wandIcon.boundDeclareAnimationComplete.bind(wandIcon)
           });
 
           let

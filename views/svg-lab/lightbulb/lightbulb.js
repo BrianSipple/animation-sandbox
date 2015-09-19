@@ -31,11 +31,13 @@ let lightbulb = function lightbulb () {
             },
 
             LABELS = {
-                phaseWireIsCharging: 'phase__wire-is-charging',
-                phaseFlickeringToFullLight: 'phase__flickering-to-full-light',
-                phaseBulbOnAndFlickering: 'phase__bulb-on-and-flickering',
+                phaseWireIsCharging: 'phase__wireIsCharging',
+                phaseFlickeringToFullLight: 'phase__flickeringToFullLight',
+                phaseBulbOnAndFlickering: 'phase__bulbOnAndFlickering',
 
-                wireChargeStart: 'wire-charge-is-starting'
+                bulbFlickeringStart: 'bulbFlickeringStart',
+
+                wireChargeStart: 'wireChargeIsStarting'
             },
 
             DURATIONS = {
@@ -248,23 +250,26 @@ let lightbulb = function lightbulb () {
                         );
                     },
 
-                    flickerToFullTL = new TimelineMax({
+                    masterFlickerTL = new TimelineMax({
                         //onComplete: tweenWireBackToNormal,
                         //onCompleteParams: ['{self}']
                     }),
+                    masterTurbulenceTL = new TimelineMax(),
+                    masterWireChargeTL = new TimelineMax(),
 
                     createWireTurbulence = function createWireTurbulence(
                         turbulenceFrequency,
-                        turbulenceDuration
+                        turbulenceDuration,
+                        delay
                     ) {
                         console.log(turbulenceFrequency);
                         console.log(turbulenceDuration);
-                        let
-                            turbulenceTL = new TimelineMax({
-                                repeatDelay: 0,
-                                repeat: 1,
-                                yoyo: true
-                            });
+                        let turbulenceTL = new TimelineMax({
+                            delay: delay,
+                            repeatDelay: 0,
+                            repeat: 1,
+                            yoyo: true
+                        });
 
                         turbulenceTL.to(
                             energyWireFilterTurbulence,
@@ -274,7 +279,8 @@ let lightbulb = function lightbulb () {
                               attr: {
                                 baseFrequency: '' + turbulenceFrequency
                               },
-                              ease: EASINGS.default
+                              ease: EASINGS.default,
+                              onComplete: function () {debugger;}
                             }
                         );
 
@@ -321,9 +327,11 @@ let lightbulb = function lightbulb () {
                         return flickerBurstTL;
                     },
 
-                    makeWiresCharge = function makeWiresCharge (duration, percentage) {
+                    makeWiresCharge = function makeWiresCharge (duration, percentage, delay) {
 
-                        let wireChargeTL = new TimelineMax();
+                        let wireChargeTL = new TimelineMax({
+                            delay: delay
+                        });
 
                         wireChargeTL.to(
                             energyWireChargedLeftSVG,
@@ -362,8 +370,11 @@ let lightbulb = function lightbulb () {
                     wireChargeTL,
                     wireTurbulenceTL;
 
+                // let
+                //     flickerIter = 0,
+                //     positionFromStartLabel;
+
                 for (let seq of flickerSequence) {
-                    debugger;
 
                     totalSeqDuration = seq.numFlickers * DURATIONS.bulbFlicker;
 
@@ -376,20 +387,24 @@ let lightbulb = function lightbulb () {
 
                     wireChargeTL = makeWiresCharge(
                         totalSeqDuration,
-                        seq.intensityPct
+                        seq.intensityPct,
+                        seq.delay
                     );
 
                     wireTurbulenceTL = createWireTurbulence(
                         maxWireTurbulence * (seq.intensityPct / 100),
-                        totalSeqDuration
+                        totalSeqDuration,
+                        seq.delay
                     );
 
-                    flickerToFullTL.addLabel(seq.label);
-                    flickerToFullTL.add(flickerBurstTL, seq.label);                    
-                    flickerToFullTL.add([wireChargeTL, wireTurbulenceTL], seq.label + '+=' + seq.delay);
+                    masterFlickerTL.add(flickerBurstTL);
+                    masterWireChargeTL.add(wireChargeTL);
+                    masterTurbulenceTL.add(wireTurbulenceTL);
+
+                    //flickerIter++;
                 }
 
-                return flickerToFullTL;
+                return [masterFlickerTL, masterWireChargeTL, masterTurbulenceTL];
             },
 
 

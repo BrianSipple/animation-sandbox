@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <g id="PlayPauseButton">
+    <g id="keylines_2_" fill="none">
+      <circle id="keyline-outer-circle--play-button" stroke="#000" stroke-miterlimit="10" cx="24" cy="24" r="22"/>
+      <rect id="keyline-outer-square--play-button" x="2" y="2" width="44" height="44"/>
+    </g>
+    <g id="main-shapes">
+      <polygon id="pause-bar--left" points="24.2,32.5 18,36 18,13 24.2,16.5"/>
+      <polygon id="pause-bar--right" points="24.2,32.5 24.2,16.5 38,24.5"/>
+    </g>
+    <g id="guide-shapes" fill="none">
+      <rect id="guide-shape--pause-right" x="28" y="13" width="10" height="23"/>
+      <rect id="guide-shape--pause-left" x="10" y="13" width="10" height="23"/>
+    </g>
+  </g>
+</svg>

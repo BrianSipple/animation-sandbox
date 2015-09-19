@@ -66,6 +66,7 @@
 
 .grid__cell {
   position: relative;
+  max-width: 100%;
   flex: 1; }
 
 .grid__cell.grid-cell--top {

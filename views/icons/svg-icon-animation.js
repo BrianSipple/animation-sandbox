@@ -1,4 +1,5 @@
-import WandIcon from './models/wand-icon';
+//import WandIcon from './models/wand-icon';
+import SVG_METADATA from './svg-metadata';
 
 let app = function app () {
 
@@ -10,32 +11,9 @@ let app = function app () {
         iconsRootSVG: '.grid__svg-container',
       },
 
-      SVG_METADATA = {
-        wand1: {
-          id: '#WandIcon1',
-          obj: WandIcon(document.querySelector('#WandIcon1')),
-          tlLabel: 'wand-icon-1-animating'
-        },
-        wand2: {
-          id: '#WandIcon2',
-          obj: WandIcon(document.querySelector('#WandIcon2')),
-          tlLabel: 'wand-icon-2-animating'
-        }
-      },
-
-      EASINGS = {
-
-      },
-
-      LABELS = {
-        wandIcon: 'wand-icon-animating'
-      },
-
       // Cache a direct mapping from svg ids to their correspoinding objects
       // that we can quickly reference during event handling
       idToIconObjectMap = {},
-
-      masterTL,
 
       iconGridContainerElem =
         document.querySelector(SELECTORS.iconGridContainer),
@@ -46,26 +24,22 @@ let app = function app () {
        */
       wireUpIcons = function wireUpIcons () {
         //debugger;
-
-        masterTL = new TimelineMax();
-
         let
           iconObj,
           iconMetaData,
-          iconOpts = {};
+          iconParams = {};
 
         Object.keys(SVG_METADATA).forEach((metaDataKey) => {
 
           iconMetaData = SVG_METADATA[metaDataKey];
           iconObj = iconMetaData.obj;
 
-          iconOpts = {
+          iconParams = {
             id: iconMetaData.id,
-            masterTL: masterTL,
-            tlLabel: iconMetaData.tlLabel
+            customClickHandlers: iconMetaData.customClickHandlers
           };
 
-          iconObj.init(iconOpts);
+          iconObj.init(iconParams);
           idToIconObjectMap[iconMetaData.id] = iconObj; // cache here for quicker access on click
         });
       },

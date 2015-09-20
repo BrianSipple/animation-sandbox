@@ -7,7 +7,7 @@
 
 
 
-.grid__svg-container {
+.svg-grid-container {
   opacity: 0;   /*  animate in after DOM is built */
   transition: opacity $animation-duration__fade-toggle $easing__ease-out-cubic;
   width: 100%;

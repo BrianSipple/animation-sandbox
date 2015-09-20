@@ -8,7 +8,7 @@ let app = function app () {
     let
       SELECTORS = {
         iconGridContainer: '.grid',
-        iconsRootSVG: '.grid__svg-container',
+        iconsRootSVG: '.svg-grid-container',
       },
 
       // Cache a direct mapping from svg ids to their correspoinding objects

@@ -46,7 +46,19 @@ let lightbulb = function lightbulb () {
 
             DURATIONS = {
                 initialWireCharging: 3.2,
-                bulbFlicker: .0025
+
+                // this should be at least the monitor
+                // frame rate that we're targeting (i.e. 60 fps ==> 0.0167ms)
+                bulbFlicker: .07
+            },
+
+            WAVE_FUNCTIONS = {
+                SIN: 'sin',
+                TRIANGLE: 'triangle',
+                SQUARE: 'square',
+                SAWTOOTH: 'sawtooth',
+                INVERTED_SAWTOOTH: 'invertedSawtooth',
+                NOISE: 'randomNoise'
             },
 
             COLORS = {
@@ -106,30 +118,30 @@ let lightbulb = function lightbulb () {
              * Helper to tweak the opacity of the bulb light. This function ensures
              * that the glow intensity is in sync with the light intensity
              */
-            unDimBulb = function unDimBulb (tl, elem, intensityFactor, duration, easing, label = getUniqueLabel()) {
-
-                let
-                    // tween the bulb opacity and fill color
-                    bulbTween = TweenMax.to(
-                        elem,
-                        duration,
-                        { autoAlpha: intensityFactor, ease: easing }
-                    ),
-
-                    // tween the STD of the glow filter
-                    glowTween = TweenMax.to(
-                        bulbGlowFilterBlurNode,
-                        duration,
-                        {
-                            attr: {
-                                stdDeviation: (MAX_GLOW_FILTER_SD * intensityFactor )
-                            },
-                            ease: easing
-                        }
-                    );
-
-                tl.add([glowTween, bulbTween], label);
-            },
+            // unDimBulb = function unDimBulb (tl, elem, intensityFactor, duration, easing, label = getUniqueLabel()) {
+            //
+            //     let
+            //         // tween the bulb opacity and fill color
+            //         bulbTween = TweenMax.to(
+            //             elem,
+            //             duration,
+            //             { autoAlpha: intensityFactor, ease: easing }
+            //         ),
+            //
+            //         // tween the STD of the glow filter
+            //         glowTween = TweenMax.to(
+            //             bulbGlowFilterBlurNode,
+            //             duration,
+            //             {
+            //                 attr: {
+            //                     stdDeviation: (MAX_GLOW_FILTER_SD * intensityFactor )
+            //                 },
+            //                 ease: easing
+            //             }
+            //         );
+            //
+            //     tl.add([glowTween, bulbTween], label);
+            // },
 
             setScene = function setScene () {
 
@@ -206,17 +218,19 @@ let lightbulb = function lightbulb () {
 
                 let warmUpTL = new TimelineMax ();
 
+                warmUpTL.set(
+                    bulbInnerLightSVG,
+                    { autoAlpha: 0, scale: 1, fill: COLORS.bulb.chargingOrange, immediateRender: false },
+                    //LABELS.wireChargeStart
+                    0
+                );
+
                 warmUpTL.to(
                     energyWireUnchargedSVGs,
                     DURATIONS.initialWireCharging,
                     { stroke: COLORS.wire.chargingOrange, ease: EASINGS.initialWireCharging },
-                    LABELS.wireChargeStart
-                );
-
-                warmUpTL.set(
-                    bulbInnerLightSVG,
-                    { autoAlpha: 0, scale: 1, fill: COLORS.bulb.chargingOrange, immediateRender: false },
-                    LABELS.wireChargeStart
+                    //LABELS.wireChargeStart
+                    0
                 );
 
                 // warmUpTL.to(
@@ -224,15 +238,36 @@ let lightbulb = function lightbulb () {
                 //     DURATIONS.initialWireCharging,
                 //     { fill: COLORS.bulb.chargingOrange, ease: EASINGS.bulbWarmup }
                 // );
-
-                unDimBulb(
-                    warmUpTL,
+                warmUpTL.to(
                     bulbInnerLightSVG,
-                    1,
                     DURATIONS.initialWireCharging,
-                    EASINGS.linear,
-                    LABELS.wireChargeStart
+                    { autoAlpha: 1, ease: EASINGS.linear },
+                    //LABELS.wireChargeStart
+                    0
                 );
+
+                // expand the glow filter in sync with the glow being intensified
+                warmUpTL.to(
+                    bulbGlowFilterBlurNode,
+                    DURATIONS.initialWireCharging,
+                    {
+                        attr: {
+                            stdDeviation: (MAX_GLOW_FILTER_SD).toString()
+                        },
+                        ease: EASINGS.linear
+                    },
+                    0
+                );
+
+                //
+                // unDimBulb(
+                //     warmUpTL,
+                //     bulbInnerLightSVG,
+                //     1,
+                //     DURATIONS.initialWireCharging,
+                //     EASINGS.linear,
+                //     LABELS.wireChargeStart
+                // );
 
                 return warmUpTL;
             },
@@ -249,13 +284,13 @@ let lightbulb = function lightbulb () {
 
                 let
                     maxWireTurbulence = DIMENSIONS.wireFilterTurbulence.endFrequency,
-                    tweenWireBackToNormal = function tweenWireBackToNormal (tl) {
-                        tl.to(
-                            energyWireFilterTurbulence,
-                            2.7,
-                            { attr: { baseFrequency: '0' }}
-                        );
-                    },
+                    // tweenWireBackToNormal = function tweenWireBackToNormal (tl) {
+                    //     tl.to(
+                    //         energyWireFilterTurbulence,
+                    //         2.7,
+                    //         { attr: { baseFrequency: '0' }}
+                    //     );
+                    // },
 
                     masterFlickerTL = new TimelineMax(),
                     masterTurbulenceTL = new TimelineMax(),
@@ -320,17 +355,36 @@ let lightbulb = function lightbulb () {
                                 repeatDelay: 0
                         });
 
-                        flickerBurstTL.set(bulbInnerLightSVG, { autoAlpha: 0, scale: 1, fill: color, immediateRender: false });
+                        flickerBurstTL.set(bulbInnerLightSVG, { autoAlpha: 0, scale: 1, fill: color, immediateRender: false }, 0);
 
-                        // handle fill and opacity changes as the bulb expands
-                        unDimBulb(
-                            flickerBurstTL,
+                        // // handle fill and opacity changes as the bulb expands
+                        // unDimBulb(
+                        //     flickerBurstTL,
+                        //     bulbInnerLightSVG,
+                        //     percentage / 100,
+                        //     DURATIONS.bulbFlicker,
+                        //     EASINGS.flickerInstance,
+                        //     0
+                        // );
+                        flickerBurstTL.to(
                             bulbInnerLightSVG,
-                            percentage / 100,
                             DURATIONS.bulbFlicker,
-                            EASINGS.flickerInstance,
+                            { autoAlpha: percentage / 100, ease: EASINGS.flickerInstance },
                             0
                         );
+
+                        flickerBurstTL.to(
+                            bulbGlowFilterBlurNode,
+                            DURATIONS.bulbFlicker,
+                            {
+                                attr: {
+                                    stdDeviation: (percentage / 100).toString() // TODO: The blur shouldn't be extending inward on the light!!!!!!
+                                },
+                                ease: EASINGS.flickerInstance
+                            },
+                            0
+                        );
+
 
                         return flickerBurstTL;
                     },
@@ -360,16 +414,16 @@ let lightbulb = function lightbulb () {
 
                 let
                     flickerSequence = [
-                        { numFlickers: 301, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2 },
-                        { numFlickers: 333, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 1.1 },
-                        { numFlickers: 356, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.8 },
-                        { numFlickers: 332, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.12 },
-                        { numFlickers: 390, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 1.1 },
-                        { numFlickers: 300, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.45 },
-                        { numFlickers: 334, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.31 },
-                        { numFlickers: 334, intensityPct: 90, color: COLORS.bulb.chargingYellow, delay: 0.1 },
-                        { numFlickers: 334, intensityPct: 95, color: COLORS.bulb.chargingYellow, delay: 0.05 },
-                        { numFlickers: 334, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, turbulenceDurationMultiplier: 2},
+                        { numFlickers: 51, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2 },
+                        { numFlickers: 33, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 1.1 },
+                        { numFlickers: 56, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.8 },
+                        { numFlickers: 32, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.12 },
+                        { numFlickers: 90, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 1.1 },
+                        { numFlickers: 100, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.45 },
+                        { numFlickers: 34, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.31 },
+                        { numFlickers: 34, intensityPct: 90, color: COLORS.bulb.chargingYellow, delay: 0.1 },
+                        { numFlickers: 34, intensityPct: 95, color: COLORS.bulb.chargingYellow, delay: 0.05 },
+                        { numFlickers: 34, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, turbulenceDurationMultiplier: 2},
                     ];
 
 

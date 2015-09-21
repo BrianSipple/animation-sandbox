@@ -20,9 +20,9 @@
           <feGaussianBlur class="blur-node" in="SourceGraphic" stdDeviation="70"></feGaussianBlur>
         </filter>
 
-        <filter id="filter__thicken-and-twist">
+        <filter id="filter__perlin-electric-wobble">
           <!-- "dialate" makes the source thicker. "erode" would make it thinner -->
-          <feMorphology radius="3" operator="dilate"></feMorphology>
+          <feMorphology radius="10" operator="dilate"></feMorphology>
           <feTurbulence type="fractalNoise" baseFrequency="0.00017" numOctaves="3" result="warp"></feTurbulence>
           <feDisplacementMap xChannelSelector="R"
             yChannelSelector="G"
@@ -81,13 +81,13 @@
 
         <!-- Uncharged path is drawn first, as the charge path will varyingly cover it up -->
         <g id="EnergyWire--uncharged">
-          <path class="energy-wire-path energy-wire-path--uncharged" filter="url(#filter__thicken-and-twist)" d="M216.7 397.9l-8.1-24.5-4.7 16.9m-28-16.7l19.2 48.3 8.8-31.6m49 29.1l-13.3-45.8-10.5 31.6m-12.4-7.3l7.4 22.2 5-14.9m46.6 0l4.7 14.9 7-22.2m12.3-7.6l8.4 31.6 18.3-48.3"/>
-          <path class="energy-wire-path energy-wire-path--uncharged" filter="url(#filter__thicken-and-twist)" d="M275.7 405.2l-10.1-31.6-12.7 45.8m46.8-29.1l-4.5-16.9-7.8 24.5"/>
+          <path class="energy-wire-path energy-wire-path--uncharged" filter="url(#filter__perlin-electric-wobble)" d="M216.7 397.9l-8.1-24.5-4.7 16.9m-28-16.7l19.2 48.3 8.8-31.6m49 29.1l-13.3-45.8-10.5 31.6m-12.4-7.3l7.4 22.2 5-14.9m46.6 0l4.7 14.9 7-22.2m12.3-7.6l8.4 31.6 18.3-48.3"/>
+          <path class="energy-wire-path energy-wire-path--uncharged" filter="url(#filter__perlin-electric-wobble)" d="M275.7 405.2l-10.1-31.6-12.7 45.8m46.8-29.1l-4.5-16.9-7.8 24.5"/>
         </g>
 
         <g id="EnergyWire--charged">
-          <path id="EnergyWire--charged-left" class="energy-wire-path energy-wire-path--charged" filter="url(#filter__thicken-and-twist)" d="M175.9 373.6l19.2 48.3 13.5-48.5 15.5 46.7 15.5-46.5 13.3 45.8"/>
-          <path id="EnergyWire--charged-right" class="energy-wire-path energy-wire-path--charged" filter="url(#filter__thicken-and-twist)" d="M252.9 419.4l12.7-45.8 14.8 46.5 14.8-46.7 12.9 48.5 18.3-48.3"/>
+          <path id="EnergyWire--charged-left" class="energy-wire-path energy-wire-path--charged" filter="url(#filter__perlin-electric-wobble)" d="M175.9 373.6l19.2 48.3 13.5-48.5 15.5 46.7 15.5-46.5 13.3 45.8"/>
+          <path id="EnergyWire--charged-right" class="energy-wire-path energy-wire-path--charged" filter="url(#filter__perlin-electric-wobble)" d="M252.9 419.4l12.7-45.8 14.8 46.5 14.8-46.7 12.9 48.5 18.3-48.3"/>
         </g>
 
       </g>

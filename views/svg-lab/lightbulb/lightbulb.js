@@ -14,6 +14,7 @@ let lightbulb = function lightbulb () {
                 mainLightbulb: '#lightbulb',
                 bulbGlass: '#bulbGlass',
                 bulbInnerLight: '#bulbInnerLight',
+                bulbInnerGlowLayer: '#bulbInnerGlowLayer',
                 bulbGlowFilter: 'filter#surroundingBlur',
                 bulbGlowFilterBlurNode: '.blur-node',
                 wireTurbulenceFilter: 'filter#turbulence',
@@ -90,6 +91,7 @@ let lightbulb = function lightbulb () {
             bulbGlowFilterBlurNode,
             bulbGlassSVG,
             bulbInnerLightSVG,
+            bulbInnerGlowLayerSVG,
             energyWireUnchargedSVGs,
             energyWireChargedLeftSVG,
             energyWireChargedRightSVG,
@@ -113,35 +115,6 @@ let lightbulb = function lightbulb () {
             getUniqueLabel = () => {
                 return 'unique-label-' + currentUniqueLabelNum++;
             },
-
-            /**
-             * Helper to tweak the opacity of the bulb light. This function ensures
-             * that the glow intensity is in sync with the light intensity
-             */
-            // unDimBulb = function unDimBulb (tl, elem, intensityFactor, duration, easing, label = getUniqueLabel()) {
-            //
-            //     let
-            //         // tween the bulb opacity and fill color
-            //         bulbTween = TweenMax.to(
-            //             elem,
-            //             duration,
-            //             { autoAlpha: intensityFactor, ease: easing }
-            //         ),
-            //
-            //         // tween the STD of the glow filter
-            //         glowTween = TweenMax.to(
-            //             bulbGlowFilterBlurNode,
-            //             duration,
-            //             {
-            //                 attr: {
-            //                     stdDeviation: (MAX_GLOW_FILTER_SD * intensityFactor )
-            //                 },
-            //                 ease: easing
-            //             }
-            //         );
-            //
-            //     tl.add([glowTween, bulbTween], label);
-            // },
 
             setScene = function setScene () {
 
@@ -172,6 +145,7 @@ let lightbulb = function lightbulb () {
                 bulbGlowFilterBlurNode = bulbGlowFilter.querySelector(SELECTORS.bulbGlowFilterBlurNode);
                 bulbGlassSVG = mainLightbulbSVG.querySelector(SELECTORS.bulbGlass);
                 bulbInnerLightSVG = mainLightbulbSVG.querySelector(SELECTORS.bulbInnerLight);
+                bulbInnerGlowLayerSVG = mainLightbulbSVG.querySelector(SELECTORS.bulbInnerGlowLayer);
                 energyWireUnchargedSVGs = mainLightbulbSVG.querySelectorAll(SELECTORS.energyWireUncharged);
                 energyWireChargedLeftSVG = mainLightbulbSVG.querySelector(SELECTORS.energyWireChargedLeft);
                 energyWireChargedRightSVG = mainLightbulbSVG.querySelector(SELECTORS.energyWireChargedRight);
@@ -191,10 +165,13 @@ let lightbulb = function lightbulb () {
 
                 // Blur out, and set initial scaling and transform origin for the inner layers
                 sceneSetTL.set(
-                    bulbInnerLightSVG,
+                    [
+                        bulbInnerLightSVG,
+                        bulbInnerGlowLayerSVG
+                    ],
                     {
                         scale: 0,
-                        fill: COLORS.wire.chargingOrange,
+                        //fill: COLORS.wire.chargingOrange,
                         transformOrigin: '50% 50%',
                         autoAlpha: 0
                     }
@@ -219,9 +196,11 @@ let lightbulb = function lightbulb () {
                 let warmUpTL = new TimelineMax ();
 
                 warmUpTL.set(
-                    bulbInnerLightSVG,
+                    [
+                        bulbInnerLightSVG,
+                        bulbInnerGlowLayerSVG
+                    ],
                     { autoAlpha: 0, scale: 1, fill: COLORS.bulb.chargingOrange, immediateRender: false },
-                    //LABELS.wireChargeStart
                     0
                 );
 
@@ -229,20 +208,16 @@ let lightbulb = function lightbulb () {
                     energyWireUnchargedSVGs,
                     DURATIONS.initialWireCharging,
                     { stroke: COLORS.wire.chargingOrange, ease: EASINGS.initialWireCharging },
-                    //LABELS.wireChargeStart
                     0
                 );
 
-                // warmUpTL.to(
-                //     bulbInnerLightSVG,
-                //     DURATIONS.initialWireCharging,
-                //     { fill: COLORS.bulb.chargingOrange, ease: EASINGS.bulbWarmup }
-                // );
                 warmUpTL.to(
-                    bulbInnerLightSVG,
+                    [
+                        bulbInnerLightSVG,
+                        bulbInnerGlowLayerSVG
+                    ],
                     DURATIONS.initialWireCharging,
                     { autoAlpha: 1, ease: EASINGS.linear },
-                    //LABELS.wireChargeStart
                     0
                 );
 
@@ -258,16 +233,6 @@ let lightbulb = function lightbulb () {
                     },
                     0
                 );
-
-                //
-                // unDimBulb(
-                //     warmUpTL,
-                //     bulbInnerLightSVG,
-                //     1,
-                //     DURATIONS.initialWireCharging,
-                //     EASINGS.linear,
-                //     LABELS.wireChargeStart
-                // );
 
                 return warmUpTL;
             },
@@ -349,42 +314,58 @@ let lightbulb = function lightbulb () {
                         flickerDelay = 0.2
                     ) {
 
-                        let flickerBurstTL = new TimelineMax({
-                                repeat: numFlickers,
-                                delay: flickerDelay,
-                                repeatDelay: 0
-                        });
+                        let
+                            flickerBurstTL = new TimelineMax({
+                                delay: flickerDelay
+                            }),
 
-                        flickerBurstTL.set(bulbInnerLightSVG, { autoAlpha: 0, scale: 1, fill: color, immediateRender: false }, 0);
+                            makeFlickerTL = function makeFlickerTL(color) {
 
-                        // // handle fill and opacity changes as the bulb expands
-                        // unDimBulb(
-                        //     flickerBurstTL,
-                        //     bulbInnerLightSVG,
-                        //     percentage / 100,
-                        //     DURATIONS.bulbFlicker,
-                        //     EASINGS.flickerInstance,
-                        //     0
-                        // );
-                        flickerBurstTL.to(
-                            bulbInnerLightSVG,
-                            DURATIONS.bulbFlicker,
-                            { autoAlpha: percentage / 100, ease: EASINGS.flickerInstance },
-                            0
-                        );
+                                let flickerTL = new TimelineMax({
+                                    repeat: 1,
+                                    yoyo: true
+                                });
 
-                        flickerBurstTL.to(
-                            bulbGlowFilterBlurNode,
-                            DURATIONS.bulbFlicker,
-                            {
-                                attr: {
-                                    stdDeviation: (percentage / 100).toString() // TODO: The blur shouldn't be extending inward on the light!!!!!!
-                                },
-                                ease: EASINGS.flickerInstance
-                            },
-                            0
-                        );
+                                // prepare the light
+                                flickerTL.set(bulbInnerLightSVG, { autoAlpha: 0, scale: 1, fill: color, immediateRender: false }, 0);
 
+                                // // prepare the glow layer
+                                // flickerTL.set(bulbInnerGlowLayerSVG, { autoAlpha: 0, fill: color, immediateRender: false }, 0);
+                                // flickerTL.set(bulbGlowFilterBlurNode, { attr: { stdDeviation: '0' }, immediateRender: false }, 0);
+
+                                //flickerTL.set(bulbInnerGlowLayer, { autoAlpha: 1 }, 0);
+                                flickerTL.to(bulbInnerGlowLayer, DURATIONS.bulbFlicker, { autoAlpha: 1 }, 0);
+
+                                flickerTL.to(
+                                    bulbInnerLightSVG,
+                                    DURATIONS.bulbFlicker,
+                                    { autoAlpha: 1, ease: EASINGS.flickerInstance },
+                                    0
+                                );
+
+                                flickerTL.to(
+                                    bulbGlowFilterBlurNode,
+                                    DURATIONS.bulbFlicker,
+                                    {
+                                        attr: {
+                                            stdDeviation: (MAX_GLOW_FILTER_SD).toString() // TODO: The blur shouldn't be extending inward on the light!!!!!!
+                                        },
+                                        ease: EASINGS.flickerInstance
+                                    },
+                                    0
+                                );
+
+                                return flickerTL;
+                            };
+
+                        // prepare the glow layer
+                        flickerBurstTL.set(bulbInnerGlowLayerSVG, { autoAlpha: 0, fill: color, immediateRender: false }, 0);
+                        flickerBurstTL.set(bulbGlowFilterBlurNode, { attr: { stdDeviation: '0' }, immediateRender: false }, 0);
+
+                        // make a timeline for each flicker and add it to the "burst" TL
+                        for (let i = 0; i < numFlickers; i++) {
+                            flickerBurstTL.add(makeFlickerTL(color));
+                        }
 
                         return flickerBurstTL;
                     },
@@ -415,7 +396,7 @@ let lightbulb = function lightbulb () {
                 let
                     flickerSequence = [
                         { numFlickers: 51, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2 },
-                        { numFlickers: 33, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 1.1 },
+                        { numFlickers: 33, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.4 },
                         { numFlickers: 56, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.8 },
                         { numFlickers: 32, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.12 },
                         { numFlickers: 90, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 1.1 },

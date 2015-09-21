@@ -17,7 +17,7 @@
       <defs>
 
         <filter id="surroundingBlur" x="-200%" y="-200%" width="400%" height="400%">
-          <feGaussianBlur class="blur-node" in="SourceGraphic" stdDeviation="70"></feGaussianBlur>
+          <feGaussianBlur class="blur-node" in="FillPaint" stdDeviation="0"></feGaussianBlur>
         </filter>
 
         <filter id="filter__perlin-electric-wobble">
@@ -50,17 +50,19 @@
 
       <g id="lightbulb">
 
-        <path id="bulbInnerLight"
-              class="st0"
+        <!--
+             Underlying layer that will use our "surrounding blur" filter.
+             The light layer will cover this up over the coordinates upon which it lies,
+             but the part of the blur that projects outward from this layer will
+             create a glowing effect
+         -->
+        <path id="bulbInnerGlowLayer"
               filter="url(#surroundingBlur)"
               d="M355 396.8c0-57.9-46.9-104.8-104.8-104.8s-104.9 46.9-104.9 104.8c0 22.1 6.8 42.6 18.5 59.5l86.3 146.1 86.3-146.1c11.7-16.9 18.6-37.4 18.6-59.5z"/>
 
-        <!--
-        <path id="bulbInnerLit"
-              class="st1"
-              filter="url(#surroundingBlur)"
+        <path id="bulbInnerLight"
               d="M355 396.8c0-57.9-46.9-104.8-104.8-104.8s-104.9 46.9-104.9 104.8c0 22.1 6.8 42.6 18.5 59.5l86.3 146.1 86.3-146.1c11.7-16.9 18.6-37.4 18.6-59.5z"/>
-        -->
+
 
         <path id="bulbGlass" class="st2" d="M355 396.8c0-57.9-46.9-104.8-104.8-104.8s-104.9 46.9-104.9 104.8c0 22.1 6.8 42.6 18.5 59.5l86.3 146.1 86.3-146.1c11.7-16.9 18.6-37.4 18.6-59.5z"/>
         <path id="lightBase" class="st3" d="M200 518l-.9 83.2 51 77.2 51-80.2V518z"/>

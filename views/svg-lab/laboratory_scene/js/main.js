@@ -47,8 +47,8 @@ var app = (function (exports) {
         coinToss: 6.0,
         lightFlip: 0.1,
         machineShakeIteration: 0.06,
-        tubeFill: 1.8
-
+        maxTubeFill: 1.8,
+        maxFlaskFill: 0.5
     },
 
     EASINGS = {
@@ -83,6 +83,11 @@ var app = (function (exports) {
             ]
         },
         tubeLiquid: '#F8876E'
+    },
+
+    DIMENSIONS = {
+        maxLiquidMaskLength: 0,
+        maxTubeLength: 0
     },
 
     LABELS = {
@@ -140,10 +145,15 @@ var app = (function (exports) {
     mainStatusLightSVG = mainSVG.querySelector(SELECTORS.mainStatusLight),
     printerPaperSVG = mainSVG.querySelector(SELECTORS.printerPaper),
 
-    flaskLiquidMaskDefs = {
-        flask1: mainSVG.querySelector('#liquid-clip--liquid-1')
+    flaskLiquidMaskDefRects = {
+        flask1: mainSVG.querySelector('#liquid-clip--liquid-1 rect'),
+        flask2: mainSVG.querySelector('#liquid-clip--liquid-2 rect'),
+        flask3: mainSVG.querySelector('#liquid-clip--liquid-3 rect'),
+        flask4: mainSVG.querySelector('#liquid-clip--liquid-4 rect'),
+        primaryFlask: mainSVG.querySelector('#liquid-clip--liquid-5 rect'),
+        flask6: mainSVG.querySelector('#liquid-clip--liquid-6 rect'),
+        flask7: mainSVG.querySelector('#liquid-clip--liquid-7 rect')
     },
-
 
     clearTL,
     introTL,
@@ -158,20 +168,25 @@ var app = (function (exports) {
     function removeLiquidsFromFlasks(tl) {
 
         var
-            liquidMaskDef,
+            liquidMaskRect,
+            liquidMaskLength,
             yPosToSet;
 
-        // for (var i = 0; i < liquidMaskDefs.length; i++) {
-        //     liquidMaskDef = liquidMaskDefs.item(i);
-        //     yPosToSet = Number(liquidMaskDef.getAttribute('y')) + Number(liquidMaskDef.getAttribute('height'));
-        //     tl.set(liquidMaskDef, {attr: { y: yPosToSet } });
-        // }
+        for (var rectKey in flaskLiquidMaskDefRects) {
+            if (flaskLiquidMaskDefRects.hasOwnProperty(rectKey)) {
 
-        for (var flask of flaskLiquidMaskDefs) {
-            if (flaskLiquidMaskDefs.hasOwnProperty(flask)) {
-                liquidMaskDef = flaskLiquidMaskDefs[flask];
-                yPosToSet = Number(liquidMaskDef.getAttribute('y')) + Number(liquidMaskDef.getAttribute('height'));
-                tl.set(liquidMaskDef, {attr: { y: yPosToSet } });
+                liquidMaskRect = flaskLiquidMaskDefRects[rectKey];
+
+                liquidMaskLength = Number(liquidMaskRect.getAttribute('height'));
+
+                // cache the max length
+                if (liquidMaskLength > DIMENSIONS.maxLiquidMaskLength) {
+                    DIMENSIONS.maxLiquidMaskLength = liquidMaskLength;
+                }
+
+                // proceed to setting the inital mask position
+                yPosToSet = Number(liquidMaskRect.getAttribute('y')) + liquidMaskLength;
+                tl.set(liquidMaskRect, {attr: { y: yPosToSet } });
             }
         }
     }
@@ -569,54 +584,76 @@ var app = (function (exports) {
         ],
 
         flasksMasksToFillOnIter = {
-            0: flaskLiquidMaskDefs.flask1,
-            1: flaskLiquidMaskDefs.flask2,
-            2: flaskLiquidMaskDefs.flask3,
-            3: flaskLiquidMaskDefs.flask4,
-            5: flaskLiquidMaskDefs.flask5,
-            6: flaskLiquidMaskDefs.flask6,
-            7: flaskLiquidMaskDefs.flask7,
-            8: flaskLiquidMaskDefs.primaryFlask,
+            0: flaskLiquidMaskDefRects.flask1,
+            1: flaskLiquidMaskDefRects.flask2,
+            2: flaskLiquidMaskDefRects.flask3,
+            4: flaskLiquidMaskDefRects.flask4,
+            6: flaskLiquidMaskDefRects.flask6,
+            7: flaskLiquidMaskDefRects.flask7,
+            8: flaskLiquidMaskDefRects.primaryFlask
         },
 
         fillIterationLabel,
 
 
-        fillFlasksWhenReached = function fillFlasksWhenReached (flaskMaskDef) {
-            debugger;
-            var yDistToSlideUp = flaskMaskDef.getAttribute('y') + flaskMaskDef.getAttribute('height');
 
-            fillTubesTL.to(
-                flaskMaskDef,
-                DURATIONS.fillFlask,
-                { attr: { y: '-=' yDistToSlideUp }, ease: EASINGS.tubeFill }
-            );
-        },
+        createTubeDrawTL = function createTubeDrawTL(tubeSVG, fillLength, fillDuration, flaskMaskDef) {
 
-        drawTube = function drawTube(tubeSVG, duration, liquidLength, flaskMaskDef) {
-            TweenMax.set(
+            var
+                tubeDrawTL = new TimelineMax(),
+
+                fillFlasksWhenReached = function fillFlasksWhenReached () {
+                    var yDistToSlideUp = Number(flaskMaskDef.getAttribute('height'));
+
+                    tubeDrawTL.to(
+                        flaskMaskDef,
+                        DURATIONS.maxFlaskFill * (yDistToSlideUp / DIMENSIONS.maxLiquidMaskLength),
+                        { attr: { y: '-=' + yDistToSlideUp }, ease: EASINGS.tubeFill }
+                    );
+                };
+
+
+            tubeDrawTL.set(
                 tubeSVG,
-                { strokeDasharray: liquidLength, strokeDashoffset: liquidLength }
+                {
+                    strokeDasharray: fillLength,
+                    strokeDashoffset: fillLength,
+                    immediateRender: false
+                },
+                0
             );
 
-            fillTubesTL.set(
-                liquidSVGs,
-                { stroke: COLORS.tubeLiquid }
-            );
-            fillTubesTL.to(
+            tubeDrawTL.set(
                 tubeSVG,
-                duration,
+                { stroke: COLORS.tubeLiquid, immediateRender: false },
+                0
+            );
+
+            tubeDrawTL.to(
+                tubeSVG,
+                fillDuration,
                 {
                     strokeDashoffset: 0,
-                    ease: EASINGS.tubeFill,
-                    onComplete: function () {
-                        if (flaskMaskDef) {
-                            fillFlasksWhenReached(flaskMaskDef);
-                        }
-                    }
+                    ease: EASINGS.tubeFill
                 }
             );
+
+            if (flaskMaskDef) {
+                fillFlasksWhenReached();
+            }
+
+            return tubeDrawTL;
         };
+
+        // Cache lengths for each SVG -- and while we're at it, compute the max
+        orderedLiquidSVGs.forEach(function (liquidSVG) {
+
+            liquidSVG.computedLength = liquidSVG.getTotalLength();
+
+            if (liquidSVG.computedLength > DIMENSIONS.maxTubeLength) {
+                DIMENSIONS.maxTubeLength = liquidSVG.computedLength;
+            }
+        })
 
         orderedLiquidSVGs.forEach(function (liquidSVG, idx) {
 
@@ -628,13 +665,21 @@ var app = (function (exports) {
                 flaskLiquidMaskDef = flasksMasksToFillOnIter[idx];
             }
 
-            drawTube(
-                liquidSVG,
-                DURATIONS.tubeFill,
-                liquidSVG.getTotalLength()
-                flaskLiquidMaskDef
-            );
+            // Use a "size factor" to compute the proper duration for the
+            // fill animation
+            var
+                fillLength = liquidSVG.computedLength,
+                sizeFactor = (fillLength / DIMENSIONS.maxTubeLength),
+                fillDuration = DURATIONS.maxTubeFill * sizeFactor;
 
+            fillTubesTL.add(
+                createTubeDrawTL(
+                    liquidSVG,
+                    fillLength,
+                    fillDuration,
+                    flaskLiquidMaskDef
+                )
+            );
 
             fillTubesTL.addLabel(fillIterationLabel);
 

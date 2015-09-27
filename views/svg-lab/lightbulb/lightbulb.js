@@ -50,7 +50,7 @@ let lightbulb = function lightbulb () {
 
                 // this should be at least the monitor
                 // frame rate that we're targeting (i.e. 60 fps ==> 0.0167ms)
-                bulbFlicker: .07
+                bulbFlicker: .035
             },
 
             WAVE_FUNCTIONS = {
@@ -325,25 +325,6 @@ let lightbulb = function lightbulb () {
                                     'lightsOn'
                                 );
 
-                                flickerTL.to(
-                                    bulbInnerGlowLayerSVG,
-                                    DURATIONS.bulbFlicker,
-                                    { autoAlpha: 1, fill: color, ease: EASINGS.flickerInstance },
-                                    'lightsOn'
-                                );
-
-                                flickerTL.to(
-                                    bulbGlowFilterBlurNode,
-                                    DURATIONS.bulbFlicker,
-                                    {
-                                        attr: {
-                                            stdDeviation: (MAX_GLOW_FILTER_SD).toString()
-                                        },
-                                        ease: EASINGS.flickerInstance
-                                    },
-                                    'lightsOn'
-                                );
-
                                 flickerTL.addLabel('lightsOff');
 
                                 flickerTL.to(
@@ -353,26 +334,58 @@ let lightbulb = function lightbulb () {
                                     'lightsOff'
                                 );
 
-                                flickerTL.to(
-                                    bulbInnerGlowLayerSVG,
-                                    DURATIONS.bulbFlicker,
-                                    { autoAlpha: 0, fill: color, ease: EASINGS.flickerInstance },
-                                    'lightsOff'
-                                );
 
-                                flickerTL.to(
-                                    bulbGlowFilterBlurNode,
-                                    DURATIONS.bulbFlicker,
-                                    {
-                                        attr: {
-                                            stdDeviation: '0'
-                                        },
-                                        ease: EASINGS.flickerInstance
-                                    },
-                                    'lightsOff'
-                                );
                                 return flickerTL;
                             };
+
+                            // makeGlowTL = function makeGlowTL (color) {
+                            //
+                            //     let glowTL = new TimelineMax();
+                            //
+                            //     glowTL.addLabel('lightsOn');
+                            //
+                            //     glowTL.to(
+                            //         bulbInnerGlowLayerSVG,
+                            //         DURATIONS.bulbFlicker,
+                            //         { autoAlpha: 1, fill: color, ease: EASINGS.flickerInstance },
+                            //         'lightsOn'
+                            //     );
+                            //
+                            //     glowTL.to(
+                            //         bulbGlowFilterBlurNode,
+                            //         DURATIONS.bulbFlicker,
+                            //         {
+                            //             attr: {
+                            //                 stdDeviation: (MAX_GLOW_FILTER_SD).toString()
+                            //             },
+                            //             ease: EASINGS.flickerInstance
+                            //         },
+                            //         'lightsOn'
+                            //     );
+                            //
+                            //     glowTL.addLabel('lightsOff');
+                            //
+                            //     glowTL.to(
+                            //         bulbInnerGlowLayerSVG,
+                            //         DURATIONS.bulbFlicker,
+                            //         { autoAlpha: 0, ease: EASINGS.flickerInstance },
+                            //         'lightsOff'
+                            //     );
+                            //
+                            //     glowTL.to(
+                            //         bulbGlowFilterBlurNode,
+                            //         DURATIONS.bulbFlicker,
+                            //         {
+                            //             attr: {
+                            //                 stdDeviation: '0'
+                            //             },
+                            //             ease: EASINGS.flickerInstance
+                            //         },
+                            //         'lightsOff'
+                            //     );
+                            //
+                            //     return glowTL;
+                            // };
 
                         flickerBurstTL.set([
                                 bulbInnerLightSVG,
@@ -381,19 +394,28 @@ let lightbulb = function lightbulb () {
                             0
                          );
 
-                         flickerBurstTL.set([
-                                 bulbInnerGlowLayerSVG
-                             ],
-                             { autoAlpha: 0, fill: 'none', immediateRender: false },
-                             0
-                          );
-
-                        flickerBurstTL.set(bulbGlowFilterBlurNode, { attr: { stdDeviation: '0' }, immediateRender: false }, 0);
+                        //  flickerBurstTL.set([
+                        //          bulbInnerGlowLayerSVG
+                        //      ],
+                        //      { autoAlpha: 1, fill: color, immediateRender: false },
+                        //      0
+                        //   );
+                        //
+                        // flickerBurstTL.set(
+                        //     bulbGlowFilterBlurNode,
+                        //     { attr: { stdDeviation: (MAX_GLOW_FILTER_SD).toString() }, immediateRender: false },
+                        //     0
+                        // );
 
 
                         // make a timeline for each flicker and add it to the "burst" TL
                         for (let i = 0; i < numFlickers; i++) {
-                            flickerBurstTL.add(makeFlickerTL(color));
+                            flickerBurstTL.add(
+                                [
+                                    makeFlickerTL(color)
+                                    //makeGlowTL(color)
+                                ]
+                            );
                         }
 
                         return flickerBurstTL;
@@ -424,22 +446,25 @@ let lightbulb = function lightbulb () {
 
                 let
                     flickerSequence = [
-                        { numFlickers: 51, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2 },
-                        { numFlickers: 33, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.4 },
-                        { numFlickers: 56, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.8 },
-                        { numFlickers: 32, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.12 },
-                        { numFlickers: 90, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 1.1 },
-                        { numFlickers: 100, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.45 },
-                        { numFlickers: 34, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.31 },
-                        { numFlickers: 34, intensityPct: 90, color: COLORS.bulb.chargingYellow, delay: 0.1 },
-                        { numFlickers: 34, intensityPct: 95, color: COLORS.bulb.chargingYellow, delay: 0.05 },
-                        { numFlickers: 34, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, turbulenceDurationMultiplier: 2},
+                        { numFlickers: 11, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2 },
+                        { numFlickers: 10, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.67 },
+                        { numFlickers: 16, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.55 },
+                        { numFlickers: 9, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.1 },
+                        { numFlickers: 20, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.9 },
+                        { numFlickers: 10, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.45 },
+                        { numFlickers: 9, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.31 },
+                        { numFlickers: 9, intensityPct: 90, color: COLORS.bulb.chargingYellow, delay: 0.1 },
+                        { numFlickers: 13, intensityPct: 95, color: COLORS.bulb.chargingYellow, delay: 0.05 },
+                        { numFlickers: 17, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, turbulenceDurationMultiplier: 2},
                     ];
 
 
                 // Provide master TLs with labels so that we can reference
                 // the starting point within the loop
                 masterTurbulenceTL.addLabel(LABELS.turbulenceStart);
+                masterTurbulenceTL.set(
+                    bulbInnerGlowLayerSVG, { autoAlpha: 0, immediateRender: false  }
+                );
 
                 let
                     totalSeqDuration,

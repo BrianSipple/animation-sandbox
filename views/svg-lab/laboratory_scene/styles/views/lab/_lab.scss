@@ -104,7 +104,7 @@
     }
 
     #TitleText {
-        font-size: 2.7rem;
+        font-size: 5.7rem;
         fill: $color__primary--alt-hue-dark;
     }
 
@@ -126,7 +126,7 @@
     }
 
 
-    #BulbIdeaLight {
+    .lightbulb {
         &.is-flickering--yellow {
             animation: FlickerBulbYellow;
             animation-duration: 0.8s;
@@ -138,6 +138,9 @@
             animation-iteration-count: 3;
             animation-fill-mode: forwards;
 
+        }
+        .is-active--yellow {
+            fill: $idea-bulb__flicker-color--yellow-5;
         }
     }
 

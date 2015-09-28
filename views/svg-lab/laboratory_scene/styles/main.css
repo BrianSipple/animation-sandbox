@@ -1332,7 +1332,7 @@ h1, h2, h3, h4 {
   white-space: nowrap; }
 
 .lab #TitleText {
-  font-size: 2.7rem;
+  font-size: 5.7rem;
   fill: #2e4d66; }
 
 .lab #lab-svg {
@@ -1350,13 +1350,16 @@ h1, h2, h3, h4 {
   visibility: hidden;
   opacity: 0; }
 
-.lab #BulbIdeaLight.is-flickering--yellow {
+.lab .lightbulb.is-flickering--yellow {
   animation: FlickerBulbYellow;
   animation-duration: 0.8s;
   animation-iteration-count: 3; }
 
-.lab #BulbIdeaLight.is-flickering--green {
+.lab .lightbulb.is-flickering--green {
   animation: FlickerBulbGreen;
   animation-duration: 0.8s;
   animation-iteration-count: 3;
   animation-fill-mode: forwards; }
+
+.lab .lightbulb .is-active--yellow {
+  fill: #fdf0bf; }

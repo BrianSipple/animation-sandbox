@@ -35,9 +35,9 @@ let lightbulb = function lightbulb () {
             },
 
             LABELS = {
-                phaseWireIsCharging: 'phase__wireIsCharging',
-                phaseFlickeringToFullLight: 'phase__flickeringToFullLight',
-                phaseBulbOnAndFlickering: 'phase__bulbOnAndFlickering',
+                phaseBulbWarmingUp: 'phase__bulbWarmingUp',
+                phaseBulbFlickeringToFullCharge: 'phase__BulbFlickeringToFullCharge',
+                phaseBulbFlickeringAtRandom: 'phase__BulbFlickeringAtRandom',
 
                 bulbFlickeringStart: 'bulbFlickeringStart',
 
@@ -114,6 +114,64 @@ let lightbulb = function lightbulb () {
             currentUniqueLabelNum = 1,
             getUniqueLabel = () => {
                 return 'unique-label-' + currentUniqueLabelNum++;
+            },
+
+
+            /**
+             * Makes a timelime that coordinates a flickering of the bulb
+             */
+            makeFlickerBurst = function makeFlickerBurst (
+                numFlickers,
+                color,
+                flickerDelay = 0.2
+            ) {
+
+                let
+                    flickerBurstTL = new TimelineMax({
+                        delay: flickerDelay,
+                        onComplete: function () {console.log('burst');}
+                    }),
+
+                    makeFlickerTL = function makeFlickerTL(color) {
+
+                        let flickerTL = new TimelineMax();
+
+                        flickerTL.addLabel('lightsOn');
+
+                        flickerTL.to(
+                            bulbInnerLightSVG,
+                            DURATIONS.bulbFlicker,
+                            { autoAlpha: 1, ease: EASINGS.flickerInstance },
+                            'lightsOn'
+                        );
+
+                        flickerTL.addLabel('lightsOff');
+
+                        flickerTL.to(
+                            bulbInnerLightSVG,
+                            DURATIONS.bulbFlicker,
+                            { autoAlpha: 0, ease: EASINGS.flickerInstance },
+                            'lightsOff'
+                        );
+
+
+                        return flickerTL;
+                    };
+
+
+                flickerBurstTL.set([
+                        bulbInnerLightSVG,
+                    ],
+                    { autoAlpha: 0, fill: color, immediateRender: false },
+                    0
+                 );
+
+                // make a timeline for each flicker and add it to the "burst" TL
+                for (let i = 0; i < numFlickers; i++) {
+                    flickerBurstTL.add(makeFlickerTL(color));
+                }
+
+                return flickerBurstTL;
             },
 
             setScene = function setScene () {
@@ -237,7 +295,6 @@ let lightbulb = function lightbulb () {
                 return warmUpTL;
             },
 
-
             /**
              * The wire now has enough charge to begin having its
              * "fully-charged" color flicker.
@@ -260,16 +317,11 @@ let lightbulb = function lightbulb () {
                         turbulenceDuration,
                         delay
                     ) {
-                        console.log(`Tweenming frequency to ${turbulenceFrequency}`);
-                        console.log(`Tweening with duration of ${turbulenceDuration}`);
-                        // let turbulenceTL = new TimelineMax({
-                        //     delay: delay,
-                        //     repeatDelay: 0,
-                        //     repeat: 1,
-                        //     yoyo: true
-                        // });
+
                         let
-                            turbulenceTL = new TimelineMax(),
+                            turbulenceTL = new TimelineMax({
+                                delay: delay
+                            }),
 
                             zapFactor = 0.125,
                             zapDuration = turbulenceDuration * zapFactor,
@@ -297,130 +349,6 @@ let lightbulb = function lightbulb () {
                         return turbulenceTL;
                     },
 
-                    /**
-                     * Makes a timelime that coordinates a flickering of the bulb
-                     */
-                    makeFlickerBurst = function makeFlickerBurst (
-                        numFlickers,
-                        percentage,
-                        color,
-                        flickerDelay = 0.2
-                    ) {
-
-                        let
-                            flickerBurstTL = new TimelineMax({
-                                delay: flickerDelay
-                            }),
-
-                            makeFlickerTL = function makeFlickerTL(color) {
-
-                                let flickerTL = new TimelineMax();
-
-                                flickerTL.addLabel('lightsOn');
-
-                                flickerTL.to(
-                                    bulbInnerLightSVG,
-                                    DURATIONS.bulbFlicker,
-                                    { autoAlpha: 1, ease: EASINGS.flickerInstance },
-                                    'lightsOn'
-                                );
-
-                                flickerTL.addLabel('lightsOff');
-
-                                flickerTL.to(
-                                    bulbInnerLightSVG,
-                                    DURATIONS.bulbFlicker,
-                                    { autoAlpha: 0, ease: EASINGS.flickerInstance },
-                                    'lightsOff'
-                                );
-
-
-                                return flickerTL;
-                            };
-
-                            // makeGlowTL = function makeGlowTL (color) {
-                            //
-                            //     let glowTL = new TimelineMax();
-                            //
-                            //     glowTL.addLabel('lightsOn');
-                            //
-                            //     glowTL.to(
-                            //         bulbInnerGlowLayerSVG,
-                            //         DURATIONS.bulbFlicker,
-                            //         { autoAlpha: 1, fill: color, ease: EASINGS.flickerInstance },
-                            //         'lightsOn'
-                            //     );
-                            //
-                            //     glowTL.to(
-                            //         bulbGlowFilterBlurNode,
-                            //         DURATIONS.bulbFlicker,
-                            //         {
-                            //             attr: {
-                            //                 stdDeviation: (MAX_GLOW_FILTER_SD).toString()
-                            //             },
-                            //             ease: EASINGS.flickerInstance
-                            //         },
-                            //         'lightsOn'
-                            //     );
-                            //
-                            //     glowTL.addLabel('lightsOff');
-                            //
-                            //     glowTL.to(
-                            //         bulbInnerGlowLayerSVG,
-                            //         DURATIONS.bulbFlicker,
-                            //         { autoAlpha: 0, ease: EASINGS.flickerInstance },
-                            //         'lightsOff'
-                            //     );
-                            //
-                            //     glowTL.to(
-                            //         bulbGlowFilterBlurNode,
-                            //         DURATIONS.bulbFlicker,
-                            //         {
-                            //             attr: {
-                            //                 stdDeviation: '0'
-                            //             },
-                            //             ease: EASINGS.flickerInstance
-                            //         },
-                            //         'lightsOff'
-                            //     );
-                            //
-                            //     return glowTL;
-                            // };
-
-                        flickerBurstTL.set([
-                                bulbInnerLightSVG,
-                            ],
-                            { autoAlpha: 0, fill: color, immediateRender: false },
-                            0
-                         );
-
-                        //  flickerBurstTL.set([
-                        //          bulbInnerGlowLayerSVG
-                        //      ],
-                        //      { autoAlpha: 1, fill: color, immediateRender: false },
-                        //      0
-                        //   );
-                        //
-                        // flickerBurstTL.set(
-                        //     bulbGlowFilterBlurNode,
-                        //     { attr: { stdDeviation: (MAX_GLOW_FILTER_SD).toString() }, immediateRender: false },
-                        //     0
-                        // );
-
-
-                        // make a timeline for each flicker and add it to the "burst" TL
-                        for (let i = 0; i < numFlickers; i++) {
-                            flickerBurstTL.add(
-                                [
-                                    makeFlickerTL(color)
-                                    //makeGlowTL(color)
-                                ]
-                            );
-                        }
-
-                        return flickerBurstTL;
-                    },
-
                     makeWiresCharge = function makeWiresCharge (duration, percentage, delay) {
 
                         let wireChargeTL = new TimelineMax({
@@ -446,57 +374,49 @@ let lightbulb = function lightbulb () {
 
                 let
                     flickerSequence = [
-                        { numFlickers: 11, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2 },
-                        { numFlickers: 10, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.67 },
-                        { numFlickers: 16, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.55 },
-                        { numFlickers: 9, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.1 },
-                        { numFlickers: 20, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.9 },
-                        { numFlickers: 10, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.45 },
-                        { numFlickers: 9, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.31 },
-                        { numFlickers: 9, intensityPct: 90, color: COLORS.bulb.chargingYellow, delay: 0.1 },
-                        { numFlickers: 13, intensityPct: 95, color: COLORS.bulb.chargingYellow, delay: 0.05 },
-                        { numFlickers: 17, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, turbulenceDurationMultiplier: 2},
+                        { numFlickers: 11, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2, label: 'flicker1' },
+                        { numFlickers: 10, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.67, label: 'flicker2' },
+                        { numFlickers: 16, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.55, label: 'flicker3' },
+                        { numFlickers: 9, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.1, label: 'flicker4' },
+                        { numFlickers: 20, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.9, label: 'flicker5' },
+                        { numFlickers: 10, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.45, label: 'flicker6' },
+                        { numFlickers: 9, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.31, label: 'flicker7' },
+                        { numFlickers: 9, intensityPct: 90, color: COLORS.bulb.chargingYellow, delay: 0.1, label: 'flicker8' },
+                        { numFlickers: 13, intensityPct: 95, color: COLORS.bulb.chargingYellow, delay: 0.05, label: 'flicker9' },
+                        { numFlickers: 17, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, label: 'flicker10' }
                     ];
 
 
                 // Provide master TLs with labels so that we can reference
                 // the starting point within the loop
-                masterTurbulenceTL.addLabel(LABELS.turbulenceStart);
-                masterTurbulenceTL.set(
+                //masterTurbulenceTL.addLabel(LABELS.turbulenceStart);
+                masterFlickerTL.set(
                     bulbInnerGlowLayerSVG, { autoAlpha: 0, immediateRender: false  }
                 );
 
                 let
-                    totalSeqDuration,
+                    flickerBurstDuration,
                     turbulenceDuration,
                     flickerBurstTL,
                     wireChargeTL,
-                    wireTurbulenceTL,
-                    currentSeqIdx = 0,
-                    turbulenceStartPosition;
+                    wireTurbulenceTL;
 
                 for (let seq of flickerSequence) {
 
-                    totalSeqDuration = seq.numFlickers * DURATIONS.bulbFlicker;
+                    flickerBurstDuration = seq.numFlickers * DURATIONS.bulbFlicker;
 
-                    // if (seq.turbulenceDurationMultiplier) {
-                    //     turbulenceDuration = seq.turbulenceDurationMultiplier * (totalSeqDuration * 3);
-                    //
-                    // } else {
-                    //     turbulenceDuration = totalSeqDuration * 3;
-                    // }
-
-                    turbulenceDuration = totalSeqDuration * 10;
+                    // treat turbulence as a more prolonged effect of
+                    // of each flicker burst
+                    turbulenceDuration = flickerBurstDuration * 5;
 
                     flickerBurstTL = makeFlickerBurst(
                         seq.numFlickers,
-                        seq.intensityPct,
                         seq.color,
                         seq.delay
                     );
 
                     wireChargeTL = makeWiresCharge(
-                        totalSeqDuration,
+                        flickerBurstDuration,
                         seq.intensityPct,
                         seq.delay
                     );
@@ -507,32 +427,42 @@ let lightbulb = function lightbulb () {
                         seq.delay
                     );
 
-                    masterFlickerTL.add(flickerBurstTL);
-                    masterWireChargeTL.add(wireChargeTL);
+                    masterFlickerTL.addLabel(seq.label);
+                    masterFlickerTL.add([flickerBurstTL, wireChargeTL, wireTurbulenceTL], seq.label );
 
-                    debugger;
-                    // Position each turbulence burst so that, even though the
-                    // physics of its motoin is independent of the physics for the light flickering,
-                    // its still synchronized with WHEN the flicker is instigated
-                    turbulenceStartPosition =
-                        LABELS.turbulenceStart + '+=' + (currentSeqIdx * totalSeqDuration);
-
-                    console.log(`TurbulenceDuration: ${turbulenceDuration}`);
-                    console.log(`Turbulence Start Position: ${turbulenceStartPosition}`);
-                    console.log(`Total Seq Duration: ${totalSeqDuration}`);
-
-                    //masterTurbulenceTL.add(wireTurbulenceTL, (currentSeqIdx * totalSeqDuration));
-                    masterTurbulenceTL.add(wireTurbulenceTL, turbulenceStartPosition);
-
-                    currentSeqIdx++;
                 }
 
-                return [masterFlickerTL, masterWireChargeTL, masterTurbulenceTL];
+                return masterFlickerTL;
             },
 
 
             flickerBulbAtRandom = function flickerBulbAtRandom () {
-                let flickerTL = new TimelineMax({ repeat: -1 });
+
+                let
+                    makeRandomFlicker = function makeRandomFlicker (tl) {
+                        console.log('random flicker');
+                        debugger;
+                        let
+                            delay = 5 + (Math.random() * 3),
+                            numFlickers = 4 + (Math.floor(Math.random() * 20));
+
+                        tl.add(makeFlickerBurst(
+                            numFlickers,
+                            COLORS.bulb.litYellow,
+                            delay
+                        ));
+                    },
+
+                    randomFlickerTL = new TimelineMax({
+                        repeat: -1,
+                        onRepeat: makeRandomFlicker,
+                        onRepeatParams: ['{self}']
+                    });
+
+                    makeRandomFlicker(randomFlickerTL);
+
+                    return randomFlickerTL;
+
             },
 
             // wireUpControls = function wireUpControls () {
@@ -546,16 +476,20 @@ let lightbulb = function lightbulb () {
             letThereBeLight = function letThereBeLight() {
 
                 masterTL.add(setScene());
-                masterTL.add(warmUpBulb());
-                masterTL.addLabel(LABELS.phaseWireIsCharging);
-                masterTL.add(flickerToFullCharge());
-                masterTL.addLabel(LABELS.phaseFlickeringToFullLight);
-                //masterTL.add(flickerBulbAtRandom(), LABELS.phaseBulbOnAndFlickering);
-                masterTL.play();
+                masterTL.addLabel(LABELS.phaseBulbWarmingUp);
+                masterTL.add(warmUpBulb(), LABELS.phaseBulbWarmingUp);
+
+                masterTL.addLabel(LABELS.phaseBulbFlickeringToFullCharge);
+                masterTL.add(flickerToFullCharge(), LABELS.phaseBulbFlickeringToFullCharge);
+
+                masterTL.addLabel(LABELS.phaseBulbFlickeringAtRandom);
+                masterTL.add(flickerBulbAtRandom(), LABELS.phaseBulbFlickeringAtRandom);
+
+                //masterTL.play();
+                masterTL.seek(LABELS.phaseBulbFlickeringAtRandom + '-=1');
             };
 
         masterTL = new TimelineMax({paused: true});
-        //wireUpControls();
         letThereBeLight();
     };
 

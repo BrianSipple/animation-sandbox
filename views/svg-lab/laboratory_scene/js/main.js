@@ -48,7 +48,8 @@ var app = (function (exports) {
         lightFlip: 0.1,
         machineShakeIteration: 0.06,
         maxTubeFill: 1.8,
-        maxFlaskFill: 0.5
+        maxFlaskFill: 0.5,
+        paperEjection: 1.15
     },
 
     EASINGS = {
@@ -57,7 +58,16 @@ var app = (function (exports) {
         slideInOrOut: Power4.easeInOut,
         fadeInOrOut: Power3.easeOut,
         colorChange: Power0.easeNone,
-        tubeFill: Power0.easeNone
+        tubeFill: Power0.easeNone,
+        roughOscillation: RoughEase.ease.config({
+            template: Power0.easeNone,
+            strength: 2,
+            points: 50,
+            taper: 'none',
+            randomize: true,
+            clamp: false
+        }),
+        bounceIntoView: Bounce.easeOut
     },
 
     COLORS = {
@@ -87,7 +97,8 @@ var app = (function (exports) {
 
     DIMENSIONS = {
         maxLiquidMaskLength: 0,
-        maxTubeLength: 0
+        maxTubeLength: 0,
+        printerPaperHeight: 55
     },
 
     LABELS = {
@@ -95,6 +106,7 @@ var app = (function (exports) {
         sceneIdeaHad: 'scene__idea',
         sceneMachineStarted: 'scene__machine-start',
         sceneTubesFilled: 'scene__tubes-filled',
+        sceneCallToAction: 'scene__callToAction',
 
         brianHasAppeared: 'brian-has-appeared',
         brianIsSmiling: 'brian-is-smiling',
@@ -108,13 +120,16 @@ var app = (function (exports) {
         fillFlask2: 'fill-flask-2',
         fillFlask3: 'fill-flask-3',
         fillFlask4: 'fill-flask-4',
-        fillFlask5: 'fill-flask-5'
+        fillFlask5: 'fill-flask-5',
+
+        allTubesFilled: 'allTubesFilled'
 
     },
 
     CLASSES = {
         bulbFlickeringYellow: 'is-flickering--yellow',
         bulbFlickeringGreen: 'is-flickering--green',
+        bulbActiveYellow: 'is-active--yellow'
     },
 
     mainSceneContainer = document.querySelector(SELECTORS.mainSceneContainer),
@@ -238,7 +253,7 @@ var app = (function (exports) {
         );
 
         // Set paper to the top of the printer
-        clearTL.set(printerPaperSVG, {y: '+=55'});
+        clearTL.set(printerPaperSVG, {y: '+=' + DIMENSIONS.printerPaperHeight });
 
         // Set the generator's progress slider to its starting position
         clearTL.set(genProgressMeterSliderSVG, {x: '-=27'});
@@ -580,7 +595,8 @@ var app = (function (exports) {
             'Mixin a timeline',
             'Draw up some easing functions',
             'Wire up our DOM nodes',
-            'Now we\'re ready for the world'
+            'And most of all...',
+            'Have some fun!'
         ],
 
         flasksMasksToFillOnIter = {
@@ -588,29 +604,37 @@ var app = (function (exports) {
             1: flaskLiquidMaskDefRects.flask2,
             2: flaskLiquidMaskDefRects.flask3,
             4: flaskLiquidMaskDefRects.flask4,
-            6: flaskLiquidMaskDefRects.flask6,
-            7: flaskLiquidMaskDefRects.flask7,
-            8: flaskLiquidMaskDefRects.primaryFlask
+            7: flaskLiquidMaskDefRects.flask6,
+            8: flaskLiquidMaskDefRects.flask7,
+            after: flaskLiquidMaskDefRects.primaryFlask
         },
 
         fillIterationLabel,
 
+        fillFlasksWhenReached = function fillFlasksWhenReached (tl, flaskMaskDef) {
+            var yDistToSlideUp = Number(flaskMaskDef.getAttribute('height'));
 
+            tl.to(
+                flaskMaskDef,
+                DURATIONS.maxFlaskFill * (yDistToSlideUp / DIMENSIONS.maxLiquidMaskLength),
+                { attr: { y: '-=' + yDistToSlideUp }, ease: EASINGS.tubeFill }
+            );
+        },
 
         createTubeDrawTL = function createTubeDrawTL(tubeSVG, fillLength, fillDuration, flaskMaskDef) {
 
             var
-                tubeDrawTL = new TimelineMax(),
+                tubeDrawTL = new TimelineMax();
 
-                fillFlasksWhenReached = function fillFlasksWhenReached () {
-                    var yDistToSlideUp = Number(flaskMaskDef.getAttribute('height'));
-
-                    tubeDrawTL.to(
-                        flaskMaskDef,
-                        DURATIONS.maxFlaskFill * (yDistToSlideUp / DIMENSIONS.maxLiquidMaskLength),
-                        { attr: { y: '-=' + yDistToSlideUp }, ease: EASINGS.tubeFill }
-                    );
-                };
+                // fillFlasksWhenReached = function fillFlasksWhenReached () {
+                //     var yDistToSlideUp = Number(flaskMaskDef.getAttribute('height'));
+                //
+                //     tubeDrawTL.to(
+                //         flaskMaskDef,
+                //         DURATIONS.maxFlaskFill * (yDistToSlideUp / DIMENSIONS.maxLiquidMaskLength),
+                //         { attr: { y: '-=' + yDistToSlideUp }, ease: EASINGS.tubeFill }
+                //     );
+                // };
 
 
             tubeDrawTL.set(
@@ -639,7 +663,7 @@ var app = (function (exports) {
             );
 
             if (flaskMaskDef) {
-                fillFlasksWhenReached();
+                fillFlasksWhenReached(tubeDrawTL, flaskMaskDef);
             }
 
             return tubeDrawTL;
@@ -661,6 +685,7 @@ var app = (function (exports) {
             // that we'll tween to animate the appearance of the flask filling
             var flaskLiquidMaskDef;
 
+            // Select the appropriate iteration for each flask
             if (flasksMasksToFillOnIter[idx]) {
                 flaskLiquidMaskDef = flasksMasksToFillOnIter[idx];
             }
@@ -683,6 +708,7 @@ var app = (function (exports) {
 
             fillTubesTL.addLabel(fillIterationLabel);
 
+            // flip the text after each tube fill
             changeTitleText(fillTubesTL, {
                 yDistUp: 30,
                 yDistDown1: 10,
@@ -691,19 +717,58 @@ var app = (function (exports) {
                 labelIn: fillIterationLabel
             });
 
-            //fillTubesTL.addLabel('tube-fill--iter-' + idx);
+            // On the penultimate iteration, bump the scale around for a bit
+            if (idx === 7) {
+                fillTubesTL.set(
+                    mainTitleElem,
+                    { fontSize: '0.9em', immediateRender: false },
+                    fillIterationLabel + '-=0.2'
+                );
 
-            //   changeTitleText(fillTubesTL, {
-            //       yDistUp: 30,
-            //       yDistDown1: 10,
-            //       yDistDown2: 20,
-            //       newText: fillStepLabels[idx],
-            //       labelIn: '+=0.2'
-            //   });
+                fillTubesTL.to(
+                    mainTitleElem,
+                    2,
+                    { fontSize: '1.2em', ease: EASINGS.roughOscillation },
+                    fillIterationLabel
+                );
+            }
+        });
 
+        fillTubesTL.addLabel(LABELS.allTubesFilled);
+        fillFlasksWhenReached(fillTubesTL, flasksMasksToFillOnIter.after);
+        fillTubesTL.set(
+            mainBulbSVG,
+            {
+                className: '+=' +
+                    CLASSES.bulbFlickeringYellow +
+                    ' ' + CLASSES.bulbActiveYellow,
+                immediateRender: false
+            }
+        );
+
+        // finish this scene by removing the text
+        changeTitleText(
+            fillTubesTL, {
+            yDistUp: 30,
+            newText: '',
+            labelOut: '+=1.3'
         });
 
         return fillTubesTL;
+    }
+
+    function ejectPrinterPaper () {
+        var ejectionTL = new TimelineMax();
+
+        ejectionTL.to(
+            printerPaperSVG,
+            DURATIONS.paperEjection,
+            { y: '-=' + DIMENSIONS.printerPaperHeight },
+            EASINGS.bounceIntoView
+        )
+
+
+        return ejectionTL;
     }
 
 
@@ -717,11 +782,11 @@ var app = (function (exports) {
         masterTL.add(startMachine());
         masterTL.addLabel(LABELS.sceneMachineStarted);
         masterTL.add(fillMachineTubes(), LABELS.sceneMachineStarted);
-        //masterTL.add(fillFlasksWhenReached(), LABELS.sceneMachineStarted);
-        masterTL.addLabel(LABELS.sceneTubesFilled);
+        masterTL.addLabel(LABELS.sceneCallToAction);
+        masterTL.add(ejectPrinterPaper(), LABELS.sceneCallToAction);
 
 
-        masterTL.seek(LABELS.sceneMachineStarted + '-=1');
+        masterTL.seek(LABELS.sceneTubesFilled + '-=6');
     }
 
     return {

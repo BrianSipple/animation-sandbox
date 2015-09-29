@@ -125,6 +125,7 @@ let lightbulb = function lightbulb () {
                 color,
                 flickerDelay = 0.2
             ) {
+                console.log('Making flicker burst');
 
                 let
                     flickerBurstTL = new TimelineMax({
@@ -158,7 +159,6 @@ let lightbulb = function lightbulb () {
                         return flickerTL;
                     };
 
-
                 flickerBurstTL.set([
                         bulbInnerLightSVG,
                     ],
@@ -173,6 +173,69 @@ let lightbulb = function lightbulb () {
 
                 return flickerBurstTL;
             },
+
+            createWireTurbulence = function createWireTurbulence(
+                turbulenceFrequency,
+                turbulenceDuration,
+                delay
+            ) {
+
+                let
+                    turbulenceTL = new TimelineMax({
+                        delay: delay
+                    }),
+
+                    zapFactor = 0.125,
+                    zapDuration = turbulenceDuration * zapFactor,
+                    attenuationDuration = turbulenceDuration * (1 - zapFactor);
+
+                // zap the wire with turbulence
+                turbulenceTL.to(
+                    energyWireFilterTurbulence,
+                    zapDuration,
+                    {
+                      attr: {
+                        baseFrequency: '' + turbulenceFrequency
+                      },
+                      ease: EASINGS.wireTurbulence
+                    }
+                );
+
+                // now head back to normal, albiet much more smoothly
+                turbulenceTL.to(
+                    energyWireFilterTurbulence,
+                    attenuationDuration,
+                    { attr: { baseFrequency: '0' } }
+                );
+
+                return turbulenceTL;
+            },
+
+            makeWiresCharge = function makeWiresCharge (duration, percentage, delay) {
+
+                let wireChargeTL = new TimelineMax({
+                    delay: delay
+                });
+
+                wireChargeTL.to(
+                    energyWireChargedLeftSVG,
+                    duration,
+                    { drawSVG: percentage + '%', ease: EASINGS.default },
+                    0
+                );
+
+                wireChargeTL.to(
+                    energyWireChargedRightSVG,
+                    duration,
+                    { drawSVG: '100% ' + (100 - percentage) + '%', ease: EASINGS.default },
+                    0
+                );
+
+                return wireChargeTL;
+            },
+
+
+            /*------------------- PHASE FUNCTIONS -------------------*/
 
             setScene = function setScene () {
 
@@ -311,68 +374,6 @@ let lightbulb = function lightbulb () {
                     masterTurbulenceTL = new TimelineMax(),
                     masterWireChargeTL = new TimelineMax(),
 
-
-                    createWireTurbulence = function createWireTurbulence(
-                        turbulenceFrequency,
-                        turbulenceDuration,
-                        delay
-                    ) {
-
-                        let
-                            turbulenceTL = new TimelineMax({
-                                delay: delay
-                            }),
-
-                            zapFactor = 0.125,
-                            zapDuration = turbulenceDuration * zapFactor,
-                            attenuationDuration = turbulenceDuration * (1 - zapFactor);
-
-                        // zap the wire with turbulence
-                        turbulenceTL.to(
-                            energyWireFilterTurbulence,
-                            zapDuration,
-                            {
-                              attr: {
-                                baseFrequency: '' + turbulenceFrequency
-                              },
-                              ease: EASINGS.wireTurbulence
-                            }
-                        );
-
-                        // now head back to normal, albiet much more smoothly
-                        turbulenceTL.to(
-                            energyWireFilterTurbulence,
-                            attenuationDuration,
-                            { attr: { baseFrequency: '0' } }
-                        );
-
-                        return turbulenceTL;
-                    },
-
-                    makeWiresCharge = function makeWiresCharge (duration, percentage, delay) {
-
-                        let wireChargeTL = new TimelineMax({
-                            delay: delay
-                        });
-
-                        wireChargeTL.to(
-                            energyWireChargedLeftSVG,
-                            duration,
-                            { drawSVG: percentage + '%', ease: EASINGS.default },
-                            0
-                        );
-
-                        wireChargeTL.to(
-                            energyWireChargedRightSVG,
-                            duration,
-                            { drawSVG: '100% ' + (100 - percentage) + '%', ease: EASINGS.default },
-                            0
-                        );
-
-                        return wireChargeTL;
-                    };
-
-                let
                     flickerSequence = [
                         { numFlickers: 11, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2, label: 'flicker1' },
                         { numFlickers: 10, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.67, label: 'flicker2' },
@@ -440,17 +441,35 @@ let lightbulb = function lightbulb () {
 
                 let
                     makeRandomFlicker = function makeRandomFlicker (tl) {
-                        console.log('random flicker');
-                        debugger;
+
                         let
                             delay = 5 + (Math.random() * 3),
-                            numFlickers = 4 + (Math.floor(Math.random() * 20));
+                            numFlickers = 4 + (Math.floor(Math.random() * 20)),
+                            flickerBurstDuration = numFlickers * DURATIONS.bulbFlicker,
+                            turbulenceDuration = flickerBurstDuration * 5;
+
+                        console.log('random flicker burst');
+                        console.log(`delay: ${delay}`);
+                        console.log(`num flickers: ${numFlickers}`);
+                        console.log(tl);
 
                         tl.add(makeFlickerBurst(
                             numFlickers,
                             COLORS.bulb.litYellow,
                             delay
-                        ));
+                        ), 0);
+
+                        tl.add(makeWiresCharge(
+                            flickerBurstDuration,
+                            100,
+                            delay
+                        ), 0);
+
+                        tl.add(createWireTurbulence(
+                            maxWireTurbulence,
+                            turbulenceDuration,
+                            delay
+                        ), 0);
                     },
 
                     randomFlickerTL = new TimelineMax({
@@ -459,9 +478,9 @@ let lightbulb = function lightbulb () {
                         onRepeatParams: ['{self}']
                     });
 
-                    makeRandomFlicker(randomFlickerTL);
+                makeRandomFlicker(randomFlickerTL);
 
-                    return randomFlickerTL;
+                return randomFlickerTL;
 
             },
 
@@ -485,8 +504,10 @@ let lightbulb = function lightbulb () {
                 masterTL.addLabel(LABELS.phaseBulbFlickeringAtRandom);
                 masterTL.add(flickerBulbAtRandom(), LABELS.phaseBulbFlickeringAtRandom);
 
-                //masterTL.play();
-                masterTL.seek(LABELS.phaseBulbFlickeringAtRandom + '-=1');
+                //masterTL.play(LABELS.phaseBulbFlickeringAtRandom + '-=1');
+                masterTL.play();
+                //masterTL.seek(LABELS.phaseBulbFlickeringAtRandom + '-=1');
+
             };
 
         masterTL = new TimelineMax({paused: true});

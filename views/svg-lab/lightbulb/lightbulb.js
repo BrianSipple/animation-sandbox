@@ -177,7 +177,8 @@ let lightbulb = function lightbulb () {
             createWireTurbulence = function createWireTurbulence(
                 turbulenceFrequency,
                 turbulenceDuration,
-                delay
+                delay,
+                label
             ) {
 
                 let
@@ -375,16 +376,16 @@ let lightbulb = function lightbulb () {
                     masterWireChargeTL = new TimelineMax(),
 
                     flickerSequence = [
-                        { numFlickers: 11, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2, label: 'flicker1' },
-                        { numFlickers: 10, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.67, label: 'flicker2' },
-                        { numFlickers: 16, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.55, label: 'flicker3' },
-                        { numFlickers: 9, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.1, label: 'flicker4' },
-                        { numFlickers: 20, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.9, label: 'flicker5' },
-                        { numFlickers: 10, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.45, label: 'flicker6' },
-                        { numFlickers: 9, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.31, label: 'flicker7' },
-                        { numFlickers: 9, intensityPct: 90, color: COLORS.bulb.chargingYellow, delay: 0.1, label: 'flicker8' },
-                        { numFlickers: 13, intensityPct: 95, color: COLORS.bulb.chargingYellow, delay: 0.05, label: 'flicker9' },
-                        { numFlickers: 17, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, label: 'flicker10' }
+                        { numFlickers: 11, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2 },
+                        { numFlickers: 10, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.27, nextFlickerStartLabel: 'flicker2' },
+                        { numFlickers: 16, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.55, nextFlickerStartLabel: 'flicker3' },
+                        { numFlickers: 9, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.1, nextFlickerStartLabel: 'flicker4' },
+                        { numFlickers: 4, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.9, nextFlickerStartLabel: 'flicker5' },
+                        { numFlickers: 9, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.45, nextFlickerStartLabel: 'flicker6' },
+                        { numFlickers: 6, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.31, nextFlickerStartLabel: 'flicker7' },
+                        { numFlickers: 9, intensityPct: 90, color: COLORS.bulb.chargingYellow, delay: 0.1, nextFlickerStartLabel: 'flicker8' },
+                        { numFlickers: 5, intensityPct: 95, color: COLORS.bulb.chargingYellow, delay: 0.05, nextFlickerStartLabel: 'flicker9' },
+                        { numFlickers: 13, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, nextFlickerStartLabel: 'flicker10' }
                     ];
 
 
@@ -400,7 +401,11 @@ let lightbulb = function lightbulb () {
                     turbulenceDuration,
                     flickerBurstTL,
                     wireChargeTL,
-                    wireTurbulenceTL;
+                    wireTurbulenceTL,
+                    flickerBurstPosition,
+                    wireChargePosition,
+                    turbulencePosition,
+                    currentSeqIter = 0;
 
                 for (let seq of flickerSequence) {
 
@@ -408,7 +413,7 @@ let lightbulb = function lightbulb () {
 
                     // treat turbulence as a more prolonged effect of
                     // of each flicker burst
-                    turbulenceDuration = flickerBurstDuration * 5;
+                    turbulenceDuration = flickerBurstDuration * 15;
 
                     flickerBurstTL = makeFlickerBurst(
                         seq.numFlickers,
@@ -428,12 +433,31 @@ let lightbulb = function lightbulb () {
                         seq.delay
                     );
 
-                    masterFlickerTL.addLabel(seq.label);
-                    masterFlickerTL.add([flickerBurstTL, wireChargeTL, wireTurbulenceTL], seq.label );
+
+                    //masterFlickerTL.add([flickerBurstTL, wireChargeTL, wireTurbulenceTL], seq.label );
+
+
+                    flickerBurstPosition = `+${currentSeqIter * flickerBurstDuration}`
+                    wireChargePosition = `+${currentSeqIter * flickerBurstDuration}`
+                    turbulencePosition = `+${currentSeqIter * flickerBurstDuration}`
+
+                    console.log(`Adding flicker burst at ${flickerBurstPosition}`);
+                    console.log(`Adding wire charge at ${wireChargePosition}`);
+                    console.log(`Adding turbulence at ${turbulencePosition}`);
+
+                    masterFlickerTL.add(flickerBurstTL, flickerBurstPosition);
+                    masterFlickerTL.add(wireChargeTL, wireChargePosition);
+                    masterFlickerTL.add(wireTurbulenceTL, turbulencePosition);
+                    //masterFlickerTL.add(wireTurbulenceTL, seq.label);
+                    // masterFlickerTL.add(flickerBurstTL);
+                    // masterWireChargeTL.add(wireChargeTL);
+                    // masterTurbulenceTL.add(wireTurbulenceTL, '+=' + flickerBurstDuration);
+                    currentSeqIter++;
 
                 }
 
                 return masterFlickerTL;
+                //return [masterFlickerTL, masterWireChargeTL, masterTurbulenceTL];
             },
 
 
@@ -466,7 +490,7 @@ let lightbulb = function lightbulb () {
                         ), 0);
 
                         tl.add(createWireTurbulence(
-                            maxWireTurbulence,
+                            DIMENSIONS.wireFilterTurbulence.endFrequency,
                             turbulenceDuration,
                             delay
                         ), 0);

@@ -399,6 +399,8 @@ let lightbulb = function lightbulb () {
                 let
                     flickerBurstDuration,
                     turbulenceDuration,
+                    totalSequenceDuration,
+                    nextSequenceStartPosition = 0,
                     flickerBurstTL,
                     wireChargeTL,
                     wireTurbulenceTL,
@@ -414,6 +416,8 @@ let lightbulb = function lightbulb () {
                     // treat turbulence as a more prolonged effect of
                     // of each flicker burst
                     turbulenceDuration = flickerBurstDuration * 15;
+
+                    totalSequenceDuration = flickerBurstDuration + seq.delay;
 
                     flickerBurstTL = makeFlickerBurst(
                         seq.numFlickers,
@@ -437,17 +441,50 @@ let lightbulb = function lightbulb () {
                     //masterFlickerTL.add([flickerBurstTL, wireChargeTL, wireTurbulenceTL], seq.label );
 
 
-                    flickerBurstPosition = `+${currentSeqIter * flickerBurstDuration}`
-                    wireChargePosition = `+${currentSeqIter * flickerBurstDuration}`
-                    turbulencePosition = `+${currentSeqIter * flickerBurstDuration}`
+                    flickerBurstPosition = `+${currentSeqIter * totalSequenceDuration}`
+                    wireChargePosition = `+${currentSeqIter * totalSequenceDuration}`
+                    turbulencePosition = `+${currentSeqIter * totalSequenceDuration}`
 
-                    console.log(`Adding flicker burst at ${flickerBurstPosition}`);
-                    console.log(`Adding wire charge at ${wireChargePosition}`);
-                    console.log(`Adding turbulence at ${turbulencePosition}`);
+                    // console.log(`Adding flicker burst at ${flickerBurstPosition}`);
+                    // console.log(`Adding wire charge at ${wireChargePosition}`);
+                    // console.log(`Adding turbulence at ${turbulencePosition}`);
 
-                    masterFlickerTL.add(flickerBurstTL, flickerBurstPosition);
-                    masterFlickerTL.add(wireChargeTL, wireChargePosition);
-                    masterFlickerTL.add(wireTurbulenceTL, turbulencePosition);
+                    // masterFlickerTL.add(flickerBurstTL, flickerBurstPosition);
+                    // masterFlickerTL.add(wireChargeTL, wireChargePosition);
+
+                    //masterFlickerTL.add([flickerBurstTL, wireChargeTL], `+${currentSeqIter * totalSequenceDuration}`);
+
+                    // console.log(
+                    //     `Adding flicker burst and wireCharge TLs
+                    //     at ${flickerBurstPosition}
+                    //     +${currentSeqIter * totalSequenceDuration}`
+                    // );
+
+                    if (currentSeqIter === 0) {
+                        nextSequenceStartPosition = 0;
+                    } else {
+                        nextSequenceStartPosition = `flicker${currentSeqIter-1}Done`;
+                    }
+
+                    masterFlickerTL.add(flickerBurstTL, nextSequenceStartPosition);
+                    masterFlickerTL.add(wireChargeTL, nextSequenceStartPosition);
+
+                    //debugger;
+                    // add the label at a time computed by the flicker and wire TL sequences
+                    masterFlickerTL.addLabel(
+                        `flicker${currentSeqIter}Done`,
+                        masterFlickerTL.recent().endTime() + seq.delay
+                    );
+
+                    console.log(`added label at ${masterFlickerTL.recent().endTime()}`);
+
+                    // Except for the first burst, back-set each turbulenceTL sequence
+                    // so that it plays in sync with the flickering
+
+                    masterFlickerTL.add(wireTurbulenceTL, nextSequenceStartPosition);
+
+
+
                     //masterFlickerTL.add(wireTurbulenceTL, seq.label);
                     // masterFlickerTL.add(flickerBurstTL);
                     // masterWireChargeTL.add(wireChargeTL);

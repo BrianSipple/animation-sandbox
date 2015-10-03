@@ -27,7 +27,7 @@ let lightbulb = function lightbulb () {
 
             EASINGS = {
                 default: Power4.easeInOut,
-                warmUpBulb: Power2.easeIn,
+                glowGrow: Power2.easeIn,
                 flickerInstance: Power4.easeOut,
                 wireTurbulence: Power2.easeInOut,
                 linear: Power0.easeNone,
@@ -38,6 +38,7 @@ let lightbulb = function lightbulb () {
                 phaseBulbWarmingUp: 'phase__bulbWarmingUp',
                 phaseBulbFlickeringToFullCharge: 'phase__BulbFlickeringToFullCharge',
                 phaseBulbFlickeringAtRandom: 'phase__BulbFlickeringAtRandom',
+                phaseBulbOnAfterFlikcer: 'phase__BulbOnAfterFlicker',
 
                 bulbFlickeringStart: 'bulbFlickeringStart',
 
@@ -50,7 +51,10 @@ let lightbulb = function lightbulb () {
 
                 // this should be at least the monitor
                 // frame rate that we're targeting (i.e. 60 fps ==> 0.0167ms)
-                bulbFlicker: .035
+                bulbFlicker: .035,
+
+                // How much longer turbulence should last than an initial flicker burst
+                wireTurbulenceMultiplier: 5
             },
 
             WAVE_FUNCTIONS = {
@@ -123,14 +127,13 @@ let lightbulb = function lightbulb () {
             makeFlickerBurst = function makeFlickerBurst (
                 numFlickers,
                 color,
-                flickerDelay = 0.2
+                flickerDelay = 0
             ) {
-                console.log('Making flicker burst');
+                //console.log('Making flicker burst');
 
                 let
                     flickerBurstTL = new TimelineMax({
-                        delay: flickerDelay,
-                        onComplete: function () {console.log('burst');}
+                        delay: flickerDelay
                     }),
 
                     makeFlickerTL = function makeFlickerTL(color) {
@@ -177,7 +180,7 @@ let lightbulb = function lightbulb () {
             createWireTurbulence = function createWireTurbulence(
                 turbulenceFrequency,
                 turbulenceDuration,
-                delay,
+                delay = 0,
                 label
             ) {
 
@@ -212,7 +215,7 @@ let lightbulb = function lightbulb () {
                 return turbulenceTL;
             },
 
-            makeWiresCharge = function makeWiresCharge (duration, percentage, delay) {
+            makeWiresCharge = function makeWiresCharge (duration, percentage, delay = 0) {
 
                 let wireChargeTL = new TimelineMax({
                     delay: delay
@@ -233,6 +236,56 @@ let lightbulb = function lightbulb () {
                 );
 
                 return wireChargeTL;
+            },
+
+            /**
+             * Animate in some glow of a given color
+             */
+            growSomeGlow = function growSomeGlow (color, duration) {
+
+                let glowTL = new TimelineMax ();
+
+                glowTL.set(
+                    [
+                        bulbInnerLightSVG,
+                        bulbInnerGlowLayerSVG
+                    ],
+                    { autoAlpha: 0, scale: 1, fill: color, immediateRender: false },
+                    0
+                );
+
+                glowTL.to(
+                    energyWireUnchargedSVGs,
+                    duration,
+                    { stroke: color, ease: EASINGS.glowGrow },
+                    0
+                );
+
+                glowTL.to(
+                    [
+                        bulbInnerLightSVG,
+                        bulbInnerGlowLayerSVG
+                    ],
+                    duration,
+                    { autoAlpha: 1, ease: EASINGS.glowGrow },
+                    0
+                );
+
+                // expand the glow filter in sync with the glow being intensified
+                glowTL.fromTo(
+                    bulbGlowFilterBlurNode,
+                    duration,
+                    { attr: { stdDeviation: '0' } },
+                    {
+                        attr: {
+                            stdDeviation: (MAX_GLOW_FILTER_SD).toString()
+                        },
+                        ease: EASINGS.glowGrow
+                    },
+                    0
+                );
+
+                return glowTL;
             },
 
 
@@ -293,7 +346,6 @@ let lightbulb = function lightbulb () {
                     ],
                     {
                         scale: 0,
-                        //fill: COLORS.wire.chargingOrange,
                         transformOrigin: '50% 50%',
                         autoAlpha: 0
                     }
@@ -307,56 +359,6 @@ let lightbulb = function lightbulb () {
                 sceneSetTL.set(mainSVGContainer, { opacity: 1, visibility: 'visible' });
 
                 return sceneSetTL;
-            },
-
-
-            /**
-             * Gradually bring the initial energy wire up to its charged state
-             */
-            warmUpBulb = function warmUpBulb () {
-
-                let warmUpTL = new TimelineMax ();
-
-                warmUpTL.set(
-                    [
-                        bulbInnerLightSVG,
-                        bulbInnerGlowLayerSVG
-                    ],
-                    { autoAlpha: 0, scale: 1, fill: COLORS.bulb.chargingOrange, immediateRender: false },
-                    0
-                );
-
-                warmUpTL.to(
-                    energyWireUnchargedSVGs,
-                    DURATIONS.initialWireCharging,
-                    { stroke: COLORS.wire.chargingOrange, ease: EASINGS.initialWireCharging },
-                    0
-                );
-
-                warmUpTL.to(
-                    [
-                        bulbInnerLightSVG,
-                        bulbInnerGlowLayerSVG
-                    ],
-                    DURATIONS.initialWireCharging,
-                    { autoAlpha: 1, ease: EASINGS.linear },
-                    0
-                );
-
-                // expand the glow filter in sync with the glow being intensified
-                warmUpTL.to(
-                    bulbGlowFilterBlurNode,
-                    DURATIONS.initialWireCharging,
-                    {
-                        attr: {
-                            stdDeviation: (MAX_GLOW_FILTER_SD).toString()
-                        },
-                        ease: EASINGS.linear
-                    },
-                    0
-                );
-
-                return warmUpTL;
             },
 
             /**
@@ -377,21 +379,20 @@ let lightbulb = function lightbulb () {
 
                     flickerSequence = [
                         { numFlickers: 11, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2 },
-                        { numFlickers: 10, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.27, nextFlickerStartLabel: 'flicker2' },
-                        { numFlickers: 16, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.55, nextFlickerStartLabel: 'flicker3' },
-                        { numFlickers: 9, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.1, nextFlickerStartLabel: 'flicker4' },
+                        { numFlickers: 10, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.67, nextFlickerStartLabel: 'flicker2' },
+                        { numFlickers: 16, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.45, nextFlickerStartLabel: 'flicker3' },
+                        { numFlickers: 9, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.10, nextFlickerStartLabel: 'flicker4' },
                         { numFlickers: 4, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.9, nextFlickerStartLabel: 'flicker5' },
-                        { numFlickers: 9, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.45, nextFlickerStartLabel: 'flicker6' },
+                        { numFlickers: 9, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.15, nextFlickerStartLabel: 'flicker6' },
                         { numFlickers: 6, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.31, nextFlickerStartLabel: 'flicker7' },
                         { numFlickers: 9, intensityPct: 90, color: COLORS.bulb.chargingYellow, delay: 0.1, nextFlickerStartLabel: 'flicker8' },
                         { numFlickers: 5, intensityPct: 95, color: COLORS.bulb.chargingYellow, delay: 0.05, nextFlickerStartLabel: 'flicker9' },
-                        { numFlickers: 13, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, nextFlickerStartLabel: 'flicker10' }
+                        { numFlickers: 5, intensityPct: 97, color: COLORS.bulb.chargingYellow, delay: 0.05, nextFlickerStartLabel: 'flicker10' },
+                        { numFlickers: 13, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, nextFlickerStartLabel: 'flicker11', finalFlicker: true }
                     ];
-
 
                 // Provide master TLs with labels so that we can reference
                 // the starting point within the loop
-                //masterTurbulenceTL.addLabel(LABELS.turbulenceStart);
                 masterFlickerTL.set(
                     bulbInnerGlowLayerSVG, { autoAlpha: 0, immediateRender: false  }
                 );
@@ -415,7 +416,8 @@ let lightbulb = function lightbulb () {
 
                     // treat turbulence as a more prolonged effect of
                     // of each flicker burst
-                    turbulenceDuration = flickerBurstDuration * 15;
+                    turbulenceDuration =
+                        flickerBurstDuration * DURATIONS.wireTurbulenceMultiplier;
 
                     totalSequenceDuration = flickerBurstDuration + seq.delay;
 
@@ -437,28 +439,9 @@ let lightbulb = function lightbulb () {
                         seq.delay
                     );
 
-
-                    //masterFlickerTL.add([flickerBurstTL, wireChargeTL, wireTurbulenceTL], seq.label );
-
-
                     flickerBurstPosition = `+${currentSeqIter * totalSequenceDuration}`
                     wireChargePosition = `+${currentSeqIter * totalSequenceDuration}`
                     turbulencePosition = `+${currentSeqIter * totalSequenceDuration}`
-
-                    // console.log(`Adding flicker burst at ${flickerBurstPosition}`);
-                    // console.log(`Adding wire charge at ${wireChargePosition}`);
-                    // console.log(`Adding turbulence at ${turbulencePosition}`);
-
-                    // masterFlickerTL.add(flickerBurstTL, flickerBurstPosition);
-                    // masterFlickerTL.add(wireChargeTL, wireChargePosition);
-
-                    //masterFlickerTL.add([flickerBurstTL, wireChargeTL], `+${currentSeqIter * totalSequenceDuration}`);
-
-                    // console.log(
-                    //     `Adding flicker burst and wireCharge TLs
-                    //     at ${flickerBurstPosition}
-                    //     +${currentSeqIter * totalSequenceDuration}`
-                    // );
 
                     if (currentSeqIter === 0) {
                         nextSequenceStartPosition = 0;
@@ -480,69 +463,90 @@ let lightbulb = function lightbulb () {
 
                     // Except for the first burst, back-set each turbulenceTL sequence
                     // so that it plays in sync with the flickering
-
                     masterFlickerTL.add(wireTurbulenceTL, nextSequenceStartPosition);
 
+                    // At the end, we'll want to add the glow-grow TL
+                    // right when the final flicker completes
+                    if (seq.finalFlicker) {
+                        masterFlickerTL.add(growSomeGlow(COLORS.bulb.litYellow, 0.10), nextSequenceStartPosition);
+                    }
 
-
-                    //masterFlickerTL.add(wireTurbulenceTL, seq.label);
-                    // masterFlickerTL.add(flickerBurstTL);
-                    // masterWireChargeTL.add(wireChargeTL);
-                    // masterTurbulenceTL.add(wireTurbulenceTL, '+=' + flickerBurstDuration);
                     currentSeqIter++;
 
                 }
 
                 return masterFlickerTL;
-                //return [masterFlickerTL, masterWireChargeTL, masterTurbulenceTL];
             },
 
 
-            flickerBulbAtRandom = function flickerBulbAtRandom () {
+            flickerBulbAtRandom = function flickerBulbAtRandom (startingBulbColor) {
 
                 let
-                    makeRandomFlicker = function makeRandomFlicker (tl) {
+                    addRandomFlickeringToMasterTL = function addRandomFlickeringToMasterTL () {
 
                         let
-                            delay = 5 + (Math.random() * 3),
+                            newDelay = 5 + (Math.random() * 3),
                             numFlickers = 4 + (Math.floor(Math.random() * 20)),
                             flickerBurstDuration = numFlickers * DURATIONS.bulbFlicker,
-                            turbulenceDuration = flickerBurstDuration * 5;
+                            turbulenceDuration =
+                                flickerBurstDuration * DURATIONS.wireTurbulenceMultiplier,
+
+                            randomFlickerTL = new TimelineMax({
+                                delay: newDelay,
+                                onComplete: function () {
+                                    masterRandomFlickerTL.restart();
+                                }
+                            });
 
                         console.log('random flicker burst');
-                        console.log(`delay: ${delay}`);
                         console.log(`num flickers: ${numFlickers}`);
-                        console.log(tl);
+                        console.log(`New delay: ${newDelay}`);
+                        console.log(randomFlickerTL);
 
-                        tl.add(makeFlickerBurst(
+                        randomFlickerTL.add(makeFlickerBurst(
                             numFlickers,
-                            COLORS.bulb.litYellow,
-                            delay
+                            COLORS.bulb.litYellow
                         ), 0);
 
-                        tl.add(makeWiresCharge(
+                        randomFlickerTL.add(makeWiresCharge(
                             flickerBurstDuration,
-                            100,
-                            delay
+                            100
                         ), 0);
 
-                        tl.add(createWireTurbulence(
+                        randomFlickerTL.addLabel(
+                            'startGlow',
+                            randomFlickerTL.recent().endTime()
+                        );
+
+                        randomFlickerTL.add(createWireTurbulence(
                             DIMENSIONS.wireFilterTurbulence.endFrequency,
-                            turbulenceDuration,
-                            delay
+                            turbulenceDuration
                         ), 0);
+
+                        randomFlickerTL.add(growSomeGlow(startingBulbColor, .10), 'startGlow');
+                        masterRandomFlickerTL.add(randomFlickerTL);
                     },
 
-                    randomFlickerTL = new TimelineMax({
+                    // repeatAtRandomDelay = function repeatAtRandomDelay (tl) {
+                    //     let newDelay = 5 + (Math.random() * 3);
+                    //     debugger;
+                    //     console.log(`New random flickering delay: ${newDelay}`);
+                    //     setTimeout( () => {
+                    //         tl.restart();
+                    //     }, newDelay);
+                    // },
+
+                    masterRandomFlickerTL = new TimelineMax({
                         repeat: -1,
-                        onRepeat: makeRandomFlicker,
-                        onRepeatParams: ['{self}']
+                        onRepeat: function () {
+                            masterRandomFlickerTL.clear();
+                            addRandomFlickeringToMasterTL();
+                        }
                     });
 
-                makeRandomFlicker(randomFlickerTL);
+                addRandomFlickeringToMasterTL();
 
-                return randomFlickerTL;
-
+                return masterRandomFlickerTL;
             },
 
             // wireUpControls = function wireUpControls () {
@@ -557,15 +561,41 @@ let lightbulb = function lightbulb () {
 
                 masterTL.add(setScene());
                 masterTL.addLabel(LABELS.phaseBulbWarmingUp);
-                masterTL.add(warmUpBulb(), LABELS.phaseBulbWarmingUp);
 
-                masterTL.addLabel(LABELS.phaseBulbFlickeringToFullCharge);
+                masterTL.add(
+                    growSomeGlow(
+                        COLORS.bulb.chargingOrange,
+                        DURATIONS.initialWireCharging
+                    ),
+                    LABELS.phaseBulbWarmingUp
+                );
+
+                masterTL.addLabel(
+                    LABELS.phaseBulbFlickeringToFullCharge,
+                    `${masterTL.recent().endTime() + 0.3}`
+                );
+
                 masterTL.add(flickerToFullCharge(), LABELS.phaseBulbFlickeringToFullCharge);
 
-                masterTL.addLabel(LABELS.phaseBulbFlickeringAtRandom);
-                masterTL.add(flickerBulbAtRandom(), LABELS.phaseBulbFlickeringAtRandom);
+                // masterTL.addLabel(
+                //     LABELS.phaseBulbOnAfterFlikcer,
+                //     masterTL.recent().endTime()
+                // );
+                // masterTL.add(
+                //     growSomeGlow(COLORS.bulb.litYellow, 0.10),
+                //     LABELS.phaseBulbOnAfterFlikcer
+                // );
 
-                //masterTL.play(LABELS.phaseBulbFlickeringAtRandom + '-=1');
+                //masterTL.add(growSomeGlow(0.10, COLORS.bulb.litYellow));
+                masterTL.addLabel(
+                    LABELS.phaseBulbFlickeringAtRandom,
+                    `${masterTL.recent().endTime() + 2.0}`
+                );
+                masterTL.add(
+                    flickerBulbAtRandom(COLORS.bulb.litYellow),
+                    LABELS.phaseBulbFlickeringAtRandom
+                );
+
                 masterTL.play();
                 //masterTL.seek(LABELS.phaseBulbFlickeringAtRandom + '-=1');
 

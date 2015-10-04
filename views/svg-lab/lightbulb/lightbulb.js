@@ -428,6 +428,22 @@ let lightbulb = function lightbulb () {
                         seq.delay
                     );
 
+                    // At the end, we'll want to add the glow-grow TL
+                    // right when the final flicker completes
+                    if (seq.finalFlicker) {
+                        //flickerBurstTL.add(
+                        //    growSomeGlow(COLORS.bulb.litYellow, 0.1)
+                        //);
+                        flickerBurstTL.set(
+                            [
+                                bulbInnerGlowLayerSVG,
+                                bulbInnerLightSVG
+                            ],
+                            { opacity: 1, visibility: 'visible', fill: COLORS.bulb.litYellow, immediateRender: false }
+                            //masterFlickerTL.recent().endTime() + seq.delay + .01
+                        );
+                    }
+
                     wireChargeTL = makeWiresCharge(
                         flickerBurstDuration,
                         seq.intensityPct,
@@ -455,15 +471,6 @@ let lightbulb = function lightbulb () {
                         `flicker${currentSeqIter}Done`,
                         masterFlickerTL.recent().endTime() + seq.delay
                     );
-
-                    // At the end, we'll want to add the glow-grow TL
-                    // right when the final flicker completes
-                    if (seq.finalFlicker) {
-                        masterFlickerTL.add(
-                            growSomeGlow(COLORS.bulb.litYellow, 0.10),
-                            masterFlickerTL.recent().endTime() + seq.delay + .01
-                        );
-                    }
 
                     console.log(`added label at ${masterFlickerTL.recent().endTime()}`);
 
@@ -586,8 +593,8 @@ let lightbulb = function lightbulb () {
                     LABELS.phaseBulbFlickeringAtRandom
                 );
 
-                masterTL.play();
-                //masterTL.play(11.5);
+                //masterTL.play();
+                masterTL.play(9.5);
                 //masterTL.seek(LABELS.phaseBulbFlickeringAtRandom + '-=1');
 
             };

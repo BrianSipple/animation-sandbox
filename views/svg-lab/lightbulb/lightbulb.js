@@ -250,7 +250,7 @@ let lightbulb = function lightbulb () {
                         bulbInnerLightSVG,
                         bulbInnerGlowLayerSVG
                     ],
-                    { visibility: 'visible', opacity: 1, scale: 1, fill: color, immediateRender: false },
+                    { visibility: 'visible', opacity: 0, scale: 1, fill: color, immediateRender: false },
                     0
                 );
 
@@ -382,7 +382,7 @@ let lightbulb = function lightbulb () {
                     flickerSequence = [
                         { numFlickers: 11, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2 },
                         { numFlickers: 10, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.67, nextFlickerStartLabel: 'flicker2' },
-                        { numFlickers: 16, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.45, nextFlickerStartLabel: 'flicker3' },
+                        { numFlickers: 16, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.85, nextFlickerStartLabel: 'flicker3' },
                         { numFlickers: 9, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.10, nextFlickerStartLabel: 'flicker4' },
                         { numFlickers: 4, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.9, nextFlickerStartLabel: 'flicker5' },
                         { numFlickers: 9, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.15, nextFlickerStartLabel: 'flicker6' },
@@ -485,7 +485,7 @@ let lightbulb = function lightbulb () {
 
                         let
                             newDelay = 5 + (Math.random() * 3),
-                            numFlickers = 2 + (Math.floor(Math.random() * 2)),
+                            numFlickers = 3 + (Math.floor(Math.random() * 7)),
                             flickerBurstDuration = numFlickers * DURATIONS.bulbFlicker,
                             turbulenceDuration =
                                 flickerBurstDuration * DURATIONS.wireTurbulenceMultiplier,
@@ -522,7 +522,7 @@ let lightbulb = function lightbulb () {
                         //     'randomFlickerEnd'
                         // );
 
-                        randomFlickerTL.add(growSomeGlow(startingBulbColor, .10), '+0.3');
+                        randomFlickerTL.add(growSomeGlow(startingBulbColor, 0));
                         masterRandomFlickerTL.add(randomFlickerTL);
                     },
 
@@ -587,6 +587,7 @@ let lightbulb = function lightbulb () {
                 );
 
                 masterTL.play();
+                //masterTL.play(11.5);
                 //masterTL.seek(LABELS.phaseBulbFlickeringAtRandom + '-=1');
 
             };

@@ -189,10 +189,7 @@ module.exports = function () {
     };
 
     config.svgSymbolsOpts = {
-        className: '.icon--%f',
-        svgoConfig: {
-
-        }  // TODO: Add options here. For now, I'm using SVGOMG
+        className: '.icon--%f'        
     };
 
 

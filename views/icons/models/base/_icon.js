@@ -62,7 +62,7 @@ let
 
       // add a click listener on the svg element and bind
       // the callback to our object instance
-      this.svgElem.addEventListener('click', this.handleClick);
+      this.svgElem.addEventListener('click', this.handleClick.bind(this));
 
       // Support any additional custom click listeners/handlers
       if ( params.customClickHandlers && Array.isArray(params.customClickHandlers) ) {

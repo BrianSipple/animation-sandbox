@@ -5,10 +5,14 @@
     </g>
 
     <g id="guide-shapes" fill="none">
-      <polygon id="guide-shape--pause-right" class="guide-element guide-element__pause-right" points="28,13 38,13 38,36 28,36"/>
-      <polygon id="guide-shape--pause-left" class="guide-element__pause-left" points="10,13 20,13 20,36 10,36"/>
+      <polygon id="guide-shape--pause-right" class="guide-element guide-element__pause-right" points="26.5,13 38,13 38,36 26.5,36"/>
+      <polygon id="guide-shape--pause-left" class="guide-element__pause-left" points="10,13 21.5,13 21.5,36 10,36"/>
     </g>
 
+   <!--
+       In the start state, these will be shaped and positioned to
+       perfectly match the play triangle
+   -->
     <g id="main-shapes">
         <polygon id="pause-bar--left" class="shape-element shape-element__pause-left" points="18,13 24.35,16.585 24.35,32.415 18,36"/>
         <polygon id="pause-bar--right" class="shape-element shape-element__pause-right" points="24.2,16.5 38,24.5 38,24.5 24.2,32.5"/>

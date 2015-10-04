@@ -17,20 +17,21 @@
 </head>
 <body>
 
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" style="width:0; height:0; visibility:hidden;">
         <symbol id="icon_PlayButton" viewBox="0 0 48 48">
-          <title>icon_PlayButton icon</title>
-          <circle cx="24" cy="24" r="22" stroke="#000" stroke-miterlimit="10" fill="none"/><g fill="none"><path class="guide-element guide-element__pause-right" d="M28 13h10v23H28z"/><path class="guide-element__pause-left" d="M10 13h10v23H10z"/></g><g><path class="shape-element shape-element__pause-left" d="M18 13l6.35 3.585v15.83L18 36z"/><path class="shape-element shape-element__pause-right" d="M24.2 16.5l13.8 8-13.8 8z"/></g>
+           <g id="keylines" fill="none"> <circle id="keyline-outer-circle--play-button" cx="24" cy="24" r="22" stroke="#000" stroke-miterlimit="10"/> </g> <g id="guide-shapes" fill="none"> <polygon id="guide-shape--pause-right" class="guide-element guide-element__pause-right" points="26.5,13 38,13 38,36 26.5,36"/> <polygon id="guide-shape--pause-left" class="guide-element__pause-left" points="10,13 21.5,13 21.5,36 10,36"/> </g> <!--
+           In the start state, these will be shaped and positioned to
+           perfectly match the play triangle
+       --> <g id="main-shapes"> <polygon id="pause-bar--left" class="shape-element shape-element__pause-left" points="18,13 24.35,16.585 24.35,32.415 18,36"/> <polygon id="pause-bar--right" class="shape-element shape-element__pause-right" points="24.2,16.5 38,24.5 38,24.5 24.2,32.5"/> </g>
         </symbol>
         <symbol id="icon_wand" viewBox="0 0 48 48">
-          <title>icon_wand icon</title>
-          <style>.wand__motion-trail{ fill:none;stroke:#000000; stroke-width:2; stroke-miterlimit:10; opacity: 0; }</style><g id="WandMotionTrails" class="wand__motion-trails"><path id="MotionTrail1" class="wand__motion-trail wand__motion-trail-1" d="M37.9 13c10.7 8.7 9.6 25 9.6 25"/><path id="MotionTrail2" class="wand__motion-trail wand__motion-trail-2" d="M33.9 13c10.7 8.7 9.6 25 9.6 25"/><path id="MotionTrail3" class="wand__motion-trail wand__motion-trail-3" d="M28.9 13c10.7 8.7 9.6 25 9.6 25"/></g><g id="WandBody" class="wand__body"><path id="handle" class="wand__handle" d="M13.6 33.2l-4.9 5.4c-.2.2-.1.5 0 .6l1.2 1.1c.2.2.5.1.6 0l4.4-4.8 19-21.8-.8-.7-19.5 20.2"/><path id="star" class="wand__star" d="M33.5 9.5l3.6-1.9-.7 4 3 2.9-4.1.6-1.8 3.6-1.8-3.6-4.1-.6 3-2.9-.7-4 3.6 1.9z"/></g>
+            <g id="WandMotionTrails" class="wand__motion-trails"> <!-- path order starts outwards and goes inwards --> <path id="MotionTrail1" class="wand__motion-trail wand__motion-trail-1" d="M37.9 13c10.7 8.7 9.6 25 9.6 25"/> <path id="MotionTrail2" class="wand__motion-trail wand__motion-trail-2" d="M33.9 13c10.7 8.7 9.6 25 9.6 25"/> <path id="MotionTrail3" class="wand__motion-trail wand__motion-trail-3" d="M28.9 13c10.7 8.7 9.6 25 9.6 25"/> </g> <g id="WandBody" class="wand__body"> <path id="handle" class="wand__handle" d="M13.6 33.2l-4.9 5.4c-.2.2-.1.5 0 .6l1.2 1.1c.2.2.5.1.6 0l4.4-4.8 19-21.8-.8-.7-19.5 20.2"/> <path id="star" class="wand__star" d="M33.5 9.5l3.6-1.9-.7 4 3 2.9-4.1.6-1.8 3.6-1.8-3.6-4.1-.6 3-2.9-.7-4 3.6 1.9z"/> </g>
         </symbol>
-        <symbol id="icons_x" viewBox="0 0 48 48">
-          <title>icons_x icon</title>
-          <g fill="none" stroke="#000" stroke-miterlimit="10"><path d="M8.5 39.5l31-31M8.5 8.5l31 31"/></g>
+        <symbol id="icon_x" viewBox="0 0 48 48">
+           <g fill="none"> <path stroke="#000" stroke-miterlimit="10" d="M8.5 39.5l31-31"/> <path stroke="#000" stroke-miterlimit="10" d="M8.5 8.5l31 31"/> </g>
         </symbol>
     </svg>
+
 
 
     <div class="svg-grid-container">
@@ -50,24 +51,23 @@
 
              <!-- //////////////////////////////// Wand //////////////////////////////// -->
              <svg id="WandIcon1" class="wand svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-               <style>
-                 .wand__motion-trail{
-                     fill:none;stroke:#000000; stroke-width:2; stroke-miterlimit:10; opacity: 0;
-                 }
-               </style>
-               <g id="WandMotionTrails" class="wand__motion-trails">
-                 <!-- path order starts outwards and goes inwards -->
-                 <path id="MotionTrail1" class="wand__motion-trail wand__motion-trail-1" d="M37.9 13c10.7 8.7 9.6 25 9.6 25"/>
-                 <path id="MotionTrail2" class="wand__motion-trail wand__motion-trail-2" d="M33.9 13c10.7 8.7 9.6 25 9.6 25"/>
-                 <path id="MotionTrail3" class="wand__motion-trail wand__motion-trail-3" d="M28.9 13c10.7 8.7 9.6 25 9.6 25"/>
-               </g>
-               <g id="WandBody" class="wand__body">
-                 <path id="handle" class="wand__handle" d="M13.6 33.2l-4.9 5.4c-.2.2-.1.5 0 .6l1.2 1.1c.2.2.5.1.6 0l4.4-4.8 19-21.8-.8-.7-19.5 20.2"/>
-                 <path id="star" class="wand__star" d="M33.5 9.5l3.6-1.9-.7 4 3 2.9-4.1.6-1.8 3.6-1.8-3.6-4.1-.6 3-2.9-.7-4 3.6 1.9z"/>
-               </g>
+                 <style>
+                   .wand__motion-trail{
+                       fill:none;stroke:#000000; stroke-width:2; stroke-miterlimit:10; opacity: 0;
+                   }
+                 </style>
+                 <g id="WandMotionTrails" class="wand__motion-trails">
+                   <!-- path order starts outwards and goes inwards -->
+                   <path id="MotionTrail1" class="wand__motion-trail wand__motion-trail-1" d="M37.9 13c10.7 8.7 9.6 25 9.6 25"/>
+                   <path id="MotionTrail2" class="wand__motion-trail wand__motion-trail-2" d="M33.9 13c10.7 8.7 9.6 25 9.6 25"/>
+                   <path id="MotionTrail3" class="wand__motion-trail wand__motion-trail-3" d="M28.9 13c10.7 8.7 9.6 25 9.6 25"/>
+                 </g>
+                 <g id="WandBody" class="wand__body">
+                   <path id="handle" class="wand__handle" d="M13.6 33.2l-4.9 5.4c-.2.2-.1.5 0 .6l1.2 1.1c.2.2.5.1.6 0l4.4-4.8 19-21.8-.8-.7-19.5 20.2"/>
+                   <path id="star" class="wand__star" d="M33.5 9.5l3.6-1.9-.7 4 3 2.9-4.1.6-1.8 3.6-1.8-3.6-4.1-.6 3-2.9-.7-4 3.6 1.9z"/>
+                 </g>
              </svg>
-
-           </svg>
+         </svg>
 
          </div>
 

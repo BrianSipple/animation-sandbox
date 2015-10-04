@@ -82,7 +82,7 @@ let WandIcon = (svgElem) => {
     };
 
     wandIcon.handleClick = function handleClick (ev) {
-      //debugger;
+      debugger;
       if (!this.isAnimating) {
 
         this.isAnimating = true;
@@ -95,7 +95,9 @@ let WandIcon = (svgElem) => {
           this.mainIconTL = new TimelineMax({
             // yoyo: true,
             // repeat: 1,
-            onComplete: wandIcon.boundDeclareAnimationComplete.bind(wandIcon)
+            onComplete: function () {
+                this.isAnimating = false;
+            }.bind(this)
           });
 
           let

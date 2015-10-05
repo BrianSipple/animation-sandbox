@@ -47,7 +47,7 @@ let lightbulb = function lightbulb () {
             },
 
             DURATIONS = {
-                initialWireCharging: 3.2,
+                initialWireCharging: 2.2,
 
                 // this should be at least the monitor
                 // frame rate that we're targeting (i.e. 60 fps ==> 0.0167ms)
@@ -68,14 +68,24 @@ let lightbulb = function lightbulb () {
 
             COLORS = {
               wire: {
-                chargingOrange: '#E68A3A',
-                chargingYellow: '#FEF734'
+                chargingOrange: '#FFA85C',
+                chargingYellow: '#FEF201'
               },
 
               bulb: {
-                chargingOrange: '#E68A3A',
-                litYellow: '#FEF734',
-                chargingYellow: '#FFF3AA'
+                chargingOrange: '#FFA85C',
+                litYellow: '#FEF201',
+                chargingYellow: '#FFF3AA',
+                yellowStep1: '#FFFBB2',
+                yellowStep2: '#FEF87F',
+                yellowStep3: '#FFF666',
+                yellowStep4: '#FFF559',
+                yellowStep5: '#FFF64C',
+                yellowStep6: '#FFF540',
+                yellowStep7: '#FFF533',
+                yellowStep8: '#FEF426',
+                yellowStep9: '#FFF319',
+                yellowStep10: '#FFF20D'
               }
             },
 
@@ -215,10 +225,12 @@ let lightbulb = function lightbulb () {
                 return turbulenceTL;
             },
 
-            makeWiresCharge = function makeWiresCharge (duration, percentage, delay = 0) {
+            makeWiresCharge = function makeWiresCharge (color, duration, percentage, delay = 0, yoyo=true) {
 
                 let wireChargeTL = new TimelineMax({
-                    delay: delay
+                    delay: delay,
+                    repeat: yoyo ? 1 : 0,
+                    yoyo: yoyo
                 });
 
                 wireChargeTL.to(
@@ -380,17 +392,17 @@ let lightbulb = function lightbulb () {
                     }),
 
                     flickerSequence = [
-                        { numFlickers: 11, intensityPct: 20, color: COLORS.bulb.chargingYellow, delay: 0.2 },
-                        { numFlickers: 10, intensityPct: 40, color: COLORS.bulb.chargingYellow, delay: 0.67, nextFlickerStartLabel: 'flicker2' },
-                        { numFlickers: 16, intensityPct: 60, color: COLORS.bulb.litYellow, delay: 0.85, nextFlickerStartLabel: 'flicker3' },
-                        { numFlickers: 9, intensityPct: 70, color: COLORS.bulb.litYellow, delay: 0.10, nextFlickerStartLabel: 'flicker4' },
-                        { numFlickers: 4, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.9, nextFlickerStartLabel: 'flicker5' },
-                        { numFlickers: 9, intensityPct: 99, color: COLORS.bulb.chargingYellow, delay: 0.15, nextFlickerStartLabel: 'flicker6' },
-                        { numFlickers: 6, intensityPct: 80, color: COLORS.bulb.chargingYellow, delay: 0.31, nextFlickerStartLabel: 'flicker7' },
-                        { numFlickers: 9, intensityPct: 90, color: COLORS.bulb.chargingYellow, delay: 0.1, nextFlickerStartLabel: 'flicker8' },
-                        { numFlickers: 5, intensityPct: 95, color: COLORS.bulb.chargingYellow, delay: 0.05, nextFlickerStartLabel: 'flicker9' },
-                        { numFlickers: 5, intensityPct: 97, color: COLORS.bulb.chargingYellow, delay: 0.05, nextFlickerStartLabel: 'flicker10' },
-                        { numFlickers: 13, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, nextFlickerStartLabel: 'flicker11', finalFlicker: true }
+                        { numFlickers: 4, intensityPct: 20, color: COLORS.bulb.yellowStep1, delay: 0.2 },
+                        { numFlickers: 5, intensityPct: 40, color: COLORS.bulb.yellowStep2, delay: 1.2, nextFlickerStartLabel: 'flicker2' },
+                        { numFlickers: 12, intensityPct: 60, color: COLORS.bulb.yellowStep3, delay: 1.35, nextFlickerStartLabel: 'flicker3' },
+                        { numFlickers: 9, intensityPct: 70, color: COLORS.bulb.yellowStep4, delay: 0.30, nextFlickerStartLabel: 'flicker4' },
+                        { numFlickers: 4, intensityPct: 80, color: COLORS.bulb.yellowStep5, delay: 0.5, nextFlickerStartLabel: 'flicker5' },
+                        { numFlickers: 9, intensityPct: 99, color: COLORS.bulb.yellowStep6, delay: 0.15, nextFlickerStartLabel: 'flicker6' },
+                        { numFlickers: 6, intensityPct: 80, color: COLORS.bulb.yellowStep7, delay: 0.31, nextFlickerStartLabel: 'flicker7' },
+                        { numFlickers: 8, intensityPct: 90, color: COLORS.bulb.yellowStep8, delay: 0.1, nextFlickerStartLabel: 'flicker8' },
+                        { numFlickers: 5, intensityPct: 95, color: COLORS.bulb.yellowStep9, delay: 0.05, nextFlickerStartLabel: 'flicker9' },
+                        { numFlickers: 5, intensityPct: 97, color: COLORS.bulb.yellowStep10, delay: 0.05, nextFlickerStartLabel: 'flicker10' },
+                        { numFlickers: 15, intensityPct: 100, color: COLORS.bulb.litYellow, delay: 0.05, nextFlickerStartLabel: 'flicker11', finalFlicker: true }
                     ];
 
                 // Provide master TLs with labels so that we can reference
@@ -431,23 +443,26 @@ let lightbulb = function lightbulb () {
                     // At the end, we'll want to add the glow-grow TL
                     // right when the final flicker completes
                     if (seq.finalFlicker) {
-                        //flickerBurstTL.add(
-                        //    growSomeGlow(COLORS.bulb.litYellow, 0.1)
-                        //);
-                        flickerBurstTL.set(
-                            [
-                                bulbInnerGlowLayerSVG,
-                                bulbInnerLightSVG
-                            ],
-                            { opacity: 1, visibility: 'visible', fill: COLORS.bulb.litYellow, immediateRender: false }
-                            //masterFlickerTL.recent().endTime() + seq.delay + .01
+                        flickerBurstTL.add(
+                           growSomeGlow(COLORS.bulb.litYellow, 0.2)
+                           //flickerBurstTL.recent().endTime() + 0.4
                         );
+                        // flickerBurstTL.set(
+                        //     [
+                        //         bulbInnerGlowLayerSVG,
+                        //         bulbInnerLightSVG
+                        //     ],
+                        //     { opacity: 1, visibility: 'visible', fill: COLORS.bulb.litYellow, immediateRender: false }
+                        //     //masterFlickerTL.recent().endTime() + seq.delay + .01
+                        // );
                     }
 
                     wireChargeTL = makeWiresCharge(
+                        seq.color,
                         flickerBurstDuration,
                         seq.intensityPct,
-                        seq.delay
+                        seq.delay,
+                        !(seq.finalFlicker)  // no yoyo on final flicker
                     );
 
                     wireTurbulenceTL = createWireTurbulence(
@@ -593,8 +608,8 @@ let lightbulb = function lightbulb () {
                     LABELS.phaseBulbFlickeringAtRandom
                 );
 
-                //masterTL.play();
-                masterTL.play(9.5);
+                masterTL.play();
+                //masterTL.play(9.5);
                 //masterTL.seek(LABELS.phaseBulbFlickeringAtRandom + '-=1');
 
             };

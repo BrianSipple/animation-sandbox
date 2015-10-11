@@ -13,13 +13,13 @@ $stroke-dash-max: 360;
     100% {
         //stroke-dasharray: $stroke-dash-max $stroke-dash-max;
         stroke-dasharray: 100% 100%;
-    }        
+    }
 }
 
 
 
 .main-view-container {
-    background-color: hsla(0, 0%, 40%, 1);    
+    background-color: hsla(0, 0%, 40%, 1);
 }
 
 .scene {
@@ -32,11 +32,11 @@ $stroke-dash-max: 360;
 }
 
 .text-content {
-    
+
 }
 
 .row {
-    fill: none;    
+    fill: none;
     stroke: #8f82FF;
     stroke-miterlimit: 10;
     font-family: $font-family-stack;
@@ -47,8 +47,8 @@ $stroke-dash-max: 360;
     //stroke-dashoffset: 0;
 
     &.drawing {
-        animation: DrawTextPath 8s $easings_ease-out-cubic;
+        animation: DrawTextPath 8s $easing__ease-out-cubic;
         animation-fill-mode: forwards;
     }
-    
+
 }

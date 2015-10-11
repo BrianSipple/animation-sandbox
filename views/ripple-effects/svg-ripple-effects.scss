@@ -1,0 +1,48 @@
+@import '../../styles/application';
+
+$ripple-color: hsla(67, 100%, 86%, 1);
+$theme-color_primary__main: hsla(276, 42%, 46%, 1);
+$tab-selectors__font-color: $background-color;
+$background-color: hsla(275, 24%, 63%, 1);
+
+.body {
+    background-color: $background-color;
+}
+
+.content-section {
+    width: 80%;
+    margin: 1rem auto;
+}
+
+.btn--ripple {
+    position: relative;
+}
+
+/* Ripple SVG element */
+.ripple {
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 0;
+    fill: $ripple-color;
+
+    &.ripple-btn {
+
+    }
+
+    use {
+        opacity: 0;
+    }
+}
+
+.tab-selectors-container {
+    width: 80%;
+}
+
+.tab-selectors {
+    background-color: $theme-color_primary__main;
+    color: $tab-selectors__font-color;
+}

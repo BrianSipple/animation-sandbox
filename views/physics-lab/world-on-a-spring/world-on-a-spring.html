@@ -39,29 +39,36 @@
         <stop offset=".835" stop-color="#0E446F"/>
         <stop offset=".894" stop-color="#0A5788"/>
         <stop offset=".944" stop-color="#056CA5"/>
+        <!--
+        For some reason, the radial gradient isn't
+        being applied corrrectly here. I'm defaulting to the primary water
+        color in the meantime
         <stop offset="1" stop-color="#9FD8FF"/>
+        -->
+        <stop offset="1" stop-color="#152545"/>
+
       </radialGradient>
     </defs>
 </svg>
 
 <div class="main-view-container">
 
-  
+
     <div class="scene__container">
-   
+
         <svg version="1.1"
              xmlns="http://www.w3.org/2000/svg"
              xmlns:xlink="http://www.w3.org/1999/xlink"
              width="100%"
              height="100%"
-             class="scene__svg-container"> 
+             class="scene__svg-container">
 
 
-           <svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 545.1 330">
+           <svg class="svg scene__world-on-a-spring" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 545.1 330">
   <style>
     .st0{fill:none;stroke:#000000;stroke-miterlimit:10;} .st1{fill:#FFFFFF;} .st2{font-family:&apos;AmericanTypewriter&apos;;} .st3{font-size:32px;}
   </style>
-  
+
     <text id="title" transform="translate(277)">
         <tspan x="0" text-anchor="middle">World on a Spring</tspan>
     </text>
@@ -78,11 +85,11 @@
 
             </svg>
         </svg>
-    
-        
-                          
+
+
+
        <div class="scene__controller">
-          
+
             <h2>Toggle the constants below to change the physics of the spring.</h2>
 
 

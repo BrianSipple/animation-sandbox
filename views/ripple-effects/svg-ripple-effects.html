@@ -1,0 +1,129 @@
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Lightbulb Flickering</title>
+    <meta name="description" content="Lightbulb Flickering">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+    <link rel="stylesheet" href="svg-ripple-effects.css">
+    <!-- Place favicon.ico in the root directory -->
+
+</head>
+<body>
+
+    <svg version="1.1"
+         class="svg-defs"
+         xmlns="http://www.w3.org/2000/svg"
+         focusable="false"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+
+         <defs>
+             <symbol id="radial-ripple" viewBox="0 0 100 100">
+                 <!--
+                 Creates a 2px x 2px circle with a radius of 1px.
+                 This will ensure our circle doesn’t crop
+                 -->
+                 <circle id="ripple-circle" cx="1" cy="1" r="1"></circle>
+             </symbol>
+         </defs>
+
+     </svg>
+
+    <div class="main-view-container">
+
+        <div class="content-section">
+
+            <button class="btn btn--ripple js-ripple-btn">
+                Ripple Me
+                <svg class="ripple ripple--btn js-ripple">
+                    <use class="svg-use svg-use--fill" id="js-ripple" xlink:href="#radial-ripple"></use>
+                </svg>
+            </button>
+
+        </div>
+
+        <div class="content-section">
+
+            <div class="tab-selectors-container">
+                <div class="tab-selectors tab-selectors--ripple">
+                    <div class="tab-selectors__content">
+                       <ul class="tab-selectors__tab-list">
+
+                            <li class="tab">
+                                <a class="tab__link" data-atom-key="hydrogen">
+                                    Hydrogen
+                                    <svg class="ripple ripple--btn js-ripple">
+                                        <use class="svg-use svg-use--fill js-ripple" xlink:href="#radial-ripple"></use>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="tab active">
+                                <a class="tab__link" data-atom-key="carbon">
+                                    Carbon
+                                    <svg class="ripple ripple--btn js-ripple">
+                                        <use class="svg-use svg-use--fill js-ripple" xlink:href="#radial-ripple"></use>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="tab">
+                                <a class="tab__link" data-atom-key="nitrogen">
+                                    Nitrogen
+                                    <svg class="ripple ripple--btn js-ripple">
+                                        <use class="svg-use svg-use--fill js-ripple" xlink:href="#radial-ripple"></use>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="tab">
+                                <a class="tab__link" data-atom-key="oxygen">
+                                    Oxygen
+                                    <svg class="ripple ripple--btn js-ripple">
+                                        <use class="svg-use svg-use--fill js-ripple" xlink:href="#radial-ripple"></use>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="tab">
+                                <a class="tab__link" data-atom-key="phosphorus">
+                                    Phosphorus
+                                    <svg class="ripple ripple--btn js-ripple">
+                                        <use class="svg-use svg-use--fill js-ripple" xlink:href="#radial-ripple"></use>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="tab">
+                                <a class="tab__link" data-atom-key="calcium">
+                                    Calcium
+                                    <svg class="ripple ripple--btn js-ripple">
+                                        <use class="svg-use svg-use--fill js-ripple" xlink:href="#radial-ripple"></use>
+                                    </svg>
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="../../../js/lib/plugins/base-plugins.js"></script>
+
+
+    <script src="../../../vendor/system.js"></script>
+    <script src="../../../config.js"></script>
+    <script>
+        System.import('views/ripple-effects/svg-ripple-effects')
+            .then(function (module) {
+                module.init();
+            });
+            // .catch(function (err) {
+            //     console.trace();
+            // });
+    </script>
+
+</body>
+</html>

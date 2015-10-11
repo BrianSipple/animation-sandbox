@@ -7,8 +7,12 @@
       @extend %button--holo;
     }
 
+    &.btn--ripple {
+
+    }
+
     // Make any further modifications, types, states, etc here
-    transition: transform ($anim-duration__multiplier * 0.4) $easing__ease-out-cubic;
+    transition: transform ($animation-duration-multiplier * 0.4) $easing__ease-out-cubic;
 
     &:hover {
         transform: scale(1.08);

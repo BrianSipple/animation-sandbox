@@ -81,10 +81,6 @@ function animateRippleOnPointerEvent (ev) {
         rippleCircleSVG,
         DURATIONS.rippleEffect,
         {
-            // attr: {
-            //     cx: xFromLeft,
-            //     cy: yFromTop
-            // },
             x: xFromLeft,
             y: yFromTop,
             scale: 0,

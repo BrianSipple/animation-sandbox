@@ -1,9 +1,9 @@
 @import '../../styles/application';
 
+$background-color: hsla(275, 24%, 63%, 1);
 $ripple-color: hsla(67, 100%, 86%, 1);
 $theme-color_primary__main: hsla(276, 42%, 46%, 1);
 $tab-selectors__font-color: $background-color;
-$background-color: hsla(275, 24%, 63%, 1);
 
 .body {
     background-color: $background-color;

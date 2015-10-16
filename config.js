@@ -18,7 +18,8 @@ System.config({
     "github:*": "vendor/github/*.js",
     "npm:*": "vendor/npm/*.js",
     "vendor": "vendor/",
-    "views": "views/"
+    "views": "views/",
+    "utils/*": "lib/utils/*.js"
   }
 });
 

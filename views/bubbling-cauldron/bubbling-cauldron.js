@@ -30,6 +30,7 @@ const BubblingCauldron = (function BubblingCauldron () {
                 [ 'bubbleUpDelayMinimum', 0.4 ],
                 [ 'bubbleUpDelayVariance', 3.0 ],
                 [ 'stirRevolution', 2 ]
+                //[ 'stirRevolution', 20 ]
             ]
         ),
 
@@ -91,7 +92,8 @@ const BubblingCauldron = (function BubblingCauldron () {
         DIMENSIONS.set('cauldronStick', {
             // width is uneven here (this is an artisal, real-wood stick),
             // so we'll use "measure points" at the sticks intersection with the liquid
-            width: Math.abs(
+            width: cauldronStickElem.getBBox().width,
+            bottomBaseWidth: Math.abs(
                 Number(stickMeasurePointElems[0].getAttribute('cx')) -
                 Number(stickMeasurePointElems[1].getAttribute('cx'))
             ),
@@ -101,19 +103,25 @@ const BubblingCauldron = (function BubblingCauldron () {
         ////////////////
         // Compute important percentages with our initial measurments
         ////////////////
-        DIMENSIONS.get('cauldronStick').widthPercentage =
+        DIMENSIONS.get('cauldronStick').bottomBaseWidthAsPercentageOfCauldronWidth =
          (
-             DIMENSIONS.get('cauldronStick').width /
+             DIMENSIONS.get('cauldronStick').bottomBaseWidth /
              DIMENSIONS.get('cauldron').width
          ) * 100;
 
-         DIMENSIONS.get('cauldronLiquid').heightPercentage =
+         DIMENSIONS.get('cauldronStick').widthAsPercentageOfCauldronWidth =
+          (
+              DIMENSIONS.get('cauldronStick').width /
+              DIMENSIONS.get('cauldron').width
+          ) * 100;
+
+         DIMENSIONS.get('cauldronLiquid').heightAsPercentageOfCauldronHeight =
           (
               DIMENSIONS.get('cauldronLiquid').height /
               DIMENSIONS.get('cauldron').height
           ) * 100;
 
-         DIMENSIONS.get('cauldronLiquid').widthPercentage =
+         DIMENSIONS.get('cauldronLiquid').widthAsPercentageOfCauldronWidth =
           (
               DIMENSIONS.get('cauldronLiquid').width /
               DIMENSIONS.get('cauldron').width
@@ -121,7 +129,6 @@ const BubblingCauldron = (function BubblingCauldron () {
     }
 
     function setUpBubbles () {
-
 
         let setupTL = new TimelineMax({ /*paused: true*/ });
 
@@ -133,8 +140,10 @@ const BubblingCauldron = (function BubblingCauldron () {
         setupTL.set(
             cauldronStickElem,
             {
-                transformOrigin: 'center bottom',
-                x: DIMENSIONS.get('cauldronStick').widthPercentage,
+                transformOrigin: 'left bottom',
+                x: (DIMENSIONS.get('cauldronStick').widthAsPercentageOfCauldronWidth / 2) +
+                    DIMENSIONS.get('cauldronStick').bottomBaseWidthAsPercentageOfCauldronWidth,
+
                 immediateRender: false
             }
         );
@@ -218,30 +227,34 @@ const BubblingCauldron = (function BubblingCauldron () {
             debugger;
             let
                 circularMotionTL = new TimelineMax(),
-
                 stickPath = [
                     // x and y transform percentages
                     {
                         x: -50,
-                        y: DIMENSIONS.get('cauldronLiquid').heightPercentage / 2   // / 2 because we start from mid height
+                        y: DIMENSIONS.get('cauldronLiquid').heightAsPercentageOfCauldronHeight / 2   // / 2 because we start from mid height
                     },
                     {
-                        x: -1 * (100 - DIMENSIONS.get('cauldronLiquid').widthPercentage),
+                        x: -1 * (
+                                (50 + ( DIMENSIONS.get('cauldronLiquid').widthAsPercentageOfCauldronWidth / 2 ) ) -
+                                DIMENSIONS.get('cauldronStick').bottomBaseWidthAsPercentageOfCauldronWidth
+                            ),
                         y: 0
                     },
                     {
                         x: -50,
-                        y: -1 * DIMENSIONS.get('cauldronLiquid').heightPercentage / 2
+                        y: -1 * DIMENSIONS.get('cauldronLiquid').heightAsPercentageOfCauldronHeight / 2
                     },
                     {
-                        x: 0 + DIMENSIONS.get('cauldronLiquid').widthPercentage,
+                        x: (
+                                DIMENSIONS.get('cauldronStick').widthAsPercentageOfCauldronWidth / 2
+                            ) +
+                            DIMENSIONS.get('cauldronStick').bottomBaseWidthAsPercentageOfCauldronWidth,
                         y: 0
                     }
                 ];
 
             console.log('Bezier tweening stick with x and y transform values of ');
             console.table(stickPath);
-
 
             circularMotionTL.to(
                 cauldronStickElem,
@@ -258,7 +271,6 @@ const BubblingCauldron = (function BubblingCauldron () {
             )
 
             return circularMotionTL;
-
         }
 
         //masterStirTL.add(rotateStick(), 0);  TODO: Enable line

@@ -143,6 +143,12 @@ body {
     overflow-x: hidden;
 }
 
+// Allow svgs to animate outside of their existing containers
+// and still be visible
+.svg-html-container {
+    overflow: visible;
+}
+
 
 .svg-def {
     position: absolute;

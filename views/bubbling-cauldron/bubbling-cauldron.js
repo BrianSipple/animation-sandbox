@@ -141,6 +141,8 @@ const BubblingCauldron = (function BubblingCauldron () {
             cauldronStickElem,
             {
                 transformOrigin: 'left bottom',
+                // y: -10,
+                // rotationZ: 20,
                 x: (DIMENSIONS.get('cauldronStick').widthAsPercentageOfCauldronWidth / 2) +
                     DIMENSIONS.get('cauldronStick').bottomBaseWidthAsPercentageOfCauldronWidth,
 
@@ -230,27 +232,35 @@ const BubblingCauldron = (function BubblingCauldron () {
                 stickPath = [
                     // x and y transform percentages
                     {
-                        x: -50,
-                        y: DIMENSIONS.get('cauldronLiquid').heightAsPercentageOfCauldronHeight / 2   // / 2 because we start from mid height
+                        x: -1 * (50 - (DIMENSIONS.get('cauldronStick').widthAsPercentageOfCauldronWidth / 2)),
+                        y: DIMENSIONS.get('cauldronLiquid').heightAsPercentageOfCauldronHeight / 2,   // / 2 because we start from mid height
                     },
                     {
                         x: -1 * (
                                 (50 + ( DIMENSIONS.get('cauldronLiquid').widthAsPercentageOfCauldronWidth / 2 ) ) -
                                 DIMENSIONS.get('cauldronStick').bottomBaseWidthAsPercentageOfCauldronWidth
                             ),
-                        y: 0
+                        y: DIMENSIONS.get('cauldronLiquid').heightAsPercentageOfCauldronHeight / 3
                     },
                     {
                         x: -50,
-                        y: -1 * DIMENSIONS.get('cauldronLiquid').heightAsPercentageOfCauldronHeight / 2
+                        y: -1 * DIMENSIONS.get('cauldronLiquid').heightAsPercentageOfCauldronHeight / 2.5
                     },
                     {
                         x: (
                                 DIMENSIONS.get('cauldronStick').widthAsPercentageOfCauldronWidth / 2
                             ) +
                             DIMENSIONS.get('cauldronStick').bottomBaseWidthAsPercentageOfCauldronWidth,
-                        y: 0
+                        y: -DIMENSIONS.get('cauldronLiquid').heightAsPercentageOfCauldronHeight / 3
                     }
+                ],
+
+                // calibrate the 3-dimensional rotation of the stick along\
+                // its motion path
+                // TODO: Um... how is GSAP expecting this to be defined?
+                rotationParams = [
+                    [ 'y', 'z', 'rotation', -310, false ],
+                    [ 'y', 'z', 'rotation', -180, false ]
                 ];
 
             console.log('Bezier tweening stick with x and y transform values of ');
@@ -264,7 +274,7 @@ const BubblingCauldron = (function BubblingCauldron () {
                         type: 'smooth',
                         values: stickPath,
                         curviness: 1,  // "normal" curviness
-                        //autoRotate: true
+                        autoRotate: rotationParams
                     },
                     ease: EASINGS.get('linear')
                 }

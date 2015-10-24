@@ -1,6 +1,6 @@
 /*!
- * VERSION: 0.0.5
- * DATE: 2015-05-19
+ * VERSION: 0.0.7
+ * DATE: 2015-10-06
  * UPDATES AND DOCS AT: http://greensock.com
  *
  * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
@@ -12,7 +12,7 @@
  */
 var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window; //helps ensure compatibility with AMD/RequireJS and CommonJS/Node
 (_gsScope._gsQueue || (_gsScope._gsQueue = [])).push( function() {
-	
+
 	"use strict";
 
 	function getDistance(x1, y1, x2, y2) {
@@ -59,7 +59,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			prevPoint = element.style.strokeDasharray;
 			element.style.strokeDasharray = "none";
 			length = element.getTotalLength() || 0;
-			//bbox = element.getBBox(); //solely for fixing bug in IE - we don't actually use the bbox.
+			bbox = element.getBBox(); //solely for fixing bug in IE - we don't actually use the bbox.
 			element.style.strokeDasharray = prevPoint;
 		} else if (type === "rect") {
 			bbox = element.getBBox();
@@ -116,13 +116,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		if (dash > length) {
 			dash = length;
 		}
-		return [Math.max(0, -offset), dash - offset];
+		return [Math.max(0, -offset), Math.max(0, dash - offset)];
 	}
 
 	DrawSVGPlugin = _gsScope._gsDefine.plugin({
 		propName: "drawSVG",
 		API: 2,
-		version: "0.0.5",
+		version: "0.0.7",
 		global: true,
 		overwriteProps: ["drawSVG"],
 
@@ -162,7 +162,11 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			if (this._firstPT) {
 				this._super.setRatio.call(this, ratio);
 				this._style.strokeDashoffset = this._offset;
-				this._style.strokeDasharray = ((ratio === 1 || ratio === 0) && this._offset < 0.001 && this._length - this._dash <= 10) ? "none" : this._dash + "px," + this._length + "px"; //to avoid rendering issues in some browsers with shapes like rect that never appear to close the path when there's a stroke-dasharray, we set it to "none" when it's basically 100%
+				if (ratio === 1 || ratio === 0) {
+					this._style.strokeDasharray = (this._offset < 0.001 && this._length - this._dash <= 10) ? "none" : (this._offset === this._dash) ? "0px, 999999px" : this._dash + "px," + this._length + "px";
+				} else {
+					this._style.strokeDasharray = this._dash + "px," + this._length + "px";
+				}
 			}
 		}
 

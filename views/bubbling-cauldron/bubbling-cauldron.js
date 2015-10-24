@@ -1,6 +1,8 @@
 import 'TweenMax';
-import { Bubble } from './Bubble';
+import Bubble from './Bubble';
+import Flame from './Flame';
 import { replacePathMoveTo } from 'utils/svg-utils';
+import { pairItemsInArray } from 'utils/array-utils';
 
 const BubblingCauldron = (function BubblingCauldron () {
 
@@ -12,7 +14,35 @@ const BubblingCauldron = (function BubblingCauldron () {
                 [ 'cauldronBubble', '.cauldron__bubble' ],
                 [ 'cauldronLiquid', '.cauldron__liquid'],
                 [ 'cauldronStickControlPoint', '.cauldon__stick-control-point'],
-                [ 'cauldronStickMeasurePoint', '.cauldon__stick-measure-point']
+                [ 'cauldronStickMeasurePoint', '.cauldon__stick-measure-point'],
+                [ 'flames', '.flame'],
+                [ 'startStateFlames', '.flame--start-state'],
+                [ 'endStateFlames', '.flame--end-state'],
+                [ 'flameSets', new Map(
+                        [
+                            [
+                                '.flames--start-state .flame--left',
+                                '.flames--end-state .flame--left'
+                            ],
+                            [
+                                '.flames--start-state .flame--left-diagonal',
+                                '.flames--end-state .flame--left-diagonal'
+                            ],
+                            [
+                                '.flames--start-state .flame--front',
+                                '.flames--end-state .flame--front',
+                            ],
+                            [
+                                '.flames--start-state .flame--right',
+                                '.flames--end-state .flame--right',
+                            ],
+                            [
+                                '.flames--start-state .flame--right-diagonal',
+                                '.flames--end-state .flame--right-diagonal',
+                            ]
+                        ]
+                    )
+                ]
             ]
 
         ),
@@ -29,7 +59,9 @@ const BubblingCauldron = (function BubblingCauldron () {
                 [ 'bubbleUpVariance', 0.3 ],
                 [ 'bubbleUpDelayMinimum', 0.4 ],
                 [ 'bubbleUpDelayVariance', 3.0 ],
-                [ 'stirRevolution', 2 ]
+                [ 'stirRevolution', 4 ],
+                [ 'flameFlickerMin', 0.5 ],
+                [ 'flameFlickerMax', 0.812 ]
                 //[ 'stirRevolution', 20 ]
             ]
         ),
@@ -52,6 +84,10 @@ const BubblingCauldron = (function BubblingCauldron () {
             ]
         ),
 
+        // holder for each [startElem, endElem] pair of flame SVGs
+        FLAME_SETS = new Set(),
+
+
         // DOM_REFS
         cauldronElem = document.querySelector(SELECTORS.get('cauldron')),
         cauldronStickElem = cauldronElem.querySelector(SELECTORS.get('cauldronStick')),
@@ -60,6 +96,12 @@ const BubblingCauldron = (function BubblingCauldron () {
 
         stickControlPointElems = cauldronElem.querySelectorAll(SELECTORS.get('cauldronStickControlPoint')),
         stickMeasurePointElems = cauldronElem.querySelectorAll(SELECTORS.get('cauldronStickMeasurePoint')),
+
+        // TODO: Not sure if we need all flames together
+        flameElems = cauldronElem.querySelectorAll(SELECTORS.get('flames')),
+
+        startStateFlameElems = cauldronElem.querySelectorAll(SELECTORS.get('startStateFlames')),
+        endStateFlameElems = cauldronElem.querySelectorAll(SELECTORS.get('endStateFlames')),
 
         stickControlPointCoords = [],
         stickTransformPercentages = {},
@@ -153,6 +195,36 @@ const BubblingCauldron = (function BubblingCauldron () {
         return setupTL;
     }
 
+    function sortElemsByClassNameModifier (el1, el2, ascending = true) {
+        //debugger;
+        //console.log(el1.getAttribute('class').match(/--[^\s]*/)[0]);
+        //console.log(el2.getAttribute('class').match(/--[^\s]*/)[0]);
+        return el1.getAttribute('class').match(/--[^\s]*/)[0] >
+            el2.getAttribute('class').match(/--[^\s]*/)[0];
+    }
+
+    /**
+     * Pair the DOM reference for each staring flame with its
+     * with a refrence to its (visually) hidden morph target
+     */
+    function wireUpFlameSets () {
+
+        for (let elem of flameElems) {
+            console.log(elem.getAttribute('class'));
+        }
+
+        let
+            sortedFlameElems =
+                [...flameElems].sort(sortElemsByClassNameModifier),
+
+            flameElemPairs = pairItemsInArray(sortedFlameElems);
+
+        for (let pair of flameElemPairs) {
+            FLAME_SETS.add(pair);
+        }
+    }
+
+
     function getAllBubbly () {
 
         let bubblingTL = new TimelineMax ();
@@ -226,7 +298,6 @@ const BubblingCauldron = (function BubblingCauldron () {
         }
 
         function circulateStick () {
-            debugger;
             let
                 circularMotionTL = new TimelineMax(),
                 stickPath = [
@@ -289,6 +360,38 @@ const BubblingCauldron = (function BubblingCauldron () {
         return masterStirTL;
     }
 
+    /**
+     * Animate flames under the cauldron
+     */
+    function fireUpThePot () {
+        debugger;
+
+        let
+            masterFlamesTL = new TimelineMax(),
+            flame,
+            flameFlickerDuration;
+
+        // for (let [ startStateFlame, endStateFlame ] of FLAME_SETS.values()) {
+        for (let [ startStateSelector, endStateSelector ] of SELECTORS.get('flameSets').entries()) {
+
+            debugger;
+            flame = Flame(startStateSelector, endStateSelector);
+
+            flameFlickerDuration =
+                DURATIONS.get('flameFlickerMin') +
+                (
+                    Math.random() *
+                    ( DURATIONS.get('flameFlickerMax') - DURATIONS.get('flameFlickerMin') )
+                );
+
+            flame.startAnimationTimeline(flameFlickerDuration);
+            masterFlamesTL.add(flame.TL, 0);
+        }
+
+        return masterFlamesTL;
+
+    }
+
 
     function init () {
 
@@ -296,6 +399,8 @@ const BubblingCauldron = (function BubblingCauldron () {
 
         wireUpStickControlPoints();
         wireUpDimensions();
+        wireUpFlameSets();
+
 
         masterTL = new TimelineMax();
 
@@ -304,6 +409,7 @@ const BubblingCauldron = (function BubblingCauldron () {
         masterTL.add(LABELS.get('cauldronAnimationStart'));
         masterTL.add(getAllBubbly(), LABELS.get('cauldronAnimationStart'));
         masterTL.add(stirThePot(), LABELS.get('cauldronAnimationStart'));
+        masterTL.add(fireUpThePot(), LABELS.get('cauldronAnimationStart'));
 
     }
 

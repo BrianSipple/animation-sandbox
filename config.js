@@ -27,6 +27,7 @@ System.config({
   "map": {
     "DrawSVGPlugin": "vendor/gsap/src/minified/plugins/DrawSVGPlugin.min",
     "EndArrayPlugin": "vendor/gsap/src/minified/plugins/EndArrayPlugin.min",
+    "MorphSVGPlugin": "vendor/gsap/src/minified/plugins/MorphSVGPlugin.min",
     "TweenMax": "vendor/gsap/src/minified/TweenMax.min",
     "babel": "npm:babel-core@5.8.22",
     "babel-runtime": "npm:babel-runtime@5.8.20",

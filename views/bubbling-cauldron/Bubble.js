@@ -11,7 +11,7 @@ const
 
         masterTLOpts: {
             repeat: -1,
-            yoyo: true,
+            yoyo: true
             //paused: true
         },
 
@@ -24,12 +24,13 @@ const
             this.TL = new TimelineMax(this.masterTLOpts);
         },
 
-        setAnimationTimeline: function (duration, interval) {
+        /*
+         * Exposed to the caller to kick off the animation with
+         * a given duration and repeat interval.
+         */
+        setAnimationTimeline: function (duration, repeatInterval) {
 
-            //this.TL.repeatDelay(interval);
-
-            //let bubbleTL = new TimelineMax({ repeat: 0, yoyo: true, delay: interval });
-            let bubbleTL = new TimelineMax({ yoyo: true, delay: interval });
+            let bubbleTL = new TimelineMax({ delay: repeatInterval });
 
             bubbleTL.to(
                 this.elem,
@@ -47,6 +48,8 @@ const
         return bubble;
     };
 
-export function Bubble (elem) {
+function Bubble (elem) {
     return bubbleFactory(elem);
 };
+
+export default Bubble;

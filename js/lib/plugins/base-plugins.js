@@ -73,12 +73,13 @@
             };
         }
 
-        if (!Number.prototype.isNan) {
-
-            exports.isNaN = function isNaN (value) {
-                return typeof value === 'number' && value !== value;
-            };
-        }
+        // TODO: Fix!
+        // if (!Number.prototype.isNan) {
+        //
+        //     exports.isNaN = function isNaN (value) {
+        //         return typeof value === 'number' && value !== value;
+        //     };
+        // }
 
         if (!exports.getAbsoluteUrl) {
             exports.getAbsoluteUrl = (function getAbsoluteUrl (url) {

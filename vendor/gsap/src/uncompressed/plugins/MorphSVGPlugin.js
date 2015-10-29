@@ -1,6 +1,6 @@
 /*!
- * VERSION: 0.3.0
- * DATE: 2015-10-13
+ * VERSION: 0.3.1
+ * DATE: 2015-10-21
  * UPDATES AND DOCS AT: http://greensock.com
  *
  * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
@@ -276,21 +276,24 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					segment[l++] = relativeY = y;
 					i += 1;
 
-				// "L" (line)
-				} else if (command === "L") {
-					segment[l++] = relativeX + (x - relativeX) / 3;
-					segment[l++] = relativeY + (y - relativeY) / 3;
-					segment[l++] = relativeX + (x - relativeX) * 2 / 3;
-					segment[l++] = relativeY + (y - relativeY) * 2 / 3;
-					segment[l++] = relativeX = x;
-					segment[l++] = relativeY = y;
-					i += 2;
-
-				// "Z" (close)
-				} else if (command === "Z") {
-					relativeX = startX;
-					relativeY = startY;
-					segment.closed = true;
+				// "L" (line) or "Z" (close)
+				} else if (command === "L" || command === "Z") {
+					if (command === "Z") {
+						x = startX;
+						y = startY;
+						segment.closed = true;
+					}
+					if (command === "L" || Math.abs(relativeX - x) > 1 || Math.abs(relativeY - y) > 1) {
+						segment[l++] = relativeX + (x - relativeX) / 3;
+						segment[l++] = relativeY + (y - relativeY) / 3;
+						segment[l++] = relativeX + (x - relativeX) * 2 / 3;
+						segment[l++] = relativeY + (y - relativeY) * 2 / 3;
+						segment[l++] = x;
+						segment[l++] = y;
+						i += 2;
+					}
+					relativeX = x;
+					relativeY = y;
 
 				// "A" (arc)
 				} else if (command === "A") {
@@ -584,8 +587,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				shapeIndex = (shapeIndices[i] || shapeIndices[i] === 0) ? shapeIndices[i] : "auto";
 				if (shapeIndex) {
-					//if start and end shapes are both closed, then find the closest point to the start/end, and re-organize the bezier points accordingly so that the shape morphs in a more intuitive way.
-					if (Math.abs(sb[0] - sb[sb.length - 2]) < 0.5 && Math.abs(sb[1] - sb[sb.length - 1]) < 0.5) {
+					//if start shape is closed, find the closest point to the start/end, and re-organize the bezier points accordingly so that the shape morphs in a more intuitive way.
+					if (sb.closed || (Math.abs(sb[0] - sb[sb.length - 2]) < 0.5 && Math.abs(sb[1] - sb[sb.length - 1]) < 0.5)) {
 						if (shapeIndex === "auto") {
 							shapeIndices[i] = shapeIndex = _getClosestShapeIndex(sb, eb, i === 0);
 							if (shapeIndex < 0) {
@@ -797,7 +800,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			propName: "morphSVG",
 			API: 2,
 			global: true,
-			version: "0.3.0",
+			version: "0.3.1",
 
 			//called when the tween renders for the first time. This is where initial values should be recorded and any setup routines should run.
 			init: function(target, value, tween) {

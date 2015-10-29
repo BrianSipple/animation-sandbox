@@ -9,7 +9,6 @@ body {
     top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
-
     width: 75%;
     height: 75%;
 }
@@ -25,8 +24,8 @@ body {
     }
 
 
-    /* The end-state flames only exists as a morph target */
-    &.flames--end-state {
-        display: none;
-    }
+    // /* The end-state flames only exists as a morph target */
+    // &.flames--end-state {
+    //     display: none;
+    // }
 }

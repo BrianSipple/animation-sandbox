@@ -628,11 +628,5 @@ body {
   width: 100%;
   height: 100%; }
 
-.flames {
-  /* The end-state flames only exists as a morph target */ }
-
 .flames .flame {
   fill: url("#flame-gradient"); }
-
-.flames.flames--end-state {
-  display: none; }

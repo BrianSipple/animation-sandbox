@@ -64,12 +64,12 @@ const
 function _configureFlameFlickeringOpts (duration, svgElem) {
 
     let
-        elemBox = svgElem.getBBox(),
+        //elemBox = svgElem.getBBox(),
         elemRect = svgElem.getBoundingClientRect(),
         totalElemPathLength = svgElem.getTotalLength(),
         isSineWaveStartHalf = svgElem.getAttribute('class').search(CLASSES.sinWaveStartHalf),
 
-        bezierPointsList = MorphSVGPlugin.pathDataToRawBezier(svgElem.getAttribute('d')),
+        bezierPointsList = MorphSVGPlugin.pathDataToRawBezier(svgElem.getAttribute('d'))[0],
 
         startPathIdx = isSineWaveStartHalf ?
             0 :
@@ -77,7 +77,7 @@ function _configureFlameFlickeringOpts (duration, svgElem) {
 
         endPathIdx = isSineWaveStartHalf ?
             nearestOdd(bezierPointsList.length * 0.1) :
-            nearestOdd(bezierPointsList.length - 1)
+            nearestOdd(bezierPointsList.length - 1),
 
         // analagous to the hypotenuese
         diagonalLength = _getDiagonalLength(
@@ -101,19 +101,23 @@ function _configureFlameFlickeringOpts (duration, svgElem) {
         //amplitude = Math.floor(boundedRandom(10, diagonalLength / 12)),
         amplitude = Math.floor(boundedRandom( diagonalLength / 10, diagonalLength / 7)),
 
+        // phase = isSineWaveStartHalf ?
+        //     -angle * 0.3 :
+        //     angle * 0.3,
         phase = isSineWaveStartHalf ?
-            -angle * 0.3 :
-            angle * 0.3,
-
+            -amplitude * 0.3 :
+            amplitude * 0.3,
 
 
         isLoose = true,
 
         repeat = -1,
-        start = 2,
-        end = 6,
+        //start = 2,
+        //end = 6,
         debug = false;
-    //
+
+
+    debugger;
     return {
         taperStart,
         taperEnd,
@@ -125,8 +129,8 @@ function _configureFlameFlickeringOpts (duration, svgElem) {
         ease: EASINGS.flameFlicker,
         repeat,
         isLoose,
-        start,
-        end,
+        startPathIdx,
+        endPathIdx: 6,
         bezierPointsList
     };
 
@@ -209,8 +213,8 @@ function flickerFlame(elem, opts) {
 
     let
         bezierPointsList = opts.bezierPointsList || MorphSVGPlugin.pathDataToRawBezier(elem.getAttribute('d'))[0] || [],
-        start = (opts.start || 0) * 2,
-        end = (opts.end === 0) ? 0 : (opts.end * 2) || (bezierPointsList.length - 1),
+        start = (opts.startPathIdx || 0) * 2,
+        end = (opts.endPathIdx === 0) ? 0 : (opts.endPathIdx * 2) || (bezierPointsList.length - 1),
         length = opts.length || 100,
         amplitude = opts.amplitude || 50,
         proxy = { angle: 0 },

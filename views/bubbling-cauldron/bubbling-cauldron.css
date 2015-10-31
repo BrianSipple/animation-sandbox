@@ -630,3 +630,6 @@ body {
 
 .flames .flame {
   fill: url("#flame-gradient"); }
+
+.flames .flame-base {
+  fill: url("#flame-base-gradient"); }

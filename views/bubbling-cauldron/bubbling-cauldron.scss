@@ -22,6 +22,9 @@ body {
     .flame {
         fill: url('#flame-gradient');
     }
+    .flame-base {
+        fill: url('#flame-base-gradient');
+    }
 
 
     // /* The end-state flames only exists as a morph target */

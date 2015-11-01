@@ -59,96 +59,97 @@ const
     CLASSES = {
         sinWaveStartHalf: 'js-sine-wave-start-half',
         sinWaveEndHalf: 'js-sine-wave-end-half',
-    }
+    };
 
-function _configureFlameFlickeringOpts (duration, svgElem) {
+function _configureFlameFlickeringOpts(duration, svgElem) {
+    debugger;
 
     let
         //elemBox = svgElem.getBBox(),
         elemRect = svgElem.getBoundingClientRect(),
         totalElemPathLength = svgElem.getTotalLength(),
-        isSineWaveStartHalf = svgElem.getAttribute('class').search(CLASSES.sinWaveStartHalf),
+        isSineWaveStartHalf = ~svgElem.getAttribute('class').search(CLASSES.sinWaveStartHalf),
 
         bezierPointsList = MorphSVGPlugin.pathDataToRawBezier(svgElem.getAttribute('d'))[0],
 
-        startPathIdx = isSineWaveStartHalf ?
-            0 :
-            nearestEven(bezierPointsList.length * 0.9),
-
-        endPathIdx = isSineWaveStartHalf ?
-            nearestOdd(bezierPointsList.length * 0.1) :
-            nearestOdd(bezierPointsList.length - 1),
+        startPathIdx = nearestEven(bezierPointsList.length * 0.2),
+        endPathIdx = nearestEven(bezierPointsList.length * 0.8),
 
         // analagous to the hypotenuese
         diagonalLength = _getDiagonalLength(
             elemRect.left, elemRect.top, elemRect.right, elemRect.bottom
         ),
 
-        // taperStart = Math.floor(totalElemPathLength * 0.025),
-        // taperEnd = Math.floor(totalElemPathLength * 0.7),
-        taperStart = isSineWaveStartHalf ?
-            Math.ceil(totalElemPathLength * 0.05) :
-            Math.ceil(totalElemPathLength * 0.9),
+        taperStart = Math.floor(totalElemPathLength * 0.025),
+        taperEnd = Math.floor(totalElemPathLength * 0.7),
+        /*    taperStart = isSineWaveStartHalf ?
+        Math.ceil(totalElemPathLength * 0.05) :
+        Math.ceil(totalElemPathLength * 0.9),
 
         taperEnd = isSineWaveStartHalf ?
-            Math.ceil(totalElemPathLength * 0.1) :
-            Math.ceil(totalElemPathLength * .95),
+        Math.ceil(totalElemPathLength * 0.1) :
+        Math.ceil(totalElemPathLength * .95),*/
 
         // initial angle of the sinusoidal function at its origin
         //angle = Math.floor(boundedRandom(-180, 180)),
-        angle = parseInt(svgElem.getAttribute(DATA_ATTRIBUTES.startingAngle)) || 0,
+        startingHalfAngle = parseInt(svgElem.getAttribute(DATA_ATTRIBUTES.startingAngle)) || 0,
 
-        //amplitude = Math.floor(boundedRandom(10, diagonalLength / 12)),
-        amplitude = Math.floor(boundedRandom( diagonalLength / 10, diagonalLength / 7)),
+        angle = isSineWaveStartHalf ?
+            startingHalfAngle :
+            startingHalfAngle * 1.5,
 
-        // phase = isSineWaveStartHalf ?
-        //     -angle * 0.3 :
-        //     angle * 0.3,
-        phase = isSineWaveStartHalf ?
-            -amplitude * 0.3 :
-            amplitude * 0.3,
 
+        amplitude = Math.abs(elemRect.top - elemRect.bottom) / 4,
+        //amplitude = diagonalLength,
+
+        phase = boundedRandom(
+          angle - 0,
+          angle + 0
+        ),
 
         isLoose = true,
-
-        repeat = -1,
-        //start = 2,
-        //end = 6,
+        repeat = 1,
         debug = false;
 
-
-    debugger;
-    return {
-        taperStart,
-        taperEnd,
+    let opts = {
+        taperStart: totalElemPathLength * .4,
+        taperEnd: totalElemPathLength * .7,
         length: totalElemPathLength,
-        angle,
-        amplitude,
-        phase,
-        duration,
-        ease: EASINGS.flameFlicker,
-        repeat,
+        angle: angle,
+        amplitude: amplitude,
+        phase: angle / 2, // degrees
+        duration: duration * 1,
+        isSineAlwaysPositive: true,
+        //ease: Power0.easeNone,
+        //ease: Sine.easeOut,
+        //ease: Power3.easeInOut,
+        //ease: Elastic.easeInOut.config(2.5, 1),
+        //ease: Back.easeInOut.config(50),
+        //ease: SteppedEase.config(10),
+
+        ease: SlowMo.ease.config(1, 2, false),
+
+        //ease: Bounce.easeInOut,
+
+        /*    ease: RoughEase.ease.config({ template: Power3.easeOut, strength: 1, points: 10, taper: "none", randomize: false, clamp: true}),*/
+        tlOpts: {
+          repeat,
+          yoyo: false
+        },
         isLoose,
+        //startPathIdx: 2,
         startPathIdx,
-        endPathIdx: 6,
+        //endPathIdx: 4,
+        endPathIdx: undefined,
         bezierPointsList
     };
 
-    // return {
-    //     taperStart: 2,
-    //     taperEnd: 80,
-    //     isLoose: true,
-    //     length: 120,
-    //     angle: -50,
-    //     amplitude: 10,
-    //     phase: 110,
-    //     duration: duration,
-    //     repeat: -1,  // TL `repeat` param
-    //     start: 6,
-    //     end: 15,
-    //     debug: false
-    // };
+    debugger;
+    console.log('Using opts: ' + JSON.stringify(opts));
+    console.log(elemRect.top - elemRect.bottom);
+    //  console.log(elemBox);
 
+    return opts;
 }
 
 function _getDiagonalLength (x, y, x2, y2) {
@@ -222,6 +223,7 @@ function flickerFlame(elem, opts) {
         phase = (opts.phase || 0) * DEG_TO_RAD,
         taperStart = opts.taperStart || 0,
         taperEnd = opts.taperEnd || 0,
+        isSineAlwaysPositive = !!(opts.isSineAlwaysPositive),
         startX = bezierPointsList[start],
         startY = bezierPointsList[start + 1],
         changes = [],
@@ -229,7 +231,7 @@ function flickerFlame(elem, opts) {
 
         // if true, points will influence the current positions, but won't forcing them strictly onto the flickering path
         isLoose = !!opts.isLoose,
-        flickerTL = new TimelineMax({ repeat: opts.repeat }),
+        flickerTL = new TimelineMax(opts.tlOpts || { repeat: -1 }),
 
         bezierTotalLength,
         angle,
@@ -317,14 +319,20 @@ function flickerFlame(elem, opts) {
                 ( (bezierTotalLength - bezierLength) / taperEnd ) :
                 1;
 
-        console.log('New taper: ' + taper);
+        //console.log('New taper: ' + taper);
 
+        // dx / length is our representation of frequency * time in the
+        // oscillation function
         m = Math.sin( (dx / length) * Math.PI * 2 + phase ) * amplitude;
+
+        if (isSineAlwaysPositive) {
+            m = Math.abs(m);
+        }
 
         changes.push({
             i: i - (start ? 2 : 0),
             p: dx,
-            a: ( (dx / length) * Math.PI * 2 + phase ),
+            angle: ( (dx / length) * Math.PI * 2 + phase ),
             taper: taper,
 
             x: isLoose ?
@@ -340,7 +348,7 @@ function flickerFlame(elem, opts) {
                     Math.atan2(y - bezierPointsList[i - 1], x - bezierPointsList[i - 2]) -
                     Math.atan2(bezierPointsList[i+3] - y, bezierPointsList[i+2] - x)
                 ) < 0.01 :
-                false,
+                false
         });
 
         if (debug) {
@@ -371,54 +379,54 @@ function flickerFlame(elem, opts) {
                     l = changes.length,
                     angle = proxy.angle,
                     newPathString,
-                    node, i, m, x, y, x2, y2, x1, y1, cp, dx, dy, d, a, cpCos, cpSin;
+                    changedNode, i, m, x, y, x2, y2, x1, y1, controlPoint, dx, dy, d, a, controlPointCos, controlPointSin;
 
                 for (i = 0; i < l; i++) {
-                    node = changes[i];
-                    if (node.isSmooth || i === l - 1 || !changes[i+1].isSmooth) {
+                    changedNode = changes[i];
+                    if (changedNode.isSmooth || i === l - 1 || !changes[i+1].isSmooth) {
 
-                        console.log(
-                            `Changing x and y bezier points at indicies ${i} and ${i+1}\n
-                            Old x value: ${bezierPointsList[node.i]} \t
-                            Old y value: ${bezierPointsList[node.i+1]}`
-                        );
+                        // console.log(
+                        //     `Changing x and y bezier points at indicies ${i} and ${i+1}\n
+                        //     Old x value: ${bezierPointsList[changedNode.i]} \t
+                        //     Old y value: ${bezierPointsList[changedNode.i+1]}`
+                        // );
 
-                        m = Math.sin(node.a + angle) * amplitude * node.taper;
-                        bezierPointsList[node.i] = x = node.x + m * sin;
-                        bezierPointsList[node.i + 1] = y = node.y + m * cos;
+                        m = Math.sin(changedNode.angle + angle) * amplitude * changedNode.taper;
+                        bezierPointsList[changedNode.i] = x = changedNode.x + m * sin;
+                        bezierPointsList[changedNode.i + 1] = y = changedNode.y + m * cos;
+                        //
+                        // console.log(
+                        //     `New x value: ${x}\t New y value: ${y}`
+                        // );
 
-                        console.log(
-                            `New x value: ${x}\t New y value: ${y}`
-                        );
-
-                        if (node.isSmooth) {
+                        if (changedNode.isSmooth) {
                             //make sure smooth anchors stay smooth!
-                            cp = changes[i - 1];
-                            m = Math.sin(cp.a + angle) * amplitude * cp.taper;
-                            x1 = cp.x + m * sin;
-                            y1 = cp.y + m * cos;
+                            controlPoint = changes[i - 1];
+                            m = Math.sin(controlPoint.angle + angle) * amplitude * controlPoint.taper;
+                            x1 = controlPoint.x + m * sin;
+                            y1 = controlPoint.y + m * cos;
 
-                            cp = changes[i + 1];
-                            m = Math.sin(cp.a + angle) * amplitude * cp.taper;
-        					x2 = cp.x + m * sin;
-        					y2 = cp.y + m * cos;
+                            controlPoint = changes[i + 1];
+                            m = Math.sin(controlPoint.angle + angle) * amplitude * controlPoint.taper;
+        					x2 = controlPoint.x + m * sin;
+        					y2 = controlPoint.y + m * cos;
 
         					a = Math.atan2(y2 - y1, x2 - x1);
-        					cpCos = Math.cos(a);
-        					cpSin = Math.sin(a);
+        					controlPointCos = Math.cos(a);
+        					controlPointSin = Math.sin(a);
 
         					dx = x2 - x;
         					dy = y2 - y;
         					d = Math.sqrt(dx * dx + dy * dy);
-        					bezierPointsList[cp.i] = x + cpCos * d;
-        					bezierPointsList[cp.i + 1] = y + cpSin * d;
+        					bezierPointsList[controlPoint.i] = x + controlPointCos * d;
+        					bezierPointsList[controlPoint.i + 1] = y + controlPointSin * d;
 
-        					cp = changes[i - 1];
+        					controlPoint = changes[i - 1];
         					dx = x1 - x;
         					dy = y1 - y;
         					d = Math.sqrt(dx * dx + dy * dy);
-        					bezierPointsList[cp.i] = x - cpCos * d;
-        					bezierPointsList[cp.i + 1] = y - cpSin * d;
+        					bezierPointsList[controlPoint.i] = x - controlPointCos * d;
+        					bezierPointsList[controlPoint.i + 1] = y - controlPointSin * d;
         					i++;
                         }
                     }
@@ -426,9 +434,9 @@ function flickerFlame(elem, opts) {
 
                 if (debug) {
                     for (i = 0; i < l; i++) {
-                        node = changes[i];
-                        node.dot.setAttribute("cx", bezierPointsList[node.i]);
-                        node.dot.setAttribute("cy", bezierPointsList[node.i + 1]);
+                        changedNode = changes[i];
+                        changedNode.dot.setAttribute("cx", bezierPointsList[changedNode.i]);
+                        changedNode.dot.setAttribute("cy", bezierPointsList[changedNode.i + 1]);
                     }
                 }
 

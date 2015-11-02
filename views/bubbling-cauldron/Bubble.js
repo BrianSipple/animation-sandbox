@@ -50,6 +50,6 @@ const
 
 function Bubble (elem) {
     return bubbleFactory(elem);
-};
+}
 
 export default Bubble;

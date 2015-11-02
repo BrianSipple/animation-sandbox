@@ -52,8 +52,7 @@ const
     },
 
     EASINGS = {
-        //flameFlicker: Power4.easeOut
-        flameFlicker: Power0.easeNone
+        flameFlicker: SlowMo.ease.config(1, 2, false)
     },
 
     CLASSES = {
@@ -62,45 +61,29 @@ const
     };
 
 function _configureFlameFlickeringOpts(duration, svgElem) {
-    debugger;
 
     let
-        //elemBox = svgElem.getBBox(),
         elemRect = svgElem.getBoundingClientRect(),
         totalElemPathLength = svgElem.getTotalLength(),
         isSineWaveStartHalf = ~svgElem.getAttribute('class').search(CLASSES.sinWaveStartHalf),
 
         bezierPointsList = MorphSVGPlugin.pathDataToRawBezier(svgElem.getAttribute('d'))[0],
 
-        startPathIdx = nearestEven(bezierPointsList.length * 0.2),
-        endPathIdx = nearestEven(bezierPointsList.length * 0.8),
+        startPathIdx = 0,
+        endPathIdx = nearestEven(bezierPointsList.length * 0.6),
 
         // analagous to the hypotenuese
         diagonalLength = _getDiagonalLength(
             elemRect.left, elemRect.top, elemRect.right, elemRect.bottom
         ),
 
-        taperStart = Math.floor(totalElemPathLength * 0.025),
-        taperEnd = Math.floor(totalElemPathLength * 0.7),
-        /*    taperStart = isSineWaveStartHalf ?
-        Math.ceil(totalElemPathLength * 0.05) :
-        Math.ceil(totalElemPathLength * 0.9),
-
-        taperEnd = isSineWaveStartHalf ?
-        Math.ceil(totalElemPathLength * 0.1) :
-        Math.ceil(totalElemPathLength * .95),*/
+        taperStart = totalElemPathLength * 0.01,
+        taperEnd = totalElemPathLength * 0.3,
 
         // initial angle of the sinusoidal function at its origin
-        //angle = Math.floor(boundedRandom(-180, 180)),
-        startingHalfAngle = parseInt(svgElem.getAttribute(DATA_ATTRIBUTES.startingAngle)) || 0,
-
-        angle = isSineWaveStartHalf ?
-            startingHalfAngle :
-            startingHalfAngle * 1.5,
-
+        angle = parseInt(svgElem.getAttribute(DATA_ATTRIBUTES.startingAngle)) || 0,
 
         amplitude = Math.abs(elemRect.top - elemRect.bottom) / 4,
-        //amplitude = diagonalLength,
 
         phase = boundedRandom(
           angle - 0,
@@ -112,43 +95,29 @@ function _configureFlameFlickeringOpts(duration, svgElem) {
         debug = false;
 
     let opts = {
-        taperStart: totalElemPathLength * .4,
-        taperEnd: totalElemPathLength * .7,
+        taperStart: totalElemPathLength * .01,
+        taperEnd: totalElemPathLength * .3,
         length: totalElemPathLength,
         angle: angle,
         amplitude: amplitude,
-        phase: angle / 2, // degrees
-        duration: duration * 1,
+        phase: angle / 20, // degrees
+        duration: duration,
         isSineAlwaysPositive: true,
-        //ease: Power0.easeNone,
-        //ease: Sine.easeOut,
-        //ease: Power3.easeInOut,
-        //ease: Elastic.easeInOut.config(2.5, 1),
-        //ease: Back.easeInOut.config(50),
-        //ease: SteppedEase.config(10),
-
-        ease: SlowMo.ease.config(1, 2, false),
-
-        //ease: Bounce.easeInOut,
+        ease: EASINGS.flameFlicker,
 
         /*    ease: RoughEase.ease.config({ template: Power3.easeOut, strength: 1, points: 10, taper: "none", randomize: false, clamp: true}),*/
         tlOpts: {
-          repeat,
-          yoyo: false
+            repeat,
+            yoyo: false
         },
         isLoose,
-        //startPathIdx: 2,
         startPathIdx,
-        //endPathIdx: 4,
-        endPathIdx: undefined,
+        endPathIdx,
         bezierPointsList
     };
 
-    debugger;
     console.log('Using opts: ' + JSON.stringify(opts));
     console.log(elemRect.top - elemRect.bottom);
-    //  console.log(elemBox);
-
     return opts;
 }
 

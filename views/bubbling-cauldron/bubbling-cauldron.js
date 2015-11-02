@@ -15,43 +15,8 @@ const BubblingCauldron = (function BubblingCauldron () {
                 [ 'cauldronLiquid', '.cauldron__liquid'],
                 [ 'cauldronStickControlPoint', '.cauldon__stick-control-point'],
                 [ 'cauldronStickMeasurePoint', '.cauldon__stick-measure-point'],
-                [ 'flames', '.flame'],
-                [ 'uniqueFlames', [
-                    '.flame-group--left',
-                    '.flame-group--left-diagonal',
-                    '.flame-group--right',
-                    '.flame-group--right-diagonal',
-                    '.flame-group--front'
-                ]],
-                [ 'startStateFlames', '.flame--start-state'],
-                [ 'endStateFlames', '.flame--end-state'],
-                [ 'flameSets', new Map(
-                        // [
-                        //     [
-                        //         '.flames--start-state.flames--layer-1 .flame--left',
-                        //         '.flames--end-state.flames--layer-1 .flame--left'
-                        //     ],
-                        //     [
-                        //         '.flames--start-state.flames--layer-1 .flame--left-diagonal',
-                        //         '.flames--end-state.flames--layer-1 .flame--left-diagonal'
-                        //     ],
-                        //     [
-                        //         '.flames--start-state.flames--layer-1 .flame--front',
-                        //         '.flames--end-state.flames--layer-1 .flame--front',
-                        //     ],
-                        //     [
-                        //         '.flames--start-state.flames--layer-1 .flame--right',
-                        //         '.flames--end-state.flames--layer-1 .flame--right',
-                        //     ],
-                        //     [
-                        //         '.flames--start-state.flames--layer-1 .flame--right-diagonal',
-                        //         '.flames--end-state.flames--layer-1 .flame--right-diagonal',
-                        //     ]
-                        // ]
-                    )
-                ]
+                [ 'flames', '.flame']
             ]
-
         ),
 
         LABELS = new Map(
@@ -67,9 +32,7 @@ const BubblingCauldron = (function BubblingCauldron () {
                 [ 'bubbleUpDelayMinimum', 0.4 ],
                 [ 'bubbleUpDelayVariance', 3.0 ],
                 [ 'stirRevolution', 4 ],
-                [ 'flameFlickerMin', 1.25 ],
-                [ 'flameFlickerMax', 2.4812 ]
-                //[ 'stirRevolution', 20 ]
+                [ 'flameFlicker', 1.65 ],
             ]
         ),
 
@@ -407,16 +370,7 @@ const BubblingCauldron = (function BubblingCauldron () {
         for (let flameElem of flameElems) {
 
             flame = Flame(flameElem);
-
-            flameFlickerDuration =
-                DURATIONS.get('flameFlickerMin') +
-                (
-                    Math.random() *
-                    ( DURATIONS.get('flameFlickerMax') - DURATIONS.get('flameFlickerMin') )
-                );
-
-            //flame.startAnimationTimeline(flameFlickerDuration);
-            flame.startAnimationTimeline(flameFlickerDuration);
+            flame.startAnimationTimeline(DURATIONS.get('flameFlicker'));
             masterFlamesTL.add(flame.TL, 0);
         }
 

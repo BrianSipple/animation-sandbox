@@ -15,27 +15,14 @@
 	.st9{fill:#80171A;stroke:#C18E7F;stroke-linejoin:bevel;stroke-miterlimit:10;}
 	.st10{fill:#441715;}
 	.st11{fill:#A8D166;}
-	.st12{fill:url(#flame_js-sine-wave-start-half_1_);}
-	.st13{fill:url(#flame_js-sine-wave-end-half_1_);}
-	.st14{fill:url(#flame-base_1_);}
-	.st15{fill:url(#flame_js-sine-wave-start-half_9_);}
-	.st16{fill:url(#flame_js-sine-wave-end-half_9_);}
-	.st17{fill:url(#flame-base_9_);}
-	.st18{fill:url(#flame_js-sine-wave-start-half_10_);}
-	.st19{fill:url(#flame_js-sine-wave-end-half_10_);}
-	.st20{fill:url(#flame-base_10_);}
-	.st21{fill:url(#flame_js-sine-wave-start-half_11_);}
-	.st22{fill:url(#flame_js-sine-wave-end-half_11_);}
-	.st23{fill:url(#flame-base_11_);}
-	.st24{fill:url(#flame_js-sine-wave-start-half_12_);}
-	.st25{fill:url(#flame_js-sine-wave-end-half_12_);}
-	.st26{fill:url(#flame-base_12_);}
-	.st27{fill:url(#flame_js-sine-wave-start-half_13_);}
-	.st28{fill:url(#flame_js-sine-wave-end-half_13_);}
-	.st29{fill:url(#flame-base_13_);}
-	.st30{fill:url(#flame_js-sine-wave-start-half_14_);}
-	.st31{fill:url(#flame_js-sine-wave-end-half_14_);}
-	.st32{fill:url(#flame-base_14_);}
+	.st12{fill:url(#flame_flame--545_1_);}
+	.st13{fill:url(#flame_flame--615_2_);}
+	.st14{fill:url(#flame_flame--800_2_);}
+	.st15{fill:url(#flame_flame--400_1_);}
+	.st16{fill:url(#flame_flame--700_1_);}
+	.st17{fill:url(#flame_flame--500_1_);}
+	.st18{fill:url(#flame_flame--300_1_);}
+	.st19{fill:url(#flame_flame--900_2_);}
 </style>
 <g id="cauldron_x5F__x5F_firewood-logs">
 	<g id="log--right">
@@ -53,7 +40,7 @@
 					L44.3,289c0.2,0.2,0.6,0.2,0.8,0l45.7-45.8C95.3,238.6,95.3,231.1,90.7,226.5z"/>
 				<path id="XMLID_23_" class="st1" d="M90.7,226.5L90.7,226.5c-4.5-4.5-11.9-4.5-16.4,0l-45.8,45.9c-0.2,0.2-0.2,0.6,0,0.8
 					L44.3,289c0.2,0.2,0.6,0.2,0.8,0l45.7-45.8C95.3,238.6,95.3,231.1,90.7,226.5z"/>
-
+				
 					<ellipse id="XMLID_29_" transform="matrix(-0.7082 -0.7061 0.7061 -0.7082 -134.3577 504.956)" class="st0" cx="37.2" cy="280.2" rx="11.9" ry="16.4"/>
 			</g>
 			<path id="XMLID_25_" class="st0" d="M90.3,226.2L90.3,226.2c-4.3-4.3-11.3-4.3-15.6,0l-46.6,46.3c-0.4,0.6,9.1,9,9.1,9"/>
@@ -69,7 +56,7 @@
 					l18.3-12.8c0.3-0.2,0.3-0.5,0.1-0.8l-37-53.1C191,220.2,183.7,218.9,178.3,222.6z"/>
 				<path id="XMLID_27_" class="st1" d="M178.3,222.6L178.3,222.6c-5.3,3.7-6.6,10.9-2.9,16.2l37.1,53.2c0.2,0.3,0.5,0.3,0.8,0.1
 					l18.3-12.8c0.3-0.2,0.3-0.5,0.1-0.8l-37-53.1C191,220.2,183.7,218.9,178.3,222.6z"/>
-
+				
 					<ellipse id="XMLID_26_" transform="matrix(-0.8201 0.5722 -0.5722 -0.8201 566.5204 391.4919)" class="st0" cx="221.7" cy="284.8" rx="11.9" ry="16.4"/>
 			</g>
 			<path id="XMLID_7_" class="st0" d="M178.7,222.5L178.7,222.5c5-3.5,12.2-2.4,15.7,2.6l37.8,53.7c0.3,0.6-10.5,7.3-10.5,7.3"/>
@@ -82,7 +69,7 @@
 		<g id="firewood-log_1_">
 			<path id="XMLID_20_" class="st1" d="M128.3,229L128.3,229c-6.4,0-11.6,5.2-11.6,11.7l0.2,55.7c0,0.3,0.3,0.6,0.6,0.6l22.3-0.1
 				c0.3,0,0.6-0.3,0.6-0.6l-0.2-55.6C140.1,234.3,134.8,229,128.3,229z"/>
-
+			
 				<ellipse id="XMLID_19_" transform="matrix(-1 3.094836e-03 -3.094836e-03 -1 258.1478 591.4332)" class="st0" cx="128.6" cy="295.9" rx="11.7" ry="18.4"/>
 		</g>
 		<path id="log_x5F__x5F_spiral_3_" class="st2" d="M128.1,293.2c-1,0-1.9,1.3-2,2.9c-0.1,2.1,0.9,3.8,2.2,3.8c1.6,0.1,3-2,3.1-4.6
@@ -193,517 +180,220 @@
 	<path id="bubble--partial_70_" class="st11" d="M155,117.6c0-1.8,1.5-3.3,3.3-3.3s3.3,1.5,3.3,3.3"/>
 	<path id="bubble--partial_69_" class="st11" d="M124.5,119.3c0-2.2,2.5-4,5.6-4c3.1,0,5.6,1.8,5.6,4"/>
 </g>
-<g id="flames_flames--layer-1">
-	<g id="flame-group_flame-group--300_1_">
-
-			<linearGradient id="flame_js-sine-wave-start-half_1_" gradientUnits="userSpaceOnUse" x1="224.3845" y1="263.0706" x2="214.9749" y2="230.6403" gradientTransform="matrix(0.9721 0.2345 -0.2345 0.9721 61.8941 -83.9447)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-start-half_5_" class="st12" d="M216.2,224.5c-11-2.7-5.5-17.4,8.3-34.2L216.2,224.5z"/>
-
-			<linearGradient id="flame_js-sine-wave-end-half_1_" gradientUnits="userSpaceOnUse" x1="-183.3516" y1="263.0739" x2="-192.7629" y2="230.6377" gradientTransform="matrix(-0.9721 -0.2345 -0.2345 0.9721 97.7854 -75.2855)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-end-half_5_" class="st13" d="M216.2,224.5c11,2.7,12.8-13,8.3-34.2L216.2,224.5z"/>
-
-			<linearGradient id="flame-base_1_" gradientUnits="userSpaceOnUse" x1="222.3258" y1="263.6688" x2="222.3258" y2="239.156" gradientTransform="matrix(0.9721 0.2345 -0.2345 0.9721 61.8941 -83.9447)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.6837" style="stop-color:#FCD304"/>
-			<stop  offset="0.9759" style="stop-color:#FDBA1A"/>
-			<stop  offset="1" style="stop-color:#FBAB2A"/>
-		</linearGradient>
-		<path id="flame-base_5_" class="st14" d="M226.8,209.6c-0.1,10.5-3.3,16.6-10.6,14.9c-7.3-1.8-7.3-8.8-2.6-18.2
-			c0,0-2.6,14.7,4.8-1.1c3.1-6.5,4.3-6.1,4.5,1C223,210.6,221.3,219.2,226.8,209.6z"/>
-	</g>
-	<g id="flame-group_flame-group--900">
-
-			<linearGradient id="flame_js-sine-wave-start-half_9_" gradientUnits="userSpaceOnUse" x1="48.6111" y1="301.0706" x2="39.2015" y2="268.6403" gradientTransform="matrix(0.9757 -0.2191 0.2191 0.9757 -66.8986 -61.3317)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-start-half_8_" class="st15" d="M44.6,222.8c-11,2.5-12.6-13.2-7.7-34.3L44.6,222.8z"/>
-
-			<linearGradient id="flame_js-sine-wave-end-half_9_" gradientUnits="userSpaceOnUse" x1="-7.5781" y1="301.0739" x2="-16.9895" y2="268.6376" gradientTransform="matrix(-0.9757 0.2191 0.2191 0.9757 -30.8744 -69.4202)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-end-half_8_" class="st16" d="M44.6,222.8c11-2.5,5.8-17.3-7.7-34.3L44.6,222.8z"/>
-
-			<linearGradient id="flame-base_9_" gradientUnits="userSpaceOnUse" x1="46.5523" y1="301.6688" x2="46.5523" y2="277.1559" gradientTransform="matrix(0.9757 -0.2191 0.2191 0.9757 -66.8986 -61.3317)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.6837" style="stop-color:#FCD304"/>
-			<stop  offset="0.9759" style="stop-color:#FDBA1A"/>
-			<stop  offset="1" style="stop-color:#FBAB2A"/>
-		</linearGradient>
-		<path id="flame-base_6_" class="st17" d="M47.5,204.8c4.5,9.4,4.3,16.4-2.9,18c-7.3,1.6-10.4-4.6-10.3-15.2c0,0,4.1,14.4,3.8-3.1
-			c-0.1-7.2,1.2-7.4,4.4-1.1C44.6,207.3,46.9,215.8,47.5,204.8z"/>
-	</g>
-	<g id="flame-group_flame-group--400">
-
-			<linearGradient id="flame_js-sine-wave-start-half_10_" gradientUnits="userSpaceOnUse" x1="187.5068" y1="301.1477" x2="178.6591" y2="270.6539" gradientTransform="matrix(0.9956 9.322546e-02 -9.322546e-02 0.9956 39.9714 -65.4062)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-start-half_6_" class="st18" d="M197.3,252.2c-12.7-1.2-9.2-15.6,3.1-32.9L197.3,252.2z"/>
-
-			<linearGradient id="flame_js-sine-wave-end-half_10_" gradientUnits="userSpaceOnUse" x1="-147.9918" y1="301.1513" x2="-156.8415" y2="270.6508" gradientTransform="matrix(-0.9956 -9.322546e-02 -9.322546e-02 0.9956 76.7316 -61.9642)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-end-half_6_" class="st19" d="M197.3,252.2c12.7,1.2,11.9-13.6,3.1-32.9L197.3,252.2z"/>
-
-			<linearGradient id="flame-base_10_" gradientUnits="userSpaceOnUse" x1="186.2069" y1="301.5258" x2="186.2069" y2="278.4763" gradientTransform="matrix(0.9956 9.322546e-02 -9.322546e-02 0.9956 39.9714 -65.4062)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.6837" style="stop-color:#FCD304"/>
-			<stop  offset="0.9759" style="stop-color:#FDBA1A"/>
-			<stop  offset="1" style="stop-color:#FBAB2A"/>
-		</linearGradient>
-		<path id="flame-base_7_" class="st20" d="M206.4,237c1.8,9.8-0.8,15.9-9.1,15.1c-8.4-0.8-9.7-7.3-6.1-16.7c0,0-0.3,14.1,5.2-1.6
-			c2.3-6.5,3.7-6.2,5.2,0.4C202.4,238.3,202,246.6,206.4,237z"/>
-	</g>
-	<g id="flame-group_flame-group--800_1_">
-
-			<linearGradient id="flame_js-sine-wave-start-half_11_" gradientUnits="userSpaceOnUse" x1="53.1516" y1="306.4814" x2="44.3039" y2="275.9876" gradientTransform="matrix(0.9851 -0.1718 0.1718 0.9851 -36.9439 -44.2954)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-start-half_7_" class="st21" d="M66.9,249.1c-12.6,2.2-13-12.6-5.7-32.6L66.9,249.1z"/>
-
-			<linearGradient id="flame_js-sine-wave-end-half_11_" gradientUnits="userSpaceOnUse" x1="-13.6367" y1="306.485" x2="-22.4863" y2="275.9845" gradientTransform="matrix(-0.9851 0.1718 0.1718 0.9851 -0.5719 -50.6391)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-end-half_7_" class="st22" d="M66.9,249.1c12.6-2.2,7.9-16.3-5.7-32.6L66.9,249.1z"/>
-
-			<linearGradient id="flame-base_11_" gradientUnits="userSpaceOnUse" x1="51.8517" y1="306.8595" x2="51.8517" y2="283.81" gradientTransform="matrix(0.9851 -0.1718 0.1718 0.9851 -36.9439 -44.2954)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.6837" style="stop-color:#FCD304"/>
-			<stop  offset="0.9759" style="stop-color:#FDBA1A"/>
-			<stop  offset="1" style="stop-color:#FBAB2A"/>
-		</linearGradient>
-		<path id="flame-base_8_" class="st23" d="M71.7,232.1c4.3,9,3.5,15.6-4.8,17c-8.3,1.5-11.3-4.5-10.3-14.5c0,0,3.4,13.7,4.6-2.9
-			c0.5-6.9,2-7,5.1-1C68.2,234.4,70,242.5,71.7,232.1z"/>
-	</g>
-	<g id="flame-group_flame-group--600">
-
-			<linearGradient id="flame_js-sine-wave-start-half_12_" gradientUnits="userSpaceOnUse" x1="114.8218" y1="270.8587" x2="104.8664" y2="236.5473" gradientTransform="matrix(1 3.828950e-03 -3.828950e-03 1 14.1448 -9.0831)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-start-half_3_" class="st24" d="M128.6,262c-21.1-0.1-17.5-16.6,0-37.2L128.6,262z"/>
-
-			<linearGradient id="flame_js-sine-wave-end-half_12_" gradientUnits="userSpaceOnUse" x1="-79.2202" y1="270.8204" x2="-89.1558" y2="236.5774" gradientTransform="matrix(-1 -3.828950e-03 -3.828950e-03 1 50.9723 -8.9418)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-end-half_3_" class="st25" d="M128.6,262c21.1,0.1,17.5-16.4,0-37.2L128.6,262z"/>
-
-			<linearGradient id="flame-base_12_" gradientUnits="userSpaceOnUse" x1="115.466" y1="270.662" x2="115.466" y2="244.7546" gradientTransform="matrix(1 3.828950e-03 -3.828950e-03 1 14.1448 -9.0831)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.6837" style="stop-color:#FCD304"/>
-			<stop  offset="0.9759" style="stop-color:#FDBA1A"/>
-			<stop  offset="1" style="stop-color:#FBAB2A"/>
-		</linearGradient>
-		<path id="flame-base_3_" class="st26" d="M141.3,244.2c4.4,10.8,1.2,17.9-12.7,17.8c-14-0.1-17.1-7.3-12.6-18.1
-			c0,0,1.7,15.8,8.3-2.2c2.7-7.5,5.2-7.3,8.6,0C134.9,246.1,135.6,255.3,141.3,244.2z"/>
-	</g>
-	<g id="flame-group_flame-group--530_1_">
-
-			<linearGradient id="flame_js-sine-wave-start-half_13_" gradientUnits="userSpaceOnUse" x1="154.3853" y1="267.5952" x2="145.111" y2="235.6316" gradientTransform="matrix(0.9976 6.977491e-02 -6.977491e-02 0.9976 30.9054 -19.5822)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-start-half_4_" class="st27" d="M165.1,258.4c-14-1-10.6-16.1,2.4-34.6L165.1,258.4z"/>
-
-			<linearGradient id="flame_js-sine-wave-end-half_13_" gradientUnits="userSpaceOnUse" x1="-115.2006" y1="267.595" x2="-124.4748" y2="235.6315" gradientTransform="matrix(-0.9976 -6.977491e-02 -6.977491e-02 0.9976 67.6855 -17.0095)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-end-half_4_" class="st28" d="M165.1,258.4c14,1,12.7-14.5,2.4-34.6L165.1,258.4z"/>
-
-			<linearGradient id="flame-base_13_" gradientUnits="userSpaceOnUse" x1="153.2279" y1="267.931" x2="153.2279" y2="243.7731" gradientTransform="matrix(0.9976 6.977491e-02 -6.977491e-02 0.9976 30.9054 -19.5822)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.6837" style="stop-color:#FCD304"/>
-			<stop  offset="0.9759" style="stop-color:#FDBA1A"/>
-			<stop  offset="1" style="stop-color:#FBAB2A"/>
-		</linearGradient>
-		<path id="flame-base_4_" class="st29" d="M174.6,242.3c2.2,10.2-0.4,16.7-9.6,16.1c-9.3-0.6-10.9-7.5-7.2-17.4
-			c0,0,0.1,14.8,5.6-1.7c2.3-6.8,3.9-6.6,5.7,0.3C170.3,243.8,170.2,252.4,174.6,242.3z"/>
-	</g>
-	<g id="flame-group_flame-group--630">
-
-			<linearGradient id="flame_js-sine-wave-start-half_14_" gradientUnits="userSpaceOnUse" x1="81.7258" y1="276.308" x2="72.4516" y2="244.3444" gradientTransform="matrix(0.9977 -6.745819e-02 6.745819e-02 0.9977 -5.0722 -13.3122)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-start-half_2_" class="st30" d="M94,257.3c-14,0.9-12.7-14.5-2.3-34.6L94,257.3z"/>
-
-			<linearGradient id="flame_js-sine-wave-end-half_14_" gradientUnits="userSpaceOnUse" x1="-42.5411" y1="276.3077" x2="-51.8153" y2="244.3443" gradientTransform="matrix(-0.9977 6.745819e-02 6.745819e-02 0.9977 31.7138 -15.7992)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.5512" style="stop-color:#FCD304"/>
-			<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
-			<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
-			<stop  offset="0.8671" style="stop-color:#FBAA29"/>
-			<stop  offset="0.9208" style="stop-color:#FAA426"/>
-			<stop  offset="0.964" style="stop-color:#F89A22"/>
-			<stop  offset="1" style="stop-color:#F78D1E"/>
-			<stop  offset="1" style="stop-color:#F68C1F"/>
-			<stop  offset="1" style="stop-color:#F6871F"/>
-			<stop  offset="1" style="stop-color:#F47E20"/>
-			<stop  offset="1" style="stop-color:#F27221"/>
-			<stop  offset="1" style="stop-color:#F06122"/>
-			<stop  offset="1" style="stop-color:#EF5D23"/>
-			<stop  offset="1" style="stop-color:#EC5C23"/>
-			<stop  offset="1" style="stop-color:#E45524"/>
-			<stop  offset="1" style="stop-color:#D94A26"/>
-			<stop  offset="1" style="stop-color:#D24327"/>
-		</linearGradient>
-		<path id="flame_js-sine-wave-end-half_2_" class="st31" d="M94,257.3c14-0.9,10.6-16.1-2.3-34.6L94,257.3z"/>
-
-			<linearGradient id="flame-base_14_" gradientUnits="userSpaceOnUse" x1="80.5684" y1="276.6438" x2="80.5684" y2="252.4859" gradientTransform="matrix(0.9977 -6.745819e-02 6.745819e-02 0.9977 -5.0722 -13.3122)">
-			<stop  offset="0" style="stop-color:#FFFFFF"/>
-			<stop  offset="0" style="stop-color:#FAF6B9"/>
-			<stop  offset="0" style="stop-color:#FAF394"/>
-			<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
-			<stop  offset="0.2174" style="stop-color:#F9EC43"/>
-			<stop  offset="0.3124" style="stop-color:#FBE937"/>
-			<stop  offset="0.3645" style="stop-color:#FDE62A"/>
-			<stop  offset="0.6837" style="stop-color:#FCD304"/>
-			<stop  offset="0.9759" style="stop-color:#FDBA1A"/>
-			<stop  offset="1" style="stop-color:#FBAB2A"/>
-		</linearGradient>
-		<path id="flame-base_2_" class="st32" d="M101.3,240c3.6,9.8,1.9,16.6-7.3,17.2c-9.3,0.6-11.8-5.9-9.5-16.2c0,0,2.1,14.6,5.3-2.5
-			c1.3-7.1,3-7,5.7-0.5C97.1,242.1,98.2,250.7,101.3,240z"/>
-	</g>
-</g>
+<linearGradient id="flame_flame--545_1_" gradientUnits="userSpaceOnUse" x1="125.4709" y1="264.7156" x2="110.0566" y2="236.7173">
+	<stop  offset="0" style="stop-color:#FFFFFF"/>
+	<stop  offset="0" style="stop-color:#FAF6B9"/>
+	<stop  offset="0" style="stop-color:#FAF394"/>
+	<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
+	<stop  offset="0.2174" style="stop-color:#F9EC43"/>
+	<stop  offset="0.3124" style="stop-color:#FBE937"/>
+	<stop  offset="0.3645" style="stop-color:#FDE62A"/>
+	<stop  offset="0.5512" style="stop-color:#FCD304"/>
+	<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
+	<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
+	<stop  offset="0.8671" style="stop-color:#FBAA29"/>
+	<stop  offset="0.9208" style="stop-color:#FAA426"/>
+	<stop  offset="0.964" style="stop-color:#F89A22"/>
+	<stop  offset="1" style="stop-color:#F78D1E"/>
+	<stop  offset="1" style="stop-color:#F68C1F"/>
+	<stop  offset="1" style="stop-color:#F6871F"/>
+	<stop  offset="1" style="stop-color:#F47E20"/>
+	<stop  offset="1" style="stop-color:#F27221"/>
+	<stop  offset="1" style="stop-color:#F06122"/>
+	<stop  offset="1" style="stop-color:#EF5D23"/>
+	<stop  offset="1" style="stop-color:#EC5C23"/>
+	<stop  offset="1" style="stop-color:#E45524"/>
+	<stop  offset="1" style="stop-color:#D94A26"/>
+	<stop  offset="1" style="stop-color:#D24327"/>
+</linearGradient>
+<path id="flame_flame--545" class="st12" d="M122.5,264.8c-19.7-7-16.5-24.1-6.9-31.2C118.4,243.7,145,261.3,122.5,264.8z"/>
+<linearGradient id="flame_flame--615_2_" gradientUnits="userSpaceOnUse" x1="106.8043" y1="264.7156" x2="91.39" y2="236.7173" gradientTransform="matrix(-1 0 0 1 239.4784 0)">
+	<stop  offset="0" style="stop-color:#FFFFFF"/>
+	<stop  offset="0" style="stop-color:#FAF6B9"/>
+	<stop  offset="0" style="stop-color:#FAF394"/>
+	<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
+	<stop  offset="0.2174" style="stop-color:#F9EC43"/>
+	<stop  offset="0.3124" style="stop-color:#FBE937"/>
+	<stop  offset="0.3645" style="stop-color:#FDE62A"/>
+	<stop  offset="0.5512" style="stop-color:#FCD304"/>
+	<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
+	<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
+	<stop  offset="0.8671" style="stop-color:#FBAA29"/>
+	<stop  offset="0.9208" style="stop-color:#FAA426"/>
+	<stop  offset="0.964" style="stop-color:#F89A22"/>
+	<stop  offset="1" style="stop-color:#F78D1E"/>
+	<stop  offset="1" style="stop-color:#F68C1F"/>
+	<stop  offset="1" style="stop-color:#F6871F"/>
+	<stop  offset="1" style="stop-color:#F47E20"/>
+	<stop  offset="1" style="stop-color:#F27221"/>
+	<stop  offset="1" style="stop-color:#F06122"/>
+	<stop  offset="1" style="stop-color:#EF5D23"/>
+	<stop  offset="1" style="stop-color:#EC5C23"/>
+	<stop  offset="1" style="stop-color:#E45524"/>
+	<stop  offset="1" style="stop-color:#D94A26"/>
+	<stop  offset="1" style="stop-color:#D24327"/>
+</linearGradient>
+<path id="flame_flame--615_1_" class="st13" d="M135.6,264.8c19.7-7,16.5-24.1,6.9-31.2C139.8,243.7,113.1,261.3,135.6,264.8z"/>
+<linearGradient id="flame_flame--800_2_" gradientUnits="userSpaceOnUse" x1="66.8932" y1="243.6778" x2="52.983" y2="218.4116">
+	<stop  offset="0" style="stop-color:#FFFFFF"/>
+	<stop  offset="0" style="stop-color:#FAF6B9"/>
+	<stop  offset="0" style="stop-color:#FAF394"/>
+	<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
+	<stop  offset="0.2174" style="stop-color:#F9EC43"/>
+	<stop  offset="0.3124" style="stop-color:#FBE937"/>
+	<stop  offset="0.3645" style="stop-color:#FDE62A"/>
+	<stop  offset="0.5512" style="stop-color:#FCD304"/>
+	<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
+	<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
+	<stop  offset="0.8671" style="stop-color:#FBAA29"/>
+	<stop  offset="0.9208" style="stop-color:#FAA426"/>
+	<stop  offset="0.964" style="stop-color:#F89A22"/>
+	<stop  offset="1" style="stop-color:#F78D1E"/>
+	<stop  offset="1" style="stop-color:#F68C1F"/>
+	<stop  offset="1" style="stop-color:#F6871F"/>
+	<stop  offset="1" style="stop-color:#F47E20"/>
+	<stop  offset="1" style="stop-color:#F27221"/>
+	<stop  offset="1" style="stop-color:#F06122"/>
+	<stop  offset="1" style="stop-color:#EF5D23"/>
+	<stop  offset="1" style="stop-color:#EC5C23"/>
+	<stop  offset="1" style="stop-color:#E45524"/>
+	<stop  offset="1" style="stop-color:#D94A26"/>
+	<stop  offset="1" style="stop-color:#D24327"/>
+</linearGradient>
+<path id="flame_flame--800_1_" class="st14" d="M63.6,244.8c-13.6-6.7-11.4-23-4.7-29.7C60.8,224.7,79.1,241.5,63.6,244.8z"/>
+<linearGradient id="flame_flame--400_1_" gradientUnits="userSpaceOnUse" x1="-73.7735" y1="244.0111" x2="-87.6837" y2="218.7449" gradientTransform="matrix(-1 0 0 1 123.459 0)">
+	<stop  offset="0" style="stop-color:#FFFFFF"/>
+	<stop  offset="0" style="stop-color:#FAF6B9"/>
+	<stop  offset="0" style="stop-color:#FAF394"/>
+	<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
+	<stop  offset="0.2174" style="stop-color:#F9EC43"/>
+	<stop  offset="0.3124" style="stop-color:#FBE937"/>
+	<stop  offset="0.3645" style="stop-color:#FDE62A"/>
+	<stop  offset="0.5512" style="stop-color:#FCD304"/>
+	<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
+	<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
+	<stop  offset="0.8671" style="stop-color:#FBAA29"/>
+	<stop  offset="0.9208" style="stop-color:#FAA426"/>
+	<stop  offset="0.964" style="stop-color:#F89A22"/>
+	<stop  offset="1" style="stop-color:#F78D1E"/>
+	<stop  offset="1" style="stop-color:#F68C1F"/>
+	<stop  offset="1" style="stop-color:#F6871F"/>
+	<stop  offset="1" style="stop-color:#F47E20"/>
+	<stop  offset="1" style="stop-color:#F27221"/>
+	<stop  offset="1" style="stop-color:#F06122"/>
+	<stop  offset="1" style="stop-color:#EF5D23"/>
+	<stop  offset="1" style="stop-color:#EC5C23"/>
+	<stop  offset="1" style="stop-color:#E45524"/>
+	<stop  offset="1" style="stop-color:#D94A26"/>
+	<stop  offset="1" style="stop-color:#D24327"/>
+</linearGradient>
+<path id="flame_flame--400" class="st15" d="M200.5,245.2c13.6-6.7,11.4-23,4.7-29.7C203.3,225.1,185,241.8,200.5,245.2z"/>
+<linearGradient id="flame_flame--700_1_" gradientUnits="userSpaceOnUse" x1="92.0105" y1="256.7507" x2="78.2781" y2="231.8074">
+	<stop  offset="0" style="stop-color:#FFFFFF"/>
+	<stop  offset="0" style="stop-color:#FAF6B9"/>
+	<stop  offset="0" style="stop-color:#FAF394"/>
+	<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
+	<stop  offset="0.2174" style="stop-color:#F9EC43"/>
+	<stop  offset="0.3124" style="stop-color:#FBE937"/>
+	<stop  offset="0.3645" style="stop-color:#FDE62A"/>
+	<stop  offset="0.5512" style="stop-color:#FCD304"/>
+	<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
+	<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
+	<stop  offset="0.8671" style="stop-color:#FBAA29"/>
+	<stop  offset="0.9208" style="stop-color:#FAA426"/>
+	<stop  offset="0.964" style="stop-color:#F89A22"/>
+	<stop  offset="1" style="stop-color:#F78D1E"/>
+	<stop  offset="1" style="stop-color:#F68C1F"/>
+	<stop  offset="1" style="stop-color:#F6871F"/>
+	<stop  offset="1" style="stop-color:#F47E20"/>
+	<stop  offset="1" style="stop-color:#F27221"/>
+	<stop  offset="1" style="stop-color:#F06122"/>
+	<stop  offset="1" style="stop-color:#EF5D23"/>
+	<stop  offset="1" style="stop-color:#EC5C23"/>
+	<stop  offset="1" style="stop-color:#E45524"/>
+	<stop  offset="1" style="stop-color:#D94A26"/>
+	<stop  offset="1" style="stop-color:#D24327"/>
+</linearGradient>
+<path id="flame_flame--700" class="st16" d="M89.1,257.5c-14.7-6.5-12.3-22.3-5.1-28.8C86.1,238,105.9,254.2,89.1,257.5z"/>
+<linearGradient id="flame_flame--500_1_" gradientUnits="userSpaceOnUse" x1="2.6771" y1="256.7507" x2="-11.0553" y2="231.8074" gradientTransform="matrix(-1 0 0 1 174.1451 0)">
+	<stop  offset="0" style="stop-color:#FFFFFF"/>
+	<stop  offset="0" style="stop-color:#FAF6B9"/>
+	<stop  offset="0" style="stop-color:#FAF394"/>
+	<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
+	<stop  offset="0.2174" style="stop-color:#F9EC43"/>
+	<stop  offset="0.3124" style="stop-color:#FBE937"/>
+	<stop  offset="0.3645" style="stop-color:#FDE62A"/>
+	<stop  offset="0.5512" style="stop-color:#FCD304"/>
+	<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
+	<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
+	<stop  offset="0.8671" style="stop-color:#FBAA29"/>
+	<stop  offset="0.9208" style="stop-color:#FAA426"/>
+	<stop  offset="0.964" style="stop-color:#F89A22"/>
+	<stop  offset="1" style="stop-color:#F78D1E"/>
+	<stop  offset="1" style="stop-color:#F68C1F"/>
+	<stop  offset="1" style="stop-color:#F6871F"/>
+	<stop  offset="1" style="stop-color:#F47E20"/>
+	<stop  offset="1" style="stop-color:#F27221"/>
+	<stop  offset="1" style="stop-color:#F06122"/>
+	<stop  offset="1" style="stop-color:#EF5D23"/>
+	<stop  offset="1" style="stop-color:#EC5C23"/>
+	<stop  offset="1" style="stop-color:#E45524"/>
+	<stop  offset="1" style="stop-color:#D94A26"/>
+	<stop  offset="1" style="stop-color:#D24327"/>
+</linearGradient>
+<path id="flame_flame--500" class="st17" d="M174.3,257.5c14.7-6.5,12.3-22.3,5.1-28.8C177.4,238,157.6,254.2,174.3,257.5z"/>
+<linearGradient id="flame_flame--300_1_" gradientUnits="userSpaceOnUse" x1="48.235" y1="214.5601" x2="32.8204" y2="186.5612">
+	<stop  offset="0" style="stop-color:#FFFFFF"/>
+	<stop  offset="0" style="stop-color:#FAF6B9"/>
+	<stop  offset="0" style="stop-color:#FAF394"/>
+	<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
+	<stop  offset="0.2174" style="stop-color:#F9EC43"/>
+	<stop  offset="0.3124" style="stop-color:#FBE937"/>
+	<stop  offset="0.3645" style="stop-color:#FDE62A"/>
+	<stop  offset="0.5512" style="stop-color:#FCD304"/>
+	<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
+	<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
+	<stop  offset="0.8671" style="stop-color:#FBAA29"/>
+	<stop  offset="0.9208" style="stop-color:#FAA426"/>
+	<stop  offset="0.964" style="stop-color:#F89A22"/>
+	<stop  offset="1" style="stop-color:#F78D1E"/>
+	<stop  offset="1" style="stop-color:#F68C1F"/>
+	<stop  offset="1" style="stop-color:#F6871F"/>
+	<stop  offset="1" style="stop-color:#F47E20"/>
+	<stop  offset="1" style="stop-color:#F27221"/>
+	<stop  offset="1" style="stop-color:#F06122"/>
+	<stop  offset="1" style="stop-color:#EF5D23"/>
+	<stop  offset="1" style="stop-color:#EC5C23"/>
+	<stop  offset="1" style="stop-color:#E45524"/>
+	<stop  offset="1" style="stop-color:#D94A26"/>
+	<stop  offset="1" style="stop-color:#D24327"/>
+</linearGradient>
+<path id="flame_flame--300" class="st18" d="M43.5,216.8c-12-7.6-10.1-26.2-4.2-33.8C41,193.9,57.2,213,43.5,216.8z"/>
+<linearGradient id="flame_flame--900_2_" gradientUnits="userSpaceOnUse" x1="-124.0984" y1="214.8934" x2="-139.513" y2="186.8946" gradientTransform="matrix(-1 0 0 1 89.6479 0)">
+	<stop  offset="0" style="stop-color:#FFFFFF"/>
+	<stop  offset="0" style="stop-color:#FAF6B9"/>
+	<stop  offset="0" style="stop-color:#FAF394"/>
+	<stop  offset="5.119305e-02" style="stop-color:#F8ED46"/>
+	<stop  offset="0.2174" style="stop-color:#F9EC43"/>
+	<stop  offset="0.3124" style="stop-color:#FBE937"/>
+	<stop  offset="0.3645" style="stop-color:#FDE62A"/>
+	<stop  offset="0.5512" style="stop-color:#FCD304"/>
+	<stop  offset="0.6717" style="stop-color:#FDBA1A"/>
+	<stop  offset="0.7711" style="stop-color:#FBAB2A"/>
+	<stop  offset="0.8671" style="stop-color:#FBAA29"/>
+	<stop  offset="0.9208" style="stop-color:#FAA426"/>
+	<stop  offset="0.964" style="stop-color:#F89A22"/>
+	<stop  offset="1" style="stop-color:#F78D1E"/>
+	<stop  offset="1" style="stop-color:#F68C1F"/>
+	<stop  offset="1" style="stop-color:#F6871F"/>
+	<stop  offset="1" style="stop-color:#F47E20"/>
+	<stop  offset="1" style="stop-color:#F27221"/>
+	<stop  offset="1" style="stop-color:#F06122"/>
+	<stop  offset="1" style="stop-color:#EF5D23"/>
+	<stop  offset="1" style="stop-color:#EC5C23"/>
+	<stop  offset="1" style="stop-color:#E45524"/>
+	<stop  offset="1" style="stop-color:#D94A26"/>
+	<stop  offset="1" style="stop-color:#D24327"/>
+</linearGradient>
+<path id="flame_flame--900_1_" class="st19" d="M218.5,217.2c12-7.6,10.1-26.2,4.2-33.8C221,194.3,204.7,213.3,218.5,217.2z"/>
 </svg>

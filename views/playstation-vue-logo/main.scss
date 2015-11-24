@@ -1,0 +1,22 @@
+@import '../../styles/application';
+
+body {
+    background-color: hsla(0, 100%, 100%, 0.9);
+}
+
+
+.icon-grid-cell {
+
+    border: 1px solid red;
+    transition: all $animation-duration__color-change $easing__ease-out-cubic;
+    flex-basis: 25%;
+    height: 25%;
+    width: 33%;
+    min-height: 12rem;
+    min-width: 12rem;
+
+    &:hover {
+        background-color: blue;
+        transform: scale(1.03) translateY(-10%);
+    }
+}

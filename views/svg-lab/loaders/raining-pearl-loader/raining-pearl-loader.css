@@ -194,6 +194,13 @@
   width: 100%;
   height: 100%; }
 
+.svg--container {
+  position: relative; }
+
+.svg--container .svg--container__svg {
+  width: 100%;
+  height: 100%; }
+
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
@@ -460,6 +467,13 @@ nav, a, button {
   width: 100%;
   height: 100%; }
 
+.svg--container {
+  position: relative; }
+
+.svg--container .svg--container__svg {
+  width: 100%;
+  height: 100%; }
+
 html,
 body {
   width: 100%;
@@ -479,6 +493,9 @@ body {
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden; }
+
+.svg-html-container {
+  overflow: visible; }
 
 .svg-def {
   position: absolute;

@@ -11,7 +11,7 @@ const
         closeIcon: Power1.easeOut
     };
 
-let ShrkinkingToCloseXIcon = (svgElem, opts = {}) => {
+let ShrkinkingToCloseXIcon = function (svgElem, opts = {}) {
 
     let icon = Icon();
     icon.svgElem = svgElem;
@@ -57,4 +57,4 @@ let ShrkinkingToCloseXIcon = (svgElem, opts = {}) => {
     return Object.create(icon);
 };
 
-export {ShrkinkingToCloseXIcon};
+export default ShrkinkingToCloseXIcon;

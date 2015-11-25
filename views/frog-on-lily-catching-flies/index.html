@@ -1,0 +1,45 @@
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Frog Catching Flies</title>
+    <meta name="description" content="Frog Catching Flies">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <link rel="stylesheet" href="main.css">
+    <!-- Place favicon.ico in the root directory -->
+
+</head>
+<body>
+
+  <svg class="svg-def" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+  </svg>
+
+  <div class="scene">
+
+
+  </div>
+
+
+
+    <script src="../../js/lib/plugins/base-plugins.js"></script>
+
+
+    <script src="../../vendor/system.js"></script>
+    <script src="../../config.js"></script>
+    <script>
+        System.import('views/frog-on-lily-catching-flies/main')
+            .then(function (mod) {
+                var appRunner = mod.default();
+
+                if (appRunner) {
+                    appRunner();
+                    //window.addEventListener('DOMContentLoaded', appRunner, false);
+                }
+            });
+    </script>
+
+</body>
+</html>

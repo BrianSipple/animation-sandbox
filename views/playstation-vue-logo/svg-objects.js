@@ -15,8 +15,8 @@ const SvgObjects = {
     // },
 
     controllerToTvMorphIcon: {
-        id: '#controller-to-tv-morph',
-        obj: ControllerToTvMorphIcon(document.querySelector('#controller-to-tv-morph'))
+        id: '#controller-to-tv-morph-logo',
+        obj: ControllerToTvMorphIcon(document.querySelector('#controller-to-tv-morph-logo'))
     }
 };
 

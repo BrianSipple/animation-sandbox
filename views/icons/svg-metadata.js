@@ -5,41 +5,35 @@
  */
 
 import WandIcon from './models/wand-icon';
-import {ShrkinkingToCloseXIcon} from './models/x-icon';
+import ShrkinkingToCloseXIcon from './models/x-icon';
 import PlayPauseButton from './models/play-pause-button';
 
 
-let SVG_METADATA;
+const SVG_METADATA = {
+    wand1: {
+        id: '#WandIcon1',
+        obj: WandIcon(document.querySelector('#WandIcon1'))
+    },
 
-(function wireUpMetaData () {
+    wand2: {
+        id: '#WandIcon2',
+        obj: WandIcon(document.querySelector('#WandIcon2'))
+    },
 
-    SVG_METADATA = {
-        wand1: {
-            id: '#WandIcon1',
-            obj: WandIcon(document.querySelector('#WandIcon1'))
-        },
-
-        wand2: {
-            id: '#WandIcon2',
-            obj: WandIcon(document.querySelector('#WandIcon2'))
-        },
-
-        x: {
-            id: '#CloseXIcon',
-            obj: ShrkinkingToCloseXIcon(
-                document.querySelector('#CloseXIcon'),
-                { refreshTime: 3 }
-            ),
-            // customClickHandlers: [
-            //     { name: 'callMeOnClick', fn: function () {debugger; console.log('Yay!'); } }
-            // ]
-        },
-        playPauseButton: {
-            id: '#PlayPauseButton',
-            obj: PlayPauseButton(document.querySelector('#PlayPauseButton'))
-        }
-    };
-
-}());
+    x: {
+        id: '#CloseXIcon',
+        obj: ShrkinkingToCloseXIcon(
+            document.querySelector('#CloseXIcon'),
+            { refreshTime: 3 }
+        ),
+        // customClickHandlers: [
+        //     { name: 'callMeOnClick', fn: function () {debugger; console.log('Yay!'); } }
+        // ]
+    },
+    playPauseButton: {
+        id: '#PlayPauseButton',
+        obj: PlayPauseButton(document.querySelector('#PlayPauseButton'))
+    }
+};
 
 export default SVG_METADATA;

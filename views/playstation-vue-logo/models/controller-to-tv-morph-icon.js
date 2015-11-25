@@ -10,9 +10,14 @@ const
 
     SELECTORS = {
 
-        playStationController: '#playstation-controller',
-        tv: '#tv',
-        playstationLogo: '#playstation-logo'
+        ps4Controller: '.playstation-controller',
+        psLogo: '.ps-logo',
+        psLogoP: '.p',
+        psLogoS: '.s',
+        psLogoSTop: '.s__top',
+        psLogoSBottom: '.s__bottom',
+        vueTVLogo: '.playstation-vue-logo',
+        vueTVLogoOutline: '.playstation-vue-logo__outline'
     },
 
     EASINGS = {
@@ -52,9 +57,9 @@ const ControllerToTvMorphIcon = ((svgContainerElem, opts) => {
     icon.svgContainerElem = svgContainerElem;
 
     icon.DOM_REFS = {
-        playStationController: icon.svgContainerElem.querySelector(SELECTORS.playStationController),
-        tv: icon.svgContainerElem.querySelector(SELECTORS.tv),
-        playstationLogo: icon.svgContainerElem.querySelector(SELECTORS.playstationLogo)
+        ps4Controller: icon.svgContainerElem.querySelector(SELECTORS.ps4Controller),
+        vueTVLogo: icon.svgContainerElem.querySelector(SELECTORS.vueTVLogo),
+        psLogo: icon.svgContainerElem.querySelector(SELECTORS.psLogo)
     };
 
     icon.mainIconTL = createMorphTL();

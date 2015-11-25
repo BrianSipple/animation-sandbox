@@ -1,0 +1,74 @@
+.body {
+    background-color: hsla(0, 100%, 100%, 0.89);
+}
+
+.scene {
+
+    &.scene--default-scene {
+        #gradient__koi-fish-body {
+
+        }
+
+        #gradient__koi-fish-tail {
+
+        }
+
+        #gradient__koi-fish-top-fin {
+
+        }
+
+        #gradient__koi-fish-bottom-fin {
+
+        }
+
+    }
+
+    .koi-fish__eye-front {
+        fill: $koi-fish-color__eye-front--default;
+    }
+    .koi-fish__eye-rear {
+        fill: $koi-fish-color__eye-rear--default;
+    }
+
+    .koi-fish__gill-rear {
+        fill: $koi-fish-color__gill-rear--default;
+    }
+    .koi-fish__gill-rear {
+        fill: $koi-fish-color__gill-rear--default;
+    }
+
+
+    .koi-fish__lip {
+        fill: $koi-fish-color__lip--default;
+    }
+
+    .koi-fish__face {
+        fill: $koi-fish-color__face--default;
+    }
+
+    .koi-fish-face__main-cheek-piece {
+        fill: $koi-fish-face-color__main-cheek--default;
+    }
+
+    .koi-fish-face__small-cheek-piece {
+        fill: $koi-fish-face-color__small-cheek--default;
+    }
+
+
+}
+
+
+.koi-fish {
+    .koi-fish__body {
+        fill: url('#gradient__koi-fish-body');
+    }
+    .koi-fish__tail {
+        fill: url('#gradient__koi-fish-tail');
+    }
+    .koi-fish__top-fin {
+        fill: url('#gradient__koi-fish-top-fin');
+    }
+    .koi-fish__bottom-fin {
+        fill: url('#gradient__koi-fish-bottom-fin');
+    }
+}

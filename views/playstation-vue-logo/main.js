@@ -5,7 +5,7 @@ const app = (function () {
     const
         SELECTORS = {
             iconGridContainer: '.grid',
-            iconsRootSVG: '.svg-grid-container',
+            gridContainer: '.grid-container',
         },
 
         // Cache a direct mapping from svg ids to their correspoinding objects
@@ -39,7 +39,7 @@ const app = (function () {
     };
 
     function showIcons () {
-        document.querySelector(SELECTORS.iconsRootSVG).style.opacity = '1';
+        document.querySelector(SELECTORS.gridContainer).style.opacity = '1';
     }
 
 

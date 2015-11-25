@@ -5,7 +5,7 @@
  */
 
 //import AntennaeWiggleIcon from './models/antennae-wiggle-icon';
-import ControllerToTvMorphIcon from './models/controller-to-tv-morph-icon';
+import ControllerToTvMorphObject from './models/controller-to-tv-morph';
 
 
 const SvgObjects = {
@@ -16,7 +16,7 @@ const SvgObjects = {
 
     controllerToTvMorphIcon: {
         id: '#controller-to-tv-morph-logo',
-        obj: ControllerToTvMorphIcon(document.querySelector('#controller-to-tv-morph-logo'))
+        obj: ControllerToTvMorphObject(document.querySelector('#controller-to-tv-morph-logo'))
     }
 };
 

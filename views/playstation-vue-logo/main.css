@@ -194,10 +194,10 @@
   width: 100%;
   height: 100%; }
 
-.svg--container {
+.svg-container {
   position: relative; }
 
-.svg--container .svg--container__svg {
+.svg-container .svg-container__svg {
   width: 100%;
   height: 100%; }
 
@@ -467,10 +467,10 @@ nav, a, button {
   width: 100%;
   height: 100%; }
 
-.svg--container {
+.svg-container {
   position: relative; }
 
-.svg--container .svg--container__svg {
+.svg-container .svg-container__svg {
   width: 100%;
   height: 100%; }
 
@@ -630,10 +630,31 @@ body {
 body {
   background-color: rgba(255, 255, 255, 0.9); }
 
+.scene {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
+.ps-logo {
+  opacity: 0; }
+
+.antennae {
+  opacity: 0; }
+
+.grid-container {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.215, 0.61, 0.355, 1); }
+
 .icon-grid-cell {
   border: 1px solid red;
   transition: all 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
   flex-basis: 25%;
+  background-color: transparent;
   height: 25%;
   width: 33%;
   min-height: 12rem;
@@ -642,3 +663,9 @@ body {
 .icon-grid-cell:hover {
   background-color: blue;
   transform: scale(1.03) translateY(-10%); }
+
+.icon-grid-cell .icon-grid-cell__svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0); }

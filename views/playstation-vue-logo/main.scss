@@ -4,6 +4,29 @@ body {
     background-color: hsla(0, 100%, 100%, 0.9);
 }
 
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.ps-logo {
+    opacity: 0;
+}
+
+.antennae {
+    opacity: 0;
+}
+
+.grid-container {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    visibility: hidden;   // animate in when content is loaded
+    opacity: 0;
+    transition: all $animation-duration__fade-toggle $easing__ease-out-cubic;
+}
 
 .icon-grid-cell {
 
@@ -11,6 +34,7 @@ body {
     border: 1px solid red;
     transition: all $animation-duration__color-change $easing__ease-out-cubic;
     flex-basis: 25%;
+    background-color: transparent;
     height: 25%;
     width: 33%;
     min-height: 12rem;
@@ -19,5 +43,12 @@ body {
     &:hover {
         background-color: blue;
         transform: scale(1.03) translateY(-10%);
+    }
+
+    .icon-grid-cell__svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
     }
 }

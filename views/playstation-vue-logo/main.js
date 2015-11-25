@@ -4,48 +4,47 @@ const app = (function () {
 
     const
         SELECTORS = {
-            iconGridContainer: '.grid',
             gridContainer: '.grid-container',
         },
 
         // Cache a direct mapping from svg ids to their correspoinding objects
         // that we can quickly reference during event handling
-        idToIconObjectMap = {},
+        idToObjectMap = {},
 
-        iconGridContainerElem = document.querySelector(SELECTORS.iconGridContainer);
+        gridContainerElem = document.querySelector(SELECTORS.gridContainer);
 
     /**
     * Cache icon objects based on their id and sync their timelines
     * with the masterTL.
     */
-    function wireUpIcons () {
+    function wireUpGridObjects () {
         let
-            iconObj,
-            iconMetaData,
-            iconParams = {};
+            svgObj,
+            objParams = {};
 
         for (let svgObjData of Object.values(SvgObjects)) {
             let
-                iconObj = svgObjData.obj;
+                svgObj = svgObjData.obj;
 
-                iconParams = {
+                objParams = {
                     id: svgObjData.id,
                     customClickHandlers: svgObjData.customClickHandlers
                 };
 
-            iconObj.init(iconParams);
-            idToIconObjectMap[svgObjData.id] = iconObj; // cache here for quicker access on click
+            svgObj.init(objParams);
+            idToObjectMap[svgObjData.id] = svgObj; // cache here for quicker access on click
         }
     };
 
-    function showIcons () {
-        document.querySelector(SELECTORS.gridContainer).style.opacity = '1';
+    function showGrid () {
+        gridContainerElem.style.opacity = '1';
+        gridContainerElem.style.visibility = 'visible';
     }
 
 
     function init () {
-        wireUpIcons();
-        showIcons();
+        wireUpGridObjects();
+        showGrid();
     }
 
     init();

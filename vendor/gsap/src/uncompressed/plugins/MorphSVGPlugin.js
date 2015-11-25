@@ -1,6 +1,6 @@
 /*!
- * VERSION: 0.3.1
- * DATE: 2015-10-21
+ * VERSION: 0.6.0
+ * DATE: 2015-11-17
  * UPDATES AND DOCS AT: http://greensock.com
  *
  * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
@@ -290,7 +290,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						segment[l++] = relativeY + (y - relativeY) * 2 / 3;
 						segment[l++] = x;
 						segment[l++] = y;
-						i += 2;
+						if (command === "L") {
+							i += 2;
+						}
 					}
 					relativeX = x;
 					relativeY = y;
@@ -428,7 +430,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 			}
 			bezier.centerX = (xMax + xMin) / 2;
-			bezier.centerY = (yMax - yMin) / 2;
+			bezier.centerY = (yMax + yMin) / 2;
 			return (bezier.size = (xMax - xMin) * (yMax - yMin));
 		},
 		_sortByComplexity = function(a, b) {
@@ -494,26 +496,32 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			return minIndex / 6;
 		},
-		_getClosestAnchor = function(bezier, x, y) { //finds the index of the anchor that's closest to the provided x/y coordinate (the index returned is the x-coordinate in that bezier, so the y would be one greater)
-			var l = bezier.length,
+		_getClosestAnchor = function(bezier, x, y) { //finds the x/y of the anchor that's closest to the provided x/y coordinate (returns an array, like [x, y]). The bezier should be the top-level type that contains an array for each segment.
+			var j = bezier.length,
 				closestDistance = 99999999999,
-				closestIndex = 0,
-				dx, dy, d, i;
-			for (i = 0; i < l; i += 6) {
-				dx = bezier[i] - x;
-				dy = bezier[i+1] - y;
-				d = Math.sqrt(dx * dx + dy * dy);
-				if (d < closestDistance) {
-					closestDistance = d;
-					closestIndex = i;
+				closestX = 0,
+				closestY = 0,
+				b, dx, dy, d, i, l;
+			while (--j > -1) {
+				b = bezier[j];
+				l = b.length;
+				for (i = 0; i < l; i += 6) {
+					dx = b[i] - x;
+					dy = b[i+1] - y;
+					d = Math.sqrt(dx * dx + dy * dy);
+					if (d < closestDistance) {
+						closestDistance = d;
+						closestX = b[i];
+						closestY = b[i+1];
+					}
 				}
 			}
-			return closestIndex;
+			return [closestX, closestY];
 		},
-		_getClosestSegment = function(bezier, pool, startIndex) { //matches the bezier to the closest one in a pool (array) of beziers, assuming they are in order of size and we shouldn't drop more than 20% of the size, otherwise prioritizing location (total distance to the center). Extracts the segment out of the pool array and returns it.
+		_getClosestSegment = function(bezier, pool, startIndex, sortRatio) { //matches the bezier to the closest one in a pool (array) of beziers, assuming they are in order of size and we shouldn't drop more than 20% of the size, otherwise prioritizing location (total distance to the center). Extracts the segment out of the pool array and returns it.
 			var l = pool.length,
 				index = 0,
-				minSize = (pool[startIndex].size || _getSize(pool[startIndex])) * 0.8, //70% of the size threshold
+				minSize = (pool[startIndex].size || _getSize(pool[startIndex])) * sortRatio,
 				min = 999999999999,
 				size = bezier.size || _getSize(bezier),
 				cx = bezier.centerX,
@@ -542,6 +550,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				shorter = dif > 0 ? start : end,
 				added = 0,
 				sortMethod = (map === "complexity") ? _sortByComplexity : _sortBySize,
+				sortRatio = (map === "position") ? 0 : (typeof(map) === "number") ? map : 0.8,
 				i = shorter.length,
 				shapeIndices = (typeof(shapeIndex) === "object" && shapeIndex.push) ? shapeIndex.slice(0) : [shapeIndex],
 				reverse = (shapeIndices[0] === "reverse" || shapeIndices[0] < 0),
@@ -549,25 +558,27 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			if (!shorter[0]) {
 				return;
 			}
-			if (dif) {
-				if (dif < 0) {
-					dif = -dif;
-				}
+			if (longer.length > 1) {
 				start.sort(sortMethod);
 				end.sort(sortMethod);
 				if (sortMethod === _sortBySize) {
 					for (i = 0; i < shorter.length; i++) {
-						longer.splice(i, 0, _getClosestSegment(shorter[i], longer, i));
+						longer.splice(i, 0, _getClosestSegment(shorter[i], longer, i, sortRatio));
 					}
+				}
+			}
+			if (dif) {
+				if (dif < 0) {
+					dif = -dif;
 				}
 				if (longer[0].length > shorter[0].length) { //since we use shorter[0] as the one to map the origination point of any brand new fabricated segments, do any subdividing first so that there are more points to choose from (if necessary)
 					_subdivideBezier(shorter[0], ((longer[0].length - shorter[0].length)/6) | 0);
 				}
 				i = shorter.length;
 				while (added < dif) {
-					b = _getClosestAnchor(shorter[0], longer[i][0], longer[i][1]);
-					x = shorter[0][b];
-					y = shorter[0][b+1];
+					b = _getClosestAnchor(shorter, longer[i][0], longer[i][1]); //TODO: offsetX/offsetY so that the shapes are centered?
+					x = b[0];
+					y = b[1];
 					shorter[i++] = [x, y, x, y, x, y, x, y];
 					shorter.totalPoints += 8;
 					added++;
@@ -773,7 +784,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 			return path;
 		},
-		_parseShape = function(shape, forcePath) {
+		_parseShape = function(shape, forcePath, target) {
 			var e, type;
 			if (typeof(shape) !== "string" || (shape.match(_numbersExp) || []).length < 3) {
 				e = TweenLite.selector(shape);
@@ -785,6 +796,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						type = "PATH";
 					}
 					shape = e.getAttribute(type === "PATH" ? "d" : "points") || "";
+					if (e === target) { //if the shape matches the target element, the user wants to revert to the original which should have been stored in the data-original attribute
+						shape = e.getAttributeNS(null, "data-original") || shape;
+					}
 				} else {
 					_log("WARNING: invalid morph to: " + shape);
 					shape = false;
@@ -800,7 +814,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			propName: "morphSVG",
 			API: 2,
 			global: true,
-			version: "0.3.1",
+			version: "0.6.0",
 
 			//called when the tween renders for the first time. This is where initial values should be recorded and any setup routines should run.
 			init: function(target, value, tween) {
@@ -815,16 +829,19 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					return false;
 				}
 				p = (type === "PATH") ? "d" : "points";
-				if (typeof(value) === "string" || value.getBBox) {
+				if (typeof(value) === "string" || value.getBBox || value[0]) {
 					value = {shape:value};
 				}
-				shape = _parseShape(value.shape || value.d || value.points || "", (p === "d"));
+				shape = _parseShape(value.shape || value.d || value.points || "", (p === "d"), target);
 				if (isPoly && _commands.test(shape)) {
 					_log("WARNING: a <" + type + "> cannot accept path data. " + _morphMessage);
 					return false;
 				}
 				if (shape) {
 					this._target = target;
+					if (!target.getAttributeNS(null, "data-original")) {
+						target.setAttributeNS(null, "data-original", target.getAttribute(p)); //record the original state in a data-original attribute so that we can revert to it later.
+					}
 					pt = this._addTween(target, "setAttribute", target.getAttribute(p) + "", shape + "", "morphSVG", false, p, (p === "d") ? _buildPathFilter(value.shapeIndex, value.map) : _buildPointsFilter(value.shapeIndex));
 					if (pt) {
 						this._overwriteProps.push("morphSVG");

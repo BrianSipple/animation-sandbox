@@ -39,12 +39,12 @@ const iconProto = {
         throw new Error('Must be implemented by a linked object');
     },
 
-    /**
-     * Helper to pass as the onComplete option of a timeline
-     */
-    boundDeclareAnimationComplete: function boundDeclareAnimationComplete () {
-        this.isAnimating = false;
-    },
+    // /**
+    //  * Helper to pass as the onComplete option of a timeline
+    //  */
+    // boundDeclareAnimationComplete: function boundDeclareAnimationComplete () {
+    //     this.isAnimating = false;
+    // },
 
     /**
      * Called by the main app function when we're ready to

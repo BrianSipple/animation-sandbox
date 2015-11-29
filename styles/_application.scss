@@ -2,6 +2,7 @@
 
 @import 'base/base-variables';
 @import 'base/base-placeholders';
+@import 'base/base-mixins';
 @import 'layouts/flex-layout';
 @import 'layouts/grid';
 @import 'components/components';
@@ -128,6 +129,7 @@ body {
     height: 100%;
     top: 0;
     left: 0;
+    overflow: scroll;
     margin: 0;
     padding: 0;
     font-size: $font-size_root;
@@ -150,7 +152,8 @@ body {
 }
 
 
-.svg-def {
+.svg-def,
+.svg-defs {
     position: absolute;
     width: 0;
     height: 0;

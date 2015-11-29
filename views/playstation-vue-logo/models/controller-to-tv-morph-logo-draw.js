@@ -37,7 +37,7 @@ function setUpObject (svgObj) {
 
     //debugger;
     setupTL.set(svgObj.DOM_REFS.antennas, { transformOrigin: 'center bottom', scaleY: 0 });
-    setupTL.set(svgObj.DOM_REFS.psLogo, { transformOrigin: '50% 50%', scale: 0 });
+    setupTL.set(svgObj.DOM_REFS.psLogo, { transformOrigin: '50% 50%', drawSVG: '50% 50%' });
 
     return setupTL;
 }
@@ -47,6 +47,7 @@ function setUpObject (svgObj) {
  * a subtle wigging effect at the end
  */
 function morphControllerIntoVueTVShape(svgObj) {
+    //debugger;
     // morph to tv
     let morphTL = new TimelineMax();
 
@@ -82,7 +83,7 @@ function perkUpAntennas (svgObject) {
 }
 
 
-function flashInLogo (svgObj) {
+function drawInLogo (svgObj) {
     // draw logo
     let logoFlashTL = new TimelineMax();
 
@@ -115,7 +116,7 @@ function createMainObjectTL (svgObj) {
     mainIconTL.addLabel(LABELS.setupComplete)
     mainIconTL.add(morphControllerIntoVueTVShape(svgObj), LABELS.morphingToTV);
     mainIconTL.add(perkUpAntennas(svgObj), `${LABELS.morphingToTV}+=0.3`);
-    mainIconTL.add(flashInLogo(svgObj), `${LABELS.morphingToTV}+=0.6`);
+    mainIconTL.add(drawInLogo(svgObj), `${LABELS.morphingToTV}+=0.6`);
 
     return mainIconTL;
 }
@@ -132,7 +133,7 @@ function boundSetStateOnToggle () {
     this.shouldReverseAnimation = !this.shouldReverseAnimation;
 }
 
-const ControllerToTvMorphObject = ((svgContainerElem, opts) => {
+const ControllerToTvMorphAndDrawObject = ((svgContainerElem, opts) => {
 
     let svgObj = BaseSvgObject();  // TODO: Change name of "svgObj"
 
@@ -170,4 +171,4 @@ const ControllerToTvMorphObject = ((svgContainerElem, opts) => {
 
 });
 
-export default ControllerToTvMorphObject;
+export default ControllerToTvMorphAndDrawObject;

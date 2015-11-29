@@ -1,14 +1,13 @@
 import 'TweenMax';
 import 'MorphSVGPlugin';
-import { createSVG } from 'utils/svg-utils';
-import {
-    boundedRandom,
-    nearestEven,
-    nearestOdd
- } from 'utils/math-utils';
+import SVGUtils from 'utils/svg-utils';
+import MathUtils from 'utils/math-utils';
 
 
 const
+    { createSVG } = SVGUtils,
+    { boundedRandom, nearestEven, nearestOdd } = MathUtils,
+
     flameProto = {
 
         /* DOM node that serves as our morph source */

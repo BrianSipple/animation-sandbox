@@ -47,6 +47,7 @@ function setUpObject (svgObj) {
  * a subtle wigging effect at the end
  */
 function morphControllerIntoVueTVShape(svgObj) {
+    //debugger;
     // morph to tv
     let morphTL = new TimelineMax();
 
@@ -132,7 +133,7 @@ function boundSetStateOnToggle () {
     this.shouldReverseAnimation = !this.shouldReverseAnimation;
 }
 
-const ControllerToTvMorphObject = ((svgContainerElem, opts) => {
+const AntennaeWiggle = ((svgContainerElem, opts) => {
 
     let svgObj = BaseSvgObject();  // TODO: Change name of "svgObj"
 
@@ -170,4 +171,4 @@ const ControllerToTvMorphObject = ((svgContainerElem, opts) => {
 
 });
 
-export default ControllerToTvMorphObject;
+export default AntennaeWiggle;

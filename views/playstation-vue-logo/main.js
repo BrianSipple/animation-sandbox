@@ -28,10 +28,10 @@ const app = (function () {
 
                 objParams = {
                     id: svgObjData.id,
-                    customClickHandlers: svgObjData.customClickHandlers
+                    opts: svgObjData.opts
                 };
 
-            svgObj.init(objParams);
+            svgObj.init(objParams);  // TODO: Needed?
             idToObjectMap[svgObjData.id] = svgObj; // cache here for quicker access on click
         }
     };

@@ -1,7 +1,7 @@
 <svg version="1.1" class="svg--container" id="controller-to-tv-morph-logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 150 140.8" style="enable-background:new 0 0 150 140.8;" xml:space="preserve">
 	<style type="text/css">
-		.antennaes{display:none;}
+		.antennas{display:none;}
 		.playstation-vue-logo__outline,
 		.playstation-vue-logo__ps-logo {
 			display:inline;
@@ -12,10 +12,10 @@
 		}
 	</style>
 	<g class="playstation-vue-logo">
-		<g class="antennaes" class="st1">
-			<path class="antennae antennae--left" d="M73.6,24.8c-2.8-1.5-5-3.6-7.3-5.7c-3-2.7-5.9-5.4-8.9-8.1c-3.3-3-6.6-6-9.8-8.9
+		<g class="antennas" class="st1">
+			<path class="antenna antenna--left" d="M73.6,24.8c-2.8-1.5-5-3.6-7.3-5.7c-3-2.7-5.9-5.4-8.9-8.1c-3.3-3-6.6-6-9.8-8.9
 				c-1.4-1.2-3.2-2.6-4.9-1.8c-2.6,1.2-1,5.2,0.9,7.4c5.5,6.3,16.6,18.9,16.6,18.9L75,25.1C74.5,25.1,74.1,25,73.6,24.8z"/>
-			<path class="antennae antennae--right" d="M108,1.2c-1.5-2.1-4.8-0.4-6.7,1.3c-5.9,5.4-11.7,10.8-17.6,16.1c-1.5,1.4-2.9,2.9-4.5,4.2
+			<path class="antenna antenna--right" d="M108,1.2c-1.5-2.1-4.8-0.4-6.7,1.3c-5.9,5.4-11.7,10.8-17.6,16.1c-1.5,1.4-2.9,2.9-4.5,4.2
 				C78,23.8,76.5,25,75,25.1l14.7,1c5.6-6.4,11.1-12.8,16.7-19.2C107.8,5.2,109.3,2.9,108,1.2z"/>
 		</g>
 		<path class="playstation-vue-logo__outline" d="M89.7,26c14.2,2,28.8,0.1,42.8,2c20.8,2.8,16.6,26.3,17.1,41.8

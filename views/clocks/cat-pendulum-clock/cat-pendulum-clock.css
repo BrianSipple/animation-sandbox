@@ -68,6 +68,10 @@
  * that the size covers the container
  */
 /**
+ * Box shadow definitions inspired by
+ * the Polymer Project: https://www.polymer-project.org/components/paper-elements/demo.html#paper-shadow
+ */
+/**
  * Attribute API for declarative flexbox styling
  */
 [layout] {
@@ -481,6 +485,7 @@ body {
   height: 100%;
   top: 0;
   left: 0;
+  overflow: scroll;
   margin: 0;
   padding: 0;
   font-size: 16px;
@@ -497,7 +502,8 @@ body {
 .svg-html-container {
   overflow: visible; }
 
-.svg-def {
+.svg-def,
+.svg-defs {
   position: absolute;
   width: 0;
   height: 0;

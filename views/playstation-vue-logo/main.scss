@@ -1,7 +1,10 @@
 @import '../../styles/application';
 
+$margin__icon-in-grid-cell: 1rem;
+$margin__icon-grid-cell: 1rem;
+
 body {
-    background-color: hsla(0, 100%, 100%, 0.9);
+    background-color: hsla(265, 100%, 92%, 1.0);
 }
 
 .scene {
@@ -10,17 +13,27 @@ body {
     height: 100%;
 }
 
-.ps-logo {
-    opacity: 0;
+
+// TODO: Sepearate out into importable files for each SVG
+#controller-to-tv-morph,
+#controller-to-tv-morph-and-flash,
+#antenna-wiggle, {
+
+    .ps-logo {
+        opacity: 0;
+    }
+
+    .antenna {
+        opacity: 0;
+    }
 }
 
-.antennae {
-    opacity: 0;
-}
 
 .grid-container {
     position: absolute;
-    top: 25%;
+    width: 80%;
+    height: 80%;
+    top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     visibility: hidden;   // animate in when content is loaded
@@ -28,27 +41,51 @@ body {
     transition: all $animation-duration__fade-toggle $easing__ease-out-cubic;
 }
 
+.icon-grid {
+    flex-direction: column;
+}
+
 .icon-grid-cell {
 
-
-    border: 1px solid red;
+    @include BoxShadowHelper(3);
     transition: all $animation-duration__color-change $easing__ease-out-cubic;
     flex-basis: 25%;
-    background-color: transparent;
-    height: 25%;
-    width: 33%;
-    min-height: 12rem;
-    min-width: 12rem;
+    background-color: hsla(0, 100%, 100%, 1.0);
+    height: calc(25% - #{$margin__icon-in-grid-cell * 2} );
+    margin: $margin__icon-grid-cell;
+    width: calc(33% - #{$margin__icon-in-grid-cell * 2} );
+    position: relative;
+    flex-direction: column;
+    align-items: center;
 
     &:hover {
-        background-color: blue;
-        transform: scale(1.03) translateY(-10%);
+        background-color: hsla(0, 100%, 100%, 0.89);
+        //transform: scale(1.02) translateY(-2.5%);
+    }
+
+    .icon-grid-cell__svg-container {
+        position: relative;
+        overflow: visible;
+        width: calc(100% - #{$margin__icon-in-grid-cell * 2} );
+        height: calc(90% - #{$margin__icon-in-grid-cell * 2} );
+        margin: $margin__icon-in-grid-cell;
+    }
+
+    .icon-grid-cell__title {
+        text-align: center;
     }
 
     .icon-grid-cell__svg {
+        overflow: visible;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate3d(-50%, -50%, 0);
+    }
+}
+
+.tile-svg {
+    .tile-svg__label {
+
     }
 }

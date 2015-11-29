@@ -447,14 +447,6 @@ let lightbulb = function lightbulb () {
                            growSomeGlow(COLORS.bulb.litYellow, 0.2)
                            //flickerBurstTL.recent().endTime() + 0.4
                         );
-                        // flickerBurstTL.set(
-                        //     [
-                        //         bulbInnerGlowLayerSVG,
-                        //         bulbInnerLightSVG
-                        //     ],
-                        //     { opacity: 1, visibility: 'visible', fill: COLORS.bulb.litYellow, immediateRender: false }
-                        //     //masterFlickerTL.recent().endTime() + seq.delay + .01
-                        // );
                     }
 
                     wireChargeTL = makeWiresCharge(

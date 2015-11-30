@@ -10,6 +10,8 @@ import ControllerToTvFlashMorphObject from './models/controller-to-tv-morph-and-
 import AntennaWiggleObject from './models/antenna-wiggle';
 import ControllerToTvMorphAndDrawObject from './models/controller-to-tv-morph-logo-draw';
 
+import CONSTANTS from './constants/constants';
+
 
 const SvgObjects = {
 
@@ -23,9 +25,10 @@ const SvgObjects = {
         obj: ControllerToTvFlashMorphObject(
             document.querySelector('#controller-to-tv-morph-and-flash'),
             {
-                preserveFiltering: false,
+                finishType: CONSTANTS.FILTER_EFFECTS.TV_FINISHES.NONE,
                 filterIds: {
-                    pointLightFilter: '#filter__point-light-glow--1'                }
+                    pointLightFilter: '#filter__point-light-glow--1'
+                }
             }
         ),
     },
@@ -35,7 +38,7 @@ const SvgObjects = {
         obj: ControllerToTvFlashMorphObject(
             document.querySelector('#controller-to-tv-morph-and-flash-with-glow-finish'),
             {
-                preserveFiltering: true,
+                finishType: CONSTANTS.FILTER_EFFECTS.TV_FINISHES.LOGO_GLOW,
                 filterIds: {
                     pointLightFilter: '#filter__point-light-glow--2',
                     gaussianGlowFilter: '#filter__gaussian-glow--1',

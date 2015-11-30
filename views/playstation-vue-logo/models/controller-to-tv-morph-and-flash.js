@@ -3,9 +3,12 @@ import DrawSVGPlugin from 'DrawSVGPlugin';
 import MorphSVGPlugin from 'MorphSVGPlugin';
 import BaseSvgObject from './base/_svg-object';
 import SVGUtils from 'utils/svg-utils';
+import CONSTANTS from '../constants/constants';
 
 const
-    { setFilterOnElem } = SVGUtils,
+    { setFilterPathOnElem, removeFilterFromElem } = SVGUtils,
+
+    FINISH_TYPES = CONSTANTS.FILTER_EFFECTS.TV_FINISHES,
 
     DURATIONS = {
         scaleUp: 0.85,
@@ -28,13 +31,6 @@ const
         vueTVLogoOutline: '.playstation-vue-logo__outline',
         pointLightFilter: {},
         gaussianGlowFilter: {}
-
-        // pointLightFilter: {
-        //     base: '#filter__point-light-glow',
-        //     specularLighting: '#filter__point-light-glow feSpecularLighting',
-        //     specularLightingPointLight: '#filter__point-light-glow feSpecularLighting fePointLight',
-        // },
-        // gaussianGlowFilter: '#filter__gaussian-glow'
     },
 
     EASINGS = {
@@ -50,15 +46,24 @@ const
     },
 
     DEFAULT_OBJECT_OPTIONS = {
-        preserveFiltering: false,
+        finishType: FINISH_TYPES.NONE,
         filterIds: { pointLightFilter: undefined, gaussianGlowFilter: undefined }
     };
 
 
 function setUpObject (svgObject) {
+
     let setupTL = new TimelineMax();
 
-    setupTL.set(svgObject.DOM_REFS.antennas, { transformOrigin: 'center bottom', scaleY: 0 });
+    setupTL.set(
+        svgObject.DOM_REFS.antennas,
+        { transformOrigin: 'center bottom', scaleY: 0, opacity: 1, immediateRender: false },
+        0
+    );
+
+    setupTL.addCallback(function setInitialFilters () {
+        setFilterPathOnElem(svgObject.DOM_REFS.ps4Controller, SELECTORS.pointLightFilter.base);
+    }, 0);
 
     return setupTL;
 }
@@ -104,48 +109,69 @@ function perkUpAntennas (svgObject) {
 
 // TODO: Consider second option of a "glow layer" that we just tweak the opacity of
 // while also flickering opacity on the logo (and then set to opacity 0 at the end)
-function flashInLogo (svgObj, preserveFiltering) {
+function flashInLogo (svgObject, finishType) {
 
-    let masterFlashInTL = new TimelineMax({
-        onComplete: lightLogoForGood
-    });
+    let
+        masterFlashInTL = new TimelineMax(),
+
+        flickerSetTL = new TimelineMax({
+            onComplete: lightLogoForGood
+        }),
+
+        finishingTouchTL = new TimelineMax({
+            onStart: switchFiltersIfNeeded
+        });
+
+    function switchFiltersIfNeeded () {
+        if (finishType === FINISH_TYPES.LOGO_GLOW) {
+            finishingTouchTL.addCallback(function switchFilters () {
+                removeFilterFromElem(svgObject.DOM_REFS.ps4Controller);
+                setFilterPathOnElem(svgObject.DOM_REFS.psLogo, SELECTORS.gaussianGlowFilter.base);
+            }, 0);
+
+        }
+    }
 
     function lightLogoForGood () {
 
-        debugger;
-        // start from the endtime of the last tween on the timeline
-        masterFlashInTL.addLabel(
-            LABELS.lastLogoFlickering,
-            masterFlashInTL.recent().endTime()
-        );
-
-        masterFlashInTL.to(
-            svgObj.DOM_REFS.psLogo,
+        finishingTouchTL.to(
+            svgObject.DOM_REFS.psLogo,
             DURATIONS.logoFlicker,
-            { opacity: 1 },
-            LABELS.lastLogoFlickering
+            { opacity: 1},
+            .001
         );
 
-        // If desired, leave some finishing touches with our lighting filters, as well
-        if (preserveFiltering) {
+        // add final tweaks to the existing lighting filters
+        if (finishType === FINISH_TYPES.SPECULAR_LIGHTING) {
 
-            masterFlashInTL.to(
-                svgObj.DOM_REFS.filterSpecularLighting,
+            finishingTouchTL.to(
+                svgObject.DOM_REFS.filterSpecularLighting,
                 DURATIONS.logoFlicker,
                 { attr: { specularExponent: maxSpecularExponent * 0.05 } },
-                LABELS.lastLogoFlickering
+                .001
             );
 
-            masterFlashInTL.to(
-                svgObj.DOM_REFS.filterSpecularLightingPointLight,
+            finishingTouchTL.to(
+                svgObject.DOM_REFS.filterSpecularLightingPointLight,
                 DURATIONS.logoFlicker,
                 { attr: { z: maxPointLightDistance } },
-                LABELS.lastLogoFlickering
+                .001
+            );
+        }
+
+        // create a smooth glow around the PS logo
+        if (finishType === FINISH_TYPES.LOGO_GLOW) {
+            finishingTouchTL.to(
+                svgObject.DOM_REFS.filterGaussianBlur,
+                DURATIONS.logoFlicker,
+                { attr: { stdDeviation: 18 } },
+                .001
             );
         }
     }
 
     function createLogoFlicker (flickerOpts) {
+
         let flickerTL = new TimelineMax({
             yoyo: true,
             delay: flickerOpts.delay,
@@ -154,7 +180,7 @@ function flashInLogo (svgObj, preserveFiltering) {
 
         // tweak opacity of logo
         flickerTL.fromTo(
-            svgObj.DOM_REFS.psLogo,
+            svgObject.DOM_REFS.psLogo,
             DURATIONS.logoFlicker,
             { opacity: 0 },
             { opacity: flickerOpts.logoOpacity, ease: EASINGS.logoFlicker },
@@ -163,7 +189,7 @@ function flashInLogo (svgObj, preserveFiltering) {
 
         // tweak the point light on the controller path (which is now a tv shape)
         flickerTL.to(
-            svgObj.DOM_REFS.filterSpecularLighting,
+            svgObject.DOM_REFS.filterSpecularLighting,
             DURATIONS.logoFlicker,
             {
                 attr: {
@@ -174,7 +200,7 @@ function flashInLogo (svgObj, preserveFiltering) {
         )
 
         flickerTL.fromTo(
-            svgObj.DOM_REFS.filterSpecularLightingPointLight,
+            svgObject.DOM_REFS.filterSpecularLightingPointLight,
             DURATIONS.logoFlicker,
             { attr: { z: 0 } },
             { attr: { z: flickerOpts.pointLightDistance } },   // larger distance == closer to the viewer, and thus a large spread on the target
@@ -217,32 +243,34 @@ function flashInLogo (svgObj, preserveFiltering) {
         ];
 
     for (optionHash of flashHashes) {
-        masterFlashInTL.add(createLogoFlicker(optionHash));
+        flickerSetTL.add(createLogoFlicker(optionHash));
     }
 
-    // flash glow filter
+    masterFlashInTL.add(flickerSetTL);
+    masterFlashInTL.add(finishingTouchTL);
+
     return masterFlashInTL;
 }
 
 
-function createMainObjectTL (svgObj, preserveFiltering) {
+function createMainObjectTL (svgObject, finishType) {
 
     let mainIconTL = new TimelineMax(
         {
             paused: true,
-            onComplete: boundSetStateOnToggle.bind(svgObj),
-            onReverseComplete: boundSetStateOnToggle.bind(svgObj)
+            onComplete: boundSetStateOnToggle.bind(svgObject),
+            onReverseComplete: boundSetStateOnToggle.bind(svgObject)
         }
     );
 
-    mainIconTL.add(setUpObject(svgObj), 0);
+    mainIconTL.add(setUpObject(svgObject), 0);
     mainIconTL.addLabel(LABELS.setupComplete)
-    mainIconTL.add(morphControllerIntoVueTVShape(svgObj), LABELS.morphingToTV);
-    mainIconTL.add(perkUpAntennas(svgObj), `${LABELS.morphingToTV}+=0.3`);
+    mainIconTL.add(morphControllerIntoVueTVShape(svgObject), LABELS.morphingToTV);
+    mainIconTL.add(perkUpAntennas(svgObject), `${LABELS.morphingToTV}+=0.3`);
 
     mainIconTL.addLabel(LABELS.antennaPerkUpComplete, mainIconTL.recent().endTime());
 
-    mainIconTL.add(flashInLogo(svgObj, preserveFiltering), `${LABELS.antennaPerkUpComplete}+=0.5`);
+    mainIconTL.add(flashInLogo(svgObject, finishType), `${LABELS.antennaPerkUpComplete}+=0.5`);
 
     return mainIconTL;
 }
@@ -254,7 +282,6 @@ function boundUpdateAttr (attr, value) {
 
 
 function boundSetStateOnToggle () {
-    //debugger;
     this.isAnimating = false;
     this.shouldReverseAnimation = !this.shouldReverseAnimation;
 }
@@ -262,11 +289,13 @@ function boundSetStateOnToggle () {
 function wireUpFiltersAndDOMRefs (svgObject, svgContainerElem, filterIds) {
 
     if (filterIds.pointLightFilter) {
+        SELECTORS.pointLightFilter.base = `${filterIds.pointLightFilter}`;
         SELECTORS.pointLightFilter.specularLighting = `${filterIds.pointLightFilter} feSpecularLighting`;
         SELECTORS.pointLightFilter.specularLightingPointLight = `${filterIds.pointLightFilter} feSpecularLighting fePointLight`;
     }
 
     if (filterIds.gaussianGlowFilter) {
+        SELECTORS.gaussianGlowFilter.base = `${filterIds.gaussianGlowFilter}`;
         SELECTORS.gaussianGlowFilter.blur = `${filterIds.gaussianGlowFilter} feGaussianBlur`;
     }
 
@@ -281,13 +310,12 @@ function wireUpFiltersAndDOMRefs (svgObject, svgContainerElem, filterIds) {
 }
 
 function calibrateFilters (svgObject, svgContainerElem) {
-    debugger;
     let
         tvBoundingBox = svgContainerElem.getBBox();
         antennaHeight = svgObject.DOM_REFS.antennas[0].getBBox().height;
 
     svgObject.DOM_REFS.filterSpecularLightingPointLight.setAttribute('x', `${tvBoundingBox.width / 2}`);
-    svgObject.DOM_REFS.filterSpecularLightingPointLight.setAttribute('y', `${tvBoundingBox.height / 2 + antennaHeight}`);
+    svgObject.DOM_REFS.filterSpecularLightingPointLight.setAttribute('y', `${ (tvBoundingBox.height / 2) + (antennaHeight / 2) }`);
 }
 
 const ControllerToTvMorphAndFlash = ((svgContainerElem, opts = DEFAULT_OBJECT_OPTIONS) => {
@@ -299,7 +327,7 @@ const ControllerToTvMorphAndFlash = ((svgContainerElem, opts = DEFAULT_OBJECT_OP
     wireUpFiltersAndDOMRefs(svgObject, svgContainerElem, opts.filterIds);
     calibrateFilters(svgObject, svgContainerElem);
 
-    svgObject.mainIconTL = createMainObjectTL(svgObject, opts.preserveFiltering);
+    svgObject.mainIconTL = createMainObjectTL(svgObject, opts.finishType);
 
     svgObject.handleClick = function handleClick () {
         if (!this.isAnimating) {

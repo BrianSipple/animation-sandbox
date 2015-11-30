@@ -643,11 +643,13 @@ body {
 
 #controller-to-tv-morph .ps-logo,
 #controller-to-tv-morph-and-flash .ps-logo,
+#controller-to-tv-morph-and-flash-with-glow-finish .ps-logo,
 #antenna-wiggle .ps-logo {
   opacity: 0; }
 
 #controller-to-tv-morph .antenna,
 #controller-to-tv-morph-and-flash .antenna,
+#controller-to-tv-morph-and-flash-with-glow-finish .antenna,
 #antenna-wiggle .antenna {
   opacity: 0; }
 

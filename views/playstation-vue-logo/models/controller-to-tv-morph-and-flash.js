@@ -3,10 +3,12 @@ import DrawSVGPlugin from 'DrawSVGPlugin';
 import MorphSVGPlugin from 'MorphSVGPlugin';
 import BaseSvgObject from './base/_svg-object';
 import SVGUtils from 'utils/svg-utils';
+import MathUtils from 'utils/math-utils';
 import CONSTANTS from '../constants/constants';
 
 const
     { setFilterPathOnElem, removeFilterFromElem } = SVGUtils,
+    { lerp } = MathUtils,
 
     FINISH_TYPES = CONSTANTS.FILTER_EFFECTS.TV_FINISHES,
 
@@ -210,37 +212,70 @@ function flashInLogo (svgObject, finishType) {
         return flickerTL;
     }
 
-    // draw logo
-    let
-    // create some flash hashes!
-        maxDelay = 0.4,
-        maxSpecularExponent = 450,
-        maxPointLightDistance = 95,
-        maxLogoOpacity = 1,
-        numFlashes = 20,
+    // // draw logo
+    // let
+    // // create some flash hashes!
+    //     maxDelay = 0.4,
+    //     maxSpecularExponent = 450,
+    //     maxPointLightDistance = 95,
+    //     maxLogoOpacity = 1,
+    //     numFlashes = 20,
 
-        flashHashes = [
-            { delay: 0, specularExponent: maxSpecularExponent, pointLightDistance: maxPointLightDistance * 0.5, logoOpacity: maxLogoOpacity * 0.05 },
-            { delay: maxDelay, specularExponent: maxSpecularExponent * 0.80, pointLightDistance: maxPointLightDistance * 0.600, logoOpacity: maxLogoOpacity * 0.10 },
-            { delay: maxDelay * 0.95, specularExponent: maxSpecularExponent * 0.75, pointLightDistance: maxPointLightDistance * 0.600, logoOpacity: maxLogoOpacity * 0.10 },
-            { delay: maxDelay * 0.92, specularExponent: maxSpecularExponent * 0.55, pointLightDistance: maxPointLightDistance * 0.600, logoOpacity: maxLogoOpacity * 0.10 },
-            { delay: maxDelay * 0.7, specularExponent: maxSpecularExponent * 0.55, pointLightDistance: maxPointLightDistance * 0.600, logoOpacity: maxLogoOpacity * 0.15 },
-            { delay: maxDelay * 0.70, specularExponent: maxSpecularExponent * 0.50, pointLightDistance: maxPointLightDistance * 0.700, logoOpacity: maxLogoOpacity * 0.20 },
-            { delay: maxDelay * 0.60, specularExponent: maxSpecularExponent * 0.50, pointLightDistance: maxPointLightDistance * 0.700, logoOpacity: maxLogoOpacity * 0.30 },
-            { delay: maxDelay * 0.50, specularExponent: maxSpecularExponent * 0.45, pointLightDistance: maxPointLightDistance * 0.700, logoOpacity: maxLogoOpacity * 0.40 },
-            { delay: maxDelay * 0.50, specularExponent: maxSpecularExponent * 0.40, pointLightDistance: maxPointLightDistance * 0.700, logoOpacity: maxLogoOpacity * 0.45 },
-            { delay: maxDelay * 0.50, specularExponent: maxSpecularExponent * 0.40, pointLightDistance: maxPointLightDistance * 0.725, logoOpacity: maxLogoOpacity * 0.50 },
-            { delay: maxDelay * 0.50, specularExponent: maxSpecularExponent * 0.40, pointLightDistance: maxPointLightDistance * 0.750, logoOpacity: maxLogoOpacity * 0.55 },
-            { delay: maxDelay * 0.50, specularExponent: maxSpecularExponent * 0.25, pointLightDistance: maxPointLightDistance * 0.775, logoOpacity: maxLogoOpacity * 0.60 },
-            { delay: maxDelay * 0.30, specularExponent: maxSpecularExponent * 0.25, pointLightDistance: maxPointLightDistance * 0.800, logoOpacity: maxLogoOpacity * 0.65 },
-            { delay: maxDelay * 0.30, specularExponent: maxSpecularExponent * 0.20, pointLightDistance: maxPointLightDistance * 0.825, logoOpacity: maxLogoOpacity * 0.70 },
-            { delay: maxDelay * 0.20, specularExponent: maxSpecularExponent * 0.15, pointLightDistance: maxPointLightDistance * 0.850, logoOpacity: maxLogoOpacity * 0.75 },
-            { delay: maxDelay * 0.20, specularExponent: maxSpecularExponent * 0.12, pointLightDistance: maxPointLightDistance * 0.875, logoOpacity: maxLogoOpacity * 0.80 },
-            { delay: maxDelay * 0.20, specularExponent: maxSpecularExponent * 0.10, pointLightDistance: maxPointLightDistance * 0.900, logoOpacity: maxLogoOpacity * 0.85 },
-            { delay: maxDelay * 0.15, specularExponent: maxSpecularExponent * 0.07, pointLightDistance: maxPointLightDistance * 0.925, logoOpacity: maxLogoOpacity * 0.90 },
-            { delay: maxDelay * 0.10, specularExponent: maxSpecularExponent * 0.03, pointLightDistance: maxPointLightDistance * 0.950, logoOpacity: maxLogoOpacity * 0.95 },
-            { delay: maxDelay * 0.10, specularExponent: maxSpecularExponent * 0.02, pointLightDistance: maxPointLightDistance, logoOpacity: maxLogoOpacity * 1.0 }
-        ];
+        // flashHashes = [
+        //     { delay: 0, specularExponent: maxSpecularExponent, pointLightDistance: maxPointLightDistance * 0.5, logoOpacity: maxLogoOpacity * 0.05 },
+        //     { delay: maxDelay, specularExponent: maxSpecularExponent * 0.80, pointLightDistance: maxPointLightDistance * 0.600, logoOpacity: maxLogoOpacity * 0.10 },
+        //     { delay: maxDelay * 0.95, specularExponent: maxSpecularExponent * 0.75, pointLightDistance: maxPointLightDistance * 0.600, logoOpacity: maxLogoOpacity * 0.10 },
+        //     { delay: maxDelay * 0.92, specularExponent: maxSpecularExponent * 0.55, pointLightDistance: maxPointLightDistance * 0.600, logoOpacity: maxLogoOpacity * 0.10 },
+        //     { delay: maxDelay * 0.7, specularExponent: maxSpecularExponent * 0.55, pointLightDistance: maxPointLightDistance * 0.600, logoOpacity: maxLogoOpacity * 0.15 },
+        //     { delay: maxDelay * 0.70, specularExponent: maxSpecularExponent * 0.50, pointLightDistance: maxPointLightDistance * 0.700, logoOpacity: maxLogoOpacity * 0.20 },
+        //     { delay: maxDelay * 0.60, specularExponent: maxSpecularExponent * 0.50, pointLightDistance: maxPointLightDistance * 0.700, logoOpacity: maxLogoOpacity * 0.30 },
+        //     { delay: maxDelay * 0.50, specularExponent: maxSpecularExponent * 0.45, pointLightDistance: maxPointLightDistance * 0.700, logoOpacity: maxLogoOpacity * 0.40 },
+        //     { delay: maxDelay * 0.50, specularExponent: maxSpecularExponent * 0.40, pointLightDistance: maxPointLightDistance * 0.700, logoOpacity: maxLogoOpacity * 0.45 },
+        //     { delay: maxDelay * 0.50, specularExponent: maxSpecularExponent * 0.40, pointLightDistance: maxPointLightDistance * 0.725, logoOpacity: maxLogoOpacity * 0.50 },
+        //     { delay: maxDelay * 0.50, specularExponent: maxSpecularExponent * 0.40, pointLightDistance: maxPointLightDistance * 0.750, logoOpacity: maxLogoOpacity * 0.55 },
+        //     { delay: maxDelay * 0.50, specularExponent: maxSpecularExponent * 0.25, pointLightDistance: maxPointLightDistance * 0.775, logoOpacity: maxLogoOpacity * 0.60 },
+        //     { delay: maxDelay * 0.30, specularExponent: maxSpecularExponent * 0.25, pointLightDistance: maxPointLightDistance * 0.800, logoOpacity: maxLogoOpacity * 0.65 },
+        //     { delay: maxDelay * 0.30, specularExponent: maxSpecularExponent * 0.20, pointLightDistance: maxPointLightDistance * 0.825, logoOpacity: maxLogoOpacity * 0.70 },
+        //     { delay: maxDelay * 0.20, specularExponent: maxSpecularExponent * 0.15, pointLightDistance: maxPointLightDistance * 0.850, logoOpacity: maxLogoOpacity * 0.75 },
+        //     { delay: maxDelay * 0.20, specularExponent: maxSpecularExponent * 0.12, pointLightDistance: maxPointLightDistance * 0.875, logoOpacity: maxLogoOpacity * 0.80 },
+        //     { delay: maxDelay * 0.20, specularExponent: maxSpecularExponent * 0.10, pointLightDistance: maxPointLightDistance * 0.900, logoOpacity: maxLogoOpacity * 0.85 },
+        //     { delay: maxDelay * 0.15, specularExponent: maxSpecularExponent * 0.07, pointLightDistance: maxPointLightDistance * 0.925, logoOpacity: maxLogoOpacity * 0.90 },
+        //     { delay: maxDelay * 0.10, specularExponent: maxSpecularExponent * 0.03, pointLightDistance: maxPointLightDistance * 0.950, logoOpacity: maxLogoOpacity * 0.95 },
+        //     { delay: maxDelay * 0.10, specularExponent: maxSpecularExponent * 0.02, pointLightDistance: maxPointLightDistance, logoOpacity: maxLogoOpacity * 1.0 }
+        // ];
+
+
+        let
+            numFlashes = 20,
+            flashHashes = [],
+
+            // set target values
+            maxDelay = 0.4,
+            maxSpecularExponent = 450,
+            maxPointLightDistance = 95,
+            maxLogoOpacity = 1,
+
+            // set starting values
+            delay = maxDelay,
+            specularExponent = maxSpecularExponent,
+            pointLightDistance = maxPointLightDistance * 0.5,
+            logoOpacity = maxLogoOpacity * 0.05;
+
+        // manually add the starting values...
+        flashHashes.push({ delay, specularExponent, pointLightDistance, logoOpacity });
+
+        // ...then, LERP!
+        let flashHash;
+        for (let i = 1; i < numFlashes; i++) {
+            debugger;
+            ///// call lerp with params of initial, target, weight //////
+            delay = lerp(maxDelay, delay, ( 1 - ( 1 / numFlashes * (numFlashes * 0.75) ) ) );
+            specularExponent = lerp(specularExponent, maxSpecularExponent * 0.2, ( 1 - ( 1 / numFlashes * (numFlashes * 0.1) ) ) );
+            pointLightDistance = lerp(pointLightDistance, maxPointLightDistance, ( 1 - ( 1 / numFlashes * (numFlashes * 0.2) ) ) );
+            logoOpacity = lerp(logoOpacity, maxLogoOpacity, ( 1 - ( 1 / numFlashes * (numFlashes * 0.2) ) ) );
+
+            flashHashes.push({ delay, specularExponent, pointLightDistance, logoOpacity });
+        }
 
     for (optionHash of flashHashes) {
         flickerSetTL.add(createLogoFlicker(optionHash));

@@ -88,11 +88,11 @@ let WandIcon = (svgElem) => {
         this.isAnimating = true;
 
         // Either create the timeline, or replay it
-        if (this.mainIconTL) {
-          this.mainIconTL.play(0);
+        if (this.mainObjectTL) {
+          this.mainObjectTL.play(0);
 
         } else {
-          this.mainIconTL = new TimelineMax({
+          this.mainObjectTL = new TimelineMax({
             // yoyo: true,
             // repeat: 1,
             onComplete: function () {
@@ -104,10 +104,10 @@ let WandIcon = (svgElem) => {
             flickWandTL = this.flickWand(),
             motionTrailTL = this.showMotionTrail();
 
-          this.mainIconTL.add(flickWandTL, 0);
-          this.mainIconTL.add(motionTrailTL, 0);
+          this.mainObjectTL.add(flickWandTL, 0);
+          this.mainObjectTL.add(motionTrailTL, 0);
 
-          //this.masterTL.add(this.mainIconTL, this.LABEL);
+          //this.masterTL.add(this.mainObjectTL, this.LABEL);
         }
       }
     };

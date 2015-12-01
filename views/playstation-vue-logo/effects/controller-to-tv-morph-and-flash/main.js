@@ -1,25 +1,17 @@
 import TweenMax from 'TweenMax';
 import DrawSVGPlugin from 'DrawSVGPlugin';
 import MorphSVGPlugin from 'MorphSVGPlugin';
-import BaseSvgObject from './base/_svg-object';
+import BaseSvgObject from '../base/_svg-object';
 import SVGUtils from 'utils/svg-utils';
 import MathUtils from 'utils/math-utils';
-import CONSTANTS from '../constants/constants';
+import CONSTANTS from '../../constants/constants';
 
 const
     { setFilterPathOnElem, removeFilterFromElem } = SVGUtils,
     { lerp } = MathUtils,
 
     FINISH_TYPES = CONSTANTS.FILTER_EFFECTS.TV_FINISHES,
-
-    DURATIONS = {
-        scaleUp: 0.85,
-        morphController: 0.25,
-
-        // this should be at least the monitor
-        // frame rate that we're targeting (i.e. 60 fps ==> 0.0167ms)
-        logoFlicker: 0.035
-    },
+    { EASINGS, DURATIONS } = CONSTANTS,
 
     SELECTORS = {
         ps4Controller: '.ps4-controller',
@@ -31,13 +23,10 @@ const
         antennas: '.antenna',
         vueTVLogo: '.playstation-vue-logo',
         vueTVLogoOutline: '.playstation-vue-logo__outline',
-        pointLightFilter: {},
-        gaussianGlowFilter: {}
+        pointLightFilter: undefined,
+        gaussianGlowFilter: undefined
     },
 
-    EASINGS = {
-        logoFlicker: Power2.easeInOut   // ~= linear-in-slow-out
-    },
 
     LABELS = {
         setup: 'setup',
@@ -64,7 +53,8 @@ function setUpObject (svgObject) {
     );
 
     setupTL.addCallback(function setInitialFilters () {
-        setFilterPathOnElem(svgObject.DOM_REFS.ps4Controller, SELECTORS.pointLightFilter.base);
+        debugger;
+        setFilterPathOnElem(svgObject.DOM_REFS.ps4Controller, svgObject.SELECTORS.pointLightFilter.base);
     }, 0);
 
     return setupTL;
@@ -80,8 +70,8 @@ function morphControllerIntoVueTVShape(svgObject) {
 
     morphTL.to(
         svgObject.DOM_REFS.ps4Controller,
-        DURATIONS.morphController,
-        { morphSVG: SELECTORS.vueTVLogoOutline }
+        DURATIONS.morphObject,
+        { morphSVG: svgObject.SELECTORS.vueTVLogoOutline }
     );
 
     // wiggle antennas
@@ -112,7 +102,6 @@ function perkUpAntennas (svgObject) {
 // TODO: Consider second option of a "glow layer" that we just tweak the opacity of
 // while also flickering opacity on the logo (and then set to opacity 0 at the end)
 function flashInLogo (svgObject, finishType) {
-
     let
         masterFlashInTL = new TimelineMax(),
 
@@ -128,7 +117,7 @@ function flashInLogo (svgObject, finishType) {
         if (finishType === FINISH_TYPES.LOGO_GLOW) {
             finishingTouchTL.addCallback(function switchFilters () {
                 removeFilterFromElem(svgObject.DOM_REFS.ps4Controller);
-                setFilterPathOnElem(svgObject.DOM_REFS.psLogo, SELECTORS.gaussianGlowFilter.base);
+                setFilterPathOnElem(svgObject.DOM_REFS.psLogo, svgObject.SELECTORS.gaussianGlowFilter.base);
             }, 0);
 
         }
@@ -212,14 +201,6 @@ function flashInLogo (svgObject, finishType) {
         return flickerTL;
     }
 
-    // // draw logo
-    // let
-    // // create some flash hashes!
-    //     maxDelay = 0.4,
-    //     maxSpecularExponent = 450,
-    //     maxPointLightDistance = 95,
-    //     maxLogoOpacity = 1,
-    //     numFlashes = 20,
 
         // flashHashes = [
         //     { delay: 0, specularExponent: maxSpecularExponent, pointLightDistance: maxPointLightDistance * 0.5, logoOpacity: maxLogoOpacity * 0.05 },
@@ -250,32 +231,34 @@ function flashInLogo (svgObject, finishType) {
             flashHashes = [],
 
             // set target values
-            maxDelay = 0.4,
+            minDelay = .04,
             maxSpecularExponent = 450,
             maxPointLightDistance = 95,
             maxLogoOpacity = 1,
 
             // set starting values
-            delay = maxDelay,
+            delay = minDelay * 10,
             specularExponent = maxSpecularExponent,
             pointLightDistance = maxPointLightDistance * 0.5,
             logoOpacity = maxLogoOpacity * 0.05;
 
         // manually add the starting values...
-        flashHashes.push({ delay, specularExponent, pointLightDistance, logoOpacity });
+        flashHashes.push({ delay: 0, specularExponent, pointLightDistance, logoOpacity });
 
         // ...then, LERP!
         let flashHash;
         for (let i = 1; i < numFlashes; i++) {
-            debugger;
+            //debugger;
             ///// call lerp with params of initial, target, weight //////
-            delay = lerp(maxDelay, delay, ( 1 - ( 1 / numFlashes * (numFlashes * 0.75) ) ) );
+            delay = lerp(delay, minDelay, ( 1 - ( 1 / numFlashes * (numFlashes * 0.75) ) ) );
             specularExponent = lerp(specularExponent, maxSpecularExponent * 0.2, ( 1 - ( 1 / numFlashes * (numFlashes * 0.1) ) ) );
             pointLightDistance = lerp(pointLightDistance, maxPointLightDistance, ( 1 - ( 1 / numFlashes * (numFlashes * 0.2) ) ) );
             logoOpacity = lerp(logoOpacity, maxLogoOpacity, ( 1 - ( 1 / numFlashes * (numFlashes * 0.2) ) ) );
 
             flashHashes.push({ delay, specularExponent, pointLightDistance, logoOpacity });
         }
+
+    console.table(flashHashes);
 
     for (optionHash of flashHashes) {
         flickerSetTL.add(createLogoFlicker(optionHash));
@@ -290,7 +273,7 @@ function flashInLogo (svgObject, finishType) {
 
 function createMainObjectTL (svgObject, finishType) {
 
-    let mainIconTL = new TimelineMax(
+    let mainObjectTL = new TimelineMax(
         {
             paused: true,
             onComplete: boundSetStateOnToggle.bind(svgObject),
@@ -298,16 +281,16 @@ function createMainObjectTL (svgObject, finishType) {
         }
     );
 
-    mainIconTL.add(setUpObject(svgObject), 0);
-    mainIconTL.addLabel(LABELS.setupComplete)
-    mainIconTL.add(morphControllerIntoVueTVShape(svgObject), LABELS.morphingToTV);
-    mainIconTL.add(perkUpAntennas(svgObject), `${LABELS.morphingToTV}+=0.3`);
+    mainObjectTL.add(setUpObject(svgObject), 0);
+    mainObjectTL.addLabel(LABELS.setupComplete)
+    mainObjectTL.add(morphControllerIntoVueTVShape(svgObject), LABELS.morphingToTV);
+    mainObjectTL.add(perkUpAntennas(svgObject), `${LABELS.morphingToTV}+=0.3`);
 
-    mainIconTL.addLabel(LABELS.antennaPerkUpComplete, mainIconTL.recent().endTime());
+    mainObjectTL.addLabel(LABELS.antennaPerkUpComplete, mainObjectTL.recent().endTime());
 
-    mainIconTL.add(flashInLogo(svgObject, finishType), `${LABELS.antennaPerkUpComplete}+=0.5`);
+    mainObjectTL.add(flashInLogo(svgObject, finishType), `${LABELS.antennaPerkUpComplete}+=0.5`);
 
-    return mainIconTL;
+    return mainObjectTL;
 }
 
 
@@ -321,48 +304,16 @@ function boundSetStateOnToggle () {
     this.shouldReverseAnimation = !this.shouldReverseAnimation;
 }
 
-function wireUpFiltersAndDOMRefs (svgObject, svgContainerElem, filterIds) {
 
-    if (filterIds.pointLightFilter) {
-        SELECTORS.pointLightFilter.base = `${filterIds.pointLightFilter}`;
-        SELECTORS.pointLightFilter.specularLighting = `${filterIds.pointLightFilter} feSpecularLighting`;
-        SELECTORS.pointLightFilter.specularLightingPointLight = `${filterIds.pointLightFilter} feSpecularLighting fePointLight`;
-    }
-
-    if (filterIds.gaussianGlowFilter) {
-        SELECTORS.gaussianGlowFilter.base = `${filterIds.gaussianGlowFilter}`;
-        SELECTORS.gaussianGlowFilter.blur = `${filterIds.gaussianGlowFilter} feGaussianBlur`;
-    }
-
-    svgObject.DOM_REFS = {
-        ps4Controller: svgContainerElem.querySelector(SELECTORS.ps4Controller),
-        antennas: svgContainerElem.querySelectorAll(SELECTORS.antennas),
-        psLogo: svgContainerElem.querySelector(SELECTORS.psLogo),
-        filterSpecularLighting: svgContainerElem.querySelector(SELECTORS.pointLightFilter.specularLighting),
-        filterSpecularLightingPointLight: svgContainerElem.querySelector(SELECTORS.pointLightFilter.specularLightingPointLight),
-        filterGaussianBlur: svgContainerElem.querySelector(SELECTORS.gaussianGlowFilter.blur)
-    };
-}
-
-function calibrateFilters (svgObject, svgContainerElem) {
-    let
-        tvBoundingBox = svgContainerElem.getBBox();
-        antennaHeight = svgObject.DOM_REFS.antennas[0].getBBox().height;
-
-    svgObject.DOM_REFS.filterSpecularLightingPointLight.setAttribute('x', `${tvBoundingBox.width / 2}`);
-    svgObject.DOM_REFS.filterSpecularLightingPointLight.setAttribute('y', `${ (tvBoundingBox.height / 2) + (antennaHeight / 2) }`);
-}
 
 const ControllerToTvMorphAndFlash = ((svgContainerElem, opts = DEFAULT_OBJECT_OPTIONS) => {
 
     let svgObject = BaseSvgObject();  // TODO: Change name of "svgObject"
 
     svgObject.svgContainerElem = svgContainerElem;
+    wireUpObjectWithDOM(svgObject, opts.filterIds);
 
-    wireUpFiltersAndDOMRefs(svgObject, svgContainerElem, opts.filterIds);
-    calibrateFilters(svgObject, svgContainerElem);
-
-    svgObject.mainIconTL = createMainObjectTL(svgObject, opts.finishType);
+    svgObject.mainObjectTL = createMainObjectTL(svgObject, opts.finishType);
 
     svgObject.handleClick = function handleClick () {
         if (!this.isAnimating) {
@@ -371,18 +322,86 @@ const ControllerToTvMorphAndFlash = ((svgContainerElem, opts = DEFAULT_OBJECT_OP
 
             if (!this.shouldReverseAnimation) {
                 // animate to correct restart points
-                this.mainIconTL.play(0);
+                this.mainObjectTL.play(0);
 
             } else {
                 // Reverse back to the play symbol.
                 // NOTE: 0 sets the playhead at the end of the animation,
                 // and we reverse from there
-                this.mainIconTL.reverse(0);
+                this.mainObjectTL.reverse(0);
             }
 
             //this.shouldReverseAnimation = !this.shouldReverseAnimation;
         }
     }.bind(svgObject);
+
+
+    function wireUpObjectWithDOM () {
+
+        let filterIds = opts.filterIds;
+
+        wireUpSelectors();
+        wireUpDOMRefs();
+        calibrateFilters();
+
+
+        function wireUpSelectors () {
+
+            svgObject.SELECTORS = Object.create(SELECTORS);
+
+            if (filterIds.pointLightFilter) {
+
+                svgObject.SELECTORS.pointLightFilter = {
+                    base: `${filterIds.pointLightFilter}`,
+                    specularLighting: `${filterIds.pointLightFilter} feSpecularLighting`,
+                    specularLightingPointLight: `${filterIds.pointLightFilter} feSpecularLighting fePointLight`
+                };
+            }
+
+            if (filterIds.gaussianGlowFilter) {
+
+                svgObject.SELECTORS.gaussianGlowFilter = {
+                    base: `${filterIds.gaussianGlowFilter}`,
+                    blur: `${filterIds.gaussianGlowFilter} feGaussianBlur`
+                };
+            }
+        }
+
+
+        function wireUpDOMRefs () {
+
+            svgObject.DOM_REFS = {
+                ps4Controller: svgContainerElem.querySelector(svgObject.SELECTORS.ps4Controller),
+                antennas: svgContainerElem.querySelectorAll(svgObject.SELECTORS.antennas),
+                psLogo: svgContainerElem.querySelector(svgObject.SELECTORS.psLogo)
+            };
+
+            if (filterIds.pointLightFilter) {
+                svgObject.DOM_REFS.filterSpecularLighting =
+                    svgContainerElem.querySelector(svgObject.SELECTORS.pointLightFilter.specularLighting);
+
+                svgObject.DOM_REFS.filterSpecularLightingPointLight =
+                    svgContainerElem.querySelector(svgObject.SELECTORS.pointLightFilter.specularLightingPointLight);
+            }
+
+            if (filterIds.gaussianGlowFilter) {
+                svgObject.DOM_REFS.filterGaussianBlur =
+                    svgContainerElem.querySelector(svgObject.SELECTORS.gaussianGlowFilter.blur);
+            }
+        }
+
+
+        function calibrateFilters () {
+            let
+                tvBoundingBox = svgObject.svgContainerElem.getBBox(),
+                antennaHeight = svgObject.DOM_REFS.antennas[0].getBBox().height;
+
+            svgObject.DOM_REFS.filterSpecularLightingPointLight.setAttribute('x', `${tvBoundingBox.width / 2}`);
+            svgObject.DOM_REFS.filterSpecularLightingPointLight.setAttribute('y', `${ (tvBoundingBox.height / 2) + (antennaHeight / 2) }`);
+        }
+
+    }
+
 
     return Object.create(svgObject);
 

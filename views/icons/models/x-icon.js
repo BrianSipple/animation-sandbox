@@ -30,22 +30,22 @@ let ShrkinkingToCloseXIcon = function (svgElem, opts = {}) {
             this.isAnimating = true;
 
             // Either create the timeline, or replay it
-            if (this.mainIconTL) {
-                this.mainIconTL.play(0);
+            if (this.mainObjectTL) {
+                this.mainObjectTL.play(0);
             } else {
 
-                this.mainIconTL = new TimelineMax({
+                this.mainObjectTL = new TimelineMax({
                     onComplete: icon.boundDeclareAnimationComplete.bind(icon)
                 });
 
-                this.mainIconTL.to(
+                this.mainObjectTL.to(
                     icon.DOM_REFS.paths,
                     DURATIONS.closeIcon,
                     { drawSVG: '50% 50%', ease: EASINGS.closeIcon }
                 );
 
                 if (icon.refreshTime) {
-                    this.mainIconTL.to(
+                    this.mainObjectTL.to(
                         icon.DOM_REFS.paths,
                         DURATIONS.closeIcon,
                         { drawSVG: '100%', ease: EASINGS.closeIcon, delay: icon.refreshTime }

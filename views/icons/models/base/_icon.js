@@ -16,7 +16,7 @@ let
     /**
      * The main (i.e. parent) timeline of the icon
      */
-    mainIconTL: undefined,
+    mainObjectTL: undefined,
 
     /**
      * The master TL that we'll plug our icon's TL into

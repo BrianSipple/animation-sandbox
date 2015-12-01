@@ -4,11 +4,11 @@
  * "metadata" object. Our main application file can then just import the object.
  */
 
-//import AntennaWiggleIcon from './models/antenna-wiggle-icon';
-import ControllerToTvMorphObject from './models/controller-to-tv-morph';
-import ControllerToTvFlashMorphObject from './models/controller-to-tv-morph-and-flash';
-import AntennaWiggleObject from './models/antenna-wiggle';
-import ControllerToTvMorphAndDrawObject from './models/controller-to-tv-morph-logo-draw';
+//import AntennaWiggleIcon from './effects/antenna-wiggle-icon';
+import ControllerToTvMorphObject from './effects/controller-to-tv-morph/main';
+import ControllerToTvFlashMorphObject from './effects/controller-to-tv-morph-and-flash/main';
+import AntennaWiggleObject from './effects/antenna-wiggle/main';
+import ControllerToTvMorphAndDrawObject from './effects/controller-to-tv-morph-logo-draw/main';
 
 import CONSTANTS from './constants/constants';
 
@@ -47,9 +47,14 @@ const SvgObjects = {
         ),
     },
 
-    antennaWiggle: {
-        id: '#antenna-wiggle',
-        obj: AntennaWiggleObject(document.querySelector('#antenna-wiggle'))
+    antennaWiggle1: {
+        id: '#antenna-wiggle--1',
+        obj: AntennaWiggleObject(
+            document.querySelector('#antenna-wiggle--1'),
+            {
+                wiggleEffect: CONSTANTS.ANTENNA_WIGGLES.STRETCH
+            }
+        )
     },
 
     ControllerToTvMorphAndDraw: {

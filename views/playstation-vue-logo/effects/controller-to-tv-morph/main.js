@@ -1,13 +1,12 @@
 import TweenMax from 'TweenMax';
 import DrawSVGPlugin from 'DrawSVGPlugin';
 import MorphSVGPlugin from 'MorphSVGPlugin';
-import BaseSvgObject from './base/_svg-object';
+import BaseSvgObject from '../base/_svg-object';
+import CONSTANTS from '../../constants/constants';
 
 const
-    DURATIONS = {
-        scaleUp: 0.85,
-        morphController: 0.25
-    },
+
+    { DURATIONS, EASINGS } = CONSTANTS,
 
     SELECTORS = {
         ps4Controller: '.ps4-controller',
@@ -21,10 +20,6 @@ const
         vueTVLogoOutline: '.playstation-vue-logo__outline'
     },
 
-    EASINGS = {
-        toggleIcon: Power2.easeOut   // ~= linear-in-slow-out
-    },
-
     LABELS = {
         setup: 'setup',
         setupComplete: 'setupComplete',
@@ -35,7 +30,6 @@ const
 function setUpObject (svgObj) {
     let setupTL = new TimelineMax();
 
-    //debugger;
     setupTL.set(svgObj.DOM_REFS.antennas, { transformOrigin: 'center bottom', scaleY: 0 });
     setupTL.set(svgObj.DOM_REFS.psLogo, { transformOrigin: '50% 50%', drawSVG: '50% 50%' });
 
@@ -53,8 +47,8 @@ function morphControllerIntoVueTVShape(svgObj) {
 
     morphTL.to(
         svgObj.DOM_REFS.ps4Controller,
-        DURATIONS.morphController,
-        { morphSVG: SELECTORS.vueTVLogoOutline }
+        DURATIONS.morphObject,
+        { morphSVG: SELECTORS.vueTVLogoOutline, ease: EASINGS.morphObject }
     );
 
     // wiggle antennas
@@ -68,14 +62,12 @@ function perkUpAntennas (svgObject) {
         antennas = svgObject.DOM_REFS.antennas;
 
     antennaTL.set(antennas, { opacity: 1, immediateRender: false });
-
     antennaTL.to(
         antennas,
         DURATIONS.scaleUp,
         {
             scaleY: 1,
-            //ease: Back.easeOut.config(2.9)
-            ease: Elastic.easeOut.config(1.1, 0.4)
+            ease: EASINGS.antennaPerk
         }
     );
 
@@ -104,7 +96,7 @@ function drawInLogo (svgObj) {
 
 function createMainObjectTL (svgObj) {
 
-    let mainIconTL = new TimelineMax(
+    let mainObjectTL = new TimelineMax(
         {
             paused: true,
             onComplete: boundSetStateOnToggle.bind(svgObj),
@@ -112,13 +104,13 @@ function createMainObjectTL (svgObj) {
         }
     );
 
-    mainIconTL.add(setUpObject(svgObj), 0);
-    mainIconTL.addLabel(LABELS.setupComplete)
-    mainIconTL.add(morphControllerIntoVueTVShape(svgObj), LABELS.morphingToTV);
-    mainIconTL.add(perkUpAntennas(svgObj), `${LABELS.morphingToTV}+=0.3`);
-    mainIconTL.add(drawInLogo(svgObj), `${LABELS.morphingToTV}+=0.6`);
+    mainObjectTL.add(setUpObject(svgObj), 0);
+    mainObjectTL.addLabel(LABELS.setupComplete)
+    mainObjectTL.add(morphControllerIntoVueTVShape(svgObj), LABELS.morphingToTV);
+    mainObjectTL.add(perkUpAntennas(svgObj), `${LABELS.morphingToTV}+=0.3`);
+    mainObjectTL.add(drawInLogo(svgObj), `${LABELS.morphingToTV}+=0.6`);
 
-    return mainIconTL;
+    return mainObjectTL;
 }
 
 
@@ -133,7 +125,7 @@ function boundSetStateOnToggle () {
     this.shouldReverseAnimation = !this.shouldReverseAnimation;
 }
 
-const ControllerToTvMorphAndDrawObject = ((svgContainerElem, opts) => {
+const ControllerToTvMorph = ((svgContainerElem, opts) => {
 
     let svgObj = BaseSvgObject();  // TODO: Change name of "svgObj"
 
@@ -145,7 +137,7 @@ const ControllerToTvMorphAndDrawObject = ((svgContainerElem, opts) => {
         psLogo: svgContainerElem.querySelector(SELECTORS.psLogo)
     };
 
-    svgObj.mainIconTL = createMainObjectTL(svgObj);
+    svgObj.mainObjectTL = createMainObjectTL(svgObj);
 
     svgObj.handleClick = function handleClick () {
         if (!this.isAnimating) {
@@ -154,13 +146,13 @@ const ControllerToTvMorphAndDrawObject = ((svgContainerElem, opts) => {
 
             if (!this.shouldReverseAnimation) {
                 // animate to correct restart points
-                this.mainIconTL.play(0);
+                this.mainObjectTL.play(0);
 
             } else {
                 // Reverse back to the play symbol.
                 // NOTE: 0 sets the playhead at the end of the animation,
                 // and we reverse from there
-                this.mainIconTL.reverse(0);
+                this.mainObjectTL.reverse(0);
             }
 
             //this.shouldReverseAnimation = !this.shouldReverseAnimation;
@@ -171,4 +163,4 @@ const ControllerToTvMorphAndDrawObject = ((svgContainerElem, opts) => {
 
 });
 
-export default ControllerToTvMorphAndDrawObject;
+export default ControllerToTvMorph;

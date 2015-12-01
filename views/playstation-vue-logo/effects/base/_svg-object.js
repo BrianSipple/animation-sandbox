@@ -1,22 +1,22 @@
-const iconProto = {
+const svgObjectProto = {
 
     /**
-     * The id of the icon's main (i.e. containing) SVG node
+     * The id of the object's main (i.e. containing) SVG node
      */
     id: undefined,
 
     /**
-     * A reference to the icon's containing SVG DOM element
+     * A reference to the object's containing SVG DOM element
      */
     svgContainerElem: undefined,
 
     /**
-     * The main (i.e. parent) timeline of the icon
+     * The main (i.e. parent) timeline of the object
      */
-    mainIconTL: undefined,
+    mainObjectTL: undefined,
 
     /**
-     * The master TL that we'll plug our icon's TL into
+     * The master TL that we'll plug our object's TL into
      */
     masterTL: null,
 
@@ -26,8 +26,9 @@ const iconProto = {
     LABEL: undefined,
 
     DOM_REFS: undefined,
+    SELECTORS: undefined,
 
-    IconError: function IconError(msg) {
+    CustomError: function CustomError(msg) {
         let err = {
             name: 'Icon Error',
             msg: msg
@@ -39,23 +40,17 @@ const iconProto = {
         throw new Error('Must be implemented by a linked object');
     },
 
-    // /**
-    //  * Helper to pass as the onComplete option of a timeline
-    //  */
-    // boundDeclareAnimationComplete: function boundDeclareAnimationComplete () {
-    //     this.isAnimating = false;
-    // },
 
     /**
      * Called by the main app function when we're ready to
-     * sync our created icon object with our core app logic
+     * sync our created object with our core app logic
      */
     init: function (params) {
 
         params = params || {};
 
         if (!params.id) {
-            throw new Error(this.IconError(`a DOM id is required`));
+            throw new Error(this.CustomError(`a DOM id is required`));
         }
 
         this.id = params.id;
@@ -86,12 +81,12 @@ const iconProto = {
     }
 };
 
-function IconFactory() {
-  return Object.create(iconProto);
+function SVGObjectFactory() {
+  return Object.create(svgObjectProto);
 }
 
-function Icon () {
-    return IconFactory();
+function SVGObject () {
+    return SVGObjectFactory();
 };
 
-export default Icon;
+export default SVGObject;

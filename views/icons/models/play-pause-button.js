@@ -128,7 +128,7 @@ let PlayPauseIcon = ((svgElem, opts) => {
     };
 
     wireUpPolygonPoints();
-    icon.mainIconTL = createPlayPauseTL();
+    icon.mainObjectTL = createPlayPauseTL();
 
     icon.handleClick = function handleClick () {
         debugger;
@@ -138,13 +138,13 @@ let PlayPauseIcon = ((svgElem, opts) => {
 
             if (this.isShowingPlay) {
                 // animate to the pause symbol
-                this.mainIconTL.play(0);
+                this.mainObjectTL.play(0);
 
             } else {
                 // Reverse back to the play symbol.
                 // NOTE: 0 sets the playhead at the end of the animation,
                 // and we reverse from there
-                this.mainIconTL.reverse(0);
+                this.mainObjectTL.reverse(0);
             }
 
             this.isPlaying = !this.isPlaying;

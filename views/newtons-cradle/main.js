@@ -90,16 +90,30 @@ const NewtonsCradle = (function newtonsCradle () {
   //   //masterTL.add();
   // }
 
+  function startSwing (ballPositionToSwing, startingRotation) {
+    const swingTL = new TimelineMax({ repeat: -1 });
+
+    // compute swinging
+
+    // each time the ball returns to its initial hanging position, check whether the
+    // other ball is currently extended outward. If it is, the second to last ball
+    // on that side should swing, as nothing beyond it is absorbing the force
+
+    // call swingTL.clear() when we're done
+  }
+
   function updateBallTLOnDrag () {
     console.log('updateBallTLOnDrag!');
   }
 
   function swingBallsAfterDrag (ballPosition) {
-    debugger;
+    startSwing(ballPosition, this.rotation);
   }
 
+
+
+
   function addListeners () {
-    debugger;
     Draggable.create(DOM_REFS.leftBearingGroup, {
       type: 'rotation',
       throwProps: true,

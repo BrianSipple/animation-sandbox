@@ -1,9 +1,9 @@
 /*!
- * VERSION: 0.9.9
- * DATE: 2015-04-28
+ * VERSION: 0.9.10
+ * DATE: 2015-12-18
  * UPDATES AND DOCS AT: http://greensock.com
  *
- * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
  * ThrowPropsPlugin is a Club GreenSock membership benefit; You must have a valid membership to use
  * this code without violating the terms of use. Visit http://greensock.com/club/ to sign up or get more details.
  * This work is subject to the software agreement that was issued with your membership.
@@ -179,7 +179,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 
 		p.constructor = ThrowPropsPlugin;
-		ThrowPropsPlugin.version = "0.9.9";
+		ThrowPropsPlugin.version = "0.9.10";
 		ThrowPropsPlugin.API = 2;
 		ThrowPropsPlugin._autoCSS = true; //indicates that this plugin can be inserted into the "css" object using the autoCSS feature of TweenLite
 		ThrowPropsPlugin.defaultResistance = 100;
@@ -399,6 +399,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				val = cp.s + cp.c1 * v + cp.c2 * v * v;
 				if (cp.r) {
 					val = Math.round(val);
+				} else if (v === 1) {
+					val = ((val * 10000 + (val < 0 ? -0.5 : 0.5)) | 0) / 10000; //if we don't round things at the very end, binary math issues can creep in and cause snapping not to be exact (like landing on 20.000000000001 instead of 20).
 				}
 				if (cp.f) {
 					this.target[cp.p](val);

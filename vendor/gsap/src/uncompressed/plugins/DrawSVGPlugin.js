@@ -1,9 +1,9 @@
 /*!
- * VERSION: 0.0.7
- * DATE: 2015-10-06
+ * VERSION: 0.0.9
+ * DATE: 2015-12-10
  * UPDATES AND DOCS AT: http://greensock.com
  *
- * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
  * DrawSVGPlugin is a Club GreenSock membership benefit; You must have a valid membership to use
  * this code without violating the terms of use. Visit http://greensock.com/club/ to sign up or get more details.
  * This work is subject to the software agreement that was issued with your membership.
@@ -59,19 +59,25 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			prevPoint = element.style.strokeDasharray;
 			element.style.strokeDasharray = "none";
 			length = element.getTotalLength() || 0;
-			bbox = element.getBBox(); //solely for fixing bug in IE - we don't actually use the bbox.
+			try {
+				bbox = element.getBBox(); //solely for fixing bug in IE - we don't actually use the bbox.
+			} catch (e) {
+				//firefox has a bug that throws an error if the element isn't visible.
+			}
 			element.style.strokeDasharray = prevPoint;
 		} else if (type === "rect") {
-			bbox = element.getBBox();
-			length = (bbox.width + bbox.height) * 2;
+			length = element.getAttribute("width") * 2 + element.getAttribute("height") * 2;
 		} else if (type === "circle") {
 			length = Math.PI * 2 * parseFloat(element.getAttribute("r"));
 		} else if (type === "line") {
 			length = getDistance(element.getAttribute("x1"), element.getAttribute("y1"), element.getAttribute("x2"), element.getAttribute("y2"));
 		} else if (type === "polyline" || type === "polygon") {
-			points = element.getAttribute("points").split(" ");
+			points = element.getAttribute("points").split(", ").join(",").split(" ");
 			length = 0;
 			prevPoint = points[0].split(",");
+			if (points[points.length-1] === "") { //if there's an extra space at the end, fix it.
+				points.pop();
+			}
 			if (type === "polygon") {
 				points.push(points[0]);
 				if (points[0].indexOf(",") === -1) {
@@ -122,7 +128,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	DrawSVGPlugin = _gsScope._gsDefine.plugin({
 		propName: "drawSVG",
 		API: 2,
-		version: "0.0.7",
+		version: "0.0.9",
 		global: true,
 		overwriteProps: ["drawSVG"],
 

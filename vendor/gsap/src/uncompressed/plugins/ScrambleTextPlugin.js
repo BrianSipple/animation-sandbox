@@ -1,9 +1,9 @@
 /*!
  * VERSION: 0.2.2
  * DATE: 2014-12-31
- * UPDATES AND DOCS AT: http://www.greensock.com
+ * UPDATES AND DOCS AT: http://greensock.com
  *
- * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
  * ScrambleTextPlugin is a Club GreenSock membership benefit; You must have a valid membership to use
  * this code without violating the terms of use. Visit http://greensock.com/club/ to sign up or get more details.
  * This work is subject to the software agreement that was issued with your membership.

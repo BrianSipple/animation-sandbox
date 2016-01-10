@@ -1,9 +1,9 @@
 /*!
- * VERSION: 0.6.0
- * DATE: 2015-11-17
+ * VERSION: 0.8.1
+ * DATE: 2015-12-18
  * UPDATES AND DOCS AT: http://greensock.com
  *
- * @license Copyright (c) 2008-2015, GreenSock. All rights reserved.
+ * @license Copyright (c) 2008-2016, GreenSock. All rights reserved.
  * MorphSVGPlugin is a Club GreenSock membership benefit; You must have a valid membership to use
  * this code without violating the terms of use. Visit http://greensock.com/club/ to sign up or get more details.
  * This work is subject to the software agreement that was issued with your membership.
@@ -169,6 +169,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 				// "M" (move)
 				if (command === "M") {
+					if (segment && segment.length < 8) { //if the path data was funky and just had a M with no actual drawing anywhere, skip it.
+						path.length-=1;
+						l = 0;
+					}
 					relativeX = startX = x;
 					relativeY = startY = y;
 					segment = [x, y];
@@ -176,6 +180,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					l = 2;
 					path.push(segment);
 					i += 2;
+					command = "L"; //an "M" with more than 2 values gets interpreted as "lineTo" commands ("L").
 
 				// "C" (cubic bezier)
 				} else if (command === "C") {
@@ -191,7 +196,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					segment[l++] = relativeY + a[i + 4] * 1;
 					segment[l++] = relativeX = relativeX + a[i + 5] * 1;
 					segment[l++] = relativeY = relativeY + a[i + 6] * 1;
-
+					//if (y === segment[l-1] && y === segment[l-3] && x === segment[l-2] && x === segment[l-4]) { //if all the values are the same, eliminate the waste.
+					//	segment.length = l = l-6;
+					//}
 					i += 6;
 
 				// "S" (continuation of cubic bezier)
@@ -212,7 +219,9 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					}
 					segment[l++] = relativeX = relativeX + a[i + 3] * 1;
 					segment[l++] = relativeY = relativeY + a[i + 4] * 1;
-
+					//if (y === segment[l-1] && y === segment[l-3] && x === segment[l-2] && x === segment[l-4]) { //if all the values are the same, eliminate the waste.
+					//	segment.length = l = l-6;
+					//}
 					i += 4;
 
 				// "Q" (quadratic bezier)
@@ -253,12 +262,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				// "H" (horizontal line)
 				} else if (command === "H") {
 					y = relativeY;
-					segment[l++] = relativeX + (x - relativeX) / 3;
-					segment[l++] = relativeY + (y - relativeY) / 3;
-					segment[l++] = relativeX + (x - relativeX) * 2 / 3;
-					segment[l++] = relativeY + (y - relativeY) * 2 / 3;
-					segment[l++] = relativeX = x;
-					segment[l++] = y;
+					//if (x !== relativeX) {
+						segment[l++] = relativeX + (x - relativeX) / 3;
+						segment[l++] = relativeY + (y - relativeY) / 3;
+						segment[l++] = relativeX + (x - relativeX) * 2 / 3;
+						segment[l++] = relativeY + (y - relativeY) * 2 / 3;
+						segment[l++] = relativeX = x;
+						segment[l++] = y;
+					//}
 					i += 1;
 
 				// "V" (horizontal line)
@@ -268,12 +279,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					if (isRelative) {
 						y += relativeY - relativeX;
 					}
-					segment[l++] = x;
-					segment[l++] = relativeY + (y - relativeY) / 3;
-					segment[l++] = x;
-					segment[l++] = relativeY + (y - relativeY) * 2 / 3;
-					segment[l++] = x;
-					segment[l++] = relativeY = y;
+					//if (y !== relativeY) {
+						segment[l++] = x;
+						segment[l++] = relativeY + (y - relativeY) / 3;
+						segment[l++] = x;
+						segment[l++] = relativeY + (y - relativeY) * 2 / 3;
+						segment[l++] = x;
+						segment[l++] = relativeY = y;
+					//}
 					i += 1;
 
 				// "L" (line) or "Z" (close)
@@ -283,7 +296,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 						y = startY;
 						segment.closed = true;
 					}
-					if (command === "L" || Math.abs(relativeX - x) > 1 || Math.abs(relativeY - y) > 1) {
+					if (command === "L" || Math.abs(relativeX - x) > 0.5 || Math.abs(relativeY - y) > 0.5) {
 						segment[l++] = relativeX + (x - relativeX) / 3;
 						segment[l++] = relativeY + (y - relativeY) / 3;
 						segment[l++] = relativeX + (x - relativeX) * 2 / 3;
@@ -408,7 +421,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			return [x / (l / 2), y / (l / 2)];
 		},
-		_getSize = function(bezier) { //rough estimate of the bounding box (based solely on the anchors). sets "size", "centerX", and "centerY" properties on the bezier array itself, and returns the size (width * height)
+		_getSize = function(bezier) { //rough estimate of the bounding box (based solely on the anchors) of a single segment. sets "size", "centerX", and "centerY" properties on the bezier array itself, and returns the size (width * height)
 			var l = bezier.length,
 				xMax = bezier[0],
 				xMin = xMax,
@@ -427,6 +440,35 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					yMax = y;
 				} else if (y < yMin) {
 					yMin = y;
+				}
+			}
+			bezier.centerX = (xMax + xMin) / 2;
+			bezier.centerY = (yMax + yMin) / 2;
+			return (bezier.size = (xMax - xMin) * (yMax - yMin));
+		},
+		_getTotalSize = function(bezier) { //rough estimate of the bounding box of the entire list of Bezier segments (based solely on the anchors). sets "size", "centerX", and "centerY" properties on the bezier array itself, and returns the size (width * height)
+			var segment = bezier.length,
+				xMax = bezier[0][0],
+				xMin = xMax,
+				yMax = bezier[0][1],
+				yMin = yMax,
+				l, x, y, i, b;
+			while (--segment > -1) {
+				b = bezier[segment];
+				l = b.length;
+				for (i = 6; i < l; i+=6) {
+					x = b[i];
+					y = b[i+1];
+					if (x > xMax) {
+						xMax = x;
+					} else if (x < xMin) {
+						xMin = x;
+					}
+					if (y > yMax) {
+						yMax = y;
+					} else if (y < yMin) {
+						yMin = y;
+					}
 				}
 			}
 			bezier.centerX = (xMax + xMin) / 2;
@@ -518,15 +560,14 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			return [closestX, closestY];
 		},
-		_getClosestSegment = function(bezier, pool, startIndex, sortRatio) { //matches the bezier to the closest one in a pool (array) of beziers, assuming they are in order of size and we shouldn't drop more than 20% of the size, otherwise prioritizing location (total distance to the center). Extracts the segment out of the pool array and returns it.
+		_getClosestSegment = function(bezier, pool, startIndex, sortRatio, offsetX, offsetY) { //matches the bezier to the closest one in a pool (array) of beziers, assuming they are in order of size and we shouldn't drop more than 20% of the size, otherwise prioritizing location (total distance to the center). Extracts the segment out of the pool array and returns it.
 			var l = pool.length,
 				index = 0,
-				minSize = (pool[startIndex].size || _getSize(pool[startIndex])) * sortRatio,
+				minSize = Math.min(bezier.size || _getSize(bezier), pool[startIndex].size || _getSize(pool[startIndex])) * sortRatio, //limit things based on a percentage of the size of either the bezier or the next element in the array, whichever is smaller.
 				min = 999999999999,
-				size = bezier.size || _getSize(bezier),
-				cx = bezier.centerX,
-				cy = bezier.centerY,
-				i, dx, dy, d;
+				cx = bezier.centerX + offsetX,
+				cy = bezier.centerY + offsetY,
+				size, i, dx, dy, d;
 			for (i = startIndex; i < l; i++) {
 				size = pool[i].size || _getSize(pool[i]);
 				if (size < minSize) {
@@ -554,16 +595,21 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				i = shorter.length,
 				shapeIndices = (typeof(shapeIndex) === "object" && shapeIndex.push) ? shapeIndex.slice(0) : [shapeIndex],
 				reverse = (shapeIndices[0] === "reverse" || shapeIndices[0] < 0),
-				eb, sb, b, x, y;
+				log = (shapeIndex === "log"),
+				eb, sb, b, x, y, offsetX, offsetY;
 			if (!shorter[0]) {
 				return;
 			}
 			if (longer.length > 1) {
 				start.sort(sortMethod);
 				end.sort(sortMethod);
+				offsetX = longer.size || _getTotalSize(longer); //ensures centerX and centerY are defined (used below).
+				offsetX = shorter.size || _getTotalSize(shorter);
+				offsetX = longer.centerX - shorter.centerX;
+				offsetY = longer.centerY - shorter.centerY;
 				if (sortMethod === _sortBySize) {
 					for (i = 0; i < shorter.length; i++) {
-						longer.splice(i, 0, _getClosestSegment(shorter[i], longer, i, sortRatio));
+						longer.splice(i, 0, _getClosestSegment(shorter[i], longer, i, sortRatio, offsetX, offsetY));
 					}
 				}
 			}
@@ -576,7 +622,8 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				}
 				i = shorter.length;
 				while (added < dif) {
-					b = _getClosestAnchor(shorter, longer[i][0], longer[i][1]); //TODO: offsetX/offsetY so that the shapes are centered?
+					x = longer[i].size || _getSize(longer[i]); //just to ensure centerX and centerY are calculated which we use on the next line.
+					b = _getClosestAnchor(shorter, longer[i].centerX, longer[i].centerY);
 					x = b[0];
 					y = b[1];
 					shorter[i++] = [x, y, x, y, x, y, x, y];
@@ -600,7 +647,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 				if (shapeIndex) {
 					//if start shape is closed, find the closest point to the start/end, and re-organize the bezier points accordingly so that the shape morphs in a more intuitive way.
 					if (sb.closed || (Math.abs(sb[0] - sb[sb.length - 2]) < 0.5 && Math.abs(sb[1] - sb[sb.length - 1]) < 0.5)) {
-						if (shapeIndex === "auto") {
+						if (shapeIndex === "auto" || shapeIndex === "log") {
 							shapeIndices[i] = shapeIndex = _getClosestShapeIndex(sb, eb, i === 0);
 							if (shapeIndex < 0) {
 								reverse = true;
@@ -625,11 +672,17 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					} else if (shapeIndex === "reverse") {
 						shapeIndices[i] = -1;
 					}
+					if (sb.closed !== eb.closed) { //if one is closed and one isn't, don't close either one otherwise the tweening will look weird (but remember, the beginning and final states will honor the actual values, so this only affects the inbetween state)
+						sb.closed = eb.closed = false;
+					}
 				}
+			}
+			if (log) {
+				_log("shapeIndex:[" + shapeIndices.join(",") + "]");
 			}
 			return shapeIndices;
 		},
-		_pathFilter = function(a, shapeIndex, map) {
+		_pathFilter = function(a, shapeIndex, map, precompile) {
 			var start = _pathDataToBezier(a[0]),
 				end = _pathDataToBezier(a[1]);
 			if (!_equalizeSegmentQuantity(start, end, (shapeIndex || shapeIndex === 0) ? shapeIndex : "auto", map)) {
@@ -637,10 +690,13 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			}
 			a[0] = _bezierToPathData(start);
 			a[1] = _bezierToPathData(end);
+			if (precompile === "log" || precompile === true) {
+				_log('precompile:["' + a[0] + '","' + a[1] + '"]');
+			}
 		},
-		_buildPathFilter = function(shapeIndex, map) {
-			return (map || shapeIndex || shapeIndex === 0) ? function(a) {
-				_pathFilter(a, shapeIndex, map);
+		_buildPathFilter = function(shapeIndex, map, precompile) {
+			return (map || precompile || shapeIndex || shapeIndex === 0) ? function(a) {
+				_pathFilter(a, shapeIndex, map, precompile);
 			} : _pathFilter;
 		},
 		_offsetPoints = function(text, offset) {
@@ -785,9 +841,10 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			return path;
 		},
 		_parseShape = function(shape, forcePath, target) {
-			var e, type;
-			if (typeof(shape) !== "string" || (shape.match(_numbersExp) || []).length < 3) {
-				e = TweenLite.selector(shape);
+			var isString = typeof(shape) === "string",
+				e, type;
+			if (!isString || (shape.match(_numbersExp) || []).length < 3) {
+				e = isString ? TweenLite.selector(shape) : [shape];
 				if (e && e[0]) {
 					e = e[0];
 					type = e.nodeName.toUpperCase();
@@ -814,7 +871,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			propName: "morphSVG",
 			API: 2,
 			global: true,
-			version: "0.6.0",
+			version: "0.8.1",
 
 			//called when the tween renders for the first time. This is where initial values should be recorded and any setup routines should run.
 			init: function(target, value, tween) {
@@ -842,7 +899,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 					if (!target.getAttributeNS(null, "data-original")) {
 						target.setAttributeNS(null, "data-original", target.getAttribute(p)); //record the original state in a data-original attribute so that we can revert to it later.
 					}
-					pt = this._addTween(target, "setAttribute", target.getAttribute(p) + "", shape + "", "morphSVG", false, p, (p === "d") ? _buildPathFilter(value.shapeIndex, value.map) : _buildPointsFilter(value.shapeIndex));
+					pt = this._addTween(target, "setAttribute", target.getAttribute(p) + "", shape + "", "morphSVG", false, p, (typeof(value.precompile) === "object") ? function(a) {a[0] = value.precompile[0]; a[1] = value.precompile[1];} : (p === "d") ? _buildPathFilter(value.shapeIndex, value.map || MorphSVGPlugin.defaultMap, value.precompile) : _buildPointsFilter(value.shapeIndex));
 					if (pt) {
 						this._overwriteProps.push("morphSVG");
 						pt.end = shape;
@@ -871,6 +928,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	MorphSVGPlugin.pathFilter = _pathFilter;
 	MorphSVGPlugin.pointsFilter = _pointsFilter;
 	MorphSVGPlugin.subdivideRawBezier = _subdivideBezier;
+	MorphSVGPlugin.defaultMap = "size";
 	MorphSVGPlugin.pathDataToRawBezier = function(data) {
 		return _pathDataToBezier(_parseShape(data, true));
 	};
@@ -890,29 +948,38 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 
 	MorphSVGPlugin.pathDataToBezier = function(data, vars) { //converts SVG path data into an array of {x, y} objects that can be plugged directly into a bezier tween. You can optionally pass in a 2D matrix like [a, b, c, d, tx, ty] containing numbers that should transform each point.
 		var bezier = _pathDataToBezier(_parseShape(data, true))[0] || [],
-			a, i, l, matrix, offsetX, offsetY;
+			prefix = 0,
+			a, i, l, matrix, offsetX, offsetY, bbox, e;
 		vars = vars || {};
-		matrix = vars.matrix;
+		e = vars.align || vars.relative;
+		matrix = vars.matrix || [1,0,0,1,0,0];
+		offsetX = vars.offsetX || 0;
+		offsetY = vars.offsetY || 0;
+		if (e === "relative" || e === true) {
+			offsetX -= bezier[0] * matrix[0] + bezier[1] * matrix[2];
+			offsetY -= bezier[0] * matrix[1] + bezier[1] * matrix[3];
+			prefix = "+=";
+		} else {
+			offsetX += matrix[4];
+			offsetY += matrix[5];
+			if (e) {
+				e = (typeof(e) === "string") ? TweenLite.selector(e) : [e];
+				if (e && e[0]) {
+					bbox = e[0].getBBox() || {x:0, y:0};
+					offsetX -= bbox.x;
+					offsetY -= bbox.y;
+				}
+			}
+		}
 		a = [];
 		l = bezier.length;
 		if (matrix) {
-			if (vars.relative) {
-				matrix = matrix.slice(0);
-				matrix[4] -= bezier[0];
-				matrix[5] -= bezier[1];
-			}
 			for (i = 0; i < l; i+=2) {
-				a.push({x:bezier[i] * matrix[0] + bezier[i+1] * matrix[2] + matrix[4], y:bezier[i] * matrix[1] + bezier[i+1] * matrix[3] + matrix[5]});
+				a.push({x:prefix + (bezier[i] * matrix[0] + bezier[i+1] * matrix[2] + offsetX), y:prefix + (bezier[i] * matrix[1] + bezier[i+1] * matrix[3] + offsetY)});
 			}
 		} else {
-			offsetX = vars.offsetX || 0;
-			offsetY = vars.offsetY || 0;
-			if (vars.relative) {
-				offsetX -= bezier[0];
-				offsetY -= bezier[1];
-			}
 			for (i = 0; i < l; i+=2) {
-				a.push({x:bezier[i] + offsetX, y:bezier[i+1] + offsetY});
+				a.push({x:prefix + (bezier[i] + offsetX), y:prefix + (bezier[i+1] + offsetY)});
 			}
 		}
 		return a;

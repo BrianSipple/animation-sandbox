@@ -1,7 +1,7 @@
 {
-  "name": "Custom",
-  "version": "5.0.0",
-  "homepage": "https://github.com/BrianSipple/html5-boilerplate",
+  "name": "animation-sandbox",
+  "version": "1.0.0",
+  "homepage": "https://github.com/BrianSipple/animation-sandbox",
   "authors": [
     "Brian Sipple <Bsipple57@gmail.com>"
   ],
@@ -14,8 +14,6 @@
     "tests"
   ],
   "dependencies": {
-    "modernizer": "~2.8.2",
-    "snap.svg": "~0.4.1",
-    "gsap": "~1.16.1"
+    "modernizer": "~2.8.2"
   }
 }

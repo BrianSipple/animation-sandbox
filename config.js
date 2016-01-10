@@ -13,6 +13,7 @@ System.config({
       "runtime"
     ]
   },
+
   "paths": {
     "*": "*.js",
     "github:*": "vendor/github/*.js",
@@ -20,15 +21,16 @@ System.config({
     "vendor": "vendor/",
     "views": "views/",
     "utils/*": "lib/utils/*.js"
-  }
-});
+  },
 
-System.config({
+
   "map": {
-    "DrawSVGPlugin": "vendor/gsap/src/uncompressed/plugins/DrawSVGPlugin",
-    "EndArrayPlugin": "vendor/gsap/src/uncompressed/plugins/EndArrayPlugin",
-    "MorphSVGPlugin": "vendor/gsap/src/uncompressed/plugins/MorphSVGPlugin",
+    "DrawSVGPlugin": "vendor/gsap/src/minified/plugins/DrawSVGPlugin.min",
+    "EndArrayPlugin": "vendor/gsap/src/minified/plugins/EndArrayPlugin.min",
+    "MorphSVGPlugin": "vendor/gsap/src/minified/plugins/MorphSVGPlugin.min",
+    "Draggable": "vendor/gsap/src/minified/utils/Draggable.min",
     "TweenMax": "vendor/gsap/src/minified/TweenMax.min",
+    "TweenLite": "vendor/gsap/src/minified/TweenLite.min",
     "babel": "npm:babel-core@5.8.22",
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "core-js": "npm:core-js@0.9.18",
@@ -50,4 +52,5 @@ System.config({
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     }
   }
+
 });

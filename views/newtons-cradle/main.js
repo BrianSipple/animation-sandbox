@@ -2,14 +2,17 @@
 
 import TweenMax from "TweenMax";
 import Draggable from "Draggable";
+import EasingUtils from 'utils/easing-utils';
 
 const SELECTORS = {
-  leftBearingGroup: '.bearing--1',
-  rightBearingGroup: '.bearing--5',
-  leftBall: '.bearing--1 .ball',
-  leftBallControlPoint: '.bearing--1 .control-point',
-  rightBall: '.bearing--5 .ball',
-  rightBallControlPoint: '.bearing--5 .control-point'
+  bearingGroup1: '.bearing--1',
+  bearingGroup2: '.bearing--2',
+  bearingGroup4: '.bearing--4',
+  bearingGroup5: '.bearing--5',
+  group1ControlPoint: '.bearing--1 .control-point',
+  group2ControlPoint: '.bearing--2 .control-point',
+  group4ControlPoint: '.bearing--4 .control-point',
+  group5ControlPoint: '.bearing--5 .control-point'
 };
 
 
@@ -34,6 +37,8 @@ const BALL_POSITIONS = ['one', 'two', 'three', 'four', 'five'];
 
 const MAX_ANGULAR_ROTATION = 85;
 
+const FRAME_RATE = 1/30;
+
 
 const NewtonsCradle = (function newtonsCradle () {
   let
@@ -44,18 +49,25 @@ const NewtonsCradle = (function newtonsCradle () {
 
   function cacheDOMState () {
       DOM_REFS = {
-        leftBearingGroup: document.querySelector(SELECTORS.leftBearingGroup),
-        leftBall: document.querySelector(SELECTORS.leftBall),
-        leftBallControlPoint: document.querySelector(SELECTORS.leftBallControlPoint),
 
-        rightBearingGroup: document.querySelector(SELECTORS.rightBearingGroup),
-        rightBallControlPoint: document.querySelector(SELECTORS.rightBallControlPoint),
-        rightBall: document.querySelector(SELECTORS.rightBall),
+        bearingGroup1: document.querySelector(SELECTORS.bearingGroup1),
+        group1ControlPoint: document.querySelector(SELECTORS.group1ControlPoint),
+
+        bearingGroup2: document.querySelector(SELECTORS.bearingGroup2),
+        group2ControlPoint: document.querySelector(SELECTORS.group2ControlPoint),
+
+        bearingGroup4: document.querySelector(SELECTORS.bearingGroup4),
+        group4ControlPoint: document.querySelector(SELECTORS.group4ControlPoint),
+
+        bearingGroup5: document.querySelector(SELECTORS.bearingGroup5),
+        group5ControlPoint: document.querySelector(SELECTORS.group5ControlPoint),
       };
 
       COORDINATES = {
-        leftBallControlPoint: `${DOM_REFS.leftBallControlPoint.getAttribute('cx')} ${DOM_REFS.leftBallControlPoint.getAttribute('cy')}`,
-        rightBallControlPoint: `${DOM_REFS.rightBallControlPoint.getAttribute('cx')} ${DOM_REFS.rightBallControlPoint.getAttribute('cy')}`
+        group1ControlPoint: `${DOM_REFS.group1ControlPoint.getAttribute('cx')} ${DOM_REFS.group1ControlPoint.getAttribute('cy')}`,
+        group2ControlPoint: `${DOM_REFS.group2ControlPoint.getAttribute('cx')} ${DOM_REFS.group2ControlPoint.getAttribute('cy')}`,
+        group4ControlPoint: `${DOM_REFS.group4ControlPoint.getAttribute('cx')} ${DOM_REFS.group4ControlPoint.getAttribute('cy')}`,
+        group5ControlPoint: `${DOM_REFS.group5ControlPoint.getAttribute('cx')} ${DOM_REFS.group5ControlPoint.getAttribute('cy')}`
       };
   }
 
@@ -64,34 +76,58 @@ const NewtonsCradle = (function newtonsCradle () {
    */
   function setInitialElementState () {
 
-    TweenMax.set(DOM_REFS.leftBearingGroup, { svgOrigin: COORDINATES.leftBallControlPoint, rotation: 0 });
-    TweenMax.set(DOM_REFS.rightBearingGroup, { svgOrigin: COORDINATES.rightBallControlPoint, rotation: 0 });
+    TweenMax.set(DOM_REFS.bearingGroup1, { svgOrigin: COORDINATES.group1ControlPoint, rotation: 0 });
+    TweenMax.set(DOM_REFS.bearingGroup2, { svgOrigin: COORDINATES.group2ControlPoint, rotation: 0 });
+    TweenMax.set(DOM_REFS.bearingGroup4, { svgOrigin: COORDINATES.group4ControlPoint, rotation: 0 });
+    TweenMax.set(DOM_REFS.bearingGroup5, { svgOrigin: COORDINATES.group5ControlPoint, rotation: 0 });
 
   }
 
-  //
-  // function configureBallMotion (ballType) {
-  //
-  //   let ballTL = new TimelineMax({ yoyo: true, repeat: -1 });
-  //
-  //   if (ballType === 'left') {
-  //     ballTL.to(
-  //       DOM_REFS.leftBall
-  //     )
-  //   }
-  // }
+
+  function createSwingTLForBearing (bearingElem, startingRotation, destinationRotation) {
+    debugger;
+
+    const tl = new TimelineMax();
+    const totalChange = destinationRotation - startingRotation;
+
+    // TODO: compute total energy based upon rotation and use that to compute time to fall back to normal position
+
+    console.log(`Total Change: ${totalChange}`);
+
+    let swingState = {
+      elapsedTime: 0,
+      durationThroughout: 2
+    };
+
+    let nextRotationVal;
+
+    while ( swingState.elapsedTime < swingState.durationThroughout ) {
+
+      nextRotationVal = (
+        startingRotation +
+        ( totalChange * EasingUtils.easeOutCubic(swingState.elapsedTime, swingState.durationThroughout) )
+      );
+
+      console.log(`nextRotationVal Rotation: ${nextRotationVal}`);
+
+      tl.to(
+        bearingElem,
+        FRAME_RATE,
+        { rotation: nextRotationVal, ease: Linear.easeNone }
+      );
+
+      swingState.elapsedTime += FRAME_RATE;
+    }
+
+    return tl;
+  }
+
+  function createSwingTLsAfterDrag (bearingGroupToStart, currentRotationOfDragged) {
+    console.log('Start Swing');
+
+    masterTL.add(createSwingTLForBearing(bearingGroupToStart, currentRotationOfDragged, 0));
 
 
-  // function wireUpAnimation () {
-  //
-  //   masterTL = new TimelineMax({ paused: true });
-  //   masterTL.add(configureBallMotion('left'), LABELS.leftBall);
-  //   masterTL.add(configureBallMotion('right'), LABELS.rightBall);
-  //   //masterTL.add();
-  // }
-
-  function startSwing (ballPositionToSwing, startingRotation) {
-    const swingTL = new TimelineMax({ repeat: -1 });
 
     // compute swinging
 
@@ -107,14 +143,19 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
   function swingBallsAfterDrag (ballPosition) {
-    startSwing(ballPosition, this.rotation);
+
+    const bearingGroupToStart = ballPosition === BALL_POSITIONS[0] ?
+      DOM_REFS.bearingGroup1 :
+      DOM_REFS.bearingGroup5;
+
+    createSwingTLsAfterDrag(bearingGroupToStart, this.rotation);
   }
 
 
 
 
   function addListeners () {
-    Draggable.create(DOM_REFS.leftBearingGroup, {
+    Draggable.create(DOM_REFS.bearingGroup1, {
       type: 'rotation',
       throwProps: true,
       bounds: {
@@ -126,7 +167,7 @@ const NewtonsCradle = (function newtonsCradle () {
       onDragEndParams: [ BALL_POSITIONS[0] ]
     });
 
-    Draggable.create(DOM_REFS.rightBearingGroup, {
+    Draggable.create(DOM_REFS.bearingGroup5, {
       type: 'rotation',
       throwProps: true,
       bounds: {
@@ -143,6 +184,9 @@ const NewtonsCradle = (function newtonsCradle () {
 
 
   function run () {
+
+    masterTL = new TimelineMax();
+
     cacheDOMState();
     setInitialElementState();
     //wireUpAnimation();

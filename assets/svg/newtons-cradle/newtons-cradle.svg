@@ -1,231 +1,280 @@
-<svg id="cradle-set" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 394.1 252.6">
-  <g id="cradle_x5F__x5F_frame">
-    <g id="cradle-base">
-      <path id="base_x5F__x5F_front-face" fill="#231F20" d="M0 228.6h394.1v24H0z"/>
-      <path id="base_x5F__x5F_front-edge_1_" fill="#58595B" d="M394.1 229.2l-2.8-3.6-387 .6-4.3 3"/>
-      <path id="base_x5F__x5F_left-edge" fill="#999A9D" d="M0 229.2v-71.4L5.3 147l-1 79.2"/>
-      <path id="base_x5F__x5F_right-edge" fill="#58595B" d="M394.1 229.2v-71.9l-5.3-10.9.9 79.2"/>
-      <path id="base_x5F__x5F_top-face" fill="#404041" d="M389.7 225.6l-.9-79.2-383.5.6-1 79.2"/>
-    </g>
-    <path id="cradle-support_cradle-support_x5F__x5F_front" fill="#A6A8AB" d="M379.5 35.2c0-23.7-12.6-21.8-26.4-21.8H41c-13.8 0-26.4-1.9-26.4 21.8l-1.2 179.7c0 2.5 2.5 4.7 6.1 5.7 2.6.7 5-2 5-5.6V70.2c-.1-26-2.8-43.3 16.9-43.3H352.6c19.7 0 17 17.3 16.9 43.3V215c0 3.6 2.5 6.3 5 5.6 3.6-1 6.1-3.2 6.1-5.7l-1.1-179.7z"/>
-    <path id="cradle-support_cradle-support_x5F__x5F_back" fill="#A6A8AB" d="M373.5 18c0-19.5-12.2-18-25.6-18H46.1C32.8 0 20.6-1.5 20.6 18l-1.2 148.1c0 2.1 2.4 3.9 5.9 4.7 2.5.6 4.8-1.6 4.8-4.6V46.9c-.1-21.4-2.7-35.7 16.4-35.7h300.9c19 0 16.4 14.3 16.4 35.7V166.3c0 3 2.4 5.2 4.8 4.6 3.5-.8 5.9-2.6 5.9-4.7l-1-148.2z"/>
-  </g>
-  <g id="bearing-group-4">
-    <path id="bearing-string_bearing-string--front-4" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.492" stroke-miterlimit="10" d="M247.8 11.1l-4.3 127.8"/>
-    <path id="bearing-string_bearing-string--back-4" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.492" stroke-miterlimit="10" d="M243.2 13.3v125.8"/>
-    <circle id="transform-origin_3_" fill="none" cx="245.4" cy="18.5" r="1.4"/>
-    <path d="M243.2 136.7c-.9 0-1.6.4-1.6.9v2.2c0 .5.7.9 1.6.9s1.6-.4 1.6-.9v-2.2c0-.5-.7-.9-1.6-.9z" id="connection-node_7_"/>
-    <radialGradient id="bearing_5_" cx="243.493" cy="161.156" r="69.444" fx="279.045" fy="110.143" gradientTransform="matrix(1 0 0 .52 0 77.36)" gradientUnits="userSpaceOnUse">
-      <stop offset=".104" stop-color="#EBFC91"/>
-      <stop offset=".138" stop-color="#E9FC93"/>
-      <stop offset=".158" stop-color="#E4FC9C"/>
-      <stop offset=".175" stop-color="#DAFCAA"/>
-      <stop offset=".189" stop-color="#CDFBBE"/>
-      <stop offset=".202" stop-color="#BCFBD8"/>
-      <stop offset=".214" stop-color="#A7FAF7"/>
-      <stop offset=".217" stop-color="#A2FAFF"/>
-      <stop offset=".223" stop-color="#ADF5FE"/>
-      <stop offset=".248" stop-color="#D8E0FB"/>
-      <stop offset=".269" stop-color="#F2D3FA"/>
-      <stop offset=".281" stop-color="#FCCEF9"/>
-      <stop offset=".294" stop-color="#FCC9F9"/>
-      <stop offset=".312" stop-color="#FAB9FA"/>
-      <stop offset=".331" stop-color="#F89FFC"/>
-      <stop offset=".351" stop-color="#F57BFE"/>
-      <stop offset=".363" stop-color="#F363FF"/>
-      <stop offset=".366" stop-color="#E959FF"/>
-      <stop offset=".373" stop-color="#D543FE"/>
-      <stop offset=".381" stop-color="#C532FD"/>
-      <stop offset=".392" stop-color="#B927FC"/>
-      <stop offset=".406" stop-color="#B320FC"/>
-      <stop offset=".446" stop-color="#B11EFC"/>
-      <stop offset=".472" stop-color="#B522FC"/>
-      <stop offset=".5" stop-color="#C02FFD"/>
-      <stop offset=".528" stop-color="#D444FE"/>
-      <stop offset=".539" stop-color="#DE4FFF"/>
-      <stop offset=".585" stop-color="#E261FE"/>
-      <stop offset=".677" stop-color="#EE91FC"/>
-      <stop offset=".782" stop-color="#FCCEF9"/>
-      <stop offset=".847" stop-color="#A2FAFF"/>
-      <stop offset=".857" stop-color="#A8FAF7"/>
-      <stop offset=".872" stop-color="#B7FBDF"/>
-      <stop offset=".891" stop-color="#D0FBBA"/>
-      <stop offset=".908" stop-color="#EBFC91"/>
-    </radialGradient>
-    <circle id="bearing" fill="url(#bearing_5_)" cx="243.2" cy="163.2" r="23.1"/>
-  </g>
-  <g id="bearing--group-middle">
-    <path id="bearing-string_bearing-string--middle" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.514" stroke-miterlimit="10" d="M197 11.1v128.5"/>
-    <path d="M197.1 136.7c-.9 0-1.6.4-1.6.9v2.2c0 .5.7.9 1.6.9s1.6-.4 1.6-.9v-2.2c0-.5-.7-.9-1.6-.9z" id="connection-node_3_"/>
-    <radialGradient id="bearing_6_" cx="197.338" cy="161.156" r="69.444" fx="232.889" fy="110.143" gradientTransform="matrix(1 0 0 .52 0 77.36)" gradientUnits="userSpaceOnUse">
-      <stop offset=".104" stop-color="#EBFC91"/>
-      <stop offset=".138" stop-color="#E9FC93"/>
-      <stop offset=".158" stop-color="#E4FC9C"/>
-      <stop offset=".175" stop-color="#DAFCAA"/>
-      <stop offset=".189" stop-color="#CDFBBE"/>
-      <stop offset=".202" stop-color="#BCFBD8"/>
-      <stop offset=".214" stop-color="#A7FAF7"/>
-      <stop offset=".217" stop-color="#A2FAFF"/>
-      <stop offset=".223" stop-color="#ADF5FE"/>
-      <stop offset=".248" stop-color="#D8E0FB"/>
-      <stop offset=".269" stop-color="#F2D3FA"/>
-      <stop offset=".281" stop-color="#FCCEF9"/>
-      <stop offset=".294" stop-color="#FCC9F9"/>
-      <stop offset=".312" stop-color="#FAB9FA"/>
-      <stop offset=".331" stop-color="#F89FFC"/>
-      <stop offset=".351" stop-color="#F57BFE"/>
-      <stop offset=".363" stop-color="#F363FF"/>
-      <stop offset=".366" stop-color="#E959FF"/>
-      <stop offset=".373" stop-color="#D543FE"/>
-      <stop offset=".381" stop-color="#C532FD"/>
-      <stop offset=".392" stop-color="#B927FC"/>
-      <stop offset=".406" stop-color="#B320FC"/>
-      <stop offset=".446" stop-color="#B11EFC"/>
-      <stop offset=".472" stop-color="#B522FC"/>
-      <stop offset=".5" stop-color="#C02FFD"/>
-      <stop offset=".528" stop-color="#D444FE"/>
-      <stop offset=".539" stop-color="#DE4FFF"/>
-      <stop offset=".585" stop-color="#E261FE"/>
-      <stop offset=".677" stop-color="#EE91FC"/>
-      <stop offset=".782" stop-color="#FCCEF9"/>
-      <stop offset=".847" stop-color="#A2FAFF"/>
-      <stop offset=".857" stop-color="#A8FAF7"/>
-      <stop offset=".872" stop-color="#B7FBDF"/>
-      <stop offset=".891" stop-color="#D0FBBA"/>
-      <stop offset=".908" stop-color="#EBFC91"/>
-    </radialGradient>
-    <circle id="bearing_3_" fill="url(#bearing_6_)" cx="197.1" cy="163.2" r="23.1"/>
-  </g>
-  <g id="bearing-group-2">
-    <path id="bearing-string_bearing-string--front-2" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.491" stroke-miterlimit="10" d="M147.1 13.6l3.7 123"/>
-    <path id="bearing-string_bearing-string--back-2" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.491" stroke-miterlimit="10" d="M150.8 11.1v128"/>
-    <circle id="transform-origin_2_" fill="none" cx="149" cy="17.9" r="2"/>
-    <path d="M150.9 136.7c-.9 0-1.6.4-1.6.9v2.2c0 .5.7.9 1.6.9s1.6-.4 1.6-.9v-2.2c0-.5-.7-.9-1.6-.9z" id="connection-node_14_"/>
-    <radialGradient id="bearing_7_" cx="151.183" cy="161.156" r="69.444" fx="186.734" fy="110.143" gradientTransform="matrix(1 0 0 .52 0 77.36)" gradientUnits="userSpaceOnUse">
-      <stop offset=".104" stop-color="#EBFC91"/>
-      <stop offset=".138" stop-color="#E9FC93"/>
-      <stop offset=".158" stop-color="#E4FC9C"/>
-      <stop offset=".175" stop-color="#DAFCAA"/>
-      <stop offset=".189" stop-color="#CDFBBE"/>
-      <stop offset=".202" stop-color="#BCFBD8"/>
-      <stop offset=".214" stop-color="#A7FAF7"/>
-      <stop offset=".217" stop-color="#A2FAFF"/>
-      <stop offset=".223" stop-color="#ADF5FE"/>
-      <stop offset=".248" stop-color="#D8E0FB"/>
-      <stop offset=".269" stop-color="#F2D3FA"/>
-      <stop offset=".281" stop-color="#FCCEF9"/>
-      <stop offset=".294" stop-color="#FCC9F9"/>
-      <stop offset=".312" stop-color="#FAB9FA"/>
-      <stop offset=".331" stop-color="#F89FFC"/>
-      <stop offset=".351" stop-color="#F57BFE"/>
-      <stop offset=".363" stop-color="#F363FF"/>
-      <stop offset=".366" stop-color="#E959FF"/>
-      <stop offset=".373" stop-color="#D543FE"/>
-      <stop offset=".381" stop-color="#C532FD"/>
-      <stop offset=".392" stop-color="#B927FC"/>
-      <stop offset=".406" stop-color="#B320FC"/>
-      <stop offset=".446" stop-color="#B11EFC"/>
-      <stop offset=".472" stop-color="#B522FC"/>
-      <stop offset=".5" stop-color="#C02FFD"/>
-      <stop offset=".528" stop-color="#D444FE"/>
-      <stop offset=".539" stop-color="#DE4FFF"/>
-      <stop offset=".585" stop-color="#E261FE"/>
-      <stop offset=".677" stop-color="#EE91FC"/>
-      <stop offset=".782" stop-color="#FCCEF9"/>
-      <stop offset=".847" stop-color="#A2FAFF"/>
-      <stop offset=".857" stop-color="#A8FAF7"/>
-      <stop offset=".872" stop-color="#B7FBDF"/>
-      <stop offset=".891" stop-color="#D0FBBA"/>
-      <stop offset=".908" stop-color="#EBFC91"/>
-    </radialGradient>
-    <circle id="bearing_2_" fill="url(#bearing_7_)" cx="150.9" cy="163.2" r="23.1"/>
-  </g>
-  <g id="bearing-group-1">
-    <path id="bearing-string_bearing-string--front-1_1_" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.506" stroke-miterlimit="10" d="M92.8 13.4l12 125.2"/>
-    <path id="bearing-string_bearing-string--back-1" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.491" stroke-miterlimit="10" d="M104.5 11.1v128"/>
-    <circle id="transform-origin_1_" fill="none" cx="99.6" cy="19.9" r="2.5"/>
-    <path d="M104.8 136.7c-.9 0-1.6.4-1.6.9v2.2c0 .5.7.9 1.6.9s1.6-.4 1.6-.9v-2.2c0-.5-.7-.9-1.6-.9z" id="connection-node_12_"/>
-    <radialGradient id="bearing_8_" cx="105.028" cy="161.156" r="69.444" fx="140.579" fy="110.143" gradientTransform="matrix(1 0 0 .52 0 77.36)" gradientUnits="userSpaceOnUse">
-      <stop offset=".104" stop-color="#EBFC91"/>
-      <stop offset=".138" stop-color="#E9FC93"/>
-      <stop offset=".158" stop-color="#E4FC9C"/>
-      <stop offset=".175" stop-color="#DAFCAA"/>
-      <stop offset=".189" stop-color="#CDFBBE"/>
-      <stop offset=".202" stop-color="#BCFBD8"/>
-      <stop offset=".214" stop-color="#A7FAF7"/>
-      <stop offset=".217" stop-color="#A2FAFF"/>
-      <stop offset=".223" stop-color="#ADF5FE"/>
-      <stop offset=".248" stop-color="#D8E0FB"/>
-      <stop offset=".269" stop-color="#F2D3FA"/>
-      <stop offset=".281" stop-color="#FCCEF9"/>
-      <stop offset=".294" stop-color="#FCC9F9"/>
-      <stop offset=".312" stop-color="#FAB9FA"/>
-      <stop offset=".331" stop-color="#F89FFC"/>
-      <stop offset=".351" stop-color="#F57BFE"/>
-      <stop offset=".363" stop-color="#F363FF"/>
-      <stop offset=".366" stop-color="#E959FF"/>
-      <stop offset=".373" stop-color="#D543FE"/>
-      <stop offset=".381" stop-color="#C532FD"/>
-      <stop offset=".392" stop-color="#B927FC"/>
-      <stop offset=".406" stop-color="#B320FC"/>
-      <stop offset=".446" stop-color="#B11EFC"/>
-      <stop offset=".472" stop-color="#B522FC"/>
-      <stop offset=".5" stop-color="#C02FFD"/>
-      <stop offset=".528" stop-color="#D444FE"/>
-      <stop offset=".539" stop-color="#DE4FFF"/>
-      <stop offset=".585" stop-color="#E261FE"/>
-      <stop offset=".677" stop-color="#EE91FC"/>
-      <stop offset=".782" stop-color="#FCCEF9"/>
-      <stop offset=".847" stop-color="#A2FAFF"/>
-      <stop offset=".857" stop-color="#A8FAF7"/>
-      <stop offset=".872" stop-color="#B7FBDF"/>
-      <stop offset=".891" stop-color="#D0FBBA"/>
-      <stop offset=".908" stop-color="#EBFC91"/>
-    </radialGradient>
-    <circle id="bearing_1_" fill="url(#bearing_8_)" cx="104.8" cy="163.2" r="23.1"/>
-  </g>
-  <g id="bearing-group-5">
-    <path id="string_string--front" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.486" stroke-miterlimit="10" d="M301.7 11.1l-12.3 127.8"/>
-    <path id="string_string--back" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.474" stroke-miterlimit="10" d="M289.1 13.3v124.1"/>
-    <circle id="transform-origin" fill="none" cx="295.6" cy="18.5" r="1.5"/>
-    <path d="M289.4 136.7c-.9 0-1.6.4-1.6.9v2.2c0 .5.7.9 1.6.9s1.6-.4 1.6-.9v-2.2c0-.5-.7-.9-1.6-.9z" id="connection-node_16_"/>
-    <radialGradient id="bearing_9_" cx="289.648" cy="161.156" r="69.444" fx="325.2" fy="110.143" gradientTransform="matrix(1 0 0 .52 0 77.36)" gradientUnits="userSpaceOnUse">
-      <stop offset=".104" stop-color="#EBFC91"/>
-      <stop offset=".138" stop-color="#E9FC93"/>
-      <stop offset=".158" stop-color="#E4FC9C"/>
-      <stop offset=".175" stop-color="#DAFCAA"/>
-      <stop offset=".189" stop-color="#CDFBBE"/>
-      <stop offset=".202" stop-color="#BCFBD8"/>
-      <stop offset=".214" stop-color="#A7FAF7"/>
-      <stop offset=".217" stop-color="#A2FAFF"/>
-      <stop offset=".223" stop-color="#ADF5FE"/>
-      <stop offset=".248" stop-color="#D8E0FB"/>
-      <stop offset=".269" stop-color="#F2D3FA"/>
-      <stop offset=".281" stop-color="#FCCEF9"/>
-      <stop offset=".294" stop-color="#FCC9F9"/>
-      <stop offset=".312" stop-color="#FAB9FA"/>
-      <stop offset=".331" stop-color="#F89FFC"/>
-      <stop offset=".351" stop-color="#F57BFE"/>
-      <stop offset=".363" stop-color="#F363FF"/>
-      <stop offset=".366" stop-color="#E959FF"/>
-      <stop offset=".373" stop-color="#D543FE"/>
-      <stop offset=".381" stop-color="#C532FD"/>
-      <stop offset=".392" stop-color="#B927FC"/>
-      <stop offset=".406" stop-color="#B320FC"/>
-      <stop offset=".446" stop-color="#B11EFC"/>
-      <stop offset=".472" stop-color="#B522FC"/>
-      <stop offset=".5" stop-color="#C02FFD"/>
-      <stop offset=".528" stop-color="#D444FE"/>
-      <stop offset=".539" stop-color="#DE4FFF"/>
-      <stop offset=".585" stop-color="#E261FE"/>
-      <stop offset=".677" stop-color="#EE91FC"/>
-      <stop offset=".782" stop-color="#FCCEF9"/>
-      <stop offset=".847" stop-color="#A2FAFF"/>
-      <stop offset=".857" stop-color="#A8FAF7"/>
-      <stop offset=".872" stop-color="#B7FBDF"/>
-      <stop offset=".891" stop-color="#D0FBBA"/>
-      <stop offset=".908" stop-color="#EBFC91"/>
-    </radialGradient>
-    <circle id="bearing_4_" fill="url(#bearing_9_)" cx="289.4" cy="163.2" r="23.1"/>
-  </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="cradle-set" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 394.1 252.6" enable-background="new 0 0 394.1 252.6" xml:space="preserve">
+<g id="cradle_x5F__x5F_frame">
+	<g id="cradle-base">
+		<rect id="base_x5F__x5F_front-face" y="228.6" fill="#231F20" width="394.1" height="24"/>
+		<polyline id="base_x5F__x5F_front-edge_1_" fill="#58595B" points="394.1,229.2 391.3,225.6 4.3,226.2 0,229.2 		"/>
+		<polyline id="base_x5F__x5F_left-edge" fill="#999A9D" points="0,229.2 0,157.8 5.3,147 4.3,226.2 		"/>
+		<polyline id="base_x5F__x5F_right-edge" fill="#58595B" points="394.1,229.2 394.1,157.3 388.8,146.4 389.7,225.6 		"/>
+		<polyline id="base_x5F__x5F_top-face" fill="#404041" points="389.7,225.6 388.8,146.4 5.3,147 4.3,226.2 		"/>
+	</g>
+	<path id="cradle-support_cradle-support_x5F__x5F_front" fill="#A6A8AB" d="M379.5,35.2c0-23.7-12.6-21.8-26.4-21.8l-151.8,0
+		L41,13.4c-13.8,0-26.4-1.9-26.4,21.8l-1.2,179.7c0,2.5,2.5,4.7,6.1,5.7c2.6,0.7,5-2,5-5.6c0,0,0-0.1,0-0.1V70.2
+		c-0.1-26-2.8-43.3,16.9-43.3l159.8,0l151.4,0c19.7,0,17,17.3,16.9,43.3v144.7c0,0,0,0.1,0,0.1c0,3.6,2.5,6.3,5,5.6
+		c3.6-1,6.1-3.2,6.1-5.7L379.5,35.2z"/>
+	<path id="cradle-support_cradle-support_x5F__x5F_back" fill="#A6A8AB" d="M373.5,18c0-19.5-12.2-18-25.6-18L201.1,0L46.1,0
+		C32.8,0,20.6-1.5,20.6,18l-1.2,148.1c0,2.1,2.4,3.9,5.9,4.7c2.5,0.6,4.8-1.6,4.8-4.6c0,0,0-0.1,0-0.1V46.9
+		c-0.1-21.4-2.7-35.7,16.4-35.7l154.5,0l146.4,0c19,0,16.4,14.3,16.4,35.7v119.3c0,0,0,0.1,0,0.1c0,3,2.4,5.2,4.8,4.6
+		c3.5-0.8,5.9-2.6,5.9-4.7L373.5,18z"/>
+</g>
+<g id="bearing-group-4">
+	
+		<line id="bearing-string_bearing-string--front-4" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.4917" stroke-miterlimit="10" x1="247.8" y1="11.1" x2="243.5" y2="138.9"/>
+	
+		<line id="bearing-string_bearing-string--back-4" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.4917" stroke-miterlimit="10" x1="243.2" y1="13.3" x2="243.2" y2="139.1"/>
+	<circle id="transform-origin_3_" fill="none" cx="245.4" cy="18.5" r="1.4"/>
+	<g id="connection-node_7_">
+		<g>
+			<path d="M243.2,136.7c-0.9,0-1.6,0.4-1.6,0.9v2.2h0c0,0.5,0.7,0.9,1.6,0.9s1.6-0.4,1.6-0.9h0v-2.2
+				C244.8,137.1,244.1,136.7,243.2,136.7z"/>
+		</g>
+	</g>
+	
+		<radialGradient id="bearing_5_" cx="243.4932" cy="161.1563" r="69.4435" fx="279.0445" fy="110.1431" gradientTransform="matrix(1 0 0 0.52 0 77.355)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0.1039" style="stop-color:#EBFC91"/>
+		<stop  offset="0.1382" style="stop-color:#E9FC93"/>
+		<stop  offset="0.1582" style="stop-color:#E4FC9C"/>
+		<stop  offset="0.1746" style="stop-color:#DAFCAA"/>
+		<stop  offset="0.189" style="stop-color:#CDFBBE"/>
+		<stop  offset="0.2021" style="stop-color:#BCFBD8"/>
+		<stop  offset="0.2142" style="stop-color:#A7FAF7"/>
+		<stop  offset="0.2167" style="stop-color:#A2FAFF"/>
+		<stop  offset="0.2227" style="stop-color:#ADF5FE"/>
+		<stop  offset="0.2485" style="stop-color:#D8E0FB"/>
+		<stop  offset="0.2686" style="stop-color:#F2D3FA"/>
+		<stop  offset="0.2806" style="stop-color:#FCCEF9"/>
+		<stop  offset="0.2943" style="stop-color:#FCC9F9"/>
+		<stop  offset="0.3116" style="stop-color:#FAB9FA"/>
+		<stop  offset="0.3308" style="stop-color:#F89FFC"/>
+		<stop  offset="0.3514" style="stop-color:#F57BFE"/>
+		<stop  offset="0.3633" style="stop-color:#F363FF"/>
+		<stop  offset="0.3658" style="stop-color:#E959FF"/>
+		<stop  offset="0.3729" style="stop-color:#D543FE"/>
+		<stop  offset="0.3812" style="stop-color:#C532FD"/>
+		<stop  offset="0.3915" style="stop-color:#B927FC"/>
+		<stop  offset="0.4059" style="stop-color:#B320FC"/>
+		<stop  offset="0.446" style="stop-color:#B11EFC"/>
+		<stop  offset="0.4721" style="stop-color:#B522FC"/>
+		<stop  offset="0.4996" style="stop-color:#C02FFD"/>
+		<stop  offset="0.5276" style="stop-color:#D444FE"/>
+		<stop  offset="0.5394" style="stop-color:#DE4FFF"/>
+		<stop  offset="0.585" style="stop-color:#E261FE"/>
+		<stop  offset="0.6769" style="stop-color:#EE91FC"/>
+		<stop  offset="0.7819" style="stop-color:#FCCEF9"/>
+		<stop  offset="0.8469" style="stop-color:#A2FAFF"/>
+		<stop  offset="0.8565" style="stop-color:#A8FAF7"/>
+		<stop  offset="0.8718" style="stop-color:#B7FBDF"/>
+		<stop  offset="0.8908" style="stop-color:#D0FBBA"/>
+		<stop  offset="0.9082" style="stop-color:#EBFC91"/>
+	</radialGradient>
+	<circle id="bearing" fill="url(#bearing_5_)" cx="243.2" cy="163.2" r="23.1"/>
+</g>
+<g id="bearing--group-middle">
+	
+		<line id="bearing-string_bearing-string--middle" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.5136" stroke-miterlimit="10" x1="197" y1="11.1" x2="197" y2="139.6"/>
+	<g id="connection-node_3_">
+		<g>
+			<path d="M197.1,136.7c-0.9,0-1.6,0.4-1.6,0.9v2.2h0c0,0.5,0.7,0.9,1.6,0.9s1.6-0.4,1.6-0.9h0v-2.2
+				C198.7,137.1,198,136.7,197.1,136.7z"/>
+		</g>
+	</g>
+	
+		<radialGradient id="bearing_6_" cx="197.3383" cy="161.1563" r="69.4435" fx="232.8895" fy="110.1431" gradientTransform="matrix(1 0 0 0.52 0 77.355)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0.1039" style="stop-color:#EBFC91"/>
+		<stop  offset="0.1382" style="stop-color:#E9FC93"/>
+		<stop  offset="0.1582" style="stop-color:#E4FC9C"/>
+		<stop  offset="0.1746" style="stop-color:#DAFCAA"/>
+		<stop  offset="0.189" style="stop-color:#CDFBBE"/>
+		<stop  offset="0.2021" style="stop-color:#BCFBD8"/>
+		<stop  offset="0.2142" style="stop-color:#A7FAF7"/>
+		<stop  offset="0.2167" style="stop-color:#A2FAFF"/>
+		<stop  offset="0.2227" style="stop-color:#ADF5FE"/>
+		<stop  offset="0.2485" style="stop-color:#D8E0FB"/>
+		<stop  offset="0.2686" style="stop-color:#F2D3FA"/>
+		<stop  offset="0.2806" style="stop-color:#FCCEF9"/>
+		<stop  offset="0.2943" style="stop-color:#FCC9F9"/>
+		<stop  offset="0.3116" style="stop-color:#FAB9FA"/>
+		<stop  offset="0.3308" style="stop-color:#F89FFC"/>
+		<stop  offset="0.3514" style="stop-color:#F57BFE"/>
+		<stop  offset="0.3633" style="stop-color:#F363FF"/>
+		<stop  offset="0.3658" style="stop-color:#E959FF"/>
+		<stop  offset="0.3729" style="stop-color:#D543FE"/>
+		<stop  offset="0.3812" style="stop-color:#C532FD"/>
+		<stop  offset="0.3915" style="stop-color:#B927FC"/>
+		<stop  offset="0.4059" style="stop-color:#B320FC"/>
+		<stop  offset="0.446" style="stop-color:#B11EFC"/>
+		<stop  offset="0.4721" style="stop-color:#B522FC"/>
+		<stop  offset="0.4996" style="stop-color:#C02FFD"/>
+		<stop  offset="0.5276" style="stop-color:#D444FE"/>
+		<stop  offset="0.5394" style="stop-color:#DE4FFF"/>
+		<stop  offset="0.585" style="stop-color:#E261FE"/>
+		<stop  offset="0.6769" style="stop-color:#EE91FC"/>
+		<stop  offset="0.7819" style="stop-color:#FCCEF9"/>
+		<stop  offset="0.8469" style="stop-color:#A2FAFF"/>
+		<stop  offset="0.8565" style="stop-color:#A8FAF7"/>
+		<stop  offset="0.8718" style="stop-color:#B7FBDF"/>
+		<stop  offset="0.8908" style="stop-color:#D0FBBA"/>
+		<stop  offset="0.9082" style="stop-color:#EBFC91"/>
+	</radialGradient>
+	<circle id="bearing_3_" fill="url(#bearing_6_)" cx="197.1" cy="163.2" r="23.1"/>
+	<circle id="transform-origin_4_" fill="none" cx="197" cy="16.8" r="3.9"/>
+</g>
+<g id="bearing-group-2">
+	
+		<line id="bearing-string_bearing-string--front-2" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.4911" stroke-miterlimit="10" x1="147.1" y1="13.6" x2="150.8" y2="136.6"/>
+	
+		<line id="bearing-string_bearing-string--back-2" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.4911" stroke-miterlimit="10" x1="150.8" y1="11.1" x2="150.8" y2="139.1"/>
+	<circle id="transform-origin_2_" fill="none" cx="149" cy="17.9" r="2"/>
+	<g id="connection-node_14_">
+		<g>
+			<path d="M150.9,136.7c-0.9,0-1.6,0.4-1.6,0.9v2.2h0c0,0.5,0.7,0.9,1.6,0.9s1.6-0.4,1.6-0.9h0v-2.2
+				C152.5,137.1,151.8,136.7,150.9,136.7z"/>
+		</g>
+	</g>
+	
+		<radialGradient id="bearing_7_" cx="151.1833" cy="161.1563" r="69.4435" fx="186.7345" fy="110.1431" gradientTransform="matrix(1 0 0 0.52 0 77.355)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0.1039" style="stop-color:#EBFC91"/>
+		<stop  offset="0.1382" style="stop-color:#E9FC93"/>
+		<stop  offset="0.1582" style="stop-color:#E4FC9C"/>
+		<stop  offset="0.1746" style="stop-color:#DAFCAA"/>
+		<stop  offset="0.189" style="stop-color:#CDFBBE"/>
+		<stop  offset="0.2021" style="stop-color:#BCFBD8"/>
+		<stop  offset="0.2142" style="stop-color:#A7FAF7"/>
+		<stop  offset="0.2167" style="stop-color:#A2FAFF"/>
+		<stop  offset="0.2227" style="stop-color:#ADF5FE"/>
+		<stop  offset="0.2485" style="stop-color:#D8E0FB"/>
+		<stop  offset="0.2686" style="stop-color:#F2D3FA"/>
+		<stop  offset="0.2806" style="stop-color:#FCCEF9"/>
+		<stop  offset="0.2943" style="stop-color:#FCC9F9"/>
+		<stop  offset="0.3116" style="stop-color:#FAB9FA"/>
+		<stop  offset="0.3308" style="stop-color:#F89FFC"/>
+		<stop  offset="0.3514" style="stop-color:#F57BFE"/>
+		<stop  offset="0.3633" style="stop-color:#F363FF"/>
+		<stop  offset="0.3658" style="stop-color:#E959FF"/>
+		<stop  offset="0.3729" style="stop-color:#D543FE"/>
+		<stop  offset="0.3812" style="stop-color:#C532FD"/>
+		<stop  offset="0.3915" style="stop-color:#B927FC"/>
+		<stop  offset="0.4059" style="stop-color:#B320FC"/>
+		<stop  offset="0.446" style="stop-color:#B11EFC"/>
+		<stop  offset="0.4721" style="stop-color:#B522FC"/>
+		<stop  offset="0.4996" style="stop-color:#C02FFD"/>
+		<stop  offset="0.5276" style="stop-color:#D444FE"/>
+		<stop  offset="0.5394" style="stop-color:#DE4FFF"/>
+		<stop  offset="0.585" style="stop-color:#E261FE"/>
+		<stop  offset="0.6769" style="stop-color:#EE91FC"/>
+		<stop  offset="0.7819" style="stop-color:#FCCEF9"/>
+		<stop  offset="0.8469" style="stop-color:#A2FAFF"/>
+		<stop  offset="0.8565" style="stop-color:#A8FAF7"/>
+		<stop  offset="0.8718" style="stop-color:#B7FBDF"/>
+		<stop  offset="0.8908" style="stop-color:#D0FBBA"/>
+		<stop  offset="0.9082" style="stop-color:#EBFC91"/>
+	</radialGradient>
+	<circle id="bearing_2_" fill="url(#bearing_7_)" cx="150.9" cy="163.2" r="23.1"/>
+</g>
+<g id="bearing-group-1">
+	
+		<line id="bearing-string_bearing-string--front-1_1_" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.5059" stroke-miterlimit="10" x1="92.8" y1="13.4" x2="104.8" y2="138.6"/>
+	
+		<line id="bearing-string_bearing-string--back-1" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.491" stroke-miterlimit="10" x1="104.5" y1="11.1" x2="104.5" y2="139.1"/>
+	<circle id="transform-origin_1_" fill="none" cx="99.6" cy="19.9" r="2.5"/>
+	<g id="connection-node_12_">
+		<g>
+			<path d="M104.8,136.7c-0.9,0-1.6,0.4-1.6,0.9v2.2h0c0,0.5,0.7,0.9,1.6,0.9s1.6-0.4,1.6-0.9h0v-2.2
+				C106.4,137.1,105.7,136.7,104.8,136.7z"/>
+		</g>
+	</g>
+	
+		<radialGradient id="bearing_8_" cx="105.0283" cy="161.1563" r="69.4435" fx="140.5795" fy="110.1431" gradientTransform="matrix(1 0 0 0.52 0 77.355)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0.1039" style="stop-color:#EBFC91"/>
+		<stop  offset="0.1382" style="stop-color:#E9FC93"/>
+		<stop  offset="0.1582" style="stop-color:#E4FC9C"/>
+		<stop  offset="0.1746" style="stop-color:#DAFCAA"/>
+		<stop  offset="0.189" style="stop-color:#CDFBBE"/>
+		<stop  offset="0.2021" style="stop-color:#BCFBD8"/>
+		<stop  offset="0.2142" style="stop-color:#A7FAF7"/>
+		<stop  offset="0.2167" style="stop-color:#A2FAFF"/>
+		<stop  offset="0.2227" style="stop-color:#ADF5FE"/>
+		<stop  offset="0.2485" style="stop-color:#D8E0FB"/>
+		<stop  offset="0.2686" style="stop-color:#F2D3FA"/>
+		<stop  offset="0.2806" style="stop-color:#FCCEF9"/>
+		<stop  offset="0.2943" style="stop-color:#FCC9F9"/>
+		<stop  offset="0.3116" style="stop-color:#FAB9FA"/>
+		<stop  offset="0.3308" style="stop-color:#F89FFC"/>
+		<stop  offset="0.3514" style="stop-color:#F57BFE"/>
+		<stop  offset="0.3633" style="stop-color:#F363FF"/>
+		<stop  offset="0.3658" style="stop-color:#E959FF"/>
+		<stop  offset="0.3729" style="stop-color:#D543FE"/>
+		<stop  offset="0.3812" style="stop-color:#C532FD"/>
+		<stop  offset="0.3915" style="stop-color:#B927FC"/>
+		<stop  offset="0.4059" style="stop-color:#B320FC"/>
+		<stop  offset="0.446" style="stop-color:#B11EFC"/>
+		<stop  offset="0.4721" style="stop-color:#B522FC"/>
+		<stop  offset="0.4996" style="stop-color:#C02FFD"/>
+		<stop  offset="0.5276" style="stop-color:#D444FE"/>
+		<stop  offset="0.5394" style="stop-color:#DE4FFF"/>
+		<stop  offset="0.585" style="stop-color:#E261FE"/>
+		<stop  offset="0.6769" style="stop-color:#EE91FC"/>
+		<stop  offset="0.7819" style="stop-color:#FCCEF9"/>
+		<stop  offset="0.8469" style="stop-color:#A2FAFF"/>
+		<stop  offset="0.8565" style="stop-color:#A8FAF7"/>
+		<stop  offset="0.8718" style="stop-color:#B7FBDF"/>
+		<stop  offset="0.8908" style="stop-color:#D0FBBA"/>
+		<stop  offset="0.9082" style="stop-color:#EBFC91"/>
+	</radialGradient>
+	<circle id="bearing_1_" fill="url(#bearing_8_)" cx="104.8" cy="163.2" r="23.1"/>
+</g>
+<g id="bearing-group-5">
+	
+		<line id="string_string--front" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.4862" stroke-miterlimit="10" x1="301.7" y1="11.1" x2="289.4" y2="138.9"/>
+	
+		<line id="string_string--back" fill="#A6A8AB" stroke="#CCCDCE" stroke-width="1.4743" stroke-miterlimit="10" x1="289.1" y1="13.3" x2="289.1" y2="137.4"/>
+	<circle id="transform-origin" fill="none" cx="295.6" cy="18.5" r="1.5"/>
+	<g id="connection-node_16_">
+		<g>
+			<path d="M289.4,136.7c-0.9,0-1.6,0.4-1.6,0.9v2.2h0c0,0.5,0.7,0.9,1.6,0.9s1.6-0.4,1.6-0.9h0v-2.2
+				C291,137.1,290.3,136.7,289.4,136.7z"/>
+		</g>
+	</g>
+	
+		<radialGradient id="bearing_9_" cx="289.6482" cy="161.1563" r="69.4435" fx="325.1995" fy="110.1431" gradientTransform="matrix(1 0 0 0.52 0 77.355)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0.1039" style="stop-color:#EBFC91"/>
+		<stop  offset="0.1382" style="stop-color:#E9FC93"/>
+		<stop  offset="0.1582" style="stop-color:#E4FC9C"/>
+		<stop  offset="0.1746" style="stop-color:#DAFCAA"/>
+		<stop  offset="0.189" style="stop-color:#CDFBBE"/>
+		<stop  offset="0.2021" style="stop-color:#BCFBD8"/>
+		<stop  offset="0.2142" style="stop-color:#A7FAF7"/>
+		<stop  offset="0.2167" style="stop-color:#A2FAFF"/>
+		<stop  offset="0.2227" style="stop-color:#ADF5FE"/>
+		<stop  offset="0.2485" style="stop-color:#D8E0FB"/>
+		<stop  offset="0.2686" style="stop-color:#F2D3FA"/>
+		<stop  offset="0.2806" style="stop-color:#FCCEF9"/>
+		<stop  offset="0.2943" style="stop-color:#FCC9F9"/>
+		<stop  offset="0.3116" style="stop-color:#FAB9FA"/>
+		<stop  offset="0.3308" style="stop-color:#F89FFC"/>
+		<stop  offset="0.3514" style="stop-color:#F57BFE"/>
+		<stop  offset="0.3633" style="stop-color:#F363FF"/>
+		<stop  offset="0.3658" style="stop-color:#E959FF"/>
+		<stop  offset="0.3729" style="stop-color:#D543FE"/>
+		<stop  offset="0.3812" style="stop-color:#C532FD"/>
+		<stop  offset="0.3915" style="stop-color:#B927FC"/>
+		<stop  offset="0.4059" style="stop-color:#B320FC"/>
+		<stop  offset="0.446" style="stop-color:#B11EFC"/>
+		<stop  offset="0.4721" style="stop-color:#B522FC"/>
+		<stop  offset="0.4996" style="stop-color:#C02FFD"/>
+		<stop  offset="0.5276" style="stop-color:#D444FE"/>
+		<stop  offset="0.5394" style="stop-color:#DE4FFF"/>
+		<stop  offset="0.585" style="stop-color:#E261FE"/>
+		<stop  offset="0.6769" style="stop-color:#EE91FC"/>
+		<stop  offset="0.7819" style="stop-color:#FCCEF9"/>
+		<stop  offset="0.8469" style="stop-color:#A2FAFF"/>
+		<stop  offset="0.8565" style="stop-color:#A8FAF7"/>
+		<stop  offset="0.8718" style="stop-color:#B7FBDF"/>
+		<stop  offset="0.8908" style="stop-color:#D0FBBA"/>
+		<stop  offset="0.9082" style="stop-color:#EBFC91"/>
+	</radialGradient>
+	<circle id="bearing_4_" fill="url(#bearing_9_)" cx="289.4" cy="163.2" r="23.1"/>
+</g>
 </svg>

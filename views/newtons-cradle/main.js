@@ -5,12 +5,15 @@ import Draggable from "Draggable";
 import EasingUtils from 'utils/easing-utils';
 
 const SELECTORS = {
+  bearingGroups: '.bearing',
   bearingGroup1: '.bearing--1',
   bearingGroup2: '.bearing--2',
+  bearingGroup3: '.bearing--3',
   bearingGroup4: '.bearing--4',
   bearingGroup5: '.bearing--5',
   group1ControlPoint: '.bearing--1 .control-point',
   group2ControlPoint: '.bearing--2 .control-point',
+  group3ControlPoint: '.bearing--3 .control-point',
   group4ControlPoint: '.bearing--4 .control-point',
   group5ControlPoint: '.bearing--5 .control-point'
 };
@@ -18,6 +21,16 @@ const SELECTORS = {
 
 const DURATIONS = {
 
+};
+
+const DATA_ATTRIBUTES = {
+    bearingGroups: [
+        'bearing-1',
+        'bearing-2',
+        'bearing-middle',
+        'bearing-4',
+        'bearing-5',
+    ]
 };
 
 
@@ -28,16 +41,16 @@ const EASINGS = {
 
 
 const LABELS = {
-  leftBall: 'leftBallMotion',
-  rightBall: 'leftBallMotion'
+  leftMotion: 'leftMotion',
+  rightMotion: 'rightMotion'
 };
 
 const BALL_POSITIONS = ['one', 'two', 'three', 'four', 'five'];
-
-
 const MAX_ANGULAR_ROTATION = 85;
-
 const FRAME_RATE = 1/30;
+
+let currentDragDirection;
+
 
 
 const NewtonsCradle = (function newtonsCradle () {
@@ -50,22 +63,28 @@ const NewtonsCradle = (function newtonsCradle () {
   function cacheDOMState () {
       DOM_REFS = {
 
+        bearingGroups: document.querySelectorAll(SELECTORS.bearingGroups),
+
         bearingGroup1: document.querySelector(SELECTORS.bearingGroup1),
         group1ControlPoint: document.querySelector(SELECTORS.group1ControlPoint),
 
         bearingGroup2: document.querySelector(SELECTORS.bearingGroup2),
         group2ControlPoint: document.querySelector(SELECTORS.group2ControlPoint),
 
+        bearingGroup3: document.querySelector(SELECTORS.bearingGroup3),
+        group3ControlPoint: document.querySelector(SELECTORS.group3ControlPoint),
+
         bearingGroup4: document.querySelector(SELECTORS.bearingGroup4),
         group4ControlPoint: document.querySelector(SELECTORS.group4ControlPoint),
 
         bearingGroup5: document.querySelector(SELECTORS.bearingGroup5),
-        group5ControlPoint: document.querySelector(SELECTORS.group5ControlPoint),
+        group5ControlPoint: document.querySelector(SELECTORS.group5ControlPoint)
       };
 
       COORDINATES = {
         group1ControlPoint: `${DOM_REFS.group1ControlPoint.getAttribute('cx')} ${DOM_REFS.group1ControlPoint.getAttribute('cy')}`,
         group2ControlPoint: `${DOM_REFS.group2ControlPoint.getAttribute('cx')} ${DOM_REFS.group2ControlPoint.getAttribute('cy')}`,
+        group3ControlPoint: `${DOM_REFS.group3ControlPoint.getAttribute('cx')} ${DOM_REFS.group3ControlPoint.getAttribute('cy')}`,
         group4ControlPoint: `${DOM_REFS.group4ControlPoint.getAttribute('cx')} ${DOM_REFS.group4ControlPoint.getAttribute('cy')}`,
         group5ControlPoint: `${DOM_REFS.group5ControlPoint.getAttribute('cx')} ${DOM_REFS.group5ControlPoint.getAttribute('cy')}`
       };
@@ -78,6 +97,7 @@ const NewtonsCradle = (function newtonsCradle () {
 
     TweenMax.set(DOM_REFS.bearingGroup1, { svgOrigin: COORDINATES.group1ControlPoint, rotation: 0 });
     TweenMax.set(DOM_REFS.bearingGroup2, { svgOrigin: COORDINATES.group2ControlPoint, rotation: 0 });
+    TweenMax.set(DOM_REFS.bearingGroup3, { svgOrigin: COORDINATES.group3ControlPoint, rotation: 0 });
     TweenMax.set(DOM_REFS.bearingGroup4, { svgOrigin: COORDINATES.group4ControlPoint, rotation: 0 });
     TweenMax.set(DOM_REFS.bearingGroup5, { svgOrigin: COORDINATES.group5ControlPoint, rotation: 0 });
 
@@ -139,49 +159,47 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
   function updateBallTLOnDrag () {
+    debugger;
     console.log('updateBallTLOnDrag!');
+    const bearingIdx = DATA_ATTRIBUTES.bearingGroups.indexOf(this.target.getAttribute('data-bearing-idx'));
+
+    // drag the bearing -- and any bearings in its path
+    let elemsToDrag = this.rotation > 0 ?
+        [...DOM_REFS.bearingGroups].slice(bearingIdx) :
+        [...DOM_REFS.bearingGroups].slice(0, bearingIdx);
+
+    TweenMax.to(elemsToDrag, .01, { rotation: this.rotation });
+
   }
 
   function swingBallsAfterDrag (ballPosition) {
 
-    const bearingGroupToStart = ballPosition === BALL_POSITIONS[0] ?
-      DOM_REFS.bearingGroup1 :
-      DOM_REFS.bearingGroup5;
+      debugger;
+    //
+    // const bearingGroupToStart = ballPosition === BALL_POSITIONS[0] ?
+    //   DOM_REFS.bearingGroup1 :
+    //   DOM_REFS.bearingGroup5;
 
-    createSwingTLsAfterDrag(bearingGroupToStart, this.rotation);
+    createSwingTLsAfterDrag(this.target, this.rotation);
   }
 
 
 
 
   function addListeners () {
-    Draggable.create(DOM_REFS.bearingGroup1, {
-      type: 'rotation',
-      throwProps: true,
-      bounds: {
-        minRotation: 0,
-        maxRotation: MAX_ANGULAR_ROTATION
-      },
-      onDrag: updateBallTLOnDrag,
-      onDragEnd: swingBallsAfterDrag,
-      onDragEndParams: [ BALL_POSITIONS[0] ]
-    });
 
-    Draggable.create(DOM_REFS.bearingGroup5, {
+    Draggable.create(DOM_REFS.bearingGroups, {
       type: 'rotation',
       throwProps: true,
       bounds: {
         minRotation: -MAX_ANGULAR_ROTATION,
-        maxRotation: 0,
+        maxRotation: MAX_ANGULAR_ROTATION
       },
       onDrag: updateBallTLOnDrag,
-      onDragEnd: swingBallsAfterDrag,
-      onDragEndParams: [ BALL_POSITIONS[4] ]
+      onDragEnd: swingBallsAfterDrag
     });
+
   }
-
-
-
 
   function run () {
 

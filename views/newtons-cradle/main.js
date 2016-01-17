@@ -3,19 +3,27 @@
 import TweenMax from "TweenMax";
 import Draggable from "Draggable";
 import EasingUtils from 'utils/easing-utils';
+import Bearing from './models/bearing';
+
+const FRAME_RATE = 1/30;
 
 const SELECTORS = {
   bearingGroups: '.bearing',
+  bearingGroup0: '.bearing--0',
   bearingGroup1: '.bearing--1',
   bearingGroup2: '.bearing--2',
   bearingGroup3: '.bearing--3',
   bearingGroup4: '.bearing--4',
-  bearingGroup5: '.bearing--5',
+  bearingBall0: '.bearing--0 .ball',
+  bearingBall1: '.bearing--1 .ball',
+  bearingBall2: '.bearing--2 .ball',
+  bearingBall3: '.bearing--3 .ball',
+  bearingBall4: '.bearing--4 .ball',
+  group0ControlPoint: '.bearing--0 .control-point',
   group1ControlPoint: '.bearing--1 .control-point',
   group2ControlPoint: '.bearing--2 .control-point',
   group3ControlPoint: '.bearing--3 .control-point',
-  group4ControlPoint: '.bearing--4 .control-point',
-  group5ControlPoint: '.bearing--5 .control-point'
+  group4ControlPoint: '.bearing--4 .control-point'
 };
 
 
@@ -24,13 +32,7 @@ const DURATIONS = {
 };
 
 const DATA_ATTRIBUTES = {
-    bearingGroups: [
-        'bearing-1',
-        'bearing-2',
-        'bearing-middle',
-        'bearing-4',
-        'bearing-5',
-    ]
+    bearingIndex: 'data-bearing-idx'
 };
 
 
@@ -47,11 +49,14 @@ const LABELS = {
 
 const BALL_POSITIONS = ['one', 'two', 'three', 'four', 'five'];
 const MAX_ANGULAR_ROTATION = 85;
-const FRAME_RATE = 1/30;
-
-let currentDragDirection;
 
 
+const BEARING_OBJECTS = [];
+
+
+function _getBearingObjectFromElem (elem) {
+  return BEARING_OBJECTS[elem.getAttribute(DATA_ATTRIBUTES.bearingIndex)];
+}
 
 const NewtonsCradle = (function newtonsCradle () {
   let
@@ -63,52 +68,114 @@ const NewtonsCradle = (function newtonsCradle () {
   function cacheDOMState () {
       DOM_REFS = {
 
-        bearingGroups: document.querySelectorAll(SELECTORS.bearingGroups),
+        bearingGroups: {
+          group0: {
+            bearingElem: document.querySelector(SELECTORS.bearingGroup0),
+            ballElem: document.querySelector(SELECTORS.bearingBall0),
+            controlPointElem: document.querySelector(SELECTORS.group0ControlPoint)
+          },
+          group1: {
+            bearingElem: document.querySelector(SELECTORS.bearingGroup1),
+            ballElem: document.querySelector(SELECTORS.bearingBall1),
+            controlPointElem: document.querySelector(SELECTORS.group1ControlPoint)
+          },
+          group2: {
+            bearingElem: document.querySelector(SELECTORS.bearingGroup2),
+            ballElem: document.querySelector(SELECTORS.bearingBall2),
+            controlPointElem: document.querySelector(SELECTORS.group2ControlPoint)
+          },
+          group3: {
+            bearingElem: document.querySelector(SELECTORS.bearingGroup3),
+            ballElem: document.querySelector(SELECTORS.bearingBall3),
+            controlPointElem: document.querySelector(SELECTORS.group3ControlPoint)
+          },
+          group4: {
+            bearingElem: document.querySelector(SELECTORS.bearingGroup4),
+            ballElem: document.querySelector(SELECTORS.bearingBall4),
+            controlPointElem: document.querySelector(SELECTORS.group4ControlPoint)
+          }
+        }
 
-        bearingGroup1: document.querySelector(SELECTORS.bearingGroup1),
-        group1ControlPoint: document.querySelector(SELECTORS.group1ControlPoint),
-
-        bearingGroup2: document.querySelector(SELECTORS.bearingGroup2),
-        group2ControlPoint: document.querySelector(SELECTORS.group2ControlPoint),
-
-        bearingGroup3: document.querySelector(SELECTORS.bearingGroup3),
-        group3ControlPoint: document.querySelector(SELECTORS.group3ControlPoint),
-
-        bearingGroup4: document.querySelector(SELECTORS.bearingGroup4),
-        group4ControlPoint: document.querySelector(SELECTORS.group4ControlPoint),
-
-        bearingGroup5: document.querySelector(SELECTORS.bearingGroup5),
-        group5ControlPoint: document.querySelector(SELECTORS.group5ControlPoint)
       };
 
-      COORDINATES = {
-        group1ControlPoint: `${DOM_REFS.group1ControlPoint.getAttribute('cx')} ${DOM_REFS.group1ControlPoint.getAttribute('cy')}`,
-        group2ControlPoint: `${DOM_REFS.group2ControlPoint.getAttribute('cx')} ${DOM_REFS.group2ControlPoint.getAttribute('cy')}`,
-        group3ControlPoint: `${DOM_REFS.group3ControlPoint.getAttribute('cx')} ${DOM_REFS.group3ControlPoint.getAttribute('cy')}`,
-        group4ControlPoint: `${DOM_REFS.group4ControlPoint.getAttribute('cx')} ${DOM_REFS.group4ControlPoint.getAttribute('cy')}`,
-        group5ControlPoint: `${DOM_REFS.group5ControlPoint.getAttribute('cx')} ${DOM_REFS.group5ControlPoint.getAttribute('cy')}`
+      // sort the array of bearing groups according to their index
+      DOM_REFS.sortedBearingGroupElems = [...document.querySelectorAll(SELECTORS.bearingGroups)]
+        .sort((a, b) => {
+          const idxA = Number(a.getAttribute(DATA_ATTRIBUTES.bearingIndex));
+          const idxB = Number(b.getAttribute(DATA_ATTRIBUTES.bearingIndex));
+          return idxA - idxB;
+        });
+  }
+
+
+  function initializeBearingObjects () {
+
+    let
+      bearingGroup,
+      bearingElem,
+      bearingControlPointCoords,
+      bearingBallElem,
+      bearingBallRadius;
+    Object.keys(DOM_REFS.bearingGroups).forEach((bearingGroupKey, idx) => {
+
+      bearingGroup = DOM_REFS.bearingGroups[bearingGroupKey];
+
+      bearingElem = bearingGroup.bearingElem;
+      bearingControlPointCoords = {
+        x: bearingGroup.controlPointElem.getAttribute('cx'),
+        y: bearingGroup.controlPointElem.getAttribute('cy')
       };
+      bearingBallElem = bearingGroup.ballElem;
+
+      bearingBallRadius = Number(bearingBallElem.getAttribute('r'));
+
+      BEARING_OBJECTS.push(
+        Bearing({
+          ballMass: 1,
+          ballRadius: bearingBallRadius,
+          position: idx,
+          masterTL: new TimelineMax(),
+          elem: bearingElem,
+          controlPointCoords: bearingControlPointCoords
+        })
+      );
+    });
+
   }
 
   /**
-   * Prepare element for the animation
+   * Prepare bearing elements for the animation
    */
-  function setInitialElementState () {
+  function syncBearingsWithAnimationScene () {
 
-    TweenMax.set(DOM_REFS.bearingGroup1, { svgOrigin: COORDINATES.group1ControlPoint, rotation: 0 });
-    TweenMax.set(DOM_REFS.bearingGroup2, { svgOrigin: COORDINATES.group2ControlPoint, rotation: 0 });
-    TweenMax.set(DOM_REFS.bearingGroup3, { svgOrigin: COORDINATES.group3ControlPoint, rotation: 0 });
-    TweenMax.set(DOM_REFS.bearingGroup4, { svgOrigin: COORDINATES.group4ControlPoint, rotation: 0 });
-    TweenMax.set(DOM_REFS.bearingGroup5, { svgOrigin: COORDINATES.group5ControlPoint, rotation: 0 });
+    for (const bearingObject of BEARING_OBJECTS) {
+      TweenMax.set(bearingObject.elem, {
+        svgOrigin: `${bearingObject.controlPointCoords.x} ${bearingObject.controlPointCoords.y}`,
+        rotation: 0
+      });
+      masterTL.add(bearingObject.masterTL);
+    }
+  }
 
+  /**
+   * TODO: Something like this... params are still tentative
+   */
+  function handleCollisionOnSwingEnd (collidingBearingElem, rotationBeforeCollision) {
+
+    let collidingBearing = _getBearingObjectFromElem(collidingBearingElem);
+
+    collidingBearingElem.isInMotion = false;
   }
 
 
   function createSwingTLForBearing (bearingElem, startingRotation, destinationRotation) {
-    debugger;
 
-    const tl = new TimelineMax();
     const totalChange = destinationRotation - startingRotation;
+
+    const tl = new TimelineMax({
+      onComplete: handleCollisionOnSwingEnd,
+      onCompleteParams: [ bearingElem, totalChange ]
+    });
 
     // TODO: compute total energy based upon rotation and use that to compute time to fall back to normal position
 
@@ -142,12 +209,20 @@ const NewtonsCradle = (function newtonsCradle () {
     return tl;
   }
 
-  function createSwingTLsAfterDrag (bearingGroupToStart, currentRotationOfDragged) {
+  function createSwingTLsAfterDrag (currentRotationOfDragged) {
     console.log('Start Swing');
 
-    masterTL.add(createSwingTLForBearing(bearingGroupToStart, currentRotationOfDragged, 0));
+    BEARING_OBJECTS
+      .filter(obj => obj.isInMotion)
+      .forEach((obj) => {
+        //obj.masterTL.add(createSwingTLForBearing(obj.elem, currentRotationOfDragged, 0)); // TODO: Desitination is not always going to be 0!
+        obj.createSwingTLAfterDrag(currentRotationOfDragged, 0);
+      });
 
 
+
+
+    //masterTL.add(createSwingTLForBearing(bearingGroupToStart, currentRotationOfDragged, 0));
 
     // compute swinging
 
@@ -155,46 +230,52 @@ const NewtonsCradle = (function newtonsCradle () {
     // other ball is currently extended outward. If it is, the second to last ball
     // on that side should swing, as nothing beyond it is absorbing the force
 
-    // call swingTL.clear() when we're done
+    // call swingTL.clear() when we're done?
   }
 
   function updateBallTLOnDrag () {
-    debugger;
-    console.log('updateBallTLOnDrag!');
-    const bearingIdx = DATA_ATTRIBUTES.bearingGroups.indexOf(this.target.getAttribute('data-bearing-idx'));
+    //console.log('updateBallTLOnDrag!');
+    //console.log(`updateOnDrag(). Rotation: ${this.rotation}`);
+    const bearingIdx = this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex);
 
-    // drag the bearing -- and any bearings in its path
-    let elemsToDrag = this.rotation > 0 ?
-        [...DOM_REFS.bearingGroups].slice(bearingIdx) :
-        [...DOM_REFS.bearingGroups].slice(0, bearingIdx);
+    // drag the bearing -- and any bearings in its path (rotation > 0 == a pull to the left)
+    const objectsToDrag = this.rotation > 0 ?
+        BEARING_OBJECTS.slice(0, bearingIdx) :
+        BEARING_OBJECTS.slice(bearingIdx);
 
-    TweenMax.to(elemsToDrag, .01, { rotation: this.rotation });
+    objectsToDrag.forEach((bearingObj) => {
+      bearingObj.masterTL.to(bearingObj.elem, .01, { rotation: this.rotation });
+      bearingObj.isInMotion = true;
+    });
 
   }
+
+  // /**
+  //  * Updates our knowledge of the bearings that have potential
+  //  * energy built up.
+  //  */
+  // function updatePotentialEnergiesOnDragStart () {
+  //   const bearingObject = _getBearingObjectFromElem(this.target);
+  //   bearingObject.isInMotion = true;
+  // }
 
   function swingBallsAfterDrag (ballPosition) {
-
-      debugger;
-    //
-    // const bearingGroupToStart = ballPosition === BALL_POSITIONS[0] ?
-    //   DOM_REFS.bearingGroup1 :
-    //   DOM_REFS.bearingGroup5;
-
-    createSwingTLsAfterDrag(this.target, this.rotation);
+    createSwingTLsAfterDrag(this.rotation);
   }
 
 
 
 
-  function addListeners () {
+  function addDragListeners () {
 
-    Draggable.create(DOM_REFS.bearingGroups, {
+    Draggable.create(DOM_REFS.sortedBearingGroupElems, {
       type: 'rotation',
       throwProps: true,
       bounds: {
         minRotation: -MAX_ANGULAR_ROTATION,
         maxRotation: MAX_ANGULAR_ROTATION
       },
+      //onDragStart: updatePotentialEnergiesOnDragStart,
       onDrag: updateBallTLOnDrag,
       onDragEnd: swingBallsAfterDrag
     });
@@ -206,9 +287,9 @@ const NewtonsCradle = (function newtonsCradle () {
     masterTL = new TimelineMax();
 
     cacheDOMState();
-    setInitialElementState();
-    //wireUpAnimation();
-    addListeners();
+    initializeBearingObjects();
+    syncBearingsWithAnimationScene();
+    addDragListeners();
   }
 
 

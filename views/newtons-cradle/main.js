@@ -5,7 +5,7 @@ import Draggable from "Draggable";
 import EasingUtils from 'utils/easing-utils';
 import Bearing from './models/bearing';
 
-const FRAME_RATE = 1/30;
+const FRAME_RATE = 1/60;
 
 const SELECTORS = {
   bearingGroups: '.bearing',
@@ -26,6 +26,11 @@ const SELECTORS = {
   group4ControlPoint: '.bearing--4 .control-point'
 };
 
+/* Direction constants to test the ouput of a Draggalbe event's `getDirection()` method */
+const DIRECTIONS = {
+  CLOCKWISE: 'clockwise',
+  COUNTER_CLOCKWISE: 'counter-clockwise'
+};
 
 const DURATIONS = {
 
@@ -59,11 +64,11 @@ function _getBearingObjectFromElem (elem) {
 }
 
 const NewtonsCradle = (function newtonsCradle () {
+
   let
     DOM_REFS,
-    COORDINATES,
+    objectsInDrag,
     masterTL;
-
 
   function cacheDOMState () {
       DOM_REFS = {
@@ -139,6 +144,8 @@ const NewtonsCradle = (function newtonsCradle () {
           controlPointCoords: bearingControlPointCoords
         })
       );
+
+      //console.log(`Created Bearing Object. isInMotion: ${BEARING_OBJECTS[idx].isInMotion}`);
     });
 
   }
@@ -158,112 +165,100 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
   /**
-   * TODO: Something like this... params are still tentative
+   * Callback for when a bearing returns from its outward, extended state and
+   * collides with its neighbor.
    */
-  function handleCollisionOnSwingEnd (collidingBearingElem, rotationBeforeCollision) {
+  function onCollision (collidingBearingObj, rotationAmountBeforeCollision) {
+    debugger;
 
-    let collidingBearing = _getBearingObjectFromElem(collidingBearingElem);
+    let energyRecipient;
 
-    collidingBearingElem.isInMotion = false;
-  }
+    const directionOfForce = collidingBearingObj.swingDirection;
 
+    if (directionOfForce > 0) {
+      // collision came from the right -- energyRecipient is
+      // the leftmost bearing that's not already in motion
+      energyRecipient = BEARING_OBJECTS
+        .slice(0, collidingBearingObj.position - 1)
+        .filter(bearingObj => !bearingObj.isInMotion)[0];
 
-  function createSwingTLForBearing (bearingElem, startingRotation, destinationRotation) {
-
-    const totalChange = destinationRotation - startingRotation;
-
-    const tl = new TimelineMax({
-      onComplete: handleCollisionOnSwingEnd,
-      onCompleteParams: [ bearingElem, totalChange ]
-    });
-
-    // TODO: compute total energy based upon rotation and use that to compute time to fall back to normal position
-
-    console.log(`Total Change: ${totalChange}`);
-
-    let swingState = {
-      elapsedTime: 0,
-      durationThroughout: 2
-    };
-
-    let nextRotationVal;
-
-    while ( swingState.elapsedTime < swingState.durationThroughout ) {
-
-      nextRotationVal = (
-        startingRotation +
-        ( totalChange * EasingUtils.easeOutCubic(swingState.elapsedTime, swingState.durationThroughout) )
-      );
-
-      console.log(`nextRotationVal Rotation: ${nextRotationVal}`);
-
-      tl.to(
-        bearingElem,
-        FRAME_RATE,
-        { rotation: nextRotationVal, ease: Linear.easeNone }
-      );
-
-      swingState.elapsedTime += FRAME_RATE;
+    } else {
+      // collision came from the right -- energyRecipient is
+      // the rightmost bearing that's not already in motion
+      energyRecipient = BEARING_OBJECTS
+        .slice(collidingBearingObj.position + 1)
+        .filter(bearingObj => !bearingObj.isInMotion).pop();
     }
 
-    return tl;
+    if (energyRecipient === collidingBearingObj) {
+      // EDGE CASE (literally!):  an end bearing has hit the end of its extension
+      console.log('edge case!');
+    }
+
+    energyRecipient.isInMotion = true;
+    energyRecipient.swingDirection = directionOfForce;
+    energyRecipient.createSwingTLAfterDrag({
+      targetRotation: -1 * rotationAmountBeforeCollision
+    }, onCollision);
   }
 
-  function createSwingTLsAfterDrag (currentRotationOfDragged) {
+
+
+  function createSwingTLsAfterDrag (currentRotationOfDragged, positionOfDragged) {
     console.log('Start Swing');
 
     BEARING_OBJECTS
-      .filter(obj => obj.isInMotion)
-      .forEach((obj) => {
-        //obj.masterTL.add(createSwingTLForBearing(obj.elem, currentRotationOfDragged, 0)); // TODO: Desitination is not always going to be 0!
-        obj.createSwingTLAfterDrag(currentRotationOfDragged, 0);
+      .filter(obj => !!obj.isInMotion)
+      .forEach((obj, idx) => {
+        //debugger;
+        obj.createSwingTLAfterDrag({
+          targetRotation: 0 // TODO: Desitination is not always going to be 0!
+        }, obj.position == positionOfDragged ? onCollision : null);
       });
 
-
-
-
-    //masterTL.add(createSwingTLForBearing(bearingGroupToStart, currentRotationOfDragged, 0));
-
-    // compute swinging
-
-    // each time the ball returns to its initial hanging position, check whether the
-    // other ball is currently extended outward. If it is, the second to last ball
-    // on that side should swing, as nothing beyond it is absorbing the force
-
-    // call swingTL.clear() when we're done?
   }
 
   function updateBallTLOnDrag () {
     //console.log('updateBallTLOnDrag!');
     //console.log(`updateOnDrag(). Rotation: ${this.rotation}`);
-    const bearingIdx = this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex);
 
-    // drag the bearing -- and any bearings in its path (rotation > 0 == a pull to the left)
-    const objectsToDrag = this.rotation > 0 ?
+    let debugString = `Dragging `;
+
+    objectsInDrag.forEach((bearingObj) => {
+      debugString += `------${bearingObj.position}-----`;
+      bearingObj.currentRotation = this.rotation;
+      bearingObj.masterTL.to(bearingObj.elem, .01, { rotation: this.rotation });
+    });
+
+    console.log(debugString);
+
+  }
+
+  function swingBallsAfterDrag () {
+    // TODO: Set appropriate bearings to isInMotion: true
+    createSwingTLsAfterDrag(
+      this.rotation,
+      this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex)
+    );
+  }
+
+  function onDragStart () {
+    debugger;
+    const bearingIdx = Number(this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex));
+
+    // test direction by
+    objectsInDrag = this.getDirection() === DIRECTIONS.CLOCKWISE ?
         BEARING_OBJECTS.slice(0, bearingIdx) :
         BEARING_OBJECTS.slice(bearingIdx);
 
-    objectsToDrag.forEach((bearingObj) => {
-      bearingObj.masterTL.to(bearingObj.elem, .01, { rotation: this.rotation });
-      bearingObj.isInMotion = true;
-    });
+    // The swing direction for the bearing will be opposite of the current drag direction
+    const swingDirection = this.getDirection() === DIRECTIONS.CLOCKWISE ? 1 : -1;
 
+    for (const obj of objectsInDrag) {
+      obj.isInMotion = true;
+      obj.swingDirection = swingDirection;
+    }
   }
-
-  // /**
-  //  * Updates our knowledge of the bearings that have potential
-  //  * energy built up.
-  //  */
-  // function updatePotentialEnergiesOnDragStart () {
-  //   const bearingObject = _getBearingObjectFromElem(this.target);
-  //   bearingObject.isInMotion = true;
-  // }
-
-  function swingBallsAfterDrag (ballPosition) {
-    createSwingTLsAfterDrag(this.rotation);
-  }
-
-
 
 
   function addDragListeners () {
@@ -275,7 +270,7 @@ const NewtonsCradle = (function newtonsCradle () {
         minRotation: -MAX_ANGULAR_ROTATION,
         maxRotation: MAX_ANGULAR_ROTATION
       },
-      //onDragStart: updatePotentialEnergiesOnDragStart,
+      onDragStart: onDragStart,
       onDrag: updateBallTLOnDrag,
       onDragEnd: swingBallsAfterDrag
     });

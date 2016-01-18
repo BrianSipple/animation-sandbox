@@ -17,6 +17,8 @@ const Bearing = {
   /* the maximum amount of rotation that this bearing can be rotated */
   maxRotation: 0,
 
+  minRotation: 0,
+
   /* The Bearing's current rotation along its transform origin's z-axis */
   currentRotation: 0,
 
@@ -41,42 +43,89 @@ const Bearing = {
   controlPointCoords: null,
 
   // TODO: Change name to just "createSwingTL?"
-  createSwingTLAfterDrag: function (swingOpts = {}, collisionCallback) {
-    //debugger;
-    //console.log(`createSwingTLAfterDrag(): Bearing ${this.position}`);
+  swing: function (opts = {}) {
+    debugger;
     this.isInMotion = true;
 
-    //const startingRotation = typeof swingOpts.startingRotation === 'undefined' ? 0 : swingOpts.startingRotation;
     const startingRotation = this.currentRotation;
-    const targetRotation = typeof swingOpts.targetRotation === 'undefined' ? 0 : swingOpts.targetRotation;
-    const FRAME_RATE = typeof swingOpts.frameRate === 'undefined' ? 1/60 : swingOpts.frameRate;
-    const totalChange = startingRotation - targetRotation;
+    const rotationKE = typeof opts.kineticEnergy !== 'undefined' ? opts.kineticEnergy : 0;
+    const returnAngle = typeof opts.returnAngle !== 'undefined' ? opts.returnAngle : 0;
+    const FRAME_RATE = opts.frameRate || 1 / 60;
+
+    let outwardAngle = (this.swingDirection * rotationKE) + startingRotation;
+      //( this.swingDirection * Math.abs(this.currentRotation) );
+
+    if (this.swingDirection === -1 && outwardAngle < this.minRotation) {
+      outwardAngle = this.minRotation;
+
+    } else if (this.swingDirection === 1 && outwardAngle > this.maxRotation) {
+      outwardAngle = this.maxRotation;
+    }
+
+    // const outwardRotation = (projectedOutwardRotation > this.maxRotation)
+    //   this.maxRotation - Math.abs(this.currentRotation) :
+    //   rotationKE;
+
+    const outwardRotationAmount = Math.abs(outwardAngle - this.currentRotation);
+    const fallBackRotationAmount = Math.abs(returnAngle - outwardAngle);
+    const totalRotationThroughout = outwardRotationAmount + fallBackRotationAmount;
+
 
     const tl = new TimelineMax({
-      onComplete: this.onSwingComplete.bind(this, totalChange, collisionCallback)
+      onComplete: this.onSwingComplete.bind(this, fallBackRotationAmount, opts.collisionCallback)
     });
 
     // TODO: compute total energy based upon rotation and use that to compute time to fall back to normal position
 
-    console.log(`Total Change: ${totalChange}`);
+    console.log(`Rotation Kinetic Energy: ${rotationKE}`);
+    console.log(`Outward Angle: ${outwardAngle}`);
+    console.log(`Outward Rotation Amount: ${outwardRotationAmount}`);
+    console.log(`Fallback Rotation Amount: ${fallBackRotationAmount}`);
+    console.log(`Total Rotation Throughout: ${totalRotationThroughout}`);
 
     const swingState = {
       elapsedTime: 0,
       durationThroughout: 2
     };
 
-    const rotationWeight = Math.abs(totalChange);
-
+    let isSwingingOutward = true;
     while ( swingState.elapsedTime < swingState.durationThroughout ) {
 
-      this.currentRotation = this.swingDirection * (
-        startingRotation +
-        ( rotationWeight * EasingUtils.easeOutCubic(swingState.elapsedTime, swingState.durationThroughout) )
-      );
+      // maxAngle = Math.min(
+      //   this.swingDirection * this.maxRotation,
+      //   this.swingDirection * (kineticEnergy + Math.abs(this.currentRotation))
+      // );
+      //
+      // this.currentRotation = this.swingDirection * (
+      //   startingRotation +
+      //   ( totalChange * EasingUtils.easeOutCubic(swingState.elapsedTime, swingState.durationThroughout) )
+      // );
+
+      this.currentRotation = isSwingingOutward ?
+        (
+          startingRotation +
+          ( (outwardRotationAmount * this.swingDirection) * EasingUtils.easeOutCubic(swingState.elapsedTime, swingState.durationThroughout) )
+        )
+        :
+        // NOTE: easeIn when coming back
+        (
+          outwardAngle +
+          ( (fallBackRotationAmount * this.swingDirection) * EasingUtils.easeInCubic(swingState.elapsedTime, swingState.durationThroughout) )
+        );
+
 
       // flip direction when max rotation is reached
-      if (Math.abs(this.currentRotation) >= this.maxRotation) {
+      if (
+        isSwingingOutward &&
+        (
+          (this.swingDirection === -1 && this.currentRotation <= outwardAngle) ||
+          (this.swingDirection === 1 && this.currentRotation >= outwardAngle)
+        )
+      ) {
+        // TODO: tl.clear() and break?
+        console.log(`Direction swap!`);
         this.swingDirection *= -1;
+        isSwingingOutward = false;
       }
 
       console.log(`Bearing ${this.position}: tl being created for currentRotation of ${this.currentRotation}`);
@@ -101,6 +150,7 @@ const Bearing = {
   onSwingComplete: function (rotationAmountBeforeCollision, collisionCallback) {
     console.log(`*** COMPLETING SWING FOR ${this.position}`);
     this.isInMotion = false;
+    //this.swingDirection *= -1;
 
     if (collisionCallback) {
       collisionCallback(this, rotationAmountBeforeCollision);

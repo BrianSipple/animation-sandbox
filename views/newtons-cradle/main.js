@@ -139,6 +139,8 @@ const NewtonsCradle = (function newtonsCradle () {
           ballMass: 1,
           ballRadius: bearingBallRadius,
           position: idx,
+          maxRotation: MAX_ANGULAR_ROTATION,
+          minRotation: -MAX_ANGULAR_ROTATION,
           masterTL: new TimelineMax(),
           elem: bearingElem,
           controlPointCoords: bearingControlPointCoords
@@ -168,38 +170,49 @@ const NewtonsCradle = (function newtonsCradle () {
    * Callback for when a bearing returns from its outward, extended state and
    * collides with its neighbor.
    */
-  function onCollision (collidingBearingObj, rotationAmountBeforeCollision) {
-    debugger;
+  function onCollision (collidingBearingObj, rotationEnergyTransfered) {
 
-    let energyRecipient;
+    // TODO: Check and handle edge case here?
+
+    let
+      energyRecipients,
+      bearingToSwing;
 
     const directionOfForce = collidingBearingObj.swingDirection;
 
     if (directionOfForce > 0) {
       // collision came from the right -- energyRecipient is
       // the leftmost bearing that's not already in motion
-      energyRecipient = BEARING_OBJECTS
+      bearingToSwing = BEARING_OBJECTS
         .slice(0, collidingBearingObj.position - 1)
         .filter(bearingObj => !bearingObj.isInMotion)[0];
 
     } else {
-      // collision came from the right -- energyRecipient is
+      // collision came from the left -- energyRecipient is
       // the rightmost bearing that's not already in motion
-      energyRecipient = BEARING_OBJECTS
+      bearingToSwing = BEARING_OBJECTS
         .slice(collidingBearingObj.position + 1)
         .filter(bearingObj => !bearingObj.isInMotion).pop();
     }
 
-    if (energyRecipient === collidingBearingObj) {
+
+    if (bearingToSwing === collidingBearingObj) {
       // EDGE CASE (literally!):  an end bearing has hit the end of its extension
       console.log('edge case!');
     }
 
-    energyRecipient.isInMotion = true;
-    energyRecipient.swingDirection = directionOfForce;
-    energyRecipient.createSwingTLAfterDrag({
-      targetRotation: -1 * rotationAmountBeforeCollision
-    }, onCollision);
+    bearingToSwing.isInMotion = true;
+    bearingToSwing.swingDirection = directionOfForce;
+
+    // energyRecipient.createSwingTLAfterDrag(
+    //   rotationAmountBeforeCollision,
+    //   onCollision
+    // );
+    bearingToSwing.swing({
+      kineticEnergy: rotationEnergyTransfered,
+      returnAngle: 0,
+      collisionCallback: onCollision
+    });
   }
 
 
@@ -210,12 +223,17 @@ const NewtonsCradle = (function newtonsCradle () {
     BEARING_OBJECTS
       .filter(obj => !!obj.isInMotion)
       .forEach((obj, idx) => {
-        //debugger;
-        obj.createSwingTLAfterDrag({
-          targetRotation: 0 // TODO: Desitination is not always going to be 0!
-        }, obj.position == positionOfDragged ? onCollision : null);
-      });
+        // obj.createSwingTLAfterDrag(
+        //   Math.abs(currentRotationOfDragged),
+        //   obj.position == positionOfDragged ? onCollision : null
+        // );
+        obj.swing({
+          kineticEnergy: 0,
+          returnAngle: 0,
+          collisionCallback: obj.position == positionOfDragged ? onCollision : null
+        });
 
+      });
   }
 
   function updateBallTLOnDrag () {
@@ -243,7 +261,6 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
   function onDragStart () {
-    debugger;
     const bearingIdx = Number(this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex));
 
     // test direction by
@@ -251,7 +268,7 @@ const NewtonsCradle = (function newtonsCradle () {
         BEARING_OBJECTS.slice(0, bearingIdx) :
         BEARING_OBJECTS.slice(bearingIdx);
 
-    // The swing direction for the bearing will be opposite of the current drag direction
+    // Set the initial swing direction
     const swingDirection = this.getDirection() === DIRECTIONS.CLOCKWISE ? 1 : -1;
 
     for (const obj of objectsInDrag) {

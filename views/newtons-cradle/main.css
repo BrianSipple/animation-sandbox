@@ -106,23 +106,29 @@
   position: relative;
   width: 100%;
   height: 100%; }
-  .grid.grid--top {
-    align-items: flex-start; }
-  .grid.grid--center {
-    align-items: center; }
-  .grid.grid--bottom {
-    align-items: flex-end; }
+
+.grid.grid--top {
+  align-items: flex-start; }
+
+.grid.grid--center {
+  align-items: center; }
+
+.grid.grid--bottom {
+  align-items: flex-end; }
 
 .grid__cell {
   position: relative;
   max-width: 100%;
   flex: 1; }
-  .grid__cell.grid-cell--top {
-    align-self: flex-start; }
-  .grid__cell.grid-cell--center {
-    align-self: center; }
-  .grid__cell.grid-cell--bottom {
-    align-self: flex-end; }
+
+.grid__cell.grid-cell--top {
+  align-self: flex-start; }
+
+.grid__cell.grid-cell--center {
+  align-self: center; }
+
+.grid__cell.grid-cell--bottom {
+  align-self: flex-end; }
 
 .tab-selectors {
   background-color: #f8f8f2;
@@ -137,40 +143,45 @@
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   transition: background-color 0.3s linear; }
-  .tab-selectors .tab-selectors__content {
-    height: 100%;
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    flex-direction: row;
-    flex: 1; }
-  .tab-selectors .tab-selectors__tab-list {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    list-style-type: none;
-    margin: 0;
-    padding: 0; }
-  .tab-selectors .tab {
-    position: relative;
-    padding: 0 0.75em;
-    overflow: hidden;
-    cursor: pointer;
-    height: 100%;
-    display: inline-flex;
-    flex: 1;
-    justify-content: center;
-    flex-basis: 0.000000001px;
-    align-items: center; }
-    .tab-selectors .tab .tab__link {
-      text-decoration: none;
-      color: rgba(255, 255, 255, 0.62);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 100%; }
-    .tab-selectors .tab.active .tab__link {
-      color: #ff9100; }
+
+.tab-selectors .tab-selectors__content {
+  height: 100%;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-direction: row;
+  flex: 1; }
+
+.tab-selectors .tab-selectors__tab-list {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.tab-selectors .tab {
+  position: relative;
+  padding: 0 0.75em;
+  overflow: hidden;
+  cursor: pointer;
+  height: 100%;
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  flex-basis: 0.000000001px;
+  align-items: center; }
+
+.tab-selectors .tab .tab__link {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.62);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%; }
+
+.tab-selectors .tab.active .tab__link {
+  color: #ff9100; }
 
 /* Ideally, this would be the top-level class on a <ul> */
 .item-list {
@@ -179,8 +190,9 @@
 
 .btn {
   transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1); }
-  .btn:hover {
-    transform: scale(1.08); }
+
+.btn:hover {
+  transform: scale(1.08); }
 
 .svg-use.svg-use--fill {
   width: 100%;
@@ -188,9 +200,10 @@
 
 .svg-container {
   position: relative; }
-  .svg-container .svg-container__svg {
-    width: 100%;
-    height: 100%; }
+
+.svg-container .svg-container__svg {
+  width: 100%;
+  height: 100%; }
 
 /*
  * What follows is the result of much research on cross-browser styling.
@@ -403,40 +416,45 @@ nav, a, button {
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   transition: background-color 0.3s linear; }
-  .tab-selectors .tab-selectors__content {
-    height: 100%;
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    flex-direction: row;
-    flex: 1; }
-  .tab-selectors .tab-selectors__tab-list {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    list-style-type: none;
-    margin: 0;
-    padding: 0; }
-  .tab-selectors .tab {
-    position: relative;
-    padding: 0 0.75em;
-    overflow: hidden;
-    cursor: pointer;
-    height: 100%;
-    display: inline-flex;
-    flex: 1;
-    justify-content: center;
-    flex-basis: 0.000000001px;
-    align-items: center; }
-    .tab-selectors .tab .tab__link {
-      text-decoration: none;
-      color: rgba(255, 255, 255, 0.62);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 100%; }
-    .tab-selectors .tab.active .tab__link {
-      color: #ff9100; }
+
+.tab-selectors .tab-selectors__content {
+  height: 100%;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-direction: row;
+  flex: 1; }
+
+.tab-selectors .tab-selectors__tab-list {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.tab-selectors .tab {
+  position: relative;
+  padding: 0 0.75em;
+  overflow: hidden;
+  cursor: pointer;
+  height: 100%;
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  flex-basis: 0.000000001px;
+  align-items: center; }
+
+.tab-selectors .tab .tab__link {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.62);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%; }
+
+.tab-selectors .tab.active .tab__link {
+  color: #ff9100; }
 
 /* Ideally, this would be the top-level class on a <ul> */
 .item-list {
@@ -445,8 +463,9 @@ nav, a, button {
 
 .btn {
   transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1); }
-  .btn:hover {
-    transform: scale(1.08); }
+
+.btn:hover {
+  transform: scale(1.08); }
 
 .svg-use.svg-use--fill {
   width: 100%;
@@ -454,9 +473,10 @@ nav, a, button {
 
 .svg-container {
   position: relative; }
-  .svg-container .svg-container__svg {
-    width: 100%;
-    height: 100%; }
+
+.svg-container .svg-container__svg {
+  width: 100%;
+  height: 100%; }
 
 html,
 body {
@@ -625,12 +645,13 @@ body {
 
 .newtons-cradle {
   position: relative; }
-  .newtons-cradle .newtons-cradle__bounding-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
-    width: 65%; }
+
+.newtons-cradle .newtons-cradle__bounding-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 65%; }
 
 .svg-outer-container {
   width: 100%;
@@ -641,3 +662,6 @@ body {
 .svg-outer-container,
 .newtons-cradle__svg {
   overflow: visible; }
+
+.bearing {
+  cursor: pointer; }

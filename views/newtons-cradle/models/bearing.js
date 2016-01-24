@@ -44,6 +44,7 @@ const Bearing = {
 
   // TODO: Change name to just "createSwingTL?"
   swing: function (opts = {}) {
+
     debugger;
     this.isInMotion = true;
 
@@ -62,16 +63,12 @@ const Bearing = {
       outwardAngle = this.maxRotation;
     }
 
-    // const outwardRotation = (projectedOutwardRotation > this.maxRotation)
-    //   this.maxRotation - Math.abs(this.currentRotation) :
-    //   rotationKE;
-
     const outwardRotationAmount = Math.abs(outwardAngle - this.currentRotation);
     const fallBackRotationAmount = Math.abs(returnAngle - outwardAngle);
     const totalRotationThroughout = outwardRotationAmount + fallBackRotationAmount;
 
-
-    const tl = new TimelineMax({
+    const outwardTL = new TimelineMax();
+    const returnTL = new TimelineMax({
       onComplete: this.onSwingComplete.bind(this, fallBackRotationAmount, opts.collisionCallback)
     });
 
@@ -88,57 +85,68 @@ const Bearing = {
       durationThroughout: 2
     };
 
-    let isSwingingOutward = true;
-    while ( swingState.elapsedTime < swingState.durationThroughout ) {
+    let
+      isSwingingOutward = true,
+      isMotionPathComplete = false;
 
-      // maxAngle = Math.min(
-      //   this.swingDirection * this.maxRotation,
-      //   this.swingDirection * (kineticEnergy + Math.abs(this.currentRotation))
-      // );
-      //
-      // this.currentRotation = this.swingDirection * (
-      //   startingRotation +
-      //   ( totalChange * EasingUtils.easeOutCubic(swingState.elapsedTime, swingState.durationThroughout) )
-      // );
+    while (!isMotionPathComplete) {
 
-      this.currentRotation = isSwingingOutward ?
-        (
+      if (isSwingingOutward) {
+
+        // startVal + changeInVal * ease(t/d)
+        this.currentRotation = (
           startingRotation +
           ( (outwardRotationAmount * this.swingDirection) * EasingUtils.easeOutCubic(swingState.elapsedTime, swingState.durationThroughout) )
-        )
-        :
-        // NOTE: easeIn when coming back
-        (
+        );
+
+        console.log(`Bearing ${this.position} tween on outwardTL: Rotating to ${this.currentRotation}`);
+
+        outwardTL.to(
+          this.elem,
+          FRAME_RATE,   // TODO: Interpolation is solid. The tweens durations are way too fast on the outwardTL. 
+          { rotation: this.currentRotation, ease: Power0.easeNone }
+        );
+
+        // flip direction when the swing's outward rotation limit is reached
+        if (
+          (this.swingDirection === -1 && this.currentRotation <= outwardAngle) ||
+          (this.swingDirection === 1 && this.currentRotation >= outwardAngle)
+        ) {
+            // TODO: tl.clear() and break?
+            console.log(`Direction swap!`);
+            this.swingDirection = this.swingDirection === -1 ? 1 : -1;
+            swingState.elapsedTime = 0;  // interpolate the
+            isSwingingOutward = false;
+        }
+
+      } else {
+          // easeIn when coming back
+        this.currentRotation = (
           outwardAngle +
           ( (fallBackRotationAmount * this.swingDirection) * EasingUtils.easeInCubic(swingState.elapsedTime, swingState.durationThroughout) )
         );
 
+        console.log(`Bearing ${this.position} tween on returnTL: Rotating to ${this.currentRotation}`);
 
-      // flip direction when max rotation is reached
-      if (
-        isSwingingOutward &&
-        (
-          (this.swingDirection === -1 && this.currentRotation <= outwardAngle) ||
-          (this.swingDirection === 1 && this.currentRotation >= outwardAngle)
-        )
-      ) {
-        // TODO: tl.clear() and break?
-        console.log(`Direction swap!`);
-        this.swingDirection *= -1;
-        isSwingingOutward = false;
+        returnTL.to(
+          this.elem,
+          FRAME_RATE,
+          { rotation: this.currentRotation, ease: Power0.easeNone }
+        );
+
+        // check to see if the swing can be completed
+        if (
+          (this.swingDirection === -1 && this.currentRotation <= returnAngle) ||
+          (this.swingDirection ===  1 && this.currentRotation >= returnAngle)
+        ) {
+          isMotionPathComplete = true;
+        }
       }
-
-      console.log(`Bearing ${this.position}: tl being created for currentRotation of ${this.currentRotation}`);
-      tl.to(
-        this.elem,
-        FRAME_RATE,
-        { rotation: this.currentRotation, ease: Linear.easeNone }
-      );
-
       swingState.elapsedTime += FRAME_RATE;
     }
-
-    this.masterTL.add(tl);
+    debugger;
+    this.masterTL.add(outwardTL);
+    this.masterTL.add(returnTL);
   },
 
 

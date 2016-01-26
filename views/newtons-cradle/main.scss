@@ -2,7 +2,6 @@
 
 
 body {
-  background-color: hsla(230, 43%, 27%, 1.0);
   background-color: hsla(72, 100%, 82%, 1.0);
 }
 
@@ -42,4 +41,26 @@ body {
 
 .bearing {
   cursor: pointer;
+}
+
+
+.instruction-toast {
+  outline: none;
+  border: none;
+  color: hsla(219, 10%, 40%, 1);
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  height: 2rem;
+  background-color: hsla(298, 98%, 80%, 1);
+  border-radius: 2em;
+  transform: translateY(8rem);
+  padding: 0 3em;
+  opacity: 0;
+  transition: all .35s ease-in-out;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

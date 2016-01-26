@@ -634,7 +634,6 @@ body {
     page-break-after: avoid; } }
 
 body {
-  background-color: #273162;
   background-color: #edffa3; }
 
 .scene {
@@ -665,3 +664,22 @@ body {
 
 .bearing {
   cursor: pointer; }
+
+.instruction-toast {
+  outline: none;
+  border: none;
+  color: #5c6370;
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  height: 2rem;
+  background-color: #fb9afe;
+  border-radius: 2em;
+  transform: translateY(8rem);
+  padding: 0 3em;
+  opacity: 0;
+  transition: all .35s ease-in-out; }
+
+.instruction-toast.visible {
+  opacity: 1;
+  transform: translateY(0); }

@@ -136,7 +136,7 @@ const NewtonsCradle = (function newtonsCradle () {
 
       BEARING_OBJECTS.push(
         Bearing({
-          ballMass: 1,
+          ballMass: 10,
           ballRadius: bearingBallRadius,
           position: idx,
           maxRotation: MAX_ANGULAR_ROTATION,
@@ -166,79 +166,87 @@ const NewtonsCradle = (function newtonsCradle () {
     }
   }
 
+  function findBearingsToSwingOnCollision (directionOfForce, collisionPosition) {
+
+    const staticBearings = directionOfForce > 0 ?
+      BEARING_OBJECTS
+        .slice(0, collisionPosition).filter(bearingObj => !bearingObj.isInMotion)
+      :
+      BEARING_OBJECTS
+        .slice(collisionPosition + 1).filter(bearingObj => !bearingObj.isInMotion);
+
+      /**
+       * return a number of bearings corresponding
+       * to the amount of bearings that were in motion behind the collision
+       */
+      return directionOfForce > 0 ?
+        BEARING_OBJECTS.slice(0, BEARING_OBJECTS.length - staticBearings.length)
+        :
+        BEARING_OBJECTS.slice(BEARING_OBJECTS.length - staticBearings.length + 1);
+  }
+
+
   /**
    * Callback for when a bearing returns from its outward, extended state and
    * collides with its neighbor.
    */
-  function onCollision (collidingBearingObj, rotationEnergyTransfered) {
+  function onCollision (collidingBearingObj, outwardStartAngleOfIncomingForce) {
 
-    // TODO: Check and handle edge case here?
-
-    let
-      energyRecipients,
-      bearingToSwing;
+    debugger;
 
     const directionOfForce = collidingBearingObj.swingDirection;
+    const bearingsToSwing = findBearingsToSwingOnCollision(directionOfForce, collidingBearingObj.position);
 
-    if (directionOfForce > 0) {
-      // collision came from the right -- energyRecipient is
-      // the leftmost bearing that's not already in motion
-      bearingToSwing = BEARING_OBJECTS
-        .slice(0, collidingBearingObj.position - 1)
-        .filter(bearingObj => !bearingObj.isInMotion)[0];
+    // Create swing TLs for static bearings while there's still energy left to be transfered
+    bearingsToSwing.forEach((bearing, idx) => {
 
-    } else {
-      // collision came from the left -- energyRecipient is
-      // the rightmost bearing that's not already in motion
-      bearingToSwing = BEARING_OBJECTS
-        .slice(collidingBearingObj.position + 1)
-        .filter(bearingObj => !bearingObj.isInMotion).pop();
-    }
+      //bearingsToSwing.push(bearing);
+      if (bearing === collidingBearingObj) {
+        // EDGE CASE (literally!):  an end bearing has hit the end of its extension
+        debugger;
+        console.log('edge case!');
+      }
 
+      bearing.isInMotion = true;
+      bearing.swingDirection = directionOfForce;
 
-    if (bearingToSwing === collidingBearingObj) {
-      // EDGE CASE (literally!):  an end bearing has hit the end of its extension
-      console.log('edge case!');
-    }
+      bearing.swing({
 
-    bearingToSwing.isInMotion = true;
-    bearingToSwing.swingDirection = directionOfForce;
+        // going left, the returning collision instigator will be the bearing at the last index
+        // going right, the returning collision instigator will be the bearing at the first index
+        willInstigateCollision: directionOfForce > 0 ?
+          (idx === bearingsToSwing.length - 1)
+          :
+          (idx === 0),
+        kineticEnergy: outwardStartAngleOfIncomingForce,
+        //returnAngle: bearing.currentAngle   // TODO: Should it not really be this in the future, not just 0?
+        returnAngle: 0,
+        collisionCallback: onCollision
+      });
 
-    // energyRecipient.createSwingTLAfterDrag(
-    //   rotationAmountBeforeCollision,
-    //   onCollision
-    // );
-    bearingToSwing.swing({
-      kineticEnergy: rotationEnergyTransfered,
-      returnAngle: 0,
-      collisionCallback: onCollision
     });
   }
 
-
-
   function createSwingTLsAfterDrag (currentRotationOfDragged, positionOfDragged) {
     console.log('Start Swing');
+    debugger;
 
     BEARING_OBJECTS
       .filter(obj => !!obj.isInMotion)
       .forEach((obj, idx) => {
-        // obj.createSwingTLAfterDrag(
-        //   Math.abs(currentRotationOfDragged),
-        //   obj.position == positionOfDragged ? onCollision : null
-        // );
+
         obj.swing({
+          willInstigateCollision: obj.position == positionOfDragged,
           kineticEnergy: 0,
+          potentialEnergy: currentRotationOfDragged,
           returnAngle: 0,
-          collisionCallback: obj.position == positionOfDragged ? onCollision : null
+          collisionCallback: onCollision
         });
 
       });
   }
 
   function updateBallTLOnDrag () {
-    //console.log('updateBallTLOnDrag!');
-    //console.log(`updateOnDrag(). Rotation: ${this.rotation}`);
 
     let debugString = `Dragging `;
 
@@ -253,7 +261,6 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
   function swingBallsAfterDrag () {
-    // TODO: Set appropriate bearings to isInMotion: true
     createSwingTLsAfterDrag(
       this.rotation,
       this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex)

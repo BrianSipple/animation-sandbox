@@ -80,7 +80,7 @@ const Bearing = {
 
   rotateBearingOnSwingUpdate: function (destinationAngle) {
 
-    console.log(`Bearing ${this.position}, swingDirection of ${this.swingDirection}: Rotating to ${this.currentRotation}`);
+    //console.log(`Bearing ${this.position}, swingDirection of ${this.swingDirection}: Rotating to ${this.currentRotation}`);
     TweenMax.to(
       this.elem,
       1 / 20,
@@ -103,11 +103,13 @@ const Bearing = {
 
     const startingRotation = this.currentRotation;
     const rotationKE = typeof opts.kineticEnergy !== 'undefined' ? opts.kineticEnergy : 0;
+    const rotationPE = typeof opts.potentialEnergy !== 'undefined' ? opts.potentialEnergy : 0;
     const returnAngle = typeof opts.returnAngle !== 'undefined' ? opts.returnAngle : 0;
     const FRAME_RATE = opts.frameRate || 1 / 20;
 
     let outwardAngle = (this.swingDirection * rotationKE) + startingRotation;
 
+    // bound outwardAngle to either the cradle min or max rotation
     if (this.swingDirection === -1 && outwardAngle < this.minRotation) {
       outwardAngle = this.minRotation;
 
@@ -121,12 +123,13 @@ const Bearing = {
 
     const swingTL = new TimelineMax({
       onUpdate: this.rotateBearingOnSwingUpdate.bind(this, outwardAngle),
-      onComplete: this.onSwingComplete.bind(this, fallBackRotationAmount, opts.collisionCallback)
+      onComplete: this.onSwingComplete.bind(this, fallBackRotationAmount, opts.collisionCallback, opts.willInstigateCollision)
     });
 
     // TODO: compute total energy based upon rotation and use that to compute time to fall back to normal position
 
     console.log(`Rotation Kinetic Energy: ${rotationKE}`);
+    console.log(`Rotation Potential Energy: ${rotationPE}`);
     console.log(`Outward Angle: ${outwardAngle}`);
     console.log(`Outward Rotation Amount: ${outwardRotationAmount}`);
     console.log(`Fallback Rotation Amount: ${fallBackRotationAmount}`);
@@ -165,7 +168,6 @@ const Bearing = {
         swingTL.add(this.createRotationSettingTween(newRotation), '+=.01');
 
         if (this.isSwingExtentReached(newRotation, returnAngle)) {
-          debugger;
           isSwingComplete = true;
         }
       }
@@ -173,7 +175,6 @@ const Bearing = {
       this.swingState.elapsedTime += FRAME_RATE;
     }
 
-    debugger;
     this.masterTL.add(swingTL);
 
   },
@@ -184,12 +185,12 @@ const Bearing = {
    * Furthermore, if this is a bearing that will produce a collision at the
    * end of its swing, call back to the collision handler.
    */
-  onSwingComplete: function (rotationAmountBeforeCollision, collisionCallback) {
+  onSwingComplete: function (rotationAmountBeforeCollision, collisionCallback, willInstigateCollision) {
     console.log(`*** COMPLETING SWING FOR ${this.position}`);
+    debugger;
     this.isInMotion = false;
-    //this.swingDirection *= -1;
 
-    if (collisionCallback) {
+    if (collisionCallback && willInstigateCollision) {
       collisionCallback(this, rotationAmountBeforeCollision);
     }
   }

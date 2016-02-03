@@ -37,7 +37,7 @@ const DURATIONS = {
 };
 
 const DATA_ATTRIBUTES = {
-    bearingIndex: 'data-bearing-idx'
+  bearingIndex: 'data-bearing-idx'
 };
 
 
@@ -66,61 +66,62 @@ function _getBearingObjectFromElem (elem) {
 const NewtonsCradle = (function newtonsCradle () {
 
   let
-    DOM_REFS,
-    objectsInDrag,
-    masterTL;
+  DOM_REFS,
+  objectsInDrag,
+  masterTL,
+  masterDraggable;
 
   function cacheDOMState () {
-      DOM_REFS = {
+    DOM_REFS = {
 
-        bearingGroups: {
-          group0: {
-            bearingElem: document.querySelector(SELECTORS.bearingGroup0),
-            ballElem: document.querySelector(SELECTORS.bearingBall0),
-            controlPointElem: document.querySelector(SELECTORS.group0ControlPoint)
-          },
-          group1: {
-            bearingElem: document.querySelector(SELECTORS.bearingGroup1),
-            ballElem: document.querySelector(SELECTORS.bearingBall1),
-            controlPointElem: document.querySelector(SELECTORS.group1ControlPoint)
-          },
-          group2: {
-            bearingElem: document.querySelector(SELECTORS.bearingGroup2),
-            ballElem: document.querySelector(SELECTORS.bearingBall2),
-            controlPointElem: document.querySelector(SELECTORS.group2ControlPoint)
-          },
-          group3: {
-            bearingElem: document.querySelector(SELECTORS.bearingGroup3),
-            ballElem: document.querySelector(SELECTORS.bearingBall3),
-            controlPointElem: document.querySelector(SELECTORS.group3ControlPoint)
-          },
-          group4: {
-            bearingElem: document.querySelector(SELECTORS.bearingGroup4),
-            ballElem: document.querySelector(SELECTORS.bearingBall4),
-            controlPointElem: document.querySelector(SELECTORS.group4ControlPoint)
-          }
+      bearingGroups: {
+        group0: {
+          bearingElem: document.querySelector(SELECTORS.bearingGroup0),
+          ballElem: document.querySelector(SELECTORS.bearingBall0),
+          controlPointElem: document.querySelector(SELECTORS.group0ControlPoint)
+        },
+        group1: {
+          bearingElem: document.querySelector(SELECTORS.bearingGroup1),
+          ballElem: document.querySelector(SELECTORS.bearingBall1),
+          controlPointElem: document.querySelector(SELECTORS.group1ControlPoint)
+        },
+        group2: {
+          bearingElem: document.querySelector(SELECTORS.bearingGroup2),
+          ballElem: document.querySelector(SELECTORS.bearingBall2),
+          controlPointElem: document.querySelector(SELECTORS.group2ControlPoint)
+        },
+        group3: {
+          bearingElem: document.querySelector(SELECTORS.bearingGroup3),
+          ballElem: document.querySelector(SELECTORS.bearingBall3),
+          controlPointElem: document.querySelector(SELECTORS.group3ControlPoint)
+        },
+        group4: {
+          bearingElem: document.querySelector(SELECTORS.bearingGroup4),
+          ballElem: document.querySelector(SELECTORS.bearingBall4),
+          controlPointElem: document.querySelector(SELECTORS.group4ControlPoint)
         }
+      }
 
-      };
+    };
 
-      // sort the array of bearing groups according to their index
-      DOM_REFS.sortedBearingGroupElems = [...document.querySelectorAll(SELECTORS.bearingGroups)]
-        .sort((a, b) => {
-          const idxA = Number(a.getAttribute(DATA_ATTRIBUTES.bearingIndex));
-          const idxB = Number(b.getAttribute(DATA_ATTRIBUTES.bearingIndex));
-          return idxA - idxB;
-        });
+    // sort the array of bearing groups according to their index
+    DOM_REFS.sortedBearingGroupElems = [...document.querySelectorAll(SELECTORS.bearingGroups)]
+    .sort((a, b) => {
+      const idxA = Number(a.getAttribute(DATA_ATTRIBUTES.bearingIndex));
+      const idxB = Number(b.getAttribute(DATA_ATTRIBUTES.bearingIndex));
+      return idxA - idxB;
+    });
   }
 
 
   function initializeBearingObjects () {
 
     let
-      bearingGroup,
-      bearingElem,
-      bearingControlPointCoords,
-      bearingBallElem,
-      bearingBallRadius;
+    bearingGroup,
+    bearingElem,
+    bearingControlPointCoords,
+    bearingBallElem,
+    bearingBallRadius;
     Object.keys(DOM_REFS.bearingGroups).forEach((bearingGroupKey, idx) => {
 
       bearingGroup = DOM_REFS.bearingGroups[bearingGroupKey];
@@ -141,20 +142,30 @@ const NewtonsCradle = (function newtonsCradle () {
           position: idx,
           maxRotation: MAX_ANGULAR_ROTATION,
           minRotation: -MAX_ANGULAR_ROTATION,
+          bearingLength: Math.abs(
+            Number(bearingBallElem.getAttribute('cy')) -
+            Number(bearingGroup.controlPointElem.getAttribute('cy'))
+          ),
           masterTL: new TimelineMax(),
           elem: bearingElem,
           controlPointCoords: bearingControlPointCoords
         })
       );
 
-      //console.log(`Created Bearing Object. isInMotion: ${BEARING_OBJECTS[idx].isInMotion}`);
     });
-
   }
 
   /**
-   * Prepare bearing elements for the animation
-   */
+  * FOR NOW: Don't allow any more dragging once the swinging starts
+  * Exploration into how to best handle this is still ongoing (http://greensock.com/forums/topic/8925-draggable-disable-enable/ )
+  */
+  function disableBearingDrag () {
+    DOM_REFS.sortedBearingGroupElems.forEach(el => el.style.pointerEvents = 'none');
+  }
+
+  /**
+  * Prepare bearing elements for the animation
+  */
   function syncBearingsWithAnimationScene () {
 
     for (const bearingObject of BEARING_OBJECTS) {
@@ -167,7 +178,6 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
   function findBearingsToSwingOnCollision (directionOfForce, collisionPosition) {
-
     const staticBearings = directionOfForce > 0 ?
       BEARING_OBJECTS
         .slice(0, collisionPosition).filter(bearingObj => !bearingObj.isInMotion)
@@ -175,21 +185,24 @@ const NewtonsCradle = (function newtonsCradle () {
       BEARING_OBJECTS
         .slice(collisionPosition + 1).filter(bearingObj => !bearingObj.isInMotion);
 
-      /**
-       * return a number of bearings corresponding
-       * to the amount of bearings that were in motion behind the collision
-       */
-      return directionOfForce > 0 ?
-        BEARING_OBJECTS.slice(0, BEARING_OBJECTS.length - staticBearings.length)
-        :
-        BEARING_OBJECTS.slice(BEARING_OBJECTS.length - staticBearings.length + 1);
+    /**
+    * return the number of bearings corresponding to the minimum
+    * between A) the bearings that were in motion behind the collision, or
+    * B) the number of static bearings remaining
+    */
+    const numberOfBearingsToSwing = Math.min(BEARING_OBJECTS.length - staticBearings.length, staticBearings.length);
+
+    return directionOfForce > 0 ?
+      BEARING_OBJECTS.slice(0, numberOfBearingsToSwing)
+      :
+      BEARING_OBJECTS.slice(numberOfBearingsToSwing + 1);
   }
 
 
   /**
-   * Callback for when a bearing returns from its outward, extended state and
-   * collides with its neighbor.
-   */
+  * Callback for when a bearing returns from its outward, extended state and
+  * collides with its neighbor.
+  */
   function onCollision (collidingBearingObj, outwardStartAngleOfIncomingForce) {
 
     debugger;
@@ -215,9 +228,9 @@ const NewtonsCradle = (function newtonsCradle () {
         // going left, the returning collision instigator will be the bearing at the last index
         // going right, the returning collision instigator will be the bearing at the first index
         willInstigateCollision: directionOfForce > 0 ?
-          (idx === bearingsToSwing.length - 1)
-          :
-          (idx === 0),
+        (idx === bearingsToSwing.length - 1)
+        :
+        (idx === 0),
         kineticEnergy: outwardStartAngleOfIncomingForce,
         //returnAngle: bearing.currentAngle   // TODO: Should it not really be this in the future, not just 0?
         returnAngle: 0,
@@ -232,18 +245,18 @@ const NewtonsCradle = (function newtonsCradle () {
     debugger;
 
     BEARING_OBJECTS
-      .filter(obj => !!obj.isInMotion)
-      .forEach((obj, idx) => {
+    .filter(obj => !!obj.isInMotion)
+    .forEach((obj, idx) => {
 
-        obj.swing({
-          willInstigateCollision: obj.position == positionOfDragged,
-          kineticEnergy: 0,
-          potentialEnergy: currentRotationOfDragged,
-          returnAngle: 0,
-          collisionCallback: onCollision
-        });
-
+      obj.swing({
+        willInstigateCollision: obj.position == positionOfDragged,
+        kineticEnergy: 0,
+        potentialEnergy: currentRotationOfDragged,
+        returnAngle: 0,
+        collisionCallback: onCollision
       });
+
+    });
   }
 
   function updateBallTLOnDrag () {
@@ -261,6 +274,8 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
   function swingBallsAfterDrag () {
+
+    disableBearingDrag();
     createSwingTLsAfterDrag(
       this.rotation,
       this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex)
@@ -272,8 +287,8 @@ const NewtonsCradle = (function newtonsCradle () {
 
     // test direction by
     objectsInDrag = this.getDirection() === DIRECTIONS.CLOCKWISE ?
-        BEARING_OBJECTS.slice(0, bearingIdx) :
-        BEARING_OBJECTS.slice(bearingIdx);
+    BEARING_OBJECTS.slice(0, bearingIdx) :
+    BEARING_OBJECTS.slice(bearingIdx);
 
     // Set the initial swing direction
     const swingDirection = this.getDirection() === DIRECTIONS.CLOCKWISE ? 1 : -1;
@@ -285,11 +300,15 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
 
-  function addDragListeners () {
+  function createDraggable () {
 
-    Draggable.create(DOM_REFS.sortedBearingGroupElems, {
+    masterDraggable = Draggable.create(DOM_REFS.sortedBearingGroupElems, {
       type: 'rotation',
       throwProps: true,
+      // onThrowComplete: function () {
+      //   debugger;
+      //   this.disable();
+      // },
       bounds: {
         minRotation: -MAX_ANGULAR_ROTATION,
         maxRotation: MAX_ANGULAR_ROTATION
@@ -308,7 +327,7 @@ const NewtonsCradle = (function newtonsCradle () {
     cacheDOMState();
     initializeBearingObjects();
     syncBearingsWithAnimationScene();
-    addDragListeners();
+    masterDraggable = createDraggable();
   }
 
 

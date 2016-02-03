@@ -16,9 +16,22 @@ const Bearing = {
   /* Kinetic Energy */
   kE: 0,
 
+  /* Spring force ---> -k * deltaX */
+  springF: 0,
+
+  /* Spring constant (aka "stiffness") in kg / s^2 */
+  springK: -20,
+
+  /* Viscous damping force ---> -bv  (where `b` is the "viscous damping coefficient", measured in kg / s) */
+  springDamping: -0.5,
+
+  cradleFrequency: (Math.PI * 0.5) * Math.sqrt(-20 / 1);  /* fn = ( 1 / 2 π ) * sqrt( k / m ) */
+
+  bearingLength: 0,
+
+
   /* the maximum amount of rotation that this bearing can be rotated */
   maxRotation: 0,
-
   minRotation: 0,
 
   /* The Bearing's current rotation along its transform origin's z-axis */
@@ -53,26 +66,30 @@ const Bearing = {
     );
   },
 
+
+
   getInterpolationFactor: function (isSwingingOutward) {
     return isSwingingOutward ?
-      EasingUtils.easeOutCubic(
-        this.swingState.elapsedTime,
-        this.swingState.durationThroughout
-      )
+      // EasingUtils.easeOutCubic(
+      //   this.swingState.elapsedTime,
+      //   this.swingState.durationThroughout
+      // )
+      interpolateOutwardSwing(this.swingState.elaspedTime, this.swingState.durationThroughout)
       :
-      EasingUtils.easeInCubic(
-        this.swingState.elapsedTime,
-        this.swingState.durationThroughout
-      );
+      interpolateInwardSwing(this.swingState.elaspedTime, this.swingState.durationThroughout);
+      // EasingUtils.easeInCubic(
+      //   this.swingState.elapsedTime,
+      //   this.swingState.durationThroughout
+      // );
   },
 
-  getNewRotation: function (startingRotation, amountOfRotation, isSwingingOutward) {
+  getNewRotation: function (startingRotation, totalAmountOfRotation, isSwingingOutward) {
 
     const interpolationFactor = this.getInterpolationFactor(isSwingingOutward);
 
     return (
       startingRotation +
-      ( (amountOfRotation * this.swingDirection) * interpolationFactor )
+      ( (totalAmountOfRotation * this.swingDirection) * interpolationFactor )
     );
 
   },
@@ -197,14 +214,20 @@ const Bearing = {
 
 };
 
+function interpolateInwardSwing (prevRotation, elaspedTime, totalDuration) {
+  //return this.springK
+}
+
+function interpolateOutwardSwing (elaspedTime, totalDuration) {
+
+}
+
 
 
 
 
 function BearingFactory (opts = {}) {
-  //debugger;
-  let bearing = Object.create(Bearing);
-  return Object.assign({}, Bearing, opts);
+  return Object.create(Object.assign({}, Bearing, opts));
 }
 
 export default BearingFactory;

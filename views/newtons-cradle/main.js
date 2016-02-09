@@ -26,7 +26,7 @@ const SELECTORS = {
   group4ControlPoint: '.bearing--4 .control-point'
 };
 
-/* Direction constants to test the ouput of a Draggalbe event's `getDirection()` method */
+/* Direction constants to test the ouput of a Draggable event's `getDirection()` method */
 const DIRECTIONS = {
   CLOCKWISE: 'clockwise',
   COUNTER_CLOCKWISE: 'counter-clockwise'
@@ -137,8 +137,8 @@ const NewtonsCradle = (function newtonsCradle () {
 
       BEARING_OBJECTS.push(
         Bearing({
-          ballMass: 10,
-          ballRadius: bearingBallRadius,
+          mass: 10,
+          radius: bearingBallRadius,
           position: idx,
           maxRotation: MAX_ANGULAR_ROTATION,
           minRotation: -MAX_ANGULAR_ROTATION,
@@ -207,7 +207,7 @@ const NewtonsCradle = (function newtonsCradle () {
 
     debugger;
 
-    const directionOfForce = collidingBearingObj.swingDirection;
+    const directionOfForce = collidingBearingObj.getDirection();
     const bearingsToSwing = findBearingsToSwingOnCollision(directionOfForce, collidingBearingObj.position);
 
     // Create swing TLs for static bearings while there's still energy left to be transfered
@@ -221,16 +221,16 @@ const NewtonsCradle = (function newtonsCradle () {
       }
 
       bearing.isInMotion = true;
-      bearing.swingDirection = directionOfForce;
+      bearing.setDirection(directionOfForce);
 
       bearing.swing({
 
         // going left, the returning collision instigator will be the bearing at the last index
         // going right, the returning collision instigator will be the bearing at the first index
         willInstigateCollision: directionOfForce > 0 ?
-        (idx === bearingsToSwing.length - 1)
-        :
-        (idx === 0),
+          (idx === bearingsToSwing.length - 1)
+          :
+          (idx === 0),
         kineticEnergy: outwardStartAngleOfIncomingForce,
         //returnAngle: bearing.currentAngle   // TODO: Should it not really be this in the future, not just 0?
         returnAngle: 0,
@@ -265,7 +265,8 @@ const NewtonsCradle = (function newtonsCradle () {
 
     objectsInDrag.forEach((bearingObj) => {
       debugString += `------${bearingObj.position}-----`;
-      bearingObj.currentRotation = this.rotation;
+      //bearingObj.currentRotation = this.rotation;
+      bearingObj.theta = this.rotation;
       bearingObj.masterTL.to(bearingObj.elem, .01, { rotation: this.rotation });
     });
 
@@ -291,11 +292,11 @@ const NewtonsCradle = (function newtonsCradle () {
     BEARING_OBJECTS.slice(bearingIdx);
 
     // Set the initial swing direction
-    const swingDirection = this.getDirection() === DIRECTIONS.CLOCKWISE ? 1 : -1;
+    const swingDirection = this.getDirection() === DIRECTIONS.CLOCKWISE ? 1 : -1;  // TODO: Ensure consisency with constants being used by bearing?
 
     for (const obj of objectsInDrag) {
       obj.isInMotion = true;
-      obj.swingDirection = swingDirection;
+      obj.setDirection(swingDirection);
     }
   }
 

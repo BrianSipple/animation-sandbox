@@ -117,11 +117,11 @@ const NewtonsCradle = (function newtonsCradle () {
   function initializeBearingObjects () {
 
     let
-    bearingGroup,
-    bearingElem,
-    bearingControlPointCoords,
-    bearingBallElem,
-    bearingBallRadius;
+      bearingGroup,
+      bearingElem,
+      bearingControlPointCoords,
+      bearingBallElem,
+      bearingBallRadius;
     Object.keys(DOM_REFS.bearingGroups).forEach((bearingGroupKey, idx) => {
 
       bearingGroup = DOM_REFS.bearingGroups[bearingGroupKey];
@@ -203,9 +203,9 @@ const NewtonsCradle = (function newtonsCradle () {
   * Callback for when a bearing returns from its outward, extended state and
   * collides with its neighbor.
   */
-  function onCollision (collidingBearingObj, outwardStartAngleOfIncomingForce) {
+  function onCollision (collidingBearingObj, rotationEnergyTransferred) {
 
-    debugger;
+    //debugger;
 
     const directionOfForce = collidingBearingObj.getDirection();
     const bearingsToSwing = findBearingsToSwingOnCollision(directionOfForce, collidingBearingObj.position);
@@ -214,7 +214,7 @@ const NewtonsCradle = (function newtonsCradle () {
     bearingsToSwing.forEach((bearing, idx) => {
 
       //bearingsToSwing.push(bearing);
-      if (bearing === collidingBearingObj) {
+      if (Object.is(bearing, collidingBearingObj)) {
         // EDGE CASE (literally!):  an end bearing has hit the end of its extension
         debugger;
         console.log('edge case!');
@@ -231,7 +231,8 @@ const NewtonsCradle = (function newtonsCradle () {
           (idx === bearingsToSwing.length - 1)
           :
           (idx === 0),
-        kineticEnergy: outwardStartAngleOfIncomingForce,
+        kineticEnergy: rotationEnergyTransferred,
+        targetAngle: rotationEnergyTransferred,
         //returnAngle: bearing.currentAngle   // TODO: Should it not really be this in the future, not just 0?
         returnAngle: 0,
         collisionCallback: onCollision
@@ -242,15 +243,14 @@ const NewtonsCradle = (function newtonsCradle () {
 
   function createSwingTLsAfterDrag (currentRotationOfDragged, positionOfDragged) {
     console.log('Start Swing');
-    debugger;
 
     BEARING_OBJECTS
     .filter(obj => !!obj.isInMotion)
     .forEach((obj, idx) => {
-
       obj.swing({
         willInstigateCollision: obj.position == positionOfDragged,
         kineticEnergy: 0,
+        targetAngle: currentRotationOfDragged,
         potentialEnergy: currentRotationOfDragged,
         returnAngle: 0,
         collisionCallback: onCollision

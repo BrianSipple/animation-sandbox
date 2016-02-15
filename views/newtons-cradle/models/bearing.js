@@ -49,7 +49,7 @@ const bearingDefaults = {
   radius: 1
 };
 
-const DEFAULT_FRAME_RATE = 1 / 20;
+const DEFAULT_FRAME_RATE = 1 / 60;
 
 
 
@@ -147,10 +147,14 @@ const Bearing = {
     this.omega = this.omega + 0.5 * (this.alpha + newAlpha) * this.swingState.deltaT;
     this.alpha = newAlpha;
 
-    return TweenMax.to(
-      this.elem,
-      this.frameRate,
-      { rotation: this.theta, ease: Linear.easeNone }
+    // return TweenMax.to(
+    //   this.elem,
+    //   this.frameRate,
+    //   { rotation: this.theta, ease: Linear.easeNone, immediateRender: false }
+    // );
+    return TweenMax.set(
+       this.elem,
+       { rotation: this.theta, immediateRender: false }
     );
   },
 
@@ -188,7 +192,7 @@ const Bearing = {
     //   ( (totalAmountOfRotation * this.swingState.direction) * interpolationFactor )
     // );
 
-    console.log(`Computing new rotation of ${newRotation}`);
+    console.log(`Bearing ${this.position}: Computing new rotation of ${newRotation}`);
     return newRotation;
   },
 
@@ -202,25 +206,13 @@ const Bearing = {
     );
   },
 
-  //_swingOutward: function (startingAngle, destinationAngle, totalRotationAmount) {
   _swingOutward: function (destinationAngle) {
-
-    // const newRotation = this._getNewRotation(startingRotation, outwardRotationAmount);
-    // swingTL.add(this._createRotationTween(newRotation), '+=.01');
-    //this.previousRotation = this.theta;
-    //const newRotation = this._getNewRotation(startingAngle, totalRotationAmount);
 
     if (this._isSwingExtentReached(destinationAngle)) {
       console.log(`Direction swap!`);
 
-      // this.swingState.direction = this.swingState.direction === swingDirections.COUNTER_CLOCKWISE ?
-      //   swingDirections.CLOCKWISE : swingDirections.COUNTER_CLOCKWISE;
-      // this.swingStateState.elapsedTime = 0;
-      // isSwingingOutward = false;
-
       this.swingState.direction = this.swingState.direction === swingDirections.COUNTER_CLOCKWISE ?
         swingDirections.CLOCKWISE : swingDirections.COUNTER_CLOCKWISE;
-      //this.swingState.t = 0;
       this.swingState.deltaT = 0;
       this.swingState.type = swingTypes.INWARD;
     }
@@ -228,8 +220,6 @@ const Bearing = {
   },
 
   _fallInward: function (destinationAngle) {
-    //this.previousRotation = this.theta;
-    //const newRotation = this._getNewRotation(startingAngle, totalRotationAmount);
 
     if (this._isSwingExtentReached(destinationAngle)) {
       this.swingState.isComplete = true;
@@ -259,14 +249,13 @@ const Bearing = {
     this.isInMotion = true;
 
     const startingRotation = this.theta;
-    //const rotationKE = typeof opts.kineticEnergy !== 'undefined' ? opts.kineticEnergy : 0;
     let targetAngle = typeof opts.targetAngle !== 'undefined' ? opts.targetAngle : 0;
     const returnAngle = typeof opts.returnAngle !== 'undefined' ? opts.returnAngle : 0;
     this.frameRate = opts.frameRate || DEFAULT_FRAME_RATE;
 
-    //let outwardAngle = (this.swingState.direction * rotationKE) + startingRotation;
+    this.omega = opts.forceOnStart;  // TODO: Make this happen!
 
-    // bound outwardAngle to either the cradle min or max rotation
+
     // TODO: Determine if these two bounds can be deleted -- we should never need them
     if (this.swingState.direction === swingDirections.COUNTER_CLOCKWISE && targetAngle < this.minRotation) {
       targetAngle = this.minRotation;
@@ -280,8 +269,6 @@ const Bearing = {
     //const totalRotationThroughout = outwardRotationAmount + fallBackRotationAmount;
 
 
-    //console.log(`Rotation Kinetic Energy: ${rotationKE}`);
-    //console.log(`Rotation Potential Energy: ${rotationPE}`);
     //console.log(`Outward Angle: ${outwardAngle}`);
     console.log(`Target Angle: ${targetAngle}`);
     //console.log(`Outward Rotation Amount: ${outwardRotationAmount}`);
@@ -293,22 +280,24 @@ const Bearing = {
     });
 
     this.swingState.deltaT = 0;
+    this.swingState.isComplete = false;
+    this.swingState.type = swingTypes.OUTWARD;
 
     while (!this.swingState.isComplete) {
 
       if (this.swingState.type === swingTypes.OUTWARD) {
-
-        //this.theta = this._getNewRotation();
-        //swingTL.add(this._swingOutward(startingRotation, outwardAngle, outwardRotationAmount), '+=.01');
-        swingTL.add(this._swingOutward(targetAngle), '+=.01');
+        swingTL.add(this._swingOutward(targetAngle), `+=${this.frameRate}`);
+        //swingTL.add(this._swingOutward(targetAngle), `'+=.01'`);
       } else {
-        swingTL.add(this._fallInward(returnAngle), '+=.01');
+        swingTL.add(this._fallInward(returnAngle), `+=${this.frameRate}`);
+        //swingTL.add(this._fallInward(returnAngle), '+=.01');
       }
 
       this.swingState.deltaT += this.frameRate;
     }
 
-    this.masterTL.add(swingTL);
+    //this.masterTL.add(swingTL);
+    swingTL.play();
   },
 
 

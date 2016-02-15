@@ -66,10 +66,10 @@ function _getBearingObjectFromElem (elem) {
 const NewtonsCradle = (function newtonsCradle () {
 
   let
-  DOM_REFS,
-  objectsInDrag,
-  masterTL,
-  masterDraggable;
+    DOM_REFS,
+    objectsInDrag,
+    masterTL,
+    masterDraggable;
 
   function cacheDOMState () {
     DOM_REFS = {
@@ -288,8 +288,8 @@ const NewtonsCradle = (function newtonsCradle () {
 
     // test direction by
     objectsInDrag = this.getDirection() === DIRECTIONS.CLOCKWISE ?
-    BEARING_OBJECTS.slice(0, bearingIdx) :
-    BEARING_OBJECTS.slice(bearingIdx);
+      BEARING_OBJECTS.slice(0, bearingIdx) :
+      BEARING_OBJECTS.slice(bearingIdx);
 
     // Set the initial swing direction
     const swingDirection = this.getDirection() === DIRECTIONS.CLOCKWISE ? 1 : -1;  // TODO: Ensure consisency with constants being used by bearing?

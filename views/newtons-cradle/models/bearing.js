@@ -12,6 +12,9 @@ function radToDeg(radians) {
   return radians / (Math.PI / 180);
 }
 
+const GRAVITATIONAL_ACCELERATION = 9.81;  /* m/s^2 */
+const MAX_DELTA_T = 0.050;
+
 const Spring = {
 
   /* Spring force ---> -k * deltaX */
@@ -36,8 +39,6 @@ const swingDirections = {
 };
 
 const Swing = {
-  // t: 0,
-  // d: 0,
   deltaT: 0,
   type: swingTypes.OUTWARD,
   direction: null,
@@ -94,13 +95,6 @@ const Bearing = {
 
   bearingLength: 0,
 
-  /* the maximum amount of rotation that this bearing can be rotated */
-  maxRotation: 0,
-  minRotation: 0,
-
-  /* track the bearing's rotation along its transform origin's z-axis */
-  previousRotation: 0,
-
   // /*
   //  *  1 == clockwise
   //  *  -1 == counter-clockwise
@@ -128,103 +122,85 @@ const Bearing = {
     this.swingState = Object.create(Object(Swing));
 
     this.frequency = (Math.PI * 0.5) * Math.sqrt(this.spring.k / this.mass);
-    this.momentOfInertia = this.mass * this.bearingLength * this.bearingLength;
+    //this.momentOfInertia = this.mass * this.bearingLength * this.bearingLength;
+    this.momentOfInertia = this.mass * this.bearingLength;
+  },
+
+  _resetForces () {
+    this.alpha = 0;
+    this.omega = 0;
   },
 
 
-  _createRotationTween: function () {
-
-    this.theta = this._getNewRotation();
-
-    /* Calculate forces from current position. */
-    const T = this.mass * 9.81 * Math.cos(degToRad(this.theta)) * this.bearingLength;
-
-    /* Current angular acceleration */
-    const newAlpha = T / this.momentOfInertia;
-
-    /* Calculate current velocity from last frame's velocity and
-    average of last frame's acceleration with this frame's acceleration. */
-    this.omega = this.omega + 0.5 * (this.alpha + newAlpha) * this.swingState.deltaT;
-    this.alpha = newAlpha;
-
-    // return TweenMax.to(
-    //   this.elem,
-    //   this.frameRate,
-    //   { rotation: this.theta, ease: Linear.easeNone, immediateRender: false }
-    // );
-    return TweenMax.set(
-       this.elem,
-       { rotation: this.theta, immediateRender: false }
-    );
-  },
-
-
-
-  // _getInterpolationFactor: function () {
-  //   return this.swingState.type === swingTypes.OUTWARD ?
-  //     // EasingUtils.easeOutCubic(
-  //     //   this.swingState.elapsedTime,
-  //     //   this.swingState.durationThroughout
-  //     // )
-  //     interpolateOutwardSwing(this.swingState.t, this.swingState.d)
-  //     :
-  //     interpolateInwardSwing(this.swingState.t, this.swingState.d);
-  //     // EasingUtils.easeInCubic(
-  //     //   this.swingStateState.elapsedTime,
-  //     //   this.swingStateState.durationThroughout
-  //     // );
-  // },
-
-  _getNewRotation: function () {
-    //debugger;
-    //const interpolationFactor = this._getInterpolationFactor();
-    // Interpolate by using the sine function to find a factor of the total amount to rotate
-    //const interpolationFactor = Math.sin(Math.PI * 2 * this.frequency * this.swingState.t);
+  _getNewRotation: function (currentTheta, deltaT) {
     const rotationIncrement = (
-      this.omega * (this.swingState.deltaT) +
-      (0.5 * this.alpha * this.swingState.deltaT * this.swingState.deltaT)
+      this.omega * (deltaT) +
+      (0.5 * this.alpha * deltaT * deltaT)
     );
 
-    const newRotation = this.theta + (this.swingState.direction * rotationIncrement);
-
-    // const newRotation = (
-    //   startingRotation +
-    //   ( (totalAmountOfRotation * this.swingState.direction) * interpolationFactor )
-    // );
+    const newRotation = currentTheta + (this.swingState.direction * rotationIncrement);
 
     console.log(`Bearing ${this.position}: Computing new rotation of ${newRotation}`);
     return newRotation;
   },
 
 
+  _createRotationTween: function (newTheta, deltaT) {
 
-  _isSwingExtentReached (destinationAngle) {
+    //this.theta = this._getNewRotation();
+
+    /* Calculate forces from current position. */
+    const T = this.mass * GRAVITATIONAL_ACCELERATION * Math.cos(degToRad(newTheta)) * this.bearingLength;
+
+    /* Current angular acceleration */
+    const newAlpha = T / this.momentOfInertia;
+
+    /* Calculate current velocity from last frame's velocity and
+    average of last frame's acceleration with this frame's acceleration. */
+    this.omega += 0.5 * (this.alpha + newAlpha) * deltaT;
+    this.alpha = newAlpha;
+
+    return TweenMax.to(
+      this.elem,
+      deltaT,
+      { rotation: newTheta, ease: Linear.easeNone, immediateRender: false }
+    );
+    // return TweenMax.set(
+    //    this.elem,
+    //    { rotation: newTheta, immediateRender: false }
+    // );
+  },
+
+
+  _isSwingExtentReached (destinationAngle, newTheta) {
     //console.log(`Checking if beyond extent of ${destinationAngle}. Current theta: ${this.theta}`);
     return (
-      (this.swingState.direction === swingDirections.COUNTER_CLOCKWISE && this.theta <= destinationAngle) ||
-      (this.swingState.direction === swingDirections.CLOCKWISE && this.theta >= destinationAngle)
+      (this.swingState.direction === swingDirections.COUNTER_CLOCKWISE && newTheta <= destinationAngle) ||
+      (this.swingState.direction === swingDirections.CLOCKWISE && newTheta >= destinationAngle)
     );
   },
 
-  _swingOutward: function (destinationAngle) {
+  _swingOutward: function (destinationAngle, newTheta, deltaT) {
 
-    if (this._isSwingExtentReached(destinationAngle)) {
+    if (this._isSwingExtentReached(destinationAngle, newTheta)) {
       console.log(`Direction swap!`);
 
       this.swingState.direction = this.swingState.direction === swingDirections.COUNTER_CLOCKWISE ?
         swingDirections.CLOCKWISE : swingDirections.COUNTER_CLOCKWISE;
-      this.swingState.deltaT = 0;
+      //this.swingState.deltaT = 0;
       this.swingState.type = swingTypes.INWARD;
+      this._resetForces();
     }
-    return this._createRotationTween();
+    return this._createRotationTween(newTheta, deltaT);
   },
 
-  _fallInward: function (destinationAngle) {
 
-    if (this._isSwingExtentReached(destinationAngle)) {
+  _fallInward: function (destinationAngle, newTheta, deltaT) {
+
+    if (this._isSwingExtentReached(destinationAngle, newTheta)) {
       this.swingState.isComplete = true;
     }
-    return this._createRotationTween();
+    return this._createRotationTween(newTheta, deltaT);
   },
 
 
@@ -244,8 +220,6 @@ const Bearing = {
 
 
   swing: function (opts = {}) {
-
-    //debugger;
     this.isInMotion = true;
 
     const startingRotation = this.theta;
@@ -253,7 +227,7 @@ const Bearing = {
     const returnAngle = typeof opts.returnAngle !== 'undefined' ? opts.returnAngle : 0;
     this.frameRate = opts.frameRate || DEFAULT_FRAME_RATE;
 
-    this.omega = opts.forceOnStart;  // TODO: Make this happen!
+    this.omega = opts.kineticEnergyTransfered || 0;
 
 
     // TODO: Determine if these two bounds can be deleted -- we should never need them
@@ -264,36 +238,48 @@ const Bearing = {
       targetAngle = this.maxRotation;
     }
 
-    //const outwardRotationAmount = Math.abs(outwardAngle - startingRotation);
     const fallBackRotationAmount = Math.abs(returnAngle - targetAngle);
-    //const totalRotationThroughout = outwardRotationAmount + fallBackRotationAmount;
 
-
-    //console.log(`Outward Angle: ${outwardAngle}`);
     console.log(`Target Angle: ${targetAngle}`);
-    //console.log(`Outward Rotation Amount: ${outwardRotationAmount}`);
     console.log(`Fallback Rotation Amount: ${fallBackRotationAmount}`);
-    //console.log(`Total Rotation Throughout: ${totalRotationThroughout}`);
 
     const swingTL = new TimelineMax({
       onComplete: this.onSwingComplete.bind(this, fallBackRotationAmount, opts.collisionCallback, opts.willInstigateCollision)
     });
 
-    this.swingState.deltaT = 0;
+    //this.swingState.deltaT = 0;
     this.swingState.isComplete = false;
     this.swingState.type = swingTypes.OUTWARD;
 
+    let newTheta;
+    let previousTime = new Date().getTime();
+    let currentTime, deltaT;
+
     while (!this.swingState.isComplete) {
 
+      currentTime = new Date().getTime();
+      deltaT = (currentTime - previousTime) / 1000;
+
+      deltaT = Math.max(DEFAULT_FRAME_RATE, Math.min(deltaT, MAX_DELTA_T));
+
+      console.log(`DeltaT: ${deltaT}`);
+      newTheta = this._getNewRotation(this.theta, deltaT);
+
       if (this.swingState.type === swingTypes.OUTWARD) {
-        swingTL.add(this._swingOutward(targetAngle), `+=${this.frameRate}`);
+        //swingTL.add(this._swingOutward(targetAngle, newTheta, deltaT), `+=${this.frameRate}`);
+        swingTL.add(this._swingOutward(targetAngle, newTheta, deltaT));
+        //swingTL.add(this._swingOutward(targetAngle, newTheta, deltaT), `+=${deltaT}`);
         //swingTL.add(this._swingOutward(targetAngle), `'+=.01'`);
       } else {
-        swingTL.add(this._fallInward(returnAngle), `+=${this.frameRate}`);
+        swingTL.add(this._fallInward(returnAngle, newTheta, deltaT));
+        //swingTL.add(this._fallInward(returnAngle, newTheta, deltaT), `+=${deltaT}`);
+        //swingTL.add(this._fallInward(returnAngle, newTheta, deltaT), `+=${this.frameRate}`);
         //swingTL.add(this._fallInward(returnAngle), '+=.01');
       }
 
-      this.swingState.deltaT += this.frameRate;
+      //this.swingState.deltaT += this.frameRate;
+      this.theta = newTheta;
+      previousTime = currentTime;
     }
 
     //this.masterTL.add(swingTL);
@@ -307,28 +293,20 @@ const Bearing = {
    * end of its swing, call back to the collision handler.
    */
   onSwingComplete: function (fallBackRotationAmount, collisionCallback, willInstigateCollision) {
-    //debugger;
     this.isInMotion = false;
-    const energyTransferred = fallBackRotationAmount * this.swingState.direction;
+    const destinationAngle = fallBackRotationAmount * this.swingState.direction;
+    const kineticEnergyTransfered = this.omega;
+    this._resetForces();
 
     if (collisionCallback && willInstigateCollision) {
-      console.log(`*** onSwingComplete *** Bearing ${this.position} colliding & transferring energy of ${energyTransferred} degrees`);
-      collisionCallback(this, energyTransferred);
+      console.log(`*** onSwingComplete *** Bearing ${this.position} colliding & \
+        transferring kinetic energy of ${this.omega}. \
+        Destination angle of collision receptor: ${destinationAngle}`);
+      collisionCallback(this, destinationAngle, kineticEnergyTransfered);
     }
   }
 
 };
-
-function interpolateInwardSwing (prevRotation, elaspedTime, totalDuration) {
-  //return this.springK
-}
-
-function interpolateOutwardSwing (elaspedTime, totalDuration) {
-
-}
-
-
-
 
 
 function BearingFactory (opts = {}) {

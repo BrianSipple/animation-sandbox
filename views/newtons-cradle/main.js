@@ -5,7 +5,7 @@ import Draggable from "Draggable";
 import EasingUtils from 'utils/easing-utils';
 import Bearing from './models/bearing';
 
-const FRAME_RATE = 1/60;
+const FRAME_RATE = 1/40;
 
 const SELECTORS = {
   bearingGroups: '.bearing',
@@ -119,6 +119,7 @@ const NewtonsCradle = (function newtonsCradle () {
     let
       bearingGroup,
       bearingElem,
+      bearingLength,
       bearingControlPointCoords,
       bearingBallElem,
       bearingBallRadius;
@@ -132,12 +133,16 @@ const NewtonsCradle = (function newtonsCradle () {
         y: bearingGroup.controlPointElem.getAttribute('cy')
       };
       bearingBallElem = bearingGroup.ballElem;
+      bearingLength = Math.abs(
+        Number(bearingBallElem.getAttribute('cy')) -
+        Number(bearingGroup.controlPointElem.getAttribute('cy'))
+      );
 
       bearingBallRadius = Number(bearingBallElem.getAttribute('r'));
 
       BEARING_OBJECTS.push(
         Bearing({
-          mass: 10,
+          mass: bearingLength / 5,
           radius: bearingBallRadius,
           position: idx,
           maxRotation: MAX_ANGULAR_ROTATION,
@@ -203,11 +208,12 @@ const NewtonsCradle = (function newtonsCradle () {
   * Callback for when a bearing returns from its outward, extended state and
   * collides with its neighbor.
   */
-  function onCollision (collidingBearingObj, rotationEnergyTransferred) {
+  function onCollision (collidingBearingObj, destinationAngle, kineticEnergyTransfered) {
 
     //debugger;
 
     const directionOfForce = collidingBearingObj.getDirection();
+    //const kineticEnergyTransfered = collidingBearingObj.omega;
     const bearingsToSwing = findBearingsToSwingOnCollision(directionOfForce, collidingBearingObj.position);
 
     // Create swing TLs for static bearings while there's still energy left to be transfered
@@ -231,8 +237,8 @@ const NewtonsCradle = (function newtonsCradle () {
           (idx === bearingsToSwing.length - 1)
           :
           (idx === 0),
-        kineticEnergy: rotationEnergyTransferred,
-        targetAngle: rotationEnergyTransferred,
+        kineticEnergyTransfered: kineticEnergyTransfered,
+        targetAngle: destinationAngle,
         //returnAngle: bearing.currentAngle   // TODO: Should it not really be this in the future, not just 0?
         returnAngle: 0,
         collisionCallback: onCollision
@@ -249,7 +255,7 @@ const NewtonsCradle = (function newtonsCradle () {
     .forEach((obj, idx) => {
       obj.swing({
         willInstigateCollision: obj.position == positionOfDragged,
-        kineticEnergy: 0,
+        kineticEnergyTransfered: 0,
         targetAngle: currentRotationOfDragged,
         potentialEnergy: currentRotationOfDragged,
         returnAngle: 0,

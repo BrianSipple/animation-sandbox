@@ -126,7 +126,6 @@ const NewtonsCradle = (function newtonsCradle () {
     Object.keys(DOM_REFS.bearingGroups).forEach((bearingGroupKey, idx) => {
 
       bearingGroup = DOM_REFS.bearingGroups[bearingGroupKey];
-
       bearingElem = bearingGroup.bearingElem;
       bearingControlPointCoords = {
         x: bearingGroup.controlPointElem.getAttribute('cx'),
@@ -208,12 +207,8 @@ const NewtonsCradle = (function newtonsCradle () {
   * Callback for when a bearing returns from its outward, extended state and
   * collides with its neighbor.
   */
-  function onCollision (collidingBearingObj, destinationAngle, kineticEnergyTransfered) {
-
-    //debugger;
-
+  function onCollision (collidingBearingObj, destinationAngle, kineticEnergyTransferred, accelerationTransferred) {
     const directionOfForce = collidingBearingObj.getDirection();
-    //const kineticEnergyTransfered = collidingBearingObj.omega;
     const bearingsToSwing = findBearingsToSwingOnCollision(directionOfForce, collidingBearingObj.position);
 
     // Create swing TLs for static bearings while there's still energy left to be transfered
@@ -237,7 +232,8 @@ const NewtonsCradle = (function newtonsCradle () {
           (idx === bearingsToSwing.length - 1)
           :
           (idx === 0),
-        kineticEnergyTransfered: kineticEnergyTransfered,
+        kineticEnergyTransferred,
+        accelerationTransferred,
         targetAngle: destinationAngle,
         //returnAngle: bearing.currentAngle   // TODO: Should it not really be this in the future, not just 0?
         returnAngle: 0,
@@ -255,7 +251,7 @@ const NewtonsCradle = (function newtonsCradle () {
     .forEach((obj, idx) => {
       obj.swing({
         willInstigateCollision: obj.position == positionOfDragged,
-        kineticEnergyTransfered: 0,
+        kineticEnergyTransferred: 0,
         targetAngle: currentRotationOfDragged,
         potentialEnergy: currentRotationOfDragged,
         returnAngle: 0,
@@ -271,7 +267,6 @@ const NewtonsCradle = (function newtonsCradle () {
 
     objectsInDrag.forEach((bearingObj) => {
       debugString += `------${bearingObj.position}-----`;
-      //bearingObj.currentRotation = this.rotation;
       bearingObj.theta = this.rotation;
       bearingObj.masterTL.to(bearingObj.elem, .01, { rotation: this.rotation });
     });
@@ -334,7 +329,7 @@ const NewtonsCradle = (function newtonsCradle () {
     cacheDOMState();
     initializeBearingObjects();
     syncBearingsWithAnimationScene();
-    masterDraggable = createDraggable();
+    createDraggable();
   }
 
 

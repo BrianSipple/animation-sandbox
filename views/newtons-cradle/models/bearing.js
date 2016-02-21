@@ -27,7 +27,6 @@ const Spring = {
   damping: 0.5
 };
 
-
 const swingTypes = {
   OUTWARD: 'outward',
   INWARD: 'inward'
@@ -45,14 +44,7 @@ const Swing = {
   isComplete: false
 };
 
-const bearingDefaults = {
-  mass: 20,
-  radius: 1
-};
-
 const DEFAULT_FRAME_RATE = 1 / 60;
-
-
 
 const Bearing = {
 
@@ -124,18 +116,15 @@ const Bearing = {
     this.frequency = (Math.PI * 0.5) * Math.sqrt(this.spring.k / this.mass);
     //this.momentOfInertia = this.mass * this.bearingLength * this.bearingLength;
     this.momentOfInertia = this.mass * this.bearingLength;
-  },
-
-  _resetForces () {
-    this.alpha = 0;
-    this.omega = 0;
+    //this.momentOfInertia = this.mass * (this.bearingLength / 4);
+    //this.momentOfInertia = this.mass * 2;
   },
 
 
   _getNewRotation: function (currentTheta, deltaT) {
     const rotationIncrement = (
-      this.omega * (deltaT) +
-      (0.5 * this.alpha * deltaT * deltaT)
+      Math.abs(this.omega) * (deltaT) +
+      (0.5 * Math.abs(this.alpha) * deltaT * deltaT)
     );
 
     const newRotation = currentTheta + (this.swingState.direction * rotationIncrement);
@@ -145,12 +134,14 @@ const Bearing = {
   },
 
 
-  _createRotationTween: function (newTheta, deltaT) {
-
-    //this.theta = this._getNewRotation();
+  _createRotationTween: function (newTheta, deltaT, accelerationWeight = 1) {
 
     /* Calculate forces from current position. */
-    const T = this.mass * GRAVITATIONAL_ACCELERATION * Math.cos(degToRad(newTheta)) * this.bearingLength;
+    const T = (
+      this.mass *
+      ( GRAVITATIONAL_ACCELERATION * accelerationWeight ) *
+      ( Math.cos(degToRad(newTheta)) * this.bearingLength )
+    );
 
     /* Current angular acceleration */
     const newAlpha = T / this.momentOfInertia;
@@ -165,10 +156,6 @@ const Bearing = {
       deltaT,
       { rotation: newTheta, ease: Linear.easeNone, immediateRender: false }
     );
-    // return TweenMax.set(
-    //    this.elem,
-    //    { rotation: newTheta, immediateRender: false }
-    // );
   },
 
 
@@ -187,11 +174,9 @@ const Bearing = {
 
       this.swingState.direction = this.swingState.direction === swingDirections.COUNTER_CLOCKWISE ?
         swingDirections.CLOCKWISE : swingDirections.COUNTER_CLOCKWISE;
-      //this.swingState.deltaT = 0;
       this.swingState.type = swingTypes.INWARD;
-      this._resetForces();
     }
-    return this._createRotationTween(newTheta, deltaT);
+    return this._createRotationTween(newTheta, deltaT, -1);
   },
 
 
@@ -200,7 +185,7 @@ const Bearing = {
     if (this._isSwingExtentReached(destinationAngle, newTheta)) {
       this.swingState.isComplete = true;
     }
-    return this._createRotationTween(newTheta, deltaT);
+    return this._createRotationTween(newTheta, deltaT, 1);
   },
 
 
@@ -213,10 +198,10 @@ const Bearing = {
     }
   },
 
+
   getDirection: function () {
     return this.swingState.direction;
   },
-
 
 
   swing: function (opts = {}) {
@@ -227,7 +212,8 @@ const Bearing = {
     const returnAngle = typeof opts.returnAngle !== 'undefined' ? opts.returnAngle : 0;
     this.frameRate = opts.frameRate || DEFAULT_FRAME_RATE;
 
-    this.omega = opts.kineticEnergyTransfered || 0;
+    this.omega = opts.kineticEnergyTransferred || 0;
+    this.alpha = opts.accelerationTransferred || 0;
 
 
     // TODO: Determine if these two bounds can be deleted -- we should never need them
@@ -295,14 +281,14 @@ const Bearing = {
   onSwingComplete: function (fallBackRotationAmount, collisionCallback, willInstigateCollision) {
     this.isInMotion = false;
     const destinationAngle = fallBackRotationAmount * this.swingState.direction;
-    const kineticEnergyTransfered = this.omega;
-    this._resetForces();
+    const kineticEnergyTransferred = this.omega;
+    const accelerationTransferred = this.alpha;
 
     if (collisionCallback && willInstigateCollision) {
       console.log(`*** onSwingComplete *** Bearing ${this.position} colliding & \
         transferring kinetic energy of ${this.omega}. \
         Destination angle of collision receptor: ${destinationAngle}`);
-      collisionCallback(this, destinationAngle, kineticEnergyTransfered);
+      collisionCallback(this, destinationAngle, kineticEnergyTransferred, accelerationTransferred);
     }
   }
 

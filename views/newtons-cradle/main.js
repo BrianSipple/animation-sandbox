@@ -5,7 +5,6 @@ import Draggable from "Draggable";
 import EasingUtils from 'utils/easing-utils';
 import Bearing from './models/bearing';
 
-const FRAME_RATE = 1/40;
 
 const SELECTORS = {
   bearingGroups: '.bearing',
@@ -23,7 +22,14 @@ const SELECTORS = {
   group1ControlPoint: '.bearing--1 .control-point',
   group2ControlPoint: '.bearing--2 .control-point',
   group3ControlPoint: '.bearing--3 .control-point',
-  group4ControlPoint: '.bearing--4 .control-point'
+  group4ControlPoint: '.bearing--4 .control-point',
+  instructionToast: '.instruction-toast',
+  sceneElem: '.newtons-cradle'
+};
+
+const CLASS_NAMES = {
+  instructionToastVisible: 'is-visible',
+  instructionToastHidden: 'is-hidden'
 };
 
 /* Direction constants to test the ouput of a Draggable event's `getDirection()` method */
@@ -33,7 +39,17 @@ const DIRECTIONS = {
 };
 
 const DURATIONS = {
+  fadeIn: 0.4,
+  slideIn: 0.6
+};
 
+const EASINGS = {
+  fadeIn: Power3.easeOut,
+  slideInSmallBounce: Back.easeOut.config(1.25)
+};
+
+const LABELS = {
+  sceneVisible: 'sceneVisible'
 };
 
 const DATA_ATTRIBUTES = {
@@ -41,18 +57,6 @@ const DATA_ATTRIBUTES = {
 };
 
 
-
-const EASINGS = {
-
-};
-
-
-const LABELS = {
-  leftMotion: 'leftMotion',
-  rightMotion: 'rightMotion'
-};
-
-const BALL_POSITIONS = ['one', 'two', 'three', 'four', 'five'];
 const MAX_ANGULAR_ROTATION = 85;
 
 
@@ -72,35 +76,41 @@ const NewtonsCradle = (function newtonsCradle () {
     masterDraggable;
 
   function cacheDOMState () {
+
+    const querySelector = document.querySelector.bind(document);
+
     DOM_REFS = {
 
       bearingGroups: {
         group0: {
-          bearingElem: document.querySelector(SELECTORS.bearingGroup0),
-          ballElem: document.querySelector(SELECTORS.bearingBall0),
-          controlPointElem: document.querySelector(SELECTORS.group0ControlPoint)
+          bearingElem: querySelector(SELECTORS.bearingGroup0),
+          ballElem: querySelector(SELECTORS.bearingBall0),
+          controlPointElem: querySelector(SELECTORS.group0ControlPoint)
         },
         group1: {
-          bearingElem: document.querySelector(SELECTORS.bearingGroup1),
-          ballElem: document.querySelector(SELECTORS.bearingBall1),
-          controlPointElem: document.querySelector(SELECTORS.group1ControlPoint)
+          bearingElem: querySelector(SELECTORS.bearingGroup1),
+          ballElem: querySelector(SELECTORS.bearingBall1),
+          controlPointElem: querySelector(SELECTORS.group1ControlPoint)
         },
         group2: {
-          bearingElem: document.querySelector(SELECTORS.bearingGroup2),
-          ballElem: document.querySelector(SELECTORS.bearingBall2),
-          controlPointElem: document.querySelector(SELECTORS.group2ControlPoint)
+          bearingElem: querySelector(SELECTORS.bearingGroup2),
+          ballElem: querySelector(SELECTORS.bearingBall2),
+          controlPointElem: querySelector(SELECTORS.group2ControlPoint)
         },
         group3: {
-          bearingElem: document.querySelector(SELECTORS.bearingGroup3),
-          ballElem: document.querySelector(SELECTORS.bearingBall3),
-          controlPointElem: document.querySelector(SELECTORS.group3ControlPoint)
+          bearingElem: querySelector(SELECTORS.bearingGroup3),
+          ballElem: querySelector(SELECTORS.bearingBall3),
+          controlPointElem: querySelector(SELECTORS.group3ControlPoint)
         },
         group4: {
-          bearingElem: document.querySelector(SELECTORS.bearingGroup4),
-          ballElem: document.querySelector(SELECTORS.bearingBall4),
-          controlPointElem: document.querySelector(SELECTORS.group4ControlPoint)
+          bearingElem: querySelector(SELECTORS.bearingGroup4),
+          ballElem: querySelector(SELECTORS.bearingBall4),
+          controlPointElem: querySelector(SELECTORS.group4ControlPoint)
         }
-      }
+      },
+
+      instructionToastElem: querySelector(SELECTORS.instructionToast),
+      sceneElem: querySelector(SELECTORS.sceneElem)
 
     };
 
@@ -141,7 +151,7 @@ const NewtonsCradle = (function newtonsCradle () {
 
       BEARING_OBJECTS.push(
         Bearing({
-          mass: bearingLength / 5,
+          mass: bearingLength,
           radius: bearingBallRadius,
           position: idx,
           maxRotation: MAX_ANGULAR_ROTATION,
@@ -268,15 +278,13 @@ const NewtonsCradle = (function newtonsCradle () {
     objectsInDrag.forEach((bearingObj) => {
       debugString += `------${bearingObj.position}-----`;
       bearingObj.theta = this.rotation;
-      bearingObj.masterTL.to(bearingObj.elem, .01, { rotation: this.rotation });
+      bearingObj.masterTL.to(bearingObj.elem, 0.01, { rotation: this.rotation });
     });
 
     console.log(debugString);
-
   }
 
   function swingBallsAfterDrag () {
-
     disableBearingDrag();
     createSwingTLsAfterDrag(
       this.rotation,
@@ -285,26 +293,47 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
   function onDragStart () {
+    DOM_REFS.instructionToastElem.classList.add(CLASS_NAMES.instructionToastHidden);
+    DOM_REFS.instructionToastElem.classList.remove(CLASS_NAMES.instructionToastVisible);
     const bearingIdx = Number(this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex));
+    const swingDirection = this.getDirection();
+    const swingDirectionWeight = swingDirection === DIRECTIONS.CLOCKWISE ? 1 : -1;
 
     // test direction by
-    objectsInDrag = this.getDirection() === DIRECTIONS.CLOCKWISE ?
+    objectsInDrag = swingDirection === DIRECTIONS.CLOCKWISE ?
       BEARING_OBJECTS.slice(0, bearingIdx) :
       BEARING_OBJECTS.slice(bearingIdx);
 
-    // Set the initial swing direction
-    const swingDirection = this.getDirection() === DIRECTIONS.CLOCKWISE ? 1 : -1;  // TODO: Ensure consisency with constants being used by bearing?
-
     for (const obj of objectsInDrag) {
       obj.isInMotion = true;
-      obj.setDirection(swingDirection);
+      obj.setDirection(swingDirectionWeight);
     }
   }
 
 
+  /**
+   * Unveil the scene and create the Draggable instance
+   */
+  function exposeScene () {
+
+    const unveilingTL = new TimelineMax({ onComplete: createDraggable });
+    const { instructionToastElem, sceneElem } = DOM_REFS;
+    const { fadeIn: fadeInDuration } = DURATIONS;
+    const { fadeIn: fadeInEase } = EASINGS;
+    const { instructionToastVisible: visibleClass, instructionToastHidden: hiddenClass } = CLASS_NAMES;
+    const { sceneVisible: sceneVisibleLabel } = LABELS;
+
+    unveilingTL.to(sceneElem, fadeInDuration, { autoAlpha: 1, ease: fadeInEase });
+
+    unveilingTL.addLabel(sceneVisibleLabel);
+
+    unveilingTL.set(instructionToastElem, { className: `+=${visibleClass}` }, `${sceneVisibleLabel}+=0.3`);
+    unveilingTL.set(instructionToastElem, { className: `-=${hiddenClass}` }, `${sceneVisibleLabel}+=0.3`);
+  }
+
   function createDraggable () {
 
-    masterDraggable = Draggable.create(DOM_REFS.sortedBearingGroupElems, {
+    Draggable.create(DOM_REFS.sortedBearingGroupElems, {
       type: 'rotation',
       throwProps: true,
       // onThrowComplete: function () {
@@ -319,8 +348,9 @@ const NewtonsCradle = (function newtonsCradle () {
       onDrag: updateBallTLOnDrag,
       onDragEnd: swingBallsAfterDrag
     });
-
   }
+
+
 
   function run () {
 
@@ -330,6 +360,7 @@ const NewtonsCradle = (function newtonsCradle () {
     initializeBearingObjects();
     syncBearingsWithAnimationScene();
     createDraggable();
+    exposeScene();
   }
 
 

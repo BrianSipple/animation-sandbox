@@ -1,20 +1,42 @@
 @import '../../styles/application';
 
+$duration__slide-instruction-toast: .35s;
+$bottom-offset__instruction-toast: 8rem;
+
+@keyframes SlideToastDown {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, #{$bottom-offset__instruction-toast}, 0);
+  }
+}
+
+@keyframes SlideToastUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0, #{-1 * $bottom-offset__instruction-toast}, 0);
+  }
+}
 
 body {
   background-color: hsla(72, 100%, 82%, 1.0);
 }
 
-.scene {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 1.25em 2em;
-}
 
 .newtons-cradle {
 
   position: relative;
+
+  /* Animate in after page loads and the scene is setup */
+  opacity: 0;
+  visibility: hidden;
 
   .newtons-cradle__bounding-wrapper {
     position: absolute;
@@ -53,15 +75,25 @@ body {
   bottom: 2rem;
   right: 2rem;
   height: 2rem;
+  padding: 0 3em;
   background-color: hsla(298, 98%, 80%, 1);
   border-radius: 2em;
-  transform: translateY(8rem);
-  padding: 0 3em;
-  opacity: 0;
-  transition: all .35s ease-in-out;
+  //opacity: 0;
+  //transform: translate3d(0, #{$bottom-offset__instruction-toast}, 0);
 
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
+
+  &.is-hidden {
+    animation-name: SlideToastDown;
+    animation-duration: $duration__slide-instruction-toast;
+    animation-timing-function: $easing__ease-out-cubic;
+    animation-fill-mode: forwards;
+  }
+
+
+  &.is-visible {
+    animation-name: SlideToastUp;
+    animation-duration: $duration__slide-instruction-toast;
+    animation-timing-function: $easing__ease-out-cubic;
+    animation-fill-mode: forwards;
   }
 }

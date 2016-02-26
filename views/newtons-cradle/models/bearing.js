@@ -114,10 +114,7 @@ const Bearing = {
     this.swingState = Object.create(Object(Swing));
 
     this.frequency = (Math.PI * 0.5) * Math.sqrt(this.spring.k / this.mass);
-    //this.momentOfInertia = this.mass * this.bearingLength * this.bearingLength;
-    this.momentOfInertia = this.mass * this.bearingLength;
-    //this.momentOfInertia = this.mass * (this.bearingLength / 4);
-    //this.momentOfInertia = this.mass * 2;
+    this.momentOfInertia = this.mass * Math.pow(this.bearingLength, 0.33);
   },
 
 
@@ -151,9 +148,12 @@ const Bearing = {
     this.omega += 0.5 * (this.alpha + newAlpha) * deltaT;
     this.alpha = newAlpha;
 
+    console.log(`end of \`createRotationTween\` with newTheta of ${newTheta} ---> T: ${T},  newAlpha: ${newAlpha}, this.alpha: ${this.alpha},  this.omega: ${this.omega}`);
+
     return TweenMax.to(
       this.elem,
       deltaT,
+      //0.01,
       { rotation: newTheta, ease: Linear.easeNone, immediateRender: false }
     );
   },
@@ -252,18 +252,12 @@ const Bearing = {
       newTheta = this._getNewRotation(this.theta, deltaT);
 
       if (this.swingState.type === swingTypes.OUTWARD) {
-        //swingTL.add(this._swingOutward(targetAngle, newTheta, deltaT), `+=${this.frameRate}`);
         swingTL.add(this._swingOutward(targetAngle, newTheta, deltaT));
-        //swingTL.add(this._swingOutward(targetAngle, newTheta, deltaT), `+=${deltaT}`);
-        //swingTL.add(this._swingOutward(targetAngle), `'+=.01'`);
+
       } else {
         swingTL.add(this._fallInward(returnAngle, newTheta, deltaT));
-        //swingTL.add(this._fallInward(returnAngle, newTheta, deltaT), `+=${deltaT}`);
-        //swingTL.add(this._fallInward(returnAngle, newTheta, deltaT), `+=${this.frameRate}`);
-        //swingTL.add(this._fallInward(returnAngle), '+=.01');
       }
 
-      //this.swingState.deltaT += this.frameRate;
       this.theta = newTheta;
       previousTime = currentTime;
     }
@@ -283,6 +277,10 @@ const Bearing = {
     const destinationAngle = fallBackRotationAmount * this.swingState.direction;
     const kineticEnergyTransferred = this.omega;
     const accelerationTransferred = this.alpha;
+
+    this.omega = 0;
+    this.alpha = 0;
+    this.theta = 0;
 
     if (collisionCallback && willInstigateCollision) {
       console.log(`*** onSwingComplete *** Bearing ${this.position} colliding & \

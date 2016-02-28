@@ -131,12 +131,12 @@ const Bearing = {
   },
 
 
-  _createRotationTween: function (newTheta, deltaT, accelerationWeight = 1) {
+  _createRotationTween: function (newTheta, deltaT, accelerationDirectionWeight = 1) {
 
-    /* Calculate forces from current position. */
+    /* Calculate net force (T) from current position. */
     const T = (
       this.mass *
-      ( GRAVITATIONAL_ACCELERATION * accelerationWeight ) *
+      ( GRAVITATIONAL_ACCELERATION * accelerationDirectionWeight ) *
       ( Math.cos(degToRad(newTheta)) * this.bearingLength )
     );
 
@@ -147,6 +147,8 @@ const Bearing = {
     average of last frame's acceleration with this frame's acceleration. */
     this.omega += 0.5 * (this.alpha + newAlpha) * deltaT;
     this.alpha = newAlpha;
+
+    console.log(`Omega: ${this.omega}`);
 
     console.log(`end of \`createRotationTween\` with newTheta of ${newTheta} ---> T: ${T},  newAlpha: ${newAlpha}, this.alpha: ${this.alpha},  this.omega: ${this.omega}`);
 
@@ -212,7 +214,7 @@ const Bearing = {
     const returnAngle = typeof opts.returnAngle !== 'undefined' ? opts.returnAngle : 0;
     this.frameRate = opts.frameRate || DEFAULT_FRAME_RATE;
 
-    this.omega = opts.kineticEnergyTransferred || 0;
+    this.omega = opts.kineticEnergyTransferred || 0;   // TODO: How is this getting out of control?
     this.alpha = opts.accelerationTransferred || 0;
 
 

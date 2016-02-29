@@ -28,8 +28,8 @@ const SELECTORS = {
 };
 
 const CLASS_NAMES = {
-  instructionToastVisible: 'is-visible',
-  instructionToastHidden: 'is-hidden'
+  isVisible: 'is-visible',
+  isHidden: 'is-hidden'
 };
 
 /* Direction constants to test the ouput of a Draggable event's `getDirection()` method */
@@ -78,6 +78,7 @@ const NewtonsCradle = (function newtonsCradle () {
   function cacheDOMState () {
 
     const querySelector = document.querySelector.bind(document);
+    const querySelectorAll = document.querySelectorAll.bind(document);
 
     DOM_REFS = {
 
@@ -115,8 +116,7 @@ const NewtonsCradle = (function newtonsCradle () {
     };
 
     // sort the array of bearing groups according to their index
-    DOM_REFS.sortedBearingGroupElems = [...document.querySelectorAll(SELECTORS.bearingGroups)]
-    .sort((a, b) => {
+    DOM_REFS.sortedBearingGroupElems = [...querySelectorAll(SELECTORS.bearingGroups)].sort((a, b) => {
       const idxA = Number(a.getAttribute(DATA_ATTRIBUTES.bearingIndex));
       const idxB = Number(b.getAttribute(DATA_ATTRIBUTES.bearingIndex));
       return idxA - idxB;
@@ -169,6 +169,12 @@ const NewtonsCradle = (function newtonsCradle () {
     });
   }
 
+  function revealResetButton () {
+    TweenMax.set(
+      DOM_REFS.revealResetButton,
+      { classNames: `+=${CLASS_NAMES.isVisible}`}
+  }
+
   /**
   * FOR NOW: Don't allow any more dragging once the swinging starts
   * Exploration into how to best handle this is still ongoing (http://greensock.com/forums/topic/8925-draggable-disable-enable/ )
@@ -191,25 +197,31 @@ const NewtonsCradle = (function newtonsCradle () {
     }
   }
 
-  function findBearingsToSwingOnCollision (directionOfForce, collisionPosition) {
-    const staticBearings = directionOfForce > 0 ?
-      BEARING_OBJECTS
-        .slice(0, collisionPosition).filter(bearingObj => !bearingObj.isInMotion)
-      :
-      BEARING_OBJECTS
-        .slice(collisionPosition + 1).filter(bearingObj => !bearingObj.isInMotion);
+  function findBearingsToSwingOnCollision (directionOfForce, numberOfBearingsToSwing) {
 
-    /**
-    * return the number of bearings corresponding to the minimum
-    * between A) the bearings that were in motion behind the collision, or
-    * B) the number of static bearings remaining
-    */
-    const numberOfBearingsToSwing = Math.min(BEARING_OBJECTS.length - staticBearings.length, staticBearings.length);
+    // directionOfForce is 1 when clockwise, -1 when counter-clockwise
+
+    // const staticBearings = directionOfForce > 0 ?
+    //   BEARING_OBJECTS
+    //     .slice(0, collisionPosition).filter(bearingObj => !bearingObj.isInMotion)
+    //   :
+    //   BEARING_OBJECTS
+    //     .slice(collisionPosition + 1).filter(bearingObj => !bearingObj.isInMotion);
+
+    // /**
+    // * return the number of bearings corresponding to the minimum
+    // * between A) the bearings that were in motion behind the collision, or
+    // * B) the number of static bearings remaining
+    // */
+    // const numberOfBearingsToSwing = Math.min(BEARING_OBJECTS.length - staticBearings.length, staticBearings.length);
 
     return directionOfForce > 0 ?
+      // BEARING_OBJECTS.slice(0, numberOfBearingsToSwing)
+      // :
+      // BEARING_OBJECTS.slice(numberOfBearingsToSwing + 1);
       BEARING_OBJECTS.slice(0, numberOfBearingsToSwing)
       :
-      BEARING_OBJECTS.slice(numberOfBearingsToSwing + 1);
+      BEARING_OBJECTS.slice(-numberOfBearingsToSwing);
   }
 
 
@@ -217,23 +229,24 @@ const NewtonsCradle = (function newtonsCradle () {
   * Callback for when a bearing returns from its outward, extended state and
   * collides with its neighbor.
   */
-  function onCollision (collidingBearingObj, destinationAngle, kineticEnergyTransferred, accelerationTransferred) {
+  function onCollision (collidingBearingObj, collisionOpts) {
+
+    const {
+      destinationAngle,
+      kineticEnergyTransferred,
+      accelerationTransferred,
+      numBearingsInMotion
+    } = collisionOpts;
+
     const directionOfForce = collidingBearingObj.getDirection();
-    const bearingsToSwing = findBearingsToSwingOnCollision(directionOfForce, collidingBearingObj.position);
+
+    // TODO: Find the bearings to swing by finding the opposite equivalent of the `numBearingsInMotion`
+    const bearingsToSwing = findBearingsToSwingOnCollision(directionOfForce, numBearingsInMotion);
 
     // Create swing TLs for static bearings while there's still energy left to be transfered
     bearingsToSwing.forEach((bearing, idx) => {
 
-      //bearingsToSwing.push(bearing);
-      if (Object.is(bearing, collidingBearingObj)) {
-        // EDGE CASE (literally!):  an end bearing has hit the end of its extension
-        debugger;
-        console.log('edge case!');
-      }
-
-      bearing.isInMotion = true;
       bearing.setDirection(directionOfForce);
-
       bearing.swing({
 
         // going left, the returning collision instigator will be the bearing at the last index
@@ -244,9 +257,9 @@ const NewtonsCradle = (function newtonsCradle () {
           (idx === 0),
         kineticEnergyTransferred,
         accelerationTransferred,
-        targetAngle: destinationAngle,
-        //returnAngle: bearing.currentAngle   // TODO: Should it not really be this in the future, not just 0?
+        outwardAngle: destinationAngle,
         returnAngle: 0,
+        numBearingsInMotion,
         collisionCallback: onCollision
       });
 
@@ -256,14 +269,15 @@ const NewtonsCradle = (function newtonsCradle () {
   function createSwingTLsAfterDrag (currentRotationOfDragged, positionOfDragged) {
     console.log('Start Swing');
 
-    BEARING_OBJECTS
-    .filter(obj => !!obj.isInMotion)
-    .forEach((obj, idx) => {
+    const bearingsInMotion = BEARING_OBJECTS.filter(obj => obj.isInMotion);
+    const numBearingsInMotion = bearingsInMotion.length;
+
+    bearingsInMotion.forEach((obj, idx) => {
       obj.swing({
         willInstigateCollision: obj.position == positionOfDragged,
+        numBearingsInMotion,
         kineticEnergyTransferred: 0,
-        targetAngle: currentRotationOfDragged,
-        potentialEnergy: currentRotationOfDragged,
+        outwardAngle: currentRotationOfDragged,
         returnAngle: 0,
         collisionCallback: onCollision
       });
@@ -290,18 +304,23 @@ const NewtonsCradle = (function newtonsCradle () {
       this.rotation,
       this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex)
     );
+    setTimeout(() => {
+      revealResetButton();  // TODO
+    }, 2000);
   }
 
   function onDragStart () {
-    DOM_REFS.instructionToastElem.classList.add(CLASS_NAMES.instructionToastHidden);
-    DOM_REFS.instructionToastElem.classList.remove(CLASS_NAMES.instructionToastVisible);
+
     const bearingIdx = Number(this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex));
     const swingDirection = this.getDirection();
     const swingDirectionWeight = swingDirection === DIRECTIONS.CLOCKWISE ? 1 : -1;
 
+    DOM_REFS.instructionToastElem.classList.add(CLASS_NAMES.isHidden);
+    DOM_REFS.instructionToastElem.classList.remove(CLASS_NAMES.isVisible);
+
     // test direction by
     objectsInDrag = swingDirection === DIRECTIONS.CLOCKWISE ?
-      BEARING_OBJECTS.slice(0, bearingIdx) :
+      BEARING_OBJECTS.slice(0, bearingIdx + 1) :
       BEARING_OBJECTS.slice(bearingIdx);
 
     for (const obj of objectsInDrag) {
@@ -317,10 +336,10 @@ const NewtonsCradle = (function newtonsCradle () {
   function exposeScene () {
 
     const unveilingTL = new TimelineMax({ onComplete: createDraggable });
-    const { instructionToastElem, sceneElem } = DOM_REFS;
+    const { instructionToastElem, sceneElem, sortedBearingGroupElems } = DOM_REFS;
     const { fadeIn: fadeInDuration } = DURATIONS;
     const { fadeIn: fadeInEase } = EASINGS;
-    const { instructionToastVisible: visibleClass, instructionToastHidden: hiddenClass } = CLASS_NAMES;
+    const { isVisible: visibleClass, isHidden: hiddenClass } = CLASS_NAMES;
     const { sceneVisible: sceneVisibleLabel } = LABELS;
 
     unveilingTL.to(sceneElem, fadeInDuration, { autoAlpha: 1, ease: fadeInEase });
@@ -329,6 +348,7 @@ const NewtonsCradle = (function newtonsCradle () {
 
     unveilingTL.set(instructionToastElem, { className: `+=${visibleClass}` }, `${sceneVisibleLabel}+=0.3`);
     unveilingTL.set(instructionToastElem, { className: `-=${hiddenClass}` }, `${sceneVisibleLabel}+=0.3`);
+    unveilingTL.set(sortedBearingGroupElems, { pointerEvents: 'all', cursor: 'pointer' });
   }
 
   function createDraggable () {

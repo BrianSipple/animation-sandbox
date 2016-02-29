@@ -677,7 +677,7 @@ body {
   overflow: visible; }
 
 .bearing {
-  cursor: pointer; }
+  pointer-events: none; }
 
 .instruction-toast {
   outline: none;

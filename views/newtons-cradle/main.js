@@ -173,6 +173,7 @@ const NewtonsCradle = (function newtonsCradle () {
     TweenMax.set(
       DOM_REFS.revealResetButton,
       { classNames: `+=${CLASS_NAMES.isVisible}`}
+    );
   }
 
   /**
@@ -233,14 +234,13 @@ const NewtonsCradle = (function newtonsCradle () {
 
     const {
       destinationAngle,
-      kineticEnergyTransferred,
+      kineticEnergyOnCollision,
+      energyDampingIncrement,
       accelerationTransferred,
       numBearingsInMotion
     } = collisionOpts;
 
     const directionOfForce = collidingBearingObj.getDirection();
-
-    // TODO: Find the bearings to swing by finding the opposite equivalent of the `numBearingsInMotion`
     const bearingsToSwing = findBearingsToSwingOnCollision(directionOfForce, numBearingsInMotion);
 
     // Create swing TLs for static bearings while there's still energy left to be transfered
@@ -255,7 +255,7 @@ const NewtonsCradle = (function newtonsCradle () {
           (idx === bearingsToSwing.length - 1)
           :
           (idx === 0),
-        kineticEnergyTransferred,
+        kineticEnergyTransferred: kineticEnergyOnCollision + (energyDampingIncrement * (bearingsToSwing.length)),
         accelerationTransferred,
         outwardAngle: destinationAngle,
         returnAngle: 0,
@@ -304,9 +304,9 @@ const NewtonsCradle = (function newtonsCradle () {
       this.rotation,
       this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex)
     );
-    setTimeout(() => {
-      revealResetButton();  // TODO
-    }, 2000);
+    // setTimeout(() => {
+    //   revealResetButton();  // TODO
+    // }, 2000);
   }
 
   function onDragStart () {

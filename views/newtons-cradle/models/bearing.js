@@ -21,10 +21,10 @@ const Spring = {
   force: 0,
 
   /* Spring constant (aka "stiffness") in kg / s^2 */
-  k: 20,
+  k: -20,
 
   /*  "viscous damping coefficient", measured in kg / s) */
-  damping: 0.5
+  damping: -0.5
 };
 
 const swingTypes = {
@@ -284,6 +284,33 @@ const Bearing = {
     //swingTL.play();
   },
 
+  _getEnergyDampingIncrement () {
+    const { spring: { damping, k: stiffness }, bearingLength, theta, mass, omega } = this;
+    const { cos } = Math;
+
+    const springForce = stiffness * cos(degToRad(theta)) - bearingLength;
+    const damperForce = damping * omega;
+
+    return (springForce + damperForce) / mass;
+  },
+  // _getIntegratedDampedEnergyOnCollision (numBearingsInMotion) {
+  //   const integratedKineticEnergies = [];
+  //   const { spring: { damping, k: stiffness }, omega, bearingLength, theta, mass } = this;
+  //   const { cos } = Math;
+  //
+  //   let dampedEnergy = this.omega;
+  //   let springForce;
+  //   let damperForce;
+  //   for (let i = 0; i < numBearingsInMotion; i++) {
+  //     springForce = stiffness * cos(degToRad(theta)) - bearingLength;
+  //     damperForce = (damping * (i + 1)) * currentEnergy;
+  //
+  //     dampedEnergy += (springForce + damperForce) / mass;
+  //   }
+  //
+  //   return dampedEnergy;
+  // },
+
 
   /**
    * After a swing, update the `isInMotion` state.
@@ -293,9 +320,13 @@ const Bearing = {
   onSwingComplete: function (fallBackRotationAmount, collisionCallback, willInstigateCollision, numBearingsInMotion) {
 
     //this.masterTL.clear();
-    const destinationAngle = fallBackRotationAmount * this.swingState.direction;
-    const kineticEnergyTransferred = this.omega * this.damping;
     const accelerationTransferred = this.alpha;
+    const kineticEnergyOnCollision = this.omega;
+    const energyDampingIncrement = this._getEnergyDampingIncrement();
+//    const destinationAngle = ( fallBackRotationAmount + (energyDampingIncrement * this.frameRate) ) * this.swingState.direction;
+    const destinationAngle = ( fallBackRotationAmount + (energyDampingIncrement) ) * this.swingState.direction;
+
+
 
     this.omega = 0;
     this.alpha = 0;
@@ -308,7 +339,8 @@ const Bearing = {
         Destination angle of collision receptor: ${destinationAngle}`);
       collisionCallback(this, {
         destinationAngle,
-        kineticEnergyTransferred,
+        kineticEnergyOnCollision,
+        energyDampingIncrement,
         accelerationTransferred,
         numBearingsInMotion
       });

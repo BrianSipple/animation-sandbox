@@ -51,6 +51,7 @@ const Swing = {
 
 const DEFAULT_FRAME_RATE = 1 / 60;
 
+
 const Bearing = {
 
   mass: null,
@@ -97,6 +98,7 @@ const Bearing = {
 
   /* Master timeline for this particular bearing */
   masterTL: null,
+  swingTL: null,
 
   /* Cahced DOM node (or SVG) for this particular bearing */
   elem: null,
@@ -238,7 +240,7 @@ const Bearing = {
     console.log(`Target Angle: ${outwardAngle}`);
     console.log(`Fallback Rotation Amount: ${fallBackRotationAmount}`);
 
-    const { collisionCallback, willInstigateCollision, numBearingsInMotion } = opts;
+    const { collisionCallback, willInstigateCollision, numBearingsInMotion, swingSeriesCompleteCallback } = opts;
 
     // const swingTL = new TimelineMax({
     //   onComplete: this.onSwingComplete,
@@ -248,7 +250,7 @@ const Bearing = {
 
     this.masterTL = new TimelineMax({
       onComplete: this.onSwingComplete,
-      onCompleteParams: [fallBackRotationAmount, collisionCallback, willInstigateCollision, numBearingsInMotion],
+      onCompleteParams: [fallBackRotationAmount, collisionCallback, willInstigateCollision, numBearingsInMotion, swingSeriesCompleteCallback],
       onCompleteScope: this
     });
 
@@ -284,7 +286,7 @@ const Bearing = {
     //swingTL.play();
   },
 
-  _getEnergyDampingIncrement () {
+  _getEnergyDampingDecrement () {
     const { spring: { damping, k: stiffness }, bearingLength, theta, mass, omega } = this;
     const { cos } = Math;
 
@@ -293,39 +295,29 @@ const Bearing = {
 
     return (springForce + damperForce) / mass;
   },
-  // _getIntegratedDampedEnergyOnCollision (numBearingsInMotion) {
-  //   const integratedKineticEnergies = [];
-  //   const { spring: { damping, k: stiffness }, omega, bearingLength, theta, mass } = this;
-  //   const { cos } = Math;
-  //
-  //   let dampedEnergy = this.omega;
-  //   let springForce;
-  //   let damperForce;
-  //   for (let i = 0; i < numBearingsInMotion; i++) {
-  //     springForce = stiffness * cos(degToRad(theta)) - bearingLength;
-  //     damperForce = (damping * (i + 1)) * currentEnergy;
-  //
-  //     dampedEnergy += (springForce + damperForce) / mass;
-  //   }
-  //
-  //   return dampedEnergy;
-  // },
-
 
   /**
    * After a swing, update the `isInMotion` state.
    * Furthermore, if this is a bearing that will produce a collision at the
    * end of its swing, call back to the collision handler.
    */
-  onSwingComplete: function (fallBackRotationAmount, collisionCallback, willInstigateCollision, numBearingsInMotion) {
+  onSwingComplete: function (fallBackRotationAmount, collisionCallback, willInstigateCollision, numBearingsInMotion, swingSeriesCompleteCallback) {
 
     //this.masterTL.clear();
     const accelerationTransferred = this.alpha;
     const kineticEnergyOnCollision = this.omega;
-    const energyDampingIncrement = this._getEnergyDampingIncrement();
-//    const destinationAngle = ( fallBackRotationAmount + (energyDampingIncrement * this.frameRate) ) * this.swingState.direction;
-    const destinationAngle = ( fallBackRotationAmount + (energyDampingIncrement) ) * this.swingState.direction;
+    const energyDampingDecrement = this._getEnergyDampingDecrement();
+    const destinationAngle = ( fallBackRotationAmount + (energyDampingDecrement) ) * this.swingState.direction;
 
+    if (destinationAngle > 0 && this.swingState.direction == -1) {
+      swingSeriesCompleteCallback();
+      return;
+    }
+
+    if (destinationAngle < 0 && this.swingState.direction == 1) {
+      swingSeriesCompleteCallback();
+      return;
+    }
 
 
     this.omega = 0;
@@ -340,11 +332,13 @@ const Bearing = {
       collisionCallback(this, {
         destinationAngle,
         kineticEnergyOnCollision,
-        energyDampingIncrement,
+        energyDampingDecrement,
         accelerationTransferred,
         numBearingsInMotion
       });
     }
+
+
   }
 
 };

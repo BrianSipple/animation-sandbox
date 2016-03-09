@@ -5,7 +5,6 @@ import Draggable from "Draggable";
 import EasingUtils from 'utils/easing-utils';
 import Bearing from './models/bearing';
 
-
 const SELECTORS = {
   bearingGroups: '.bearing',
   bearingGroup0: '.bearing--0',
@@ -56,9 +55,7 @@ const DATA_ATTRIBUTES = {
   bearingIndex: 'data-bearing-idx'
 };
 
-
 const MAX_ANGULAR_ROTATION = 85;
-
 
 const BEARING_OBJECTS = [];
 
@@ -74,6 +71,8 @@ const NewtonsCradle = (function newtonsCradle () {
     objectsInDrag,
     masterTL,
     masterDraggable;
+
+  let isCradleSwinging = false;
 
   function cacheDOMState () {
 
@@ -180,8 +179,17 @@ const NewtonsCradle = (function newtonsCradle () {
   * FOR NOW: Don't allow any more dragging once the swinging starts
   * Exploration into how to best handle this is still ongoing (http://greensock.com/forums/topic/8925-draggable-disable-enable/ )
   */
-  function disableBearingDrag () {
-    DOM_REFS.sortedBearingGroupElems.forEach(el => el.style.pointerEvents = 'none');
+  function setBearingDraggability (isDraggable) {
+    DOM_REFS.sortedBearingGroupElems.forEach(el => el.style.pointerEvents = isDraggable ? 'all' : 'none');
+  }
+
+  function onSwingSeriesEnd () {
+    if (isCradleSwinging) {
+      debugger;
+      isCradleSwinging = false;
+      toggleInstructionToast();
+      setBearingDraggability(true);
+    }
   }
 
   /**
@@ -199,32 +207,11 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
   function findBearingsToSwingOnCollision (directionOfForce, numberOfBearingsToSwing) {
-
-    // directionOfForce is 1 when clockwise, -1 when counter-clockwise
-
-    // const staticBearings = directionOfForce > 0 ?
-    //   BEARING_OBJECTS
-    //     .slice(0, collisionPosition).filter(bearingObj => !bearingObj.isInMotion)
-    //   :
-    //   BEARING_OBJECTS
-    //     .slice(collisionPosition + 1).filter(bearingObj => !bearingObj.isInMotion);
-
-    // /**
-    // * return the number of bearings corresponding to the minimum
-    // * between A) the bearings that were in motion behind the collision, or
-    // * B) the number of static bearings remaining
-    // */
-    // const numberOfBearingsToSwing = Math.min(BEARING_OBJECTS.length - staticBearings.length, staticBearings.length);
-
     return directionOfForce > 0 ?
-      // BEARING_OBJECTS.slice(0, numberOfBearingsToSwing)
-      // :
-      // BEARING_OBJECTS.slice(numberOfBearingsToSwing + 1);
       BEARING_OBJECTS.slice(0, numberOfBearingsToSwing)
       :
       BEARING_OBJECTS.slice(-numberOfBearingsToSwing);
   }
-
 
   /**
   * Callback for when a bearing returns from its outward, extended state and
@@ -232,13 +219,11 @@ const NewtonsCradle = (function newtonsCradle () {
   */
   function onCollision (collidingBearingObj, collisionOpts) {
 
-    const {
-      destinationAngle,
-      kineticEnergyOnCollision,
-      energyDampingIncrement,
-      accelerationTransferred,
-      numBearingsInMotion
-    } = collisionOpts;
+    const destinationAngle = collisionOpts.destinationAngle;
+    const kineticEnergyOnCollision = collisionOpts.kineticEnergyOnCollision;
+    const energyDampingDecrement = collisionOpts.energyDampingDecrement || 0;
+    const accelerationTransferred = collisionOpts.accelerationTransferred;
+    const numBearingsInMotion = collisionOpts.numBearingsInMotion;
 
     const directionOfForce = collidingBearingObj.getDirection();
     const bearingsToSwing = findBearingsToSwingOnCollision(directionOfForce, numBearingsInMotion);
@@ -255,20 +240,22 @@ const NewtonsCradle = (function newtonsCradle () {
           (idx === bearingsToSwing.length - 1)
           :
           (idx === 0),
-        kineticEnergyTransferred: kineticEnergyOnCollision + (energyDampingIncrement * (bearingsToSwing.length)),
+        kineticEnergyTransferred: kineticEnergyOnCollision + (energyDampingDecrement * (bearingsToSwing.length)),
         accelerationTransferred,
         outwardAngle: destinationAngle,
         returnAngle: 0,
         numBearingsInMotion,
-        collisionCallback: onCollision
+        collisionCallback: onCollision,
+        swingSeriesCompleteCallback: onSwingSeriesEnd,
       });
 
     });
   }
 
+
   function createSwingTLsAfterDrag (currentRotationOfDragged, positionOfDragged) {
     console.log('Start Swing');
-
+    isCradleSwinging = true;
     const bearingsInMotion = BEARING_OBJECTS.filter(obj => obj.isInMotion);
     const numBearingsInMotion = bearingsInMotion.length;
 
@@ -279,7 +266,8 @@ const NewtonsCradle = (function newtonsCradle () {
         kineticEnergyTransferred: 0,
         outwardAngle: currentRotationOfDragged,
         returnAngle: 0,
-        collisionCallback: onCollision
+        collisionCallback: onCollision,
+        swingSeriesCompleteCallback: onSwingSeriesEnd
       });
 
     });
@@ -299,7 +287,7 @@ const NewtonsCradle = (function newtonsCradle () {
   }
 
   function swingBallsAfterDrag () {
-    disableBearingDrag();
+    setBearingDraggability(false);
     createSwingTLsAfterDrag(
       this.rotation,
       this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex)
@@ -309,14 +297,22 @@ const NewtonsCradle = (function newtonsCradle () {
     // }, 2000);
   }
 
+
+
+  function toggleInstructionToast (isClickable) {
+    DOM_REFS.instructionToastElem.classList.toggle(CLASS_NAMES.isHidden);
+    DOM_REFS.instructionToastElem.classList.toggle(CLASS_NAMES.isVisible);
+  }
+
   function onDragStart () {
 
     const bearingIdx = Number(this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex));
     const swingDirection = this.getDirection();
     const swingDirectionWeight = swingDirection === DIRECTIONS.CLOCKWISE ? 1 : -1;
 
-    DOM_REFS.instructionToastElem.classList.add(CLASS_NAMES.isHidden);
-    DOM_REFS.instructionToastElem.classList.remove(CLASS_NAMES.isVisible);
+    // DOM_REFS.instructionToastElem.classList.add(CLASS_NAMES.isHidden);
+    // DOM_REFS.instructionToastElem.classList.remove(CLASS_NAMES.isVisible);
+    toggleInstructionToast();
 
     // test direction by
     objectsInDrag = swingDirection === DIRECTIONS.CLOCKWISE ?

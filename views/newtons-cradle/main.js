@@ -2,7 +2,6 @@
 
 import TweenMax from "TweenMax";
 import Draggable from "Draggable";
-import EasingUtils from 'utils/easing-utils';
 import Bearing from './models/bearing';
 
 const SELECTORS = {
@@ -115,7 +114,7 @@ const NewtonsCradle = (function newtonsCradle () {
     };
 
     // sort the array of bearing groups according to their index
-    DOM_REFS.sortedBearingGroupElems = [...querySelectorAll(SELECTORS.bearingGroups)].sort((a, b) => {
+    DOM_REFS.sortedBearingGroupElems = Array.from(querySelectorAll(SELECTORS.bearingGroups)).sort((a, b) => {
       const idxA = Number(a.getAttribute(DATA_ATTRIBUTES.bearingIndex));
       const idxB = Number(b.getAttribute(DATA_ATTRIBUTES.bearingIndex));
       return idxA - idxB;
@@ -147,18 +146,14 @@ const NewtonsCradle = (function newtonsCradle () {
       );
 
       bearingBallRadius = Number(bearingBallElem.getAttribute('r'));
-
       BEARING_OBJECTS.push(
         Bearing({
-          mass: bearingLength,
-          radius: bearingBallRadius,
+          mass: 1000000,  // grams
+          ballRadius: bearingBallRadius,
           position: idx,
           maxRotation: MAX_ANGULAR_ROTATION,
           minRotation: -MAX_ANGULAR_ROTATION,
-          bearingLength: Math.abs(
-            Number(bearingBallElem.getAttribute('cy')) -
-            Number(bearingGroup.controlPointElem.getAttribute('cy'))
-          ),
+          bearingLength: bearingLength,   // convert meters to centimeters
           masterTL: new TimelineMax(),
           elem: bearingElem,
           controlPointCoords: bearingControlPointCoords
@@ -185,7 +180,6 @@ const NewtonsCradle = (function newtonsCradle () {
 
   function onSwingSeriesEnd () {
     if (isCradleSwinging) {
-      debugger;
       isCradleSwinging = false;
       toggleInstructionToast();
       setBearingDraggability(true);

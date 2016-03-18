@@ -1,13 +1,13 @@
 'use strict';
 
 import TweenMax from 'TweenMax';
-import EasingUtils from 'utils/easing-utils';
 
 
 // let's get on with it, shall we... until everyone is on #TeamRadians
 function degToRad(degrees) {
   return (Math.PI / 180) * degrees;
 }
+
 function radToDeg(radians) {
   return radians / (Math.PI / 180);
 }
@@ -17,11 +17,9 @@ const MAX_DELTA_T = 0.050;
 
 const Spring = {
 
-  /* Spring force ---> -k * deltaX */
-  force: 0,
-
-  /* Spring constant (aka "stiffness") in kg / s^2 */
-  k: -20,
+  /* Gravitational Spring constant (aka "stiffness") in kg / s^2 */
+  //k: -200,
+  k: null,
 
   /*  "viscous damping coefficient", measured in kg / s) */
   damping: -0.5
@@ -52,18 +50,11 @@ const Swing = {
 const DEFAULT_FRAME_RATE = 1 / 60;
 
 
-const Bearing = {
+const BearingProto = {
 
   mass: null,
-  radius: null,
-  velocity: 0,
-  momentum: 0,
+  ballRadius: null,
 
-  /* Potential energy */
-  pE: 0,
-
-  /* Kinetic Energy */
-  kE: 0,
 
   /* Current angle (0 ~= pointing downwards) */
   theta: 0,
@@ -105,12 +96,16 @@ const Bearing = {
 
 
   onInit () {
+
+    const { pow, sqrt, PI } = Math;
+
     this.spring = Object.create(Object(Spring));
     this.swingState = Object.create(Object(Swing));
+    this.spring.k = -1 * this.mass / (this.bearingLength / 100);
+    this.frequency = (PI * 0.5) * sqrt(this.spring.k / this.mass);
 
-    this.frequency = (Math.PI * 0.5) * Math.sqrt(this.spring.k / this.mass);
-    this.momentOfInertia = this.mass * Math.pow(this.bearingLength, 0.33);
-    //this.momentOfInertia = this.mass * this.bearingLength;
+    this.momentOfInertia = this.mass * pow(this.bearingLength / 100, 2);   
+
   },
 
   _updateTheta: function (deltaT) {
@@ -134,13 +129,16 @@ const Bearing = {
 
 
   _updateMotionForces (deltaT, accelerationWeight = 1) {
+    const { cos } = Math;
 
-    /* Calculate net force (T) from current position (theta). */
+    /* Calculate net rotational force (T, or "torque") from the current position (theta). */
     const T = (
       this.mass *
       GRAVITATIONAL_ACCELERATION *
-      ( Math.cos(degToRad(this.theta)) * this.bearingLength )
+      this.bearingLength *
+      cos(degToRad(this.theta))
     );
+
 
     /* Current angular acceleration (positive when falling inward and negative when swinging outward) */
     const newAlpha = (T / this.momentOfInertia) * accelerationWeight;
@@ -226,15 +224,6 @@ const Bearing = {
     this.omega = opts.kineticEnergyTransferred || 0;
     this.alpha = opts.accelerationTransferred || 0;
 
-
-    // // TODO: Determine if these two bounds can be deleted -- we should never need them
-    // if (this.swingState.direction === swingDirections.COUNTER_CLOCKWISE && outwardAngle < this.minRotation) {
-    //   outwardAngle = this.minRotation;
-    //
-    // } else if (this.swingState.direction === swingDirections.CLOCKWISE && outwardAngle > this.maxRotation) {
-    //   outwardAngle = this.maxRotation;
-    // }
-
     const fallBackRotationAmount = Math.abs(returnAngle - outwardAngle);
 
     console.log(`Target Angle: ${outwardAngle}`);
@@ -242,13 +231,7 @@ const Bearing = {
 
     const { collisionCallback, willInstigateCollision, numBearingsInMotion, swingSeriesCompleteCallback } = opts;
 
-    // const swingTL = new TimelineMax({
-    //   onComplete: this.onSwingComplete,
-    //   onCompleteParams: [fallBackRotationAmount, collisionCallback, willInstigateCollision, numBearingsInMotion],
-    //   onCompleteScope: this
-    // });
-
-    this.masterTL = new TimelineMax({
+    this.swingTL = new TimelineMax({
       onComplete: this.onSwingComplete,
       onCompleteParams: [fallBackRotationAmount, collisionCallback, willInstigateCollision, numBearingsInMotion, swingSeriesCompleteCallback],
       onCompleteScope: this
@@ -275,25 +258,25 @@ const Bearing = {
         this._fallInward(returnAngle, deltaT);
       }
 
-      //swingTL.add(this._createRotationTween(deltaT));
-      this.masterTL.add(this._createRotationTween(deltaT));
-
+      this.swingTL.add(this._createRotationTween(deltaT));
       previousTime = currentTime;
     }
 
-    //this.masterTL.add(swingTL);
-    this.masterTL.play();
-    //swingTL.play();
+    this.swingTL.play();
   },
 
   _getEnergyDampingDecrement () {
     const { spring: { damping, k: stiffness }, bearingLength, theta, mass, omega } = this;
-    const { cos } = Math;
+    //const { cos } = Math;
+    const { cos, pow } = Math;
 
     const springForce = stiffness * cos(degToRad(theta)) - bearingLength;
+    //const springForce = stiffness * pow( cos(degToRad(theta)), 3/2);
     const damperForce = damping * omega;
 
+    console.log(`Energy Damping Decrement: ${(springForce + damperForce) / mass}`);
     return (springForce + damperForce) / mass;
+
   },
 
   /**
@@ -319,7 +302,6 @@ const Bearing = {
       return;
     }
 
-
     this.omega = 0;
     this.alpha = 0;
     this.theta = 0;
@@ -337,15 +319,12 @@ const Bearing = {
         numBearingsInMotion
       });
     }
-
-
   }
-
 };
 
 
 function BearingFactory (opts = {}) {
-  const bearing = Object.create(Object.assign({}, Bearing, opts));
+  const bearing = Object.create(Object.assign({}, BearingProto, opts));
   bearing.onInit();
   return bearing;
 }

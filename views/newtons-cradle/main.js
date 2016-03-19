@@ -129,8 +129,7 @@ const NewtonsCradle = (function newtonsCradle () {
       bearingElem,
       bearingLength,
       bearingControlPointCoords,
-      bearingBallElem,
-      bearingBallRadius;
+      bearingBallElem;
     Object.keys(DOM_REFS.bearingGroups).forEach((bearingGroupKey, idx) => {
 
       bearingGroup = DOM_REFS.bearingGroups[bearingGroupKey];
@@ -139,23 +138,18 @@ const NewtonsCradle = (function newtonsCradle () {
         x: bearingGroup.controlPointElem.getAttribute('cx'),
         y: bearingGroup.controlPointElem.getAttribute('cy')
       };
-      bearingBallElem = bearingGroup.ballElem;
       bearingLength = Math.abs(
-        Number(bearingBallElem.getAttribute('cy')) -
+        Number(bearingGroup.ballElem.getAttribute('cy')) -
         Number(bearingGroup.controlPointElem.getAttribute('cy'))
       );
 
-      bearingBallRadius = Number(bearingBallElem.getAttribute('r'));
       BEARING_OBJECTS.push(
         Bearing({
-          mass: 1000000,  // grams
-          ballRadius: bearingBallRadius,
+          massKG: 0.5,  // kilograms
           position: idx,
-          maxRotation: MAX_ANGULAR_ROTATION,
-          minRotation: -MAX_ANGULAR_ROTATION,
-          bearingLength: bearingLength,   // convert meters to centimeters
-          masterTL: new TimelineMax(),
+          bearingLengthMeters: bearingLength / 100,   // treat SVG measurements as centimeters?
           elem: bearingElem,
+          masterTL: new TimelineMax(),
           controlPointCoords: bearingControlPointCoords
         })
       );

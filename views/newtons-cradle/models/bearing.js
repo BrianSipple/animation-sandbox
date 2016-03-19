@@ -5,11 +5,11 @@ import TweenMax from 'TweenMax';
 
 // let's get on with it, shall we... until everyone is on #TeamRadians
 function degToRad(degrees) {
-  return (Math.PI / 180) * degrees;
+  return (degrees / 180) * Math.PI;
 }
 
 function radToDeg(radians) {
-  return radians / (Math.PI / 180);
+  return (radians * 180) / Math.PI;
 }
 
 const GRAVITATIONAL_ACCELERATION = 9.81;  /* m/s^2 */
@@ -52,9 +52,7 @@ const DEFAULT_FRAME_RATE = 1 / 60;
 
 const BearingProto = {
 
-  mass: null,
-  ballRadius: null,
-
+  massKG: null,
 
   /* Current angle (0 ~= pointing downwards) */
   theta: 0,
@@ -82,14 +80,14 @@ const BearingProto = {
   /* Natural frequency as modeled for a spring-mass system: ( 1 / 2 π ) * sqrt( k / m ) */
   frequency: 0,
 
-  bearingLength: 0,
+  bearingLengthMeters: 0,
 
   /* Position index along the cradle (anywhere from 0 to 4) */
   position: null,
 
-  /* Master timeline for this particular bearing */
-  masterTL: null,
+  /* Master timeline for this particular bearing's swing */
   swingTL: null,
+  masterTL: null,
 
   /* Cahced DOM node (or SVG) for this particular bearing */
   elem: null,
@@ -101,11 +99,10 @@ const BearingProto = {
 
     this.spring = Object.create(Object(Spring));
     this.swingState = Object.create(Object(Swing));
-    this.spring.k = -1 * this.mass / (this.bearingLength / 100);
-    this.frequency = (PI * 0.5) * sqrt(this.spring.k / this.mass);
+    this.spring.k = -1 * this.massKG / (this.bearingLengthMeters);
+    this.frequency = (PI * 0.5) * sqrt(this.spring.k / this.massKG);
 
-    this.momentOfInertia = this.mass * pow(this.bearingLength / 100, 2);   
-
+    this.momentOfInertia = this.massKG * pow(this.bearingLengthMeters, 2);
   },
 
   _updateTheta: function (deltaT) {
@@ -133,9 +130,9 @@ const BearingProto = {
 
     /* Calculate net rotational force (T, or "torque") from the current position (theta). */
     const T = (
-      this.mass *
-      GRAVITATIONAL_ACCELERATION *
-      this.bearingLength *
+      this.massKG *
+      ( GRAVITATIONAL_ACCELERATION * (this.bearingLengthMeters / (deltaT * deltaT)) ) *
+      //(this.bearingLengthMeters) *
       cos(degToRad(this.theta))
     );
 
@@ -262,20 +259,20 @@ const BearingProto = {
       previousTime = currentTime;
     }
 
-    this.swingTL.play();
+    //this.swingTL.play();
   },
 
   _getEnergyDampingDecrement () {
-    const { spring: { damping, k: stiffness }, bearingLength, theta, mass, omega } = this;
+    const { spring: { damping, k: stiffness }, bearingLengthMeters, theta, massKG, omega } = this;
     //const { cos } = Math;
     const { cos, pow } = Math;
 
-    const springForce = stiffness * cos(degToRad(theta)) - bearingLength;
+    const springForce = stiffness * cos(degToRad(theta)) - bearingLengthMeters;
     //const springForce = stiffness * pow( cos(degToRad(theta)), 3/2);
     const damperForce = damping * omega;
 
-    console.log(`Energy Damping Decrement: ${(springForce + damperForce) / mass}`);
-    return (springForce + damperForce) / mass;
+    console.log(`Energy Damping Decrement: ${(springForce + damperForce) / massKG}`);
+    return (springForce + damperForce) / massKG;
 
   },
 
@@ -286,7 +283,6 @@ const BearingProto = {
    */
   onSwingComplete: function (fallBackRotationAmount, collisionCallback, willInstigateCollision, numBearingsInMotion, swingSeriesCompleteCallback) {
 
-    //this.masterTL.clear();
     const accelerationTransferred = this.alpha;
     const kineticEnergyOnCollision = this.omega;
     const energyDampingDecrement = this._getEnergyDampingDecrement();

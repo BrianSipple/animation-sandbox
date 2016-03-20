@@ -9,9 +9,15 @@
   </title>
   <g id="toggle-to-x-circular-spin">
     <g id="icon">
-      <path id="menu-middle" class="cls-1" d="M11.04 24L36.96 24"/>
-      <path id="menu-bottom-x-bl-tr" class="cls-1" d="M35,13l-20.2,20.2L9.46,38.58S12.19,42.94,24,42.94s20-5.2,20-21.26C44,1,18-.19,9.94,10,1.17,21.07,2.9,33,11,33H37"/>
-      <path id="menu-top-x-tl-br" class="cls-1" d="M35.56,35.56L14.84,14.84,9.94,10s-6,7.13-6,14S6.38,42.94,23,42.94a47.71,47.71,0,0,0,10-.62,9.79,9.79,0,0,0,4.82-2.58,13.54,13.54,0,0,0,3-6,23.21,23.21,0,0,0,1-6.7,17.59,17.59,0,0,0-1-6.69A15.26,15.26,0,0,0,37,15H11"/>
+      <path id="menu-middle" class="cls-1" d="M11.04 24h25.92"/>
+      <path id="menu-bottom-x-bl-tr" class="cls-1" d="M35 13L14.8 33.2l-5.34 5.38s2.73 4.36 14.54 4.36 20-5.2 20-21.26C44 1 18-.19 9.94 10 1.17 21.07 2.9 33 11 33h26"/>
+      <path id="menu-top-x-tl-br" class="cls-1" d="M35.56 35.56L14.84 14.84 9.94 10s-6 7.13-6 14S6.38 42.94 23 42.94a47.71 47.71 0 0 0 10-.62 9.79 9.79 0 0 0 4.82-2.58 13.54 13.54 0 0 0 3-6 23.21 23.21 0 0 0 1-6.7 17.59 17.59 0 0 0-1-6.69A15.26 15.26 0 0 0 37 15H11"/>
+      <g id="control-points_control-points--hamburger" data-name="control-points control-points--hamburger">
+        <circle id="hamburger-cp--bottom-left" class="cls-2" cx="11.04" cy="33.02" r="1"/>
+        <circle id="hamburger-cp--bottom-right" class="cls-2" cx="36.96" cy="33.02" r="1"/>
+        <circle id="hamburger-cp--top-right" class="cls-2" cx="36.96" cy="15.02" r="1"/>
+        <circle id="hamburger-cp--top-left" class="cls-2" cx="11.04" cy="15.02" r="1"/>
+      </g>
       <g id="control-points_control-points--x" data-name="control-points control-points--x">
         <circle id="x-point--tl" class="cls-2" cx="12.69" cy="13.19" r="1"/>
         <circle id="x-point--bl" class="cls-2" cx="12.69" cy="35.81" r="1"/>

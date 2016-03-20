@@ -96,7 +96,6 @@ let PlayPauseIcon = ((svgElem, opts) => {
                 icon.POLYGON_POINTS.pauseBarLeft,
                 icon.POLYGON_POINTS.pauseBarRight
             ]) {
-                debugger;
                 TL.to(
                     pointSet.start,
                     DURATIONS.toggleIcon,
@@ -146,8 +145,6 @@ let PlayPauseIcon = ((svgElem, opts) => {
                 // and we reverse from there
                 this.mainObjectTL.reverse(0);
             }
-
-            this.isPlaying = !this.isPlaying;
         }
     }.bind(icon);
 

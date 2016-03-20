@@ -6,7 +6,8 @@
     "dependencies": {
       "css": "github:systemjs/plugin-css@^0.1.13",
       "modernizr": "github:Modernizr/Modernizr@^2.8.3",
-      "normalize.css": "github:necolas/normalize.css@^3.0.3"
+      "normalize.css": "github:necolas/normalize.css@^3.0.3",
+      "savvy-css": "npm:savvy-css@^0.10.3"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.1.13",

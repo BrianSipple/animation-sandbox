@@ -1,0 +1,28 @@
+/**
+ * SAVVY >>> FONT SCALE
+ *
+ *
+ */
+
+:root {
+
+  /*
+   * Values for the ratio and base variables that
+   * much of our scale logic will depend on
+   */
+  --font-ratio: 1.2;
+  --font-base: 1;
+  --base-em: calc(var(--font-base) * 1em);
+  --base-px: calc(var(--font-base) * 16px);
+
+  /* Establish the range of scale steps we're likely to use */
+  --font-scale-0: 1;
+  --font-scale-1: var(--font-ratio);                              /*  1.2    */
+  --font-scale-2: calc(var(--font-ratio) * var(--font-scale-1));  /*  1.44   */
+  --font-scale-3: calc(var(--font-ratio) * var(--font-scale-2));  /*  1.728  */
+  --font-scale-4: calc(var(--font-ratio) * var(--font-scale-3));  /*  2.074  */
+  --font-scale-5: calc(var(--font-ratio) * var(--font-scale-4));  /*  2.488  */
+  --font-scale-6: calc(var(--font-ratio) * var(--font-scale-5));  /*  2.986  */
+  --font-scale-7: calc(var(--font-ratio) * var(--font-scale-6));  /*  3.583  */
+
+}

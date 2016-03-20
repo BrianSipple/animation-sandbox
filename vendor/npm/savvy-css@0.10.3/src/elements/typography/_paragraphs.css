@@ -1,0 +1,14 @@
+/**
+* Paragraph elements
+*/
+
+/* Reset margins */
+p {
+    margin: 0;
+}
+
+/* Create a line break between subsequent paragaphs;
+* use em units for matching to breakpoint font-size */
+p + p {
+    margin-top: 1.5em;
+}

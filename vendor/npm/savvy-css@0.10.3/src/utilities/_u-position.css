@@ -1,0 +1,88 @@
+/*
+ * SAVVY >>> POSITIONING UTILITIES
+ */
+
+.u-static { position: static; }
+.u-relative { position: relative; }
+.u-absolute { position: absolute; }
+.u-transform-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.u-offset-left { top: 0; left: 0; transform: translate3d(-100%, 0, 0); }
+.u-fixed { position: fixed; }
+.u-flow-middle { margin-left: auto; margin-right: auto; }
+
+/* Experimental: https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values */
+.u-sticky { position: sticky; }
+
+/*
+ * Helpers for absolutely positioned items to place themselves at the
+ * edges of their relative containers
+ */
+ .u-edge-top { top: 0; }
+ .u-edge-bottom { bottom: 0; }
+ .u-edge-left { left: 0; }
+ .u-edge-right { right: 0; }
+
+
+@media (--screen-notSmall) {
+    ._ns-u-static { position: static; }
+    ._ns-u-relative { position: relative; }
+    ._ns-u-absolute { position: absolute; }
+    ._ns-u-fixed { position: fixed; }
+    ._ns-u-offset-left { top: 0; left: 0; transform: translate3d(-100%, 0, 0); }
+    ._ns-u-transform-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    ._ns-u-sticky { position: sticky; }
+    ._ns-u-flow-middle { margin-left: auto; margin-right: auto; }
+
+    ._ns-u-edge-top { top: 0; }
+    ._ns-u-edge-bottom { bottom: 0; }
+    ._ns-u-edge-left { left: 0; }
+    ._ns-u-edge-right { right: 0; }
+}
+
+@media (--screen-medium) {
+    ._md-u-static { position: static; }
+    ._md-u-relative { position: relative; }
+    ._md-u-absolute { position: absolute; }
+    ._md-u-fixed { position: fixed; }
+    ._md-u-transform-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    ._md-u-offset-left { top: 0; left: 0; transform: translate3d(-100%, 0, 0); }
+    ._md-u-sticky { position: sticky; }
+    ._md-u-flow-middle { margin-left: auto; margin-right: auto; }
+
+    ._md-u-edge-top { top: 0; }
+    ._md-u-edge-bottom { bottom: 0; }
+    ._md-u-edge-left { left: 0; }
+    ._md-u-edge-right { right: 0; }
+}
+
+@media (--screen-large) {
+    ._lg-u-static { position: static; }
+    ._lg-u-relative { position: relative; }
+    ._lg-u-absolute { position: absolute; }
+    ._lg-u-fixed { position: fixed; }
+    ._lg-u-transform-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    ._lg-u-offset-left { top: 0; left: 0; transform: translate3d(-100%, 0, 0); }
+    ._lg-u-sticky { position: sticky; }
+    ._lg-u-flow-middle { margin-left: auto; margin-right: auto; }
+
+    ._lg-u-edge-top { top: 0; }
+    ._lg-u-edge-bottom { bottom: 0; }
+    ._lg-u-edge-left { left: 0; }
+    ._lg-u-edge-right { right: 0; }
+}
+
+@media (--screen-xLarge) {
+    ._xlg-u-static { position: static; }
+    ._xlg-u-relative { position: relative; }
+    ._xlg-u-absolute { position: absolute; }
+    ._xlg-u-fixed { position: fixed; }
+    ._xlg-u-transform-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    ._xlg-u-offset-left { top: 0; left: 0; transform: translate3d(-100%, 0, 0); }
+    ._xlg-u-sticky { position: sticky; }
+    ._xlg-u-flow-middle { margin-left: auto; margin-right: auto; }
+
+    ._xlg-u-edge-top { top: 0; }
+    ._xlg-u-edge-bottom { bottom: 0; }
+    ._xlg-u-edge-left { left: 0; }
+    ._xlg-u-edge-right { right: 0; }
+}

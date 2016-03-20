@@ -1,0 +1,34 @@
+/**
+* List-related elements
+*/
+
+/* Definition list terms are set in bold */
+dt {
+    font-weight: 700;
+}
+
+/* List elements’ inset alignment */
+dd {
+    margin-left: var(--indentation-1);
+}
+
+ul {
+    padding-left: var(--indentation-1);
+}
+
+ol {
+    padding-left: var(--indentation-1);
+}
+
+
+@media (--screen-medium) {
+    dd {
+        margin-left: var(--indentation-2);
+    }
+    ul {
+        padding-left: var(--indentation-3);
+    }
+    ol {
+        padding-left: var(--indentation-3);
+    }
+}

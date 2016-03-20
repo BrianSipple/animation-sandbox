@@ -1,0 +1,43 @@
+/**
+* Body element typographic styles
+*/
+
+body {
+  /* Set base font size for the body  */
+  font-size: calc(var(--base-em) / var(--font-scale-1));
+
+  /* Set a base line-height multiplier of 1.44 (http://practicaltypography.com/line-spacing.html) */
+  line-height: calc(var(--base-em) * var(--font-scale-2));
+}
+
+@media (--screen-notXSmall) {
+  body {
+    font-size: calc(var(--base-em) * var(--font-scale-0));
+  }
+}
+
+@media (--screen-notSmall) {
+  body {
+    font-size: calc(var(--base-em) * var(--font-scale-1));
+  }
+}
+
+/*@media (--screen-medium) {
+body {
+font-size: calc(var(--base-em) * var(--font-scale-2));
+}
+}*/
+
+
+@media (--screen-large) {
+  body {
+    font-size: calc(var(--base-em) * var(--font-scale-2));
+  }
+}
+
+
+@media (--screen-xxLarge) {
+  body {
+    font-size: calc(var(--base-em) * var(--font-scale-3));
+  }
+}

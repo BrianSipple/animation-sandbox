@@ -1,0 +1,86 @@
+/**
+ * SAVVY >>> TYPOGRAPHIC BASE SETTINGS
+ */
+
+:root {
+
+
+    /* ------ Letter Spacing --------- */
+    --letter-spacing-h1: -0.06em;
+    --letter-spacing-h2: -0.04em;
+    --letter-spacing-h3: -0.02em;
+
+
+
+    /* ------ Font Sizes --------- */
+    --font-size__local: 1em;
+
+    /* --- Default font sizes (active during "medium" breakpoint) --- */
+
+    /* Set <body> font size a little larger than normal. */
+    --font-size__body: 1.25em;
+
+    --font-size__blockquote: 1.25em;
+    --font-size__h1: 2.5em;
+    --font-size__h2: 2em;
+    --font-size__h3: 1.5em;
+    --font-size__h4: 1.125em;
+
+    /* Redcuced font sizes at "xSmall" breakpoint */
+    --_nxs-font-size__body: 0.9375em;
+
+    /* Redcuced font sizes at "small" breakpoint */
+    --_ns-font-size__body: 1em;
+    --_ns-font-size__h1: 2em;
+    --_ns-font-size__h2: 1.625em;
+    --_ns-font-size__h3: 1.375em;
+    --_ns-font-size__h4: 1em;
+
+
+    /* Enlarged font sizes at "large" breakpoint */
+    --_lg-font-size__blockquote: 1.5em;
+    --_lg-font-size__body: 1.375em;
+    --_lg-font-size__h1: 3em;
+    --_lg-font-size__h2: 2.25em;
+    --_lg-font-size__h3: 1.75em;
+    --_lg-font-size__h4: 1.125em;
+
+    /* Font sizes at "xL" breakpoint */
+    --_xlg-font-size__body: 1.5em;
+
+
+
+    /* ------ Line Height Multipliers (to set line height as a multiple of the current font size) --------- */
+
+    --line-height-multiplier__blockquote: 1.25;
+    --line-height-multiplier__body: 1.375;
+    --line-height-multiplier__h1: 1.25;
+    --line-height-multiplier__h2: 1.25;
+    --line-height-multiplier__h3: 1.25;
+    --line-height-multiplier__h4: 1.2222;
+
+
+    /* Line-height multipliers at "xSmall" breakpoint */
+    --_nxs-line-height-multiplier__body: 1.21875;
+
+
+    /* Redcuced line-height multipliers at "small" breakpoint */
+    --_ns-line-height-multiplier__body: 1.25;
+    --_ns-line-height-multiplier__h1: 1.25;
+    --_ns-line-height-multiplier__h2: 1.15384;
+    --_ns-line-height-multiplier__h3: 1.13636;
+    --_ns-line-height-multiplier__h4: 1.11;
+
+
+    /* Enlarged line-height multipliers at "large" breakpoint */
+    --_lg-line-height-multiplier__blockquote: 1.45833333;
+
+
+    /* Enlarged line-height multipliers at "xlarge" breakpoint */
+    --_xlg-line-height-multiplier__body: 1.50390625;
+
+
+    /* Enlarged line-height multipliers at "xxLarge" breakpoint */
+    --_xlg-line-height-multiplier__body: 1.875;
+
+}

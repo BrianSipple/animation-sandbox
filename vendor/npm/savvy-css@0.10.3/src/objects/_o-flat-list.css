@@ -1,0 +1,19 @@
+/**
+ * SAVVY >>> Flat List
+ *
+ * Because sometimes... we just want to stack a few <li>'s together
+ * in our markup.
+ */
+
+
+/*
+ * NOTE: As of 0.6.0, ".o-list--flat" has been slated for deprecation.
+ * .o-list--reset is now the recommended selector name for
+ * this behavior
+ */
+.o-list--flat,
+.o-list--reset {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+}

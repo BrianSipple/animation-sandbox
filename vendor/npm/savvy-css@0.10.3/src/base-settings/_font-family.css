@@ -1,0 +1,29 @@
+/**
+ * SAVVY >>> TYPOGRAPHIC BASE SETTINGS
+ *
+ *  Font families set here prefer quality system typefaces,
+ *  of the sans-serif variety.
+ */
+
+
+:root {
+  /*
+   * Target the system fonts first (http://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/)
+   * then provide similar fallbacks
+   */
+  --font-family-stack__main:
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      'Fira Sans',
+      'Droid Sans',
+      Avenir,
+      Geneva,
+      Tahoma,
+      san-serif;
+
+}

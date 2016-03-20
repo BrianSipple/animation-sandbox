@@ -1,0 +1,25 @@
+/*
+ * SAVVY >>> DISPLAY UTILITIES
+ */
+
+.u-block { display: block; }
+.u-inline-block { display: inline-block; }
+.u-inline { display: inline; }
+
+@media (--screen-notSmall) {
+    ._ns-u-block { display: block; }
+    ._ns-u-inline-block { display: inline-block; }
+    ._ns-u-inline { display: inline; }
+}
+
+@media (--screen-medium) {
+    ._md-u-block { display: block; }
+    ._md-u-inline-block { display: inline-block; }
+    ._md-u-inline { display: inline; }
+}
+
+@media (--screen-large) {
+    ._lg-u-block { display: block; }
+    ._lg-u-inline-block { display: inline-block; }
+    ._lg-u-inline { display: inline; }
+}

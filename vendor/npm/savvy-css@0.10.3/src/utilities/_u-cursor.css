@@ -1,0 +1,8 @@
+/*
+ * SAVVY >>> CURSOR
+ */
+
+/* Set the cursor to pointer */
+.u-pointer {
+    cursor: pointer !important;
+}

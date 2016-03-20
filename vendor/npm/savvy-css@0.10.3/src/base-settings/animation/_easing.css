@@ -1,0 +1,91 @@
+/**
+ * SAVVY >>> ANIMATION EASING FUNCTION VARIABLES
+ */
+
+:root {
+
+
+/* -------------------------- Ins -------------------------- */
+  --easing__ease-in-sine: cubic-bezier(0.470, 0.000, 0.745, 0.715);
+  --easing__ease-in-quad: cubic-bezier(0.550, 0.085, 0.680, 0.530);
+  --easing__ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --easing__ease-in-cubic--sluggish: cubic-bezier(0.470, 0.020, 1.000, 0.570);
+  --easing__ease-in-quartic: cubic-bezier(0.895, 0.030, 0.685, 0.220);
+  --easing__ease-in-quint: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+  --easing__ease-in-circ: cubic-bezier(0.600, 0.040, 0.980, 0.335);
+
+  /* -------------------------- Outs -------------------------- */
+  --easing__ease-out-sine: cubic-bezier(0.390, 0.575, 0.565, 1.000);
+  --easing__ease-out-quad: cubic-bezier(0.250, 0.460, 0.450, 0.940);
+  --easing__ease-out-cubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  --easing__ease-out-cubic--bounce-25: cubic-bezier(.27, .78, .75, 2.15);
+  --easing__ease-out-quartic: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+  --easing__ease-out-quartic--sluggish: cubic-bezier(0.135, 0.535, 0.450, 0.940);
+  --easing__ease-out-quint: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+  --easing__ease-out-quint--bounce-8: cubic-bezier(0.00, 0.300, 0.00, 1.480);
+  --easing__ease-out-circ: cubic-bezier(0.075, 0.820, 0.165, 1.000);
+
+/* -------------------------- INs & OUTS -------------------------- */
+  --easing__linear-in-slow-out: cubic-bezier(0.00, 0.00, 0.20, 1);
+
+
+  --easing__default: var(--easing__ease-out-cubic);
+
+
+
+  /**
+  * Scaling the size of an element up or down
+  */
+  --easing__element-scale-up: var(--easing__ease-out-quint);
+  --easing__element-scale-up--bounce: var(--easing__ease-out-quint--bounce-8);
+  --easing__element-scale-down: var(--easing__ease-in-sine);
+
+
+  /* TODO: Make a single ease that can be used for either/both in/out */
+  --easing__fade-in: var(--easing__ease-out-cubic);
+  --easing__fade-in--bounce: var(--easing__ease-out-quint--bounce-8);
+  --easing__fade-out: var(--easing__ease-in-sine);
+
+
+  /**
+  * Sliding an element across the space of a view.
+  * Example: https://www.youtube.com/watch?v=PJqbivkm0Ms
+  *
+  * The ease should occur at the end of the motion for entrances,
+  * and the beginning of the motion for exits. The invserse would lead
+  * to motion that is distracting and unwanted
+  *
+  * Also, we give different treatment to heavy objects vs light objects:
+  * Light objects ease more quickly, whereas heavier objects
+  * ease more slowly and thus need to begin the easing a bit sooner. This
+  * is what the "sluggish"-ness here refers to
+  */
+  --easing__slide-in--light-obj: var(--easing__ease-out-quartic);
+  --easing__slide-in--heavy-obj: var(--easing__ease-out-quartic--sluggish);
+  --easing__slide-out--light-obj: var(--easing__ease-in-cubic);
+  --easing__slide-out--heavy-obj: var(--easing__ease-in-cubic--sluggish);
+
+
+
+  --easing__reposition--light-obj: var(--easing__ease-out-cubic);
+  --easing__reposition--heavy-obj: var(--easing__ease-out-quad);
+
+  /**
+  * Like element scaling, but more widely scoped
+  * (i.e. to a view or collection of elements)
+  */
+  --easing__zoom: var(--easing__ease-out-cubic);
+  --easing__zoom--bounce: var(--easing__ease-out-cubic--bounce-25);
+
+  /**
+  * Change colors
+  */
+  --easing__color-shift: var(--easing__default);
+
+
+  /**
+  * https://media.giphy.com/media/fgsyamMpPw7jW/giphy.gif
+  */
+  --easing__gtfo: cubic-bezier(0.68, -0.63, 0.00, 0.67);
+
+}

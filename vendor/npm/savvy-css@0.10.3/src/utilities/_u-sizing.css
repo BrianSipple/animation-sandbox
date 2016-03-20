@@ -1,0 +1,117 @@
+/**
+ * SAVVY >>> SIZING
+ *
+ *
+ * Utility classes for broadly styling an element ("broadly" meaning
+ * general influences such as "full height" or "full width")
+ */
+
+.u-full-bleed {
+ height: 100vh;
+ margin: 0;
+}
+
+.u-full-stretch {
+ width: 100vw;
+ margin: 0;
+}
+
+.u-fill-height {
+ height: 100%;
+}
+
+.u-inherit-height {
+  height: inherit;
+}
+
+
+
+.u-fit-width {
+  max-width: 100%;
+}
+
+.u-fill-width {
+ width: 100%;
+}
+
+.u-inherit-width {
+  width: inherit;
+}
+
+
+/**
+ * Width sizes: on the twentieths (5% increments), halves, thirds and quarters
+ */
+.u-width-95 { width: 95%; }
+.u-width-90 { width: 90%; }
+.u-width-85 { width: 85%; }
+.u-width-80 { width: 80%; }
+
+.u-width-75,
+.u-width-threeQuarters { width: 75%; }
+
+.u-width-70 { width: 70%; }
+.u-width-twoThirds { width: 66.6667%; }
+.u-width-60 { width: 60%; }
+.u-width-55 { width: 55%; }
+
+.u-width-50,
+.u-width-oneHalf { width: 50%; }
+
+.u-width-45 { width: 45%; }
+.u-width-40 { width: 40%; }
+.u-width-35 { width: 35%; }
+.u-width-oneThird { width: 33.3333%; }
+.u-width-30 { width: 30%; }
+
+.u-width-25,
+.u-width-oneQuarter { width: 25%; }
+
+.u-width-20 { width: 20%; }
+.u-width-15 { width: 15%; }
+.u-width-10 { width: 10%; }
+
+
+
+/**
+ * Height sizes: Right now, just on the tenths
+ */
+.u-height-90 { height: 90%; }
+.u-height-80 { height: 80%; }
+.u-height-70 { height: 70%; }
+.u-height-60 { height: 60%; }
+.u-height-50 { height: 50%; }
+.u-height-40 { height: 40%; }
+.u-height-30 { height: 30%; }
+.u-height-20 { height: 20%; }
+.u-height-10 { height: 10%; }
+
+
+
+
+/**
+ * Utilities for setting width & height relative
+ * to global spacing constants
+ */
+ .u-width-spacing-1 { width: var(--spacing-1); }
+ .u-width-spacing-2 { width: var(--spacing-2); }
+ .u-width-spacing-3 { width: var(--spacing-3); }
+ .u-width-spacing-4 { width: var(--spacing-4); }
+ .u-width-spacing-5 { width: var(--spacing-5); }
+
+ .u-height-spacing-1 { height: var(--spacing-1); }
+ .u-height-spacing-2 { height: var(--spacing-2); }
+ .u-height-spacing-3 { height: var(--spacing-3); }
+ .u-height-spacing-4 { height: var(--spacing-4); }
+ .u-height-spacing-5 { height: var(--spacing-5); }
+
+
+/**
+ * Helpers to set min-width to a breakpoint measurement
+ */
+ .u-min-width-breakpoint--xs { min-width: var(--breakpoint-size__x-small); }
+ .u-min-width-breakpoint--sm { min-width: var(--breakpoint-size__small); }
+ .u-min-width-breakpoint--md { min-width: var(--breakpoint-size__medium); }
+ .u-min-width-breakpoint--lg { min-width: var(--breakpoint-size__large); }
+ .u-min-width-breakpoint--xl { min-width: var(--breakpoint-size__xLarge); }
+ .u-min-width-breakpoint--xxl { min-width: var(--breakpoint-size__xxLarge); }

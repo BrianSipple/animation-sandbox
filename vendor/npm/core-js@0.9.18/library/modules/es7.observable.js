@@ -1,18 +1,18 @@
 /* */ 
-var $ = require("./$"),
-    $def = require("./$.def"),
-    $redef = require("./$.redef"),
-    $mix = require("./$.mix"),
-    asap = require("./$.task").set,
-    assert = require("./$.assert"),
-    OBSERVER = require("./$.wks")('observer'),
+var $ = require('./$'),
+    $def = require('./$.def'),
+    $redef = require('./$.redef'),
+    $mix = require('./$.mix'),
+    asap = require('./$.task').set,
+    assert = require('./$.assert'),
+    OBSERVER = require('./$.wks')('observer'),
     isFunction = $.isFunction,
     assertObject = assert.obj,
     assertFunction = assert.fn;
 function cancelSubscription(observer) {
   var subscription = observer._subscription;
   if (!subscription)
-    return ;
+    return;
   observer._subscription = undefined;
   try {
     subscription.unsubscribe();
@@ -98,7 +98,7 @@ $mix(Observable.prototype, {
     });
     return {unsubscribe: function() {
         if (unsubscribed)
-          return ;
+          return;
         unsubscribed = true;
         if (subscription)
           subscription.unsubscribe();

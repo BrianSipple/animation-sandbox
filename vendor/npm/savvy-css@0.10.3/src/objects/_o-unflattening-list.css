@@ -1,0 +1,46 @@
+/**
+ * SAVVY >>> Unflattening List
+ *
+ * Responsive "unflattening" list that -- WHEN COMBINED WITH A RESET LIST --
+ * only expands to a bulleted and margined state past a certain breakpoint
+ *
+ * NOTE: Ideally, we'd use the indentation value that matches the default
+ * indentation values for a list at the given breakpoints as they're defined
+ * in /elements/typography/lists. The more I'm exploring POSTCSS and variables,
+ * I'm thinking their might be a cleaner way of synching the variable contextually
+ *
+ */
+
+
+@media (--screen-notSmall) {
+  ._ns-o-list--unflattening {
+    list-style-type: disc;
+    padding-left: var(--indentation-1);
+  }
+  ._ns-o-list--unflattening > li {
+    display: list-item;
+    list-style-type: disc;
+  }
+}
+
+@media (--screen-medium) {
+  ._md-o-list--unflattening {
+    list-style-type: disc;
+    padding-left: var(--indentation-3);
+  }
+  ._md-o-list--unflattening > li {
+    display: list-item;
+    list-style-type: disc;
+  }
+}
+
+@media (--screen-large) {
+  ._lg-o-list--unflattening {
+    list-style-type: disc;
+    padding-left: var(--indentation-3);
+  }
+  ._lg-o-list--unflattening > li {
+    display: list-item;
+    list-style-type: disc;
+  }
+}

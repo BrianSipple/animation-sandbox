@@ -1,0 +1,31 @@
+/*
+* SAVVY >>> TYPOGRAPHY
+*
+* Base typographic styles. These attempt to set some sane defaults
+* without imposing too many opinions on style. Comment-out or
+* override as need be.
+*
+*
+*/
+
+html,
+input,
+select,
+textarea {
+    font-family: var(--font-family-stack__main);
+    color: var(--color__nearBlack);
+}
+
+
+
+address {
+    font-style: normal;
+}
+
+@import './_root.css';
+@import './_anchors.css';
+@import './_blockquote.css';
+@import './_body.css';
+@import './_headers.css';
+@import './_lists.css';
+@import './_paragraphs.css';

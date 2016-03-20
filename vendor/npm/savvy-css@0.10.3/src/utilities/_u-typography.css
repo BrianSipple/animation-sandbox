@@ -1,0 +1,20 @@
+/*
+ * SAVVY >>> TYPOGRAPHY UTILITIES
+ *
+ * Utility classes for resetting or modifying typographic properties
+ */
+
+
+/*
+ * NOTE: .u-list-reset will be deprecated at some point.
+ * Please use `.g-list-reset`, as the rule has now been classifed
+ * as a garnish
+ */
+.u-list-reset {
+  padding-left: 0;
+  list-style: none;
+}
+
+
+.u-nowrap { white-space: nowrap; }
+.u-break-word { white-space: break-word; }

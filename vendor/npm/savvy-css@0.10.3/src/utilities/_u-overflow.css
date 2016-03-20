@@ -1,0 +1,21 @@
+/**
+ * SAVVY >>> Overflow utilitites
+ */
+
+ .u-overflow-auto { overflow: auto; }
+ .u-overflow-auto-x { overflow-x: auto; }
+ .u-overflow-auto-y { overflow-y: auto; }
+
+
+.u-overflow-hide { overflow: hidden; }
+.u-overflow-hide-x { overflow-x: hidden; }
+.u-overflow-hide-y { overflow-y: hidden; }
+
+
+.u-overflow-show { overflow: visible; }
+.u-overflow-show-y { overflow-y: visible; }
+.u-overflow-show-x { overflow-y: visible; }
+
+
+.u-overflow-scroll-y { overflow-y: scroll; }
+.u-overflow-scroll-x { overflow-x: scroll; }

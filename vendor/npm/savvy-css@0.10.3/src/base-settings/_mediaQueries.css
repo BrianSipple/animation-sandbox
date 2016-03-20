@@ -1,0 +1,39 @@
+/*
+ * SAVVY >>> MEDIA QUERIES
+ *
+ * Custom media queries for quick reference.
+ * Used as follows:
+ *
+ * @media (--screen-notSmall) {
+ *   .myResponsiveClass {
+ *     flex-direction: column;
+ *   }
+ * }
+ *
+ */
+
+/* Variablize measurement values for each breakpoint */
+:root {
+    --breakpoint-size__x-small: 20em;            /* Phone */
+    --breakpoint-size__small: 32em;              /* Small tablet */
+    --breakpoint-size__medium: 48em;             /* Average tablet */
+    --breakpoint-size__large: 64em;              /* Small desktop */
+    --breakpoint-size__xLarge: 80em;             /* Large desktop */
+    --breakpoint-size__xxLarge: 96em;            /* "Monitor" */
+}
+
+
+
+/**
+ * NOTE the "not" naming convention here for small breakpoints. This allows us to
+ * reason more intuitively about the "direction" of the logic flow: The screen is NO LONGER small,
+ * and we're now styling for a wider environment.
+ */
+@custom-media --screen-notXSmall screen and (min-width: calc(var(--breakpoint-size__x-small)));
+@custom-media --screen-notSmall screen and (min-width: calc(var(--breakpoint-size__small)));
+
+
+@custom-media --screen-medium screen and (min-width: calc(var(--breakpoint-size__medium)));
+@custom-media --screen-large screen and (min-width: calc(var(--breakpoint-size__large)));
+@custom-media --screen-xLarge screen and (min-width: calc(var(--breakpoint-size__xLarge)));
+@custom-media --screen-xxLarge screen and (min-width: calc(var(--breakpoint-size__xx-large)));

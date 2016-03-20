@@ -1,0 +1,132 @@
+/*
+* SAVVY >>> TYPOGRAPHIC garnishes
+*
+*/
+
+/**
+* Chameleon garnishes
+* These classes can be used on ANY element in order for
+* that element to embody the properties of the eponymous class.
+*
+* For example, if a <p> element needs <h1> styling, but it's suboptimal
+* to change the markup, it should just apply the `.p__h1` polish rule
+*
+*/
+
+
+/* TODO: Media query support */
+/**
+* FONT-WEIGHT GARNISHES
+*/
+.g-font-100 { font-weight: 100; }
+.g-font-200 { font-weight: 200; }
+.g-font-300 { font-weight: 300; }
+.g-font-400 { font-weight: 400; }
+.g-font-500 { font-weight: 500; }
+.g-font-600 { font-weight: 600; }
+.g-font-700 { font-weight: 700; }
+.g-font-800 { font-weight: 800; }
+.g-font-900 { font-weight: 900; }
+
+
+/*
+* FONT-SIZE GARNISHES
+*/
+.g-font-smaller {
+  font-size: calc(var(--base-em) / var(--font-scale-1));
+}
+
+.g-font-larger {
+  font-size: calc(var(--base-em) * var(--font-scale-1));
+}
+
+
+/*
+* SMALL CAPS
+*/
+
+.g-small-caps {
+  font-size: 0.666em;
+  text-transform: uppercase;
+  letter-spacing: 0.125em;
+}
+
+/**
+ * REM garnishes -- usefull for setting a scope with
+ * definitive font size that's still based off of the root font size
+ *
+ * NOTE: Syntax is still in beta
+ */
+ .g-font-size--halfRoot {
+   font-size: 0.5rem;
+ }
+ .g-font-size--threeQuartersRoot {
+    font-size: 0.75rem;
+ }
+ .g-font-size--root {
+   font-size: 1rem;
+ }
+ .g-font-size--rootPlusQuarter {
+   font-size: 1.25rem;
+ }
+ .g-font-size--rootPlusThird {
+   font-size: 1.333333rem;
+ }
+ .g-font-size--rootPlusHalf {
+   font-size: 1.5rem;
+ }
+ .g-font-size--twoRoot {
+   font-size: 2rem;
+ }
+
+
+
+/**
+* Ellipsize a single line that overflows
+*/
+.g-truncate {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/**
+* Clip a single line that overflows
+*/
+.g-clip {
+  max-width: 100%;
+  text-overflow: clip;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+
+/*
+* LINK RESET
+*
+* Use this to remove the custom and fallback underline from links.
+* This should be used with caution, as links should not be indicated
+* to the user by way of colour alone.
+*/
+.g-link-reset {
+  background-image: none;
+  text-decoration: none;
+
+  &:hover {
+    background-image: none;
+    text-decoration: none;
+    color: currentColor;
+  }
+}
+
+.g-list-reset {
+  padding-left: 0;
+  list-style: none;
+}
+
+.g-list-style-none { list-style: none; }
+
+
+.g-underline { text-decoration: underline; }
+.g-strikethrough { text-decoration: line-through; }

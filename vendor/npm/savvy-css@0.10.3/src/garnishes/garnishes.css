@@ -1,0 +1,11 @@
+/**
+ * SAVVY >>> garnishes
+ */
+
+/* TODO: Deprecate _g-animation.css in favor of an entire animation
+@import './_g-animation.css';
+*/
+@import './_g-color.css';
+@import './_g-borders.css';
+@import './_g-shadows.css';
+@import './_g-typography.css';

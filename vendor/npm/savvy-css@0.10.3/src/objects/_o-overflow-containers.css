@@ -1,0 +1,17 @@
+.o-scroll-container--vertical {
+    overflow-y: scroll;
+}
+
+.o-scroll-container--horizontal {
+    overflow-x: scroll;
+}
+
+/* TODO: Deprecate for .u-overflow-hide */
+.o-clip-container {
+    overflow: hidden;
+}
+
+/*
+ * There could be an ".o-omnidirectional-scroll-container"... but it
+ * seems a bit clearer to use both "v" and "h"  :-)
+ */

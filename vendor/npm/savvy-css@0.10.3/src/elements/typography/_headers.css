@@ -1,0 +1,106 @@
+/* Only apply this text-rendering value on headings, as applying it to large
+* blocks of text can introduce performance issues */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-rendering: optimizeLegibility;
+}
+
+/* Default header typography (active during "medium" breakpoint) */
+h1 {
+  font-size: calc(var(--base-em) * var(--font-scale-4));
+  letter-spacing: var(--letter-spacing-h1);
+}
+
+h2 {
+  font-size: calc(var(--base-em) * var(--font-scale-3));
+  letter-spacing: var(--letter-spacing-h2);
+}
+
+h3 {
+  font-size: calc(var(--base-em) * var(--font-scale-2));
+  letter-spacing: var(--letter-spacing-h3);
+}
+
+h4 {
+  font-size: calc(var(--base-em) * var(--font-scale-1));
+}
+
+h5 {
+  font-size: calc(var(--base-em) * var(--font-scale-0));
+}
+
+h6 {
+  font-size: calc(var(--base-em) / var(--font-scale-1));
+}
+
+/*
+* Use a lower step of the font scale in this case
+* to benefit readability when lines are wrapping
+*/
+h1 {
+  line-height: calc(var(--base-em) * var(--font-scale-0));
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: calc(var(--base-em) * var(--font-scale-1));
+}
+
+
+
+/* Header typography for "medium" breakpoints  */
+@media (--screen-medium) {
+
+  h1 {
+    font-size: calc(var(--base-em) * var(--font-scale-5));
+  }
+  h2 {
+    font-size: calc(var(--base-em) * var(--font-scale-4));
+  }
+  h3 {
+    font-size: calc(var(--base-em) * var(--font-scale-3));
+  }
+  h4 {
+    font-size: calc(var(--base-em) * var(--font-scale-2));
+  }
+}
+
+
+/* Header typography for "large" breakpoints  */
+@media (--screen-large) {
+  h1 {
+    font-size: calc(var(--base-em) * var(--font-scale-6));
+  }
+  h2 {
+    font-size: calc(var(--base-em) * var(--font-scale-5));
+  }
+  h3 {
+    font-size: calc(var(--base-em) * var(--font-scale-4));
+  }
+  h4 {
+    font-size: calc(var(--base-em) * var(--font-scale-3));
+  }
+}
+
+/* Header typography for "xxLarge" breakpoints  */
+@media (--screen-xxLarge) {
+  h1 {
+    font-size: calc(var(--base-em) * var(--font-scale-7));
+  }
+  h2 {
+    font-size: calc(var(--base-em) * var(--font-scale-6));
+  }
+  h3 {
+    font-size: calc(var(--base-em) * var(--font-scale-5));
+  }
+  h4 {
+    font-size: calc(var(--base-em) * var(--font-scale-4));
+  }
+}

@@ -1,0 +1,141 @@
+/**
+* Helpers to have an element use one of the Savvy animation easing constants
+* during an animation
+*/
+
+.a-anim-ease-default {
+  animation-timing-function: var(--easing__default);
+}
+.a-trans-ease-default {
+  transition-timing-function: var(--easing__default);
+}
+
+
+.a-anim-ease-scaleUp {
+  animation-timing-function: var(--easing__element-scale-up);
+}
+.a-trans-ease-scaleUp {
+  transition-timing-function: var(--easing__element-scale-up);
+}
+
+
+
+.a-anim-ease-scaleUp--bounce {
+  animation-timing-function: var(--easing__element-scale-up--bounce);
+}
+.a-trans-ease-scaleUp--bounce {
+  transition-timing-function: var(--easing__element-scale-up--bounce);
+}
+
+
+
+.a-anim-ease-scaleDown {
+  animation-timing-function: var(--easing__element-scale-down);
+}
+.a-trans-ease-scaleDown {
+  transition-timing-function: var(--easing__element-scale-down);
+}
+
+
+.a-anim-ease-fadeIn {
+  animation-timing-function: var(--easing__fade-in);
+}
+.a-trans-ease-fadeIn {
+  transition-timing-function: var(--easing__fade-in);
+}
+
+
+.a-anim-ease-fadeIn--bounce {
+  animation-timing-function: var(--easing__fade-in--bounce);
+}
+.a-trans-ease-fadeIn--bounce {
+  transition-timing-function: var(--easing__fade-in--bounce);
+}
+
+
+.a-anim-ease-fadeOut {
+  animation-timing-function: var(--easing__fade-out);
+}
+.a-trans-ease-fadeOut {
+  transition-timing-function: var(--easing__fade-out);
+}
+
+
+.a-anim-ease-slideIn--light {
+  animation-timing-function: var(--easing__slide-in--light-obj);
+}
+.a-trans-ease-slideIn--light {
+  transition-timing-function: var(--easing__slide-in--light-obj);
+}
+
+
+.a-anim-ease-slideIn--heavy {
+  animation-timing-function: var(--easing__slide-in--heavy-obj);
+}
+.a-trans-ease-slideIn--heavy {
+  transition-timing-function: var(--easing__slide-in--heavy-obj);
+}
+
+
+.a-anim-ease-slideOut--light {
+  animation-timing-function: var(--easing__slide-out--light-obj);
+}
+.a-trans-ease-slideOut--light {
+  transition-timing-function: var(--easing__slide-out--light-obj);
+}
+
+
+.a-anim-ease-slideOut--heavy {
+  animation-timing-function: var(--easing__slide-out--heavy-obj);
+}
+.a-trans-ease-slideOut--heavy {
+  transition-timing-function: var(--easing__slide-out--heavy-obj);
+}
+
+
+.a-anim-ease-reposition--light {
+  animation-timing-function: var(--easing__reposition--light-obj);
+}
+.a-trans-ease-reposition--light {
+  transition-timing-function: var(--easing__reposition--light-obj);
+}
+
+
+.a-anim-ease-reposition--heavy {
+  animation-timing-function: var(--easing__reposition--heavy-obj);
+}
+.a-trans-ease-reposition--heavy {
+  transition-timing-function: var(--easing__reposition--heavy-obj);
+}
+
+
+.a-anim-ease-zoom {
+  animation-timing-function: var(--easing__zoom);
+}
+.a-trans-ease-zoom {
+  transition-timing-function: var(--easing__zoom);
+}
+
+
+.a-anim-ease-zoom--bounce {
+  animation-timing-function: var(--easing__zoom--bounce);
+}
+.a-trans-ease-zoom--bounce {
+  transition-timing-function: var(--easing__zoom--bounce);
+}
+
+
+.a-anim-ease-colorShift {
+  animation-timing-function: var(--easing__color-shift);
+}
+.a-trans-ease-colorShift {
+  transition-timing-function: var(--easing__color-shift);
+}
+
+
+.a-anim-ease-gtfo {
+  animation-timing-function: var(--easing__gtfo);
+}
+.a-trans-ease-gtfo {
+  transition-timing-function: var(--easing__gtfo);
+}

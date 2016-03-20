@@ -1,0 +1,15 @@
+/*
+ * SAVVY >>> BOX MODEL UTILITIES
+ */
+
+.u-b-box {
+  box-sizing: border-box;
+}
+
+.u-c-box {
+  box-sizing: content-box;
+}
+
+.u-pad-box {
+  box-sizing: padding-box;
+}

@@ -1,0 +1,119 @@
+/*
+* SAVVY >>> COLOR
+*
+* Savvy comes with its own color palette.
+*
+* Each color is comprised of a set of variants, or "swatches", that live along a spectrum
+* from light to dark. The swatches use a numeric system similar
+* to many typefaces. The numbers and their corresponding
+* values are:
+*
+* 100 - very light
+* 300 - light
+* 500 - medium
+* 700 - dark
+* 900 - very dark
+*
+* You’ll also find custom properties for true white
+* and true black at the bottom of this file, along with
+* the 'nearBlack' color which is used as the default
+* text color.
+*
+*/
+
+:root {
+
+    --color__red--100: hsla(354, 100%, 90%, 1);
+    --color__red--300: hsla(1, 71%, 67%, 1);
+    --color__red--500: hsla(6, 93%, 57%, 1);
+    --color__red--700: hsla(1, 68%, 50%, 1);
+    --color__red--900: hsla(3, 82%, 40%, 1);
+
+
+    --color__yellow--100: hsla(55, 100%, 88%, 1);
+    --color__yellow--300: hsla(55, 100%, 71%, 1);
+    --color__yellow--500: hsla(55, 100%, 55%, 1);
+    --color__yellow--700: hsla(46, 98%, 50%, 1);
+    --color__yellow--900: hsla(31, 100%, 48%, 1);
+
+
+    --color__green--100: hsla(137, 80%, 84%, 1);
+    --color__green--300: hsla(130, 90%, 64%, 1);
+    --color__green--500: hsla(120, 100%, 49%, 1);
+    --color__green--700: hsla(94, 87%, 40%, 1);
+    --color__green--900: hsla(124, 61%, 23%, 1);
+
+
+    /* Aquamarine blue-green */
+    --color__aqua--100: hsla(167, 100%, 82%, 1);
+    --color__aqua--300: hsla(166, 100%, 68%, 1);
+    --color__aqua--500: hsla(166, 100%, 46%, 1);
+    --color__aqua--700: hsla(172, 100%, 38%, 1);
+    --color__aqua--900: hsla(174, 100%, 27%, 1);
+
+
+
+    --color__cyan--100: hsla(187, 74%, 82%, 1);
+    --color__cyan--300: hsla(179, 96%, 59%, 1);
+    --color__cyan--500: hsla(187, 100%, 42%, 1);
+    --color__cyan--700: hsla(186, 100%, 33%, 1);
+    --color__cyan--900: hsla(183, 100%, 20%, 1);
+
+
+    --color__blue--100: hsla(199, 95%, 84%, 1);
+    --color__blue--300: hsla(199, 94%, 63%, 1);
+    --color__blue--500: hsla(199, 100%, 48%, 1);
+    --color__blue--700: hsla(202, 100%, 42%, 1);
+    --color__blue--900: hsla(208, 100%, 31%, 1);
+
+
+
+    --color__purple--100: hsla(251, 77%, 86%, 1);
+    --color__purple--300: hsla(251, 60%, 65%, 1);
+    --color__purple--500: hsla(263, 56%, 47%, 1);
+    --color__purple--700: hsla(259, 64%, 41%, 1);
+    --color__purple--900: hsla(255, 80%, 33%, 1);
+
+
+    --color__violet--100: hsla(292, 58%, 90%, 1);
+    --color__violet--300: hsla(300, 65%, 87%, 1);
+    --color__violet--500: hsla(300, 79%, 72%, 1);
+    --color__violet--700: hsla(292, 74%, 40%, 1);
+    --color__violet--900: hsla(283, 79%, 36%, 1);
+
+
+    --color__magenta--100: hsla(300, 100%, 63%, 1);
+    --color__magenta--300: hsla(300, 100%, 50%, 1);
+    --color__magenta--500: hsla(300, 100%, 41%, 1);
+    --color__magenta--700: hsla(300, 100%, 25%, 1);
+    --color__magenta--900: hsla(299, 59%, 32%, 1);
+
+
+    --color__gray--100: hsla(0, 0%, 96%, 1);
+    --color__gray--300: hsla(0, 0%, 88%, 1);
+    --color__gray--500: hsla(0, 0%, 62%, 1);
+    --color__gray--700: hsla(0, 0%, 38%, 1);
+    --color__gray--900: hsla(0, 0%, 13%, 1);
+
+
+    --color__warm-gray--100: hsla(38, 17%, 91%, 1);
+    --color__warm-gray--300: hsla(30, 17%, 77%, 1);
+    --color__warm-gray--500: hsla(34, 18%, 70%, 1);
+    --color__warm-gray--700: hsla(33, 10%, 45%, 1);
+    --color__warm-gray--900: hsla(33, 11%, 19%, 1);
+
+
+    --color__cool-gray--100: hsla(198, 16%, 84%, 1);
+    --color__cool-gray--300: hsla(201, 17%, 62%, 1);
+    --color__cool-gray--500: hsla(200, 19%, 46%, 1);
+    --color__cool-gray--700: hsla(199, 19%, 33%, 1);
+    --color__cool-gray--900: hsla(200, 19%, 18%, 1);
+
+
+    --color__white: hsla(0, 0%, 100%, 1);
+    --color__nearWhite: hsla(0, 0%, 98%, 1);
+    --color__black: hsla(0, 0%, 0%, 1);
+    --color__nearBlack: hsla(0, 0%, 0%, 0.87);
+
+
+}

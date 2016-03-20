@@ -18,11 +18,10 @@ const MAX_DELTA_T = 0.050;
 const Spring = {
 
   /* Gravitational Spring constant (aka "stiffness") in kg / s^2 */
-  //k: -200,
   k: null,
 
   /*  "viscous damping coefficient", measured in kg / s) */
-  damping: -0.5
+  damping: 0.5
 };
 
 const swingTypes = {
@@ -56,6 +55,8 @@ const BearingProto = {
 
   /* Current angle (0 ~= pointing downwards) */
   theta: 0,
+
+  MAX_ANGLE: null,
 
   /**
    * Force multiplied by the bearing's (perpendicular) distance from the
@@ -99,7 +100,9 @@ const BearingProto = {
 
     this.spring = Object.create(Object(Spring));
     this.swingState = Object.create(Object(Swing));
-    this.spring.k = -1 * this.massKG / (this.bearingLengthMeters);
+    //this.spring.k = this.massKG / (this.bearingLengthMeters);
+    //this.spring.k = this.bearingLengthMeters;
+    this.spring.k = 20;
     this.frequency = (PI * 0.5) * sqrt(this.spring.k / this.massKG);
 
     this.momentOfInertia = this.massKG * pow(this.bearingLengthMeters, 2);
@@ -112,16 +115,23 @@ const BearingProto = {
       alpha,
       position,
       swingState: { direction: swingDirection },
-      theta: currentTheta
+      theta: currentTheta,
+      MAX_ANGLE,
     } = this;
+
+    const { min, max } = Math;
 
     const rotationIncrement = (
       Math.abs(omega) * (deltaT) +
       (0.5 * Math.abs(alpha) * deltaT * deltaT)
     );
 
-    this.theta = currentTheta + (swingDirection * rotationIncrement);
-    console.log(`Bearing ${position}: Computing new rotation of ${this.theta}`);
+    this.theta = swingDirection === -1 ?
+      max(-MAX_ANGLE, currentTheta - rotationIncrement)
+      :
+      min(MAX_ANGLE, currentTheta + rotationIncrement);
+
+    console.log(`\`updateTheta():\` Bearing ${position}: Computing new rotation of ${this.theta}`);
   },
 
 
@@ -145,7 +155,7 @@ const BearingProto = {
     this.omega += ( 0.5 * (this.alpha + newAlpha) ) * deltaT;
     this.alpha = newAlpha;
 
-    console.log(`Omega: ${this.omega}`);
+    console.log(`end of \`_updateMotionForces():\` Omega: ${this.omega}`);
 
   },
 
@@ -156,7 +166,7 @@ const BearingProto = {
   },
 
   _createRotationTween: function (deltaT) {
-    console.log(`end of \`createRotationTween\` with newTheta of ${this.theta} ---> this.alpha: ${this.alpha},  this.omega: ${this.omega}`);
+    console.log(`createRotationTween(): newTheta of ${this.theta} ---> this.alpha: ${this.alpha},  this.omega: ${this.omega}`);
     return TweenMax.to(
       this.elem,
       deltaT,
@@ -262,17 +272,22 @@ const BearingProto = {
     //this.swingTL.play();
   },
 
-  _getEnergyDampingDecrement () {
+  /**
+   * Computes a positive damping "decrement" that will later by subtracted from the
+   * overarching motion's energy
+   */
+  _getEnergyDampingDecrement (fallBackRotationAmount) {
     const { spring: { damping, k: stiffness }, bearingLengthMeters, theta, massKG, omega } = this;
     //const { cos } = Math;
-    const { cos, pow } = Math;
+    const { cos, pow, abs } = Math;
 
-    const springForce = stiffness * cos(degToRad(theta)) - bearingLengthMeters;
-    //const springForce = stiffness * pow( cos(degToRad(theta)), 3/2);
-    const damperForce = damping * omega;
+    // const springForceDecrement = stiffness * ( cos(degToRad(theta)) / bearingLengthMeters ) ;
+    const springForceDecrement = stiffness * ( cos(degToRad(fallBackRotationAmount)) * bearingLengthMeters );  // the more we fall back, the lower the cosine will be
+    const damperForceDecrement = damping * omega;
 
-    console.log(`Energy Damping Decrement: ${(springForce + damperForce) / massKG}`);
-    return (springForce + damperForce) / massKG;
+    console.log(`Energy Damping Decrement: ${(springForceDecrement + damperForceDecrement) / massKG}`);
+    //return (springForce + damperForce) / massKG);
+    return (springForceDecrement + damperForceDecrement) / massKG;
 
   },
 
@@ -285,8 +300,12 @@ const BearingProto = {
 
     const accelerationTransferred = this.alpha;
     const kineticEnergyOnCollision = this.omega;
-    const energyDampingDecrement = this._getEnergyDampingDecrement();
-    const destinationAngle = ( fallBackRotationAmount + (energyDampingDecrement) ) * this.swingState.direction;
+    const energyDampingDecrement = this._getEnergyDampingDecrement(fallBackRotationAmount);
+    const destinationAngle = ( fallBackRotationAmount - energyDampingDecrement ) * this.swingState.direction;
+
+    this.omega = 0;
+    this.alpha = 0;
+    this.theta = 0;
 
     if (destinationAngle > 0 && this.swingState.direction == -1) {
       swingSeriesCompleteCallback();
@@ -297,10 +316,6 @@ const BearingProto = {
       swingSeriesCompleteCallback();
       return;
     }
-
-    this.omega = 0;
-    this.alpha = 0;
-    this.theta = 0;
 
     if (collisionCallback && willInstigateCollision) {
       console.log(`*** onSwingComplete ***

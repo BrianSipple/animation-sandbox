@@ -1,0 +1,13 @@
+blockquote {
+    font-size: calc(var(--base-em) * var(--font-scale-1));
+    line-height: calc(var(--base-em) * var(--font-scale-1));
+}
+
+
+
+@media (--screen-large) {
+    blockquote {
+      font-size: calc(var(--base-em) * var(--font-scale-2));
+      line-height: calc(var(--base-em) * var(--font-scale-0));
+    }
+}

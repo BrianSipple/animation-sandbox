@@ -1,0 +1,31 @@
+/*
+ * SAVVY >>> JUSTIFICATION UTILITIES
+ */
+
+.u-justify-start { justify-content: flex-start; }
+.u-justify-end { justify-content: flex-end; }
+.u-justify-center { justify-content: center; }
+
+@media (--screen-notSmall) {
+    ._ns-u-justify-start { justify-content: flex-start; }
+    ._ns-u-justify-end { justify-content: flex-end; }
+    ._ns-u-justify-center { justify-content: center; }
+}
+
+@media (--screen-medium) {
+    ._md-u-justify-start { justify-content: flex-start; }
+    ._md-u-justify-end { justify-content: flex-end; }
+    ._md-u-justify-center { justify-content: center; }
+}
+
+@media (--screen-large) {
+    ._lg-u-justify-start { justify-content: flex-start; }
+    ._lg-u-justify-end { justify-content: flex-end; }
+    ._lg-u-justify-center { justify-content: center; }
+}
+
+@media (--screen-xLarge) {
+    ._xl-u-justify-start { justify-content: flex-start; }
+    ._xl-u-justify-end { justify-content: flex-end; }
+    ._xl-u-justify-center { justify-content: center; }
+}

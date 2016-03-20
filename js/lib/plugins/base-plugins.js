@@ -23,11 +23,6 @@
 
 // Place any helper plugins in here......
 
-// Optional application namespace for bundling all exported modules, which
-// would allow us to pass our application object into that wrapper function as a parameter
-// called exports...
-//var BS = {};
-
 (function (exports) {
 
     (function (exports) {
@@ -73,13 +68,6 @@
             };
         }
 
-        // TODO: Fix!
-        // if (!Number.prototype.isNan) {
-        //
-        //     exports.isNaN = function isNaN (value) {
-        //         return typeof value === 'number' && value !== value;
-        //     };
-        // }
 
         if (!exports.getAbsoluteUrl) {
             exports.getAbsoluteUrl = (function getAbsoluteUrl (url) {

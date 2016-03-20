@@ -1,0 +1,16 @@
+/*
+ * SAVVY >>> SHADOWS
+ *
+ * Box shadows with multiple sources, heavily
+ * inspired by Google’s Material Design and the
+ * Polymer Project: https://www.polymer-project.org/components/paper-elements/demo.html#paper-shadow
+ *
+ */
+
+:root {
+    --box-shadow-1: 0 1.5px 4px rgba(0,0,0,0.24), 0 1.5px 6px rgba(0,0,0,0.12);
+    --box-shadow-2: 0 3px 12px rgba(0,0,0,0.23), 0 3px 12px rgba(0,0,0,0.16);
+    --box-shadow-3: 0 10px 12px rgba(0,0,0,0.23), 0 6px 40px rgba(0,0,0,0.19);
+    --box-shadow-4: 0 14px 20px rgba(0,0,0,0.22), 0 10px 56px rgba(0,0,0,0.25);
+    --box-shadow-5: 0 19px 24px rgba(0,0,0,0.22), 0 15px 76px rgba(0,0,0,0.3);
+}

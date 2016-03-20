@@ -147,7 +147,9 @@ const NewtonsCradle = (function newtonsCradle () {
         Bearing({
           massKG: 0.5,  // kilograms
           position: idx,
-          bearingLengthMeters: bearingLength / 100,   // treat SVG measurements as centimeters?
+          MAX_ANGLE: MAX_ANGULAR_ROTATION,
+          //bearingLengthMeters: bearingLength / 100,   // treat SVG measurements as centimeters?
+          bearingLengthMeters: bearingLength,   // treat SVG measurements as centimeters?
           elem: bearingElem,
           masterTL: new TimelineMax(),
           controlPointCoords: bearingControlPointCoords
@@ -228,7 +230,7 @@ const NewtonsCradle = (function newtonsCradle () {
           (idx === bearingsToSwing.length - 1)
           :
           (idx === 0),
-        kineticEnergyTransferred: kineticEnergyOnCollision + (energyDampingDecrement * (bearingsToSwing.length)),
+        kineticEnergyTransferred: kineticEnergyOnCollision - (energyDampingDecrement * (bearingsToSwing.length)),
         accelerationTransferred,
         outwardAngle: destinationAngle,
         returnAngle: 0,

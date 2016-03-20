@@ -7,53 +7,6 @@
 
     <link rel="stylesheet" href="../../../../vendor/savvy/savvy.min.css">
     <link rel="stylesheet" href="main.css">
-
-    <svg class="svg-symbols" xmlns="http://www.w3.org/2000/svg">
-
-      <symbol id="toggle-to-x-circular-spin" viewBox="0 0 48 48">
-
-        <defs>
-          <style>
-            .control-points,
-            .icon-paths {
-              fill:none;
-            }
-            .icon-paths {
-              stroke:#000;
-              stroke-miterlimit:10;
-              stroke-width:3px;
-            }
-          </style>
-        </defs>
-
-        <title>
-          Hamburger To X Icon Toggle
-        </title>
-
-        <g class="icon">
-          <g class="icon-paths">
-            <path class="menu-middle" d="M11.04 24h25.92"/>
-            <path class="menu-bottom-x-bl-tr" d="M35 13L14.8 33.2l-5.34 5.38s2.73 4.36 14.54 4.36 20-5.2 20-21.26C44 1 18-.19 9.94 10 1.17 21.07 2.9 33 11 33h26"/>
-            <path class="menu-top-x-tl-br" d="M35.56 35.56L14.84 14.84 9.94 10s-6 7.13-6 14S6.38 42.94 23 42.94a47.71 47.71 0 0 0 10-.62 9.79 9.79 0 0 0 4.82-2.58 13.54 13.54 0 0 0 3-6 23.21 23.21 0 0 0 1-6.7 17.59 17.59 0 0 0-1-6.69A15.26 15.26 0 0 0 37 15H11"/>
-          </g>
-          <g class="control-points control-points--hamburger">
-            <circle class="hamburger-cp hamburger-cp--bottom-left" cx="11.04" cy="33.02" r="1"/>
-            <circle class="hamburger-cp hamburger-cp--bottom-right" cx="36.96" cy="33.02" r="1"/>
-            <circle class="hamburger-cp hamburger-cp--top-right" cx="36.96" cy="15.02" r="1"/>
-            <circle class="hamburger-cp hamburger-cp--top-left" cx="11.04" cy="15.02" r="1"/>
-          </g>
-          <g class="control-points control-points--x">
-            <circle class="x-cp x-cp--tl" cx="12.69" cy="13.19" r="1"/>
-            <circle class="x-cp x-cp--bl" cx="12.69" cy="35.81" r="1"/>
-            <circle class="x-cp x-cp--br" cx="35.31" cy="35.81" r="1"/>
-            <circle class="x-cp x-cp--tr" cx="35.31" cy="13.19" r="1"/>
-          </g>
-        </g>
-
-      </symbol>
-
-    </svg>
-
   </head>
 
   <body class="u-full-bleed u-full-stretch u-relative g-bg-aqua--100">
@@ -69,7 +22,51 @@
             <h2 class="g-gray--500 u-mt2 u-mb2">Circular Spinning Toggle</h2>
 
             <svg class="o-svg o-svg--wrapper">
-              <use xlink:href="#toggle-to-x-circular-spin" />
+
+              <svg class="o-svg u-fill-width u-fill-height" 
+                   id="toggle-to-x-circular-spin"
+                   viewBox="0 0 48 48"
+                   xmlns="http://www.w3.org/2000/svg">
+
+                <defs>
+                  <style>
+                    .control-points,
+                    .icon-paths {
+                      fill:none;
+                    }
+                    .icon-paths {
+                      stroke:#000;
+                      stroke-miterlimit:10;
+                      stroke-width:3px;
+                    }
+                  </style>
+                </defs>
+
+                <title>
+                  Hamburger To X Icon Toggle
+                </title>
+
+                <g class="icon">
+                  <g class="icon-paths">
+                    <path class="icon-path icon-path--menu-middle" d="M11.04 24h25.92"/>
+                    <path class="icon-path icon-path--menu-bottom-x-bl-tr" d="M35 13L14.8 33.2l-5.34 5.38s2.73 4.36 14.54 4.36 20-5.2 20-21.26C44 1 18-.19 9.94 10 1.17 21.07 2.9 33 11 33h26"/>
+                    <path class="icon-path icon-path--menu-top-x-tl-br" d="M35.56 35.56L14.84 14.84 9.94 10s-6 7.13-6 14S6.38 42.94 23 42.94a47.71 47.71 0 0 0 10-.62 9.79 9.79 0 0 0 4.82-2.58 13.54 13.54 0 0 0 3-6 23.21 23.21 0 0 0 1-6.7 17.59 17.59 0 0 0-1-6.69A15.26 15.26 0 0 0 37 15H11"/>
+                  </g>
+                  <g class="control-points control-points--hamburger">
+                    <circle class="hamburger-cp hamburger-cp--bottom-left" cx="11.04" cy="33.02" r="1"/>
+                    <circle class="hamburger-cp hamburger-cp--bottom-right" cx="36.96" cy="33.02" r="1"/>
+                    <circle class="hamburger-cp hamburger-cp--top-right" cx="36.96" cy="15.02" r="1"/>
+                    <circle class="hamburger-cp hamburger-cp--top-left" cx="11.04" cy="15.02" r="1"/>
+                  </g>
+                  <g class="control-points control-points--x">
+                    <circle class="x-cp x-cp--top-left" cx="12.69" cy="13.19" r="1"/>
+                    <circle class="x-cp x-cp--bottom-left" cx="12.69" cy="35.81" r="1"/>
+                    <circle class="x-cp x-cp--bottom-right" cx="35.31" cy="35.81" r="1"/>
+                    <circle class="x-cp x-cp--top-right" cx="35.31" cy="13.19" r="1"/>
+                  </g>
+                </g>
+
+              </svg>
             </svg>
 
           </div>
@@ -89,7 +86,7 @@
                 MODULE.default.run();
               })
               .catch(function (err) {
-                console.error(err.stack);
+                console.error(`Error: ${err}\nStack: ${err.stack}`);
               });
         });
     </script>

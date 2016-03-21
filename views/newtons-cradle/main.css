@@ -650,7 +650,7 @@ body {
     transform: translateY(0, -8rem, 0); } }
 
 body {
-  background-color: #edffa3; }
+  background-color: cyan; }
 
 .newtons-cradle {
   position: relative;
@@ -663,8 +663,8 @@ body {
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
-  width: 65%;
-  height: 100%; }
+  width: 50%;
+  height: 50%; }
 
 .svg-outer-container {
   width: 100%;

@@ -144,6 +144,7 @@ const BearingProto = {
   },
 
 
+  // TODO: Tweak the alpha incrementation here in order to get a more realistic deceleration mid-swing
   _updateMotionForces (deltaT, accelerationWeight = 1) {
     const { cos } = Math;
 

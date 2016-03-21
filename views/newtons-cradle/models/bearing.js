@@ -12,7 +12,7 @@ function radToDeg(radians) {
   return (radians * 180) / Math.PI;
 }
 
-const GRAVITATIONAL_ACCELERATION = 9.81;  /* m/s^2 */
+const GRAVITATIONAL_ACCELERATION = 9.81 * 9.81;  /* m/s^2 */
 const MAX_DELTA_T = 0.050;
 
 const Spring = {
@@ -70,16 +70,16 @@ const BearingProto = {
   /* Angular acceleration */
   alpha: 0,
 
-  /* Point mass m at along a weightless rod at a distance r from the axis of rotation. */
+  /**
+   * Point mass m at along a weightless rod at a distance r from the axis of rotation.
+   * (kgm^2)
+   */
   momentOfInertia: 0,
 
 
   /* Spring force ---> -k * deltaX */
   spring: null,
   swingState: null,
-
-  /* Natural frequency as modeled for a spring-mass system: ( 1 / 2 π ) * sqrt( k / m ) */
-  frequency: 0,
 
   bearingLengthMeters: 0,
 
@@ -100,12 +100,9 @@ const BearingProto = {
 
     this.spring = Object.create(Object(Spring));
     this.swingState = Object.create(Object(Swing));
-    //this.spring.k = this.massKG / (this.bearingLengthMeters);
-    //this.spring.k = this.bearingLengthMeters;
-    this.spring.k = 20;
-    this.frequency = (PI * 0.5) * sqrt(this.spring.k / this.massKG);
-
-    this.momentOfInertia = this.massKG * pow(this.bearingLengthMeters, 2);
+    this.spring.k = this.bearingLengthMeters * 2;
+//    this.frequency = (PI * 0.5) * sqrt(this.spring.k / this.massKG);
+    this.momentOfInertia = this.massKG * pow(this.bearingLengthMeters, 2);   //
   },
 
   _updateTheta: function (deltaT) {
@@ -126,10 +123,22 @@ const BearingProto = {
       (0.5 * Math.abs(alpha) * deltaT * deltaT)
     );
 
-    this.theta = swingDirection === -1 ?
-      max(-MAX_ANGLE, currentTheta - rotationIncrement)
-      :
-      min(MAX_ANGLE, currentTheta + rotationIncrement);
+    if (swingDirection === -1) {
+      this.theta = currentTheta <= 0 ?
+        // right and moving right
+        max(-MAX_ANGLE, currentTheta - rotationIncrement)
+        :
+        // left and moving right
+        max(0, currentTheta - rotationIncrement);
+
+    } else {
+      this.theta = currentTheta < 0 ?
+        // left and moving left
+        min(0, currentTheta + rotationIncrement)
+        :
+        // right and moving left
+        min(MAX_ANGLE, currentTheta + rotationIncrement);
+    }
 
     console.log(`\`updateTheta():\` Bearing ${position}: Computing new rotation of ${this.theta}`);
   },
@@ -142,6 +151,7 @@ const BearingProto = {
     const T = (
       this.massKG *
       ( GRAVITATIONAL_ACCELERATION * (this.bearingLengthMeters / (deltaT * deltaT)) ) *
+      //( GRAVITATIONAL_ACCELERATION * (this.bearingLengthMeters) ) *
       //(this.bearingLengthMeters) *
       cos(degToRad(this.theta))
     );
@@ -156,7 +166,6 @@ const BearingProto = {
     this.alpha = newAlpha;
 
     console.log(`end of \`_updateMotionForces():\` Omega: ${this.omega}`);
-
   },
 
   _updateTheUniverse(deltaT, accelerationWeight = 1) {
@@ -166,7 +175,7 @@ const BearingProto = {
   },
 
   _createRotationTween: function (deltaT) {
-    console.log(`createRotationTween(): newTheta of ${this.theta} ---> this.alpha: ${this.alpha},  this.omega: ${this.omega}`);
+    //console.log(`createRotationTween(): newTheta of ${this.theta} ---> this.alpha: ${this.alpha},  this.omega: ${this.omega}`);
     return TweenMax.to(
       this.elem,
       deltaT,
@@ -233,8 +242,8 @@ const BearingProto = {
 
     const fallBackRotationAmount = Math.abs(returnAngle - outwardAngle);
 
-    console.log(`Target Angle: ${outwardAngle}`);
-    console.log(`Fallback Rotation Amount: ${fallBackRotationAmount}`);
+//    console.log(`Target Angle: ${outwardAngle}`);
+  //  console.log(`Fallback Rotation Amount: ${fallBackRotationAmount}`);
 
     const { collisionCallback, willInstigateCollision, numBearingsInMotion, swingSeriesCompleteCallback } = opts;
 
@@ -256,8 +265,7 @@ const BearingProto = {
       deltaT = (currentTime - previousTime) / 1000;
 
       deltaT = Math.max(DEFAULT_FRAME_RATE, Math.min(deltaT, MAX_DELTA_T));
-
-      console.log(`DeltaT: ${deltaT}`);
+      //console.log(`DeltaT: ${deltaT}`);
 
       if (this.swingState.type === swingTypes.OUTWARD) {
         this._swingOutward(outwardAngle, deltaT);
@@ -274,21 +282,28 @@ const BearingProto = {
 
   /**
    * Computes a positive damping "decrement" that will later by subtracted from the
-   * overarching motion's energy
+   * overarching motion's energy.
+   *
+   * Essentially, we derive the amount of energy lossed during the transfer by
+   * computing a "decremental force" from the angular displacement and then dividing it
+   * by the kinectic energy (1/2mv^2)
    */
   _getEnergyDampingDecrement (fallBackRotationAmount) {
+    if (this.omega === 0) {
+      return this.spring.damping;
+    }
     const { spring: { damping, k: stiffness }, bearingLengthMeters, theta, massKG, omega } = this;
-    //const { cos } = Math;
-    const { cos, pow, abs } = Math;
+    const { cos } = Math;
 
-    // const springForceDecrement = stiffness * ( cos(degToRad(theta)) / bearingLengthMeters ) ;
-    const springForceDecrement = stiffness * ( cos(degToRad(fallBackRotationAmount)) * bearingLengthMeters );  // the more we fall back, the lower the cosine will be
-    const damperForceDecrement = damping * omega;
+    const angularDisplacement = cos(degToRad(fallBackRotationAmount));
+    const springForceDecrement = stiffness * ( angularDisplacement * bearingLengthMeters );  // the more we fall back, the lower the cosine will be
+    const damperForceDecrement = damping * omega || damping;
 
-    console.log(`Energy Damping Decrement: ${(springForceDecrement + damperForceDecrement) / massKG}`);
-    //return (springForce + damperForce) / massKG);
-    return (springForceDecrement + damperForceDecrement) / massKG;
-
+    //console.log(`Energy Damping Decrement: ${(springForceDecrement + damperForceDecrement) / (massKG * omega * omega)}`);
+    return omega === 0 ?
+      (springForceDecrement + damperForceDecrement) / (0.5 * massKG)
+      :
+      (springForceDecrement + damperForceDecrement) / (0.5 * massKG * omega * omega);
   },
 
   /**
@@ -318,9 +333,10 @@ const BearingProto = {
     }
 
     if (collisionCallback && willInstigateCollision) {
-      console.log(`*** onSwingComplete ***
-        Issuing collisionCallback from bearing ${this.position} & \
-        transferring kinetic energy of ${this.omega}. \
+      console.log(`*** onSwingComplete -- firing collision callback ***
+        Bearing ${this.position}
+        Velocity: ${this.omega}.
+        Energy Damping Decrement: ${energyDampingDecrement}
         Destination angle of collision receptor: ${destinationAngle}`);
       collisionCallback(this, {
         destinationAngle,

@@ -59,9 +59,6 @@ const MAX_ANGULAR_ROTATION = 85;
 const BEARING_OBJECTS = [];
 
 
-function _getBearingObjectFromElem (elem) {
-  return BEARING_OBJECTS[elem.getAttribute(DATA_ATTRIBUTES.bearingIndex)];
-}
 
 const NewtonsCradle = (function newtonsCradle () {
 
@@ -148,8 +145,7 @@ const NewtonsCradle = (function newtonsCradle () {
           massKG: 0.5,  // kilograms
           position: idx,
           MAX_ANGLE: MAX_ANGULAR_ROTATION,
-          //bearingLengthMeters: bearingLength / 100,   // treat SVG measurements as centimeters?
-          bearingLengthMeters: bearingLength,   // treat SVG measurements as centimeters?
+          bearingLengthMeters: bearingLength,
           elem: bearingElem,
           masterTL: new TimelineMax(),
           controlPointCoords: bearingControlPointCoords
@@ -157,13 +153,6 @@ const NewtonsCradle = (function newtonsCradle () {
       );
 
     });
-  }
-
-  function revealResetButton () {
-    TweenMax.set(
-      DOM_REFS.revealResetButton,
-      { classNames: `+=${CLASS_NAMES.isVisible}`}
-    );
   }
 
   /**
@@ -282,9 +271,6 @@ const NewtonsCradle = (function newtonsCradle () {
       this.rotation,
       this.target.getAttribute(DATA_ATTRIBUTES.bearingIndex)
     );
-    // setTimeout(() => {
-    //   revealResetButton();  // TODO
-    // }, 2000);
   }
 
 
@@ -300,8 +286,6 @@ const NewtonsCradle = (function newtonsCradle () {
     const swingDirection = this.getDirection();
     const swingDirectionWeight = swingDirection === DIRECTIONS.CLOCKWISE ? 1 : -1;
 
-    // DOM_REFS.instructionToastElem.classList.add(CLASS_NAMES.isHidden);
-    // DOM_REFS.instructionToastElem.classList.remove(CLASS_NAMES.isVisible);
     toggleInstructionToast();
 
     // test direction by
@@ -342,10 +326,6 @@ const NewtonsCradle = (function newtonsCradle () {
     Draggable.create(DOM_REFS.sortedBearingGroupElems, {
       type: 'rotation',
       throwProps: true,
-      // onThrowComplete: function () {
-      //   debugger;
-      //   this.disable();
-      // },
       bounds: {
         minRotation: -MAX_ANGULAR_ROTATION,
         maxRotation: MAX_ANGULAR_ROTATION

@@ -203,7 +203,7 @@
                 NewtonsCradle.default.run();
               })
               .catch(function (err) {
-                console.error(err.stack);
+                console.error(`Error: ${err}\n Stack: ${err.stack}`);
               });
         });
     </script>

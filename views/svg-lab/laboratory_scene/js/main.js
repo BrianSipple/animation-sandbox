@@ -786,7 +786,7 @@ var app = (function (exports) {
         masterTL.add(ejectPrinterPaper(), LABELS.sceneCallToAction);
 
 
-        masterTL.seek(LABELS.sceneTubesFilled + '-=6');
+        masterTL.play(0);
     }
 
     return {

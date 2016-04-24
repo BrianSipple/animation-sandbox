@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Multi-Color Circle Spinner</title>
+    <link rel="stylesheet" href="main.css" media="screen">
+    <link rel="stylesheet" href="../../../vendor/savvy/savvy-0.10.3.min.css" media="screen">
+  </head>
+  <body class="u-fill-width u-full-bleed u-overflow-hide-x u-overflow-auto-y g-bg-purple--700 g-nearWhite">
+
+    <span class="u-block u-align-center u-mt3 u-ml-auto u-mr-auto">Spin Here</span>
+
+
+    <script src="../../../vendor/system.js" charset="utf-8"></script>
+    <script src="../../../config.js" charset="utf-8"></script>
+    <script type="text/javascript">
+
+      function runApp () {
+        System
+        .import('./main.js')
+        .then(Module => {
+          Module.default.init();
+          window.removeEventListener('DOMContentLoaded', runApp);
+        })
+        .catch(err => console.error(`Error: ${err}\nStack: ${err.stack}`));
+      }
+
+      window.addEventListener('DOMContentLoaded', runApp, false);
+    </script>
+  </body>
+</html>

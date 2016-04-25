@@ -8,11 +8,12 @@ const DURATIONS = {
 };
 
 const CLASS_NAMES = {
+  iconContainer: 'js-icon-container--toggle-to-x-circular-spin',
   icon: 'icon',
   iconPaths: {
-    menuTopXTopLeft: 'icon-path icon-path--menu-top-x-tl-br',
+    topLeftHamBottomRightX: 'icon-path icon-path--menu-top-x-tl-br',
     menuMiddle: 'icon-path icon-path--menu-middle',
-    menuBottomXBottomLeft: 'icon-path icon-path--menu-bottom-x-bl-tr'
+    bottomRightHamTopRightX: 'icon-path icon-path--menu-bottom-x-bl-tr'
   },
   controlPoints: {
     hamburger: {
@@ -41,32 +42,33 @@ const Icon = (function Icon() {
 
 
   function wireUpDOMRefs () {
-    const iconElem = document.querySelector(`.${CLASS_NAMES.icon}`);
+    const iconContainer = document.querySelector(`.${CLASS_NAMES.iconContainer}`);
 
-    DOM_REFS.icon = iconElem;
+    DOM_REFS.iconContainer = iconContainer;
+    DOM_REFS.icon = iconContainer.getElementsByClassName(CLASS_NAMES.icon)[0];
     DOM_REFS.iconPaths = {
-      menuTopXTopLeft: iconElem.getElementsByClassName(CLASS_NAMES.iconPaths.menuTopXTopLeft)[0],   // menu top / the part of the "x" that starts (left-to-right) at the top-left
-      menuMiddle: iconElem.getElementsByClassName(CLASS_NAMES.iconPaths.menuMiddle)[0],
-      menuBottomXBottomLeft: iconElem.getElementsByClassName(CLASS_NAMES.iconPaths.menuBottomXBottomLeft)[0], // menu top / the part of the "x" that starts (left-to-right) at the bottom-left
+      topLeftHamBottomRightX: iconContainer.getElementsByClassName(CLASS_NAMES.iconPaths.topLeftHamBottomRightX)[0],   // menu top / the part of the "x" that starts (left-to-right) at the top-left
+      menuMiddle: iconContainer.getElementsByClassName(CLASS_NAMES.iconPaths.menuMiddle)[0],
+      bottomRightHamTopRightX: iconContainer.getElementsByClassName(CLASS_NAMES.iconPaths.bottomRightHamTopRightX)[0], // menu top / the part of the "x" that starts (left-to-right) at the bottom-left
     };
     DOM_REFS.controlPoints = {
       hamburger: {
-        topLeft: iconElem.getElementsByClassName(CLASS_NAMES.controlPoints.hamburger.topLeft)[0],
-        topRight: iconElem.getElementsByClassName(CLASS_NAMES.controlPoints.hamburger.topRight)[0],
-        bottomLeft: iconElem.getElementsByClassName(CLASS_NAMES.controlPoints.hamburger.bottomLeft)[0],
-        bottomRight: iconElem.getElementsByClassName(CLASS_NAMES.controlPoints.hamburger.bottomRight)[0],
+        topLeft: iconContainer.getElementsByClassName(CLASS_NAMES.controlPoints.hamburger.topLeft)[0],
+        topRight: iconContainer.getElementsByClassName(CLASS_NAMES.controlPoints.hamburger.topRight)[0],
+        bottomLeft: iconContainer.getElementsByClassName(CLASS_NAMES.controlPoints.hamburger.bottomLeft)[0],
+        bottomRight: iconContainer.getElementsByClassName(CLASS_NAMES.controlPoints.hamburger.bottomRight)[0],
       },
       x: {
-        topLeft: iconElem.getElementsByClassName(CLASS_NAMES.controlPoints.x.topLeft)[0],
-        topRight: iconElem.getElementsByClassName(CLASS_NAMES.controlPoints.x.topRight)[0],
-        bottomLeft: iconElem.getElementsByClassName(CLASS_NAMES.controlPoints.x.bottomLeft)[0],
-        bottomRight: iconElem.getElementsByClassName(CLASS_NAMES.controlPoints.x.bottomRight)[0],
+        topLeft: iconContainer.getElementsByClassName(CLASS_NAMES.controlPoints.x.topLeft)[0],
+        topRight: iconContainer.getElementsByClassName(CLASS_NAMES.controlPoints.x.topRight)[0],
+        bottomLeft: iconContainer.getElementsByClassName(CLASS_NAMES.controlPoints.x.bottomLeft)[0],
+        bottomRight: iconContainer.getElementsByClassName(CLASS_NAMES.controlPoints.x.bottomRight)[0],
       }
-    }
+    };
   }
 
   function registerListeners () {
-    DOM_REFS.icon.addEventListener('click', toggleIcon, false);
+    DOM_REFS.iconContainer.addEventListener('click', toggleIcon, false);
   }
 
   function onToggleToXComplete () {
@@ -86,13 +88,13 @@ const Icon = (function Icon() {
 
       if (isShowingMenu) {
         // Animate to the "x" playing the TL from its beginning
-        toggleTL.play(0);
+        masterTL.play(0);
 
       } else {
         // Reverse back to the hamburger state.
         // NOTE: 0 tell `reverse` to set the playhead at the end of the TL --
         // and and then wind back from there.
-        toggleTL.reverse(0);
+        masterTL.reverse(0);
       }
     }
   }
@@ -108,13 +110,10 @@ const Icon = (function Icon() {
       onComplete: onToggleToXComplete,
       onReverseComplete: onToggleToHamburgerComplete
     });
-
-    masterTL.add(makeToggleTL());
   }
 
 
   function prepareStartState() {
-    debugger;
     const topLeftHamburgerControlPoint = DOM_REFS.controlPoints.hamburger.topLeft;
     const topRightHamburgerControlPoint = DOM_REFS.controlPoints.hamburger.topRight;
     const bottomLeftHamburgerControlPoint = DOM_REFS.controlPoints.hamburger.bottomLeft;
@@ -127,24 +126,38 @@ const Icon = (function Icon() {
 
     const topHamburgerDrawPct = (
       Math.abs(topRightHamburgerX - topLeftHamburgerX) /
-      DOM_REFS.iconPaths.menuTopXTopLeft.getTotalLength()
+      DOM_REFS.iconPaths.topLeftHamBottomRightX.getTotalLength()
     ) * 100;
     const bottomHamburgerDrawPct = (
       Math.abs(bottomRightHamburgerX - bottomLeftHamburgerX) /
-      DOM_REFS.iconPaths.menuBottomXBottomLeft.getTotalLength()
+      DOM_REFS.iconPaths.bottomRightHamTopRightX.getTotalLength()
     ) * 100;
 
+    debugger;
+    // TweenMax.set(
+    //   DOM_REFS.iconPaths.topLeftHamBottomRightX,
+    //   {
+    //     drawSVG: false,
+    //   }
+    // );
+    //
+    // TweenMax.set(
+    //   DOM_REFS.iconPaths.bottomRightHamTopRightX,
+    //   {
+    //     drawSVG: '50%',
+    //   }
+    // );
     TweenMax.set(
-      DOM_REFS.iconPaths.menuTopXTopLeft,
+      DOM_REFS.iconPaths.topLeftHamBottomRightX,
       {
-        DrawSVG: {}
+        drawSVG: `${100 - topHamburgerDrawPct}% 100%`,
       }
     );
 
     TweenMax.set(
-      DOM_REFS.iconPaths.menuBottomXBottomLeft,
+      DOM_REFS.iconPaths.bottomRightHamTopRightX,
       {
-        DrawSVG: {}
+        drawSVG: `100% ${100 - bottomHamburgerDrawPct}%`,
       }
     );
   }

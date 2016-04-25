@@ -8,7 +8,8 @@ const DURATIONS = {
 };
 
 const CLASS_NAMES = {
-  iconContainer: 'js-icon-root-svg--toggle-to-x-circular-spin',
+  iconContainer: 'icon-container-svg--toggle-to-x-circular-spin',
+  iconRoot: 'icon-root-svg--toggle-to-x-circular-spin',
   icon: 'icon',
   iconPaths: {
     menuTopLeftToXBottomRight: 'icon-path icon-path--menu-tl-to-x-br',
@@ -32,6 +33,7 @@ const CLASS_NAMES = {
 };
 
 const DOM_REFS = {};
+const MEASUREMENTS = {};
 
 const Icon = (function Icon() {
 
@@ -41,10 +43,11 @@ const Icon = (function Icon() {
   let masterTL;
 
 
-  function wireUpDOMRefs () {
+  function cacheDOMRefs () {
     const iconContainer = document.querySelector(`.${CLASS_NAMES.iconContainer}`);
 
     DOM_REFS.iconContainer = iconContainer;
+    DOM_REFS.iconRoot = iconContainer.getElementsByClassName(CLASS_NAMES.iconRoot)[0];
     DOM_REFS.icon = iconContainer.getElementsByClassName(CLASS_NAMES.icon)[0];
     DOM_REFS.iconPaths = {
       menuTopLeftToXBottomRight: iconContainer.getElementsByClassName(CLASS_NAMES.iconPaths.menuTopLeftToXBottomRight)[0],   // menu top / the part of the "x" that starts (left-to-right) at the top-left
@@ -82,7 +85,7 @@ const Icon = (function Icon() {
   }
 
   function toggleIcon () {
-
+    debugger;
     if (!isAnimating) {
       isAnimating = true;
 
@@ -99,72 +102,98 @@ const Icon = (function Icon() {
     }
   }
 
-  function makeToggleTL() {
-    const toggleTL = new TimelineMax();
+  function makeToggleTL () {
+    const TL = new TimelineMax();
+    const { topPathStartingDrawPct, bottomPathStartingDrawPct } = MEASUREMENTS;
+
+    TL.add()
+
+    return TL;
   }
+
 
   function initMasterTL() {
 
     masterTL = new TimelineMax({
-      pause: true,
+      paused: true,
       onComplete: onToggleToXComplete,
       onReverseComplete: onToggleToHamburgerComplete
     });
+
+    masterTL.add(makeToggleTL());
+  }
+
+  /**
+   * Pythagorous FTW
+   */
+  function computePointDistance (p1, p2) {
+    const { sqrt, abs } = Math;
+    const a = abs(p1.getAttribute('cx') - p2.getAttribute('cx'));
+    const b = abs(p1.getAttribute('cy') - p2.getAttribute('cy'));
+
+    return sqrt(a*a + b*b);
+  }
+
+  function cacheMeasurements () {
+    debugger;
+    const { controlPoints: { menu: menuControlPoints, x: xControlPoints }, iconPaths } = DOM_REFS;
+
+    const topLeftMenuXPos = Number(menuControlPoints.topLeft.getAttribute('cx'));
+    const topRightMenuXPos = Number(menuControlPoints.topRight.getAttribute('cx'));
+    const bottomLeftMenuXPos = Number(menuControlPoints.bottomLeft.getAttribute('cx'));
+    const bottomRightMenuXPos = Number(menuControlPoints.bottomRight.getAttribute('cx'));
+
+    const topMenuPathDistance = computePointDistance(menuControlPoints.topLeft, menuControlPoints.topRight);
+    const topDownXPathDistance = computePointDistance(xControlPoints.topLeft, xControlPoints.bottomRight);
+
+    const bottomMenuPathDistance = computePointDistance(menuControlPoints.bottomLeft, menuControlPoints.bottomRight);
+    const bottomUpXPathDisance = computePointDistance(xControlPoints.bottomRight, xControlPoints.topLeft);
+
+    const menuTopLeftToXBottomRightDistance = iconPaths.menuTopLeftToXBottomRight.getTotalLength();
+    const menuBottomRightToXTopRightDistance = iconPaths.menuBottomRightToXTopRight.getTotalLength();
+
+    MEASUREMENTS.topPathStartingDrawPct = (
+      topMenuPathDistance /
+      menuTopLeftToXBottomRightDistance
+    ) * 100;
+    MEASUREMENTS.bottomPathStartingDrawPct = (
+      bottomMenuPathDistance /
+      menuBottomRightToXTopRightDistance
+    ) * 100;
+    MEASUREMENTS.topDownXDrawPct = (
+      topDownXPathDistance /
+      menuTopLeftToXBottomRightDistance
+    ) * 100;
+    MEASUREMENTS.bottomUpXDrawPct = (
+      bottomUpXPathDisance /
+      menuBottomRightToXTopRightDistance
+    ) * 100;
   }
 
 
+
   function prepareStartState() {
-    const topLeftHamburgerControlPoint = DOM_REFS.controlPoints.menu.topLeft;
-    const topRightHamburgerControlPoint = DOM_REFS.controlPoints.menu.topRight;
-    const bottomLeftHamburgerControlPoint = DOM_REFS.controlPoints.menu.bottomLeft;
-    const bottomRightHamburgerControlPoint = DOM_REFS.controlPoints.menu.bottomRight;
-
-    const topLeftHamburgerX = Number(topLeftHamburgerControlPoint.getAttribute('cx'));
-    const topRightHamburgerX = Number(topRightHamburgerControlPoint.getAttribute('cx'));
-    const bottomLeftHamburgerX = Number(bottomLeftHamburgerControlPoint.getAttribute('cx'));
-    const bottomRightHamburgerX = Number(bottomRightHamburgerControlPoint.getAttribute('cx'));
-
-    const topHamburgerDrawPct = (
-      Math.abs(topRightHamburgerX - topLeftHamburgerX) /
-      DOM_REFS.iconPaths.menuTopLeftToXBottomRight.getTotalLength()
-    ) * 100;
-    const bottomHamburgerDrawPct = (
-      Math.abs(bottomRightHamburgerX - bottomLeftHamburgerX) /
-      DOM_REFS.iconPaths.menuBottomRightToXTopRight.getTotalLength()
-    ) * 100;
-
-    debugger;
-    // TweenMax.set(
-    //   DOM_REFS.iconPaths.menuTopLeftToXBottomRight,
-    //   {
-    //     drawSVG: false,
-    //   }
-    // );
-    //
-    // TweenMax.set(
-    //   DOM_REFS.iconPaths.menuBottomRightToXTopRight,
-    //   {
-    //     drawSVG: '50%',
-    //   }
-    // );
     TweenMax.set(
       DOM_REFS.iconPaths.menuTopLeftToXBottomRight,
       {
-        drawSVG: `${100 - topHamburgerDrawPct}% 100%`,
+        drawSVG: `${100 - MEASUREMENTS.topPathStartingDrawPct}% 100%`,
       }
     );
-
     TweenMax.set(
       DOM_REFS.iconPaths.menuBottomRightToXTopRight,
       {
-        drawSVG: `100% ${100 - bottomHamburgerDrawPct}%`,
+        drawSVG: `100% ${100 - MEASUREMENTS.bottomPathStartingDrawPct}%`,
       }
+    );
+    TweenMax.set(
+      DOM_REFS.iconContainer, { opacity: 1, visibility: 'visible' }
     );
   }
 
 
   function run () {
-    wireUpDOMRefs();
+    cacheDOMRefs();
+    cacheMeasurements();
     prepareStartState();
     registerListeners();
     initMasterTL();

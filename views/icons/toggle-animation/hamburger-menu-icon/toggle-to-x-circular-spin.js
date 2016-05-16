@@ -42,7 +42,6 @@ const Icon = (function Icon() {
 
   let masterTL;
 
-
   function cacheDOMRefs () {
     const iconContainer = document.querySelector(`.${CLASS_NAMES.iconContainer}`);
 
@@ -102,38 +101,6 @@ const Icon = (function Icon() {
     }
   }
 
-  function makeToggleTL () {
-    const TL = new TimelineMax();
-    const { topPathStartingDrawPct, bottomPathStartingDrawPct } = MEASUREMENTS;
-
-    TL.add()
-
-    return TL;
-  }
-
-
-  function initMasterTL() {
-
-    masterTL = new TimelineMax({
-      paused: true,
-      onComplete: onToggleToXComplete,
-      onReverseComplete: onToggleToHamburgerComplete
-    });
-
-    masterTL.add(makeToggleTL());
-  }
-
-  /**
-   * Pythagorous FTW
-   */
-  function computePointDistance (p1, p2) {
-    const { sqrt, abs } = Math;
-    const a = abs(p1.getAttribute('cx') - p2.getAttribute('cx'));
-    const b = abs(p1.getAttribute('cy') - p2.getAttribute('cy'));
-
-    return sqrt(a*a + b*b);
-  }
-
   function cacheMeasurements () {
     debugger;
     const { controlPoints: { menu: menuControlPoints, x: xControlPoints }, iconPaths } = DOM_REFS;
@@ -143,11 +110,11 @@ const Icon = (function Icon() {
     const bottomLeftMenuXPos = Number(menuControlPoints.bottomLeft.getAttribute('cx'));
     const bottomRightMenuXPos = Number(menuControlPoints.bottomRight.getAttribute('cx'));
 
-    const topMenuPathDistance = computePointDistance(menuControlPoints.topLeft, menuControlPoints.topRight);
-    const topDownXPathDistance = computePointDistance(xControlPoints.topLeft, xControlPoints.bottomRight);
+    const topMenuPathDistance = _computePointDistance(menuControlPoints.topLeft, menuControlPoints.topRight);
+    const topDownXPathDistance = _computePointDistance(xControlPoints.topLeft, xControlPoints.bottomRight);
 
-    const bottomMenuPathDistance = computePointDistance(menuControlPoints.bottomLeft, menuControlPoints.bottomRight);
-    const bottomUpXPathDisance = computePointDistance(xControlPoints.bottomRight, xControlPoints.topLeft);
+    const bottomMenuPathDistance = _computePointDistance(menuControlPoints.bottomLeft, menuControlPoints.bottomRight);
+    const bottomUpXPathDisance = _computePointDistance(xControlPoints.bottomRight, xControlPoints.topLeft);
 
     const menuTopLeftToXBottomRightDistance = iconPaths.menuTopLeftToXBottomRight.getTotalLength();
     const menuBottomRightToXTopRightDistance = iconPaths.menuBottomRightToXTopRight.getTotalLength();
@@ -170,8 +137,6 @@ const Icon = (function Icon() {
     ) * 100;
   }
 
-
-
   function prepareStartState() {
     TweenMax.set(
       DOM_REFS.iconPaths.menuTopLeftToXBottomRight,
@@ -190,6 +155,67 @@ const Icon = (function Icon() {
     );
   }
 
+  function updateDrawSVGForPath(pathElem, startDrawPct, endDrawPct) {
+    TweenMax.set(
+      pathElem,
+      {
+        drawSVG: `${startDrawPct}% ${endDrawPct}%`,
+        immediateRender: false
+      }
+    );
+  }
+
+  function makeTopPathTL() {
+
+    const TL = new TimelineMax({ onUpdate: updateDrawSVGForPath });
+
+    const { topPathStartingDrawPct: startDrawPct, topDownXDrawPct: endDrawPct } = MEASUREMENTS;
+
+    TL.fromTo()
+
+
+    return TL;
+  }
+
+
+  function makeMiddlePathTL () {
+    const TL = new TimelineMax();
+
+    return TL;
+  }
+
+
+  function makeBottomPathTL () {
+    const TL = new TimelineMax();
+
+    return TL;
+  }
+
+
+  function makeToggleTL () {
+    const TL = new TimelineMax();
+    const { topPathStartingDrawPct, bottomPathStartingDrawPct } = MEASUREMENTS;
+
+    TL.add([
+      makeTopPathTL(),
+      makeMiddlePathTL(),
+      makeBottomPathTL(),
+    ]);
+
+    return TL;
+  }
+
+
+  function initMasterTL() {
+
+    masterTL = new TimelineMax({
+      paused: true,
+      onComplete: onToggleToXComplete,
+      onReverseComplete: onToggleToHamburgerComplete
+    });
+
+    masterTL.add(makeToggleTL());
+  }
 
   function run () {
     cacheDOMRefs();
@@ -199,11 +225,21 @@ const Icon = (function Icon() {
     initMasterTL();
   }
 
-  return {
-    run,
-  };
+  return { run };
 
 }());
+
+
+/**
+ * Pythagorous FTW
+ */
+function _computePointDistance (p1, p2) {
+  const { sqrt, abs } = Math;
+  const a = abs(p1.getAttribute('cx') - p2.getAttribute('cx'));
+  const b = abs(p1.getAttribute('cy') - p2.getAttribute('cy'));
+
+  return sqrt(a*a + b*b);
+}
 
 
 export default Icon;

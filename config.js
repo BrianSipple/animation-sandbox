@@ -25,6 +25,7 @@ function getBaseProjectURL (url) {
   return BASE_PROJECT_URL;
 }
 
+//TODO: Figure out if the above is necessary
 
 System.config({
   baseURL: getBaseProjectURL(),

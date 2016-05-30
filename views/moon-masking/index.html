@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Moon Masking</title>
+
+    <link rel="stylesheet" href="../../../vendor/savvy/savvy.min.css">
+    <link rel="stylesheet" href="main.css">
+  </head>
+
+  <body class="u-full-bleed u-full-stretch u-relative g-bg-aqua--100">
+
+    <header>
+      <h1 class="g-gray--500 u-flow-middle u-m4 u-align-center">Hamburger Icon Toggling</h1>
+    </header>
+
+    <main>
+
+    </main>
+
+
+
+    <script src="../../../vendor/system.js"></script>
+    <script src="../../../config.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            System
+              .import('views/moon-masking/main')
+              .then(function (MODULE) {
+                MODULE.default.run();
+              })
+              .catch(function (err) {
+                console.error(`Error: ${err}\nStack: ${err.stack}`);
+              });
+        });
+    </script>
+
+  </body>
+</html>

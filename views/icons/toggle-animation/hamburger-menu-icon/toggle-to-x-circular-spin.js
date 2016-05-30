@@ -4,7 +4,7 @@ import TweenMax from "TweenMax";
 import DrawSVGPlugin from 'DrawSVGPlugin';
 
 const DURATIONS = {
-
+  toggle: 0.75
 };
 
 const CLASS_NAMES = {
@@ -102,7 +102,6 @@ const Icon = (function Icon() {
   }
 
   function cacheMeasurements () {
-    debugger;
     const { controlPoints: { menu: menuControlPoints, x: xControlPoints }, iconPaths } = DOM_REFS;
 
     const topLeftMenuXPos = Number(menuControlPoints.topLeft.getAttribute('cx'));
@@ -165,46 +164,45 @@ const Icon = (function Icon() {
     );
   }
 
-  function makeTopPathTL() {
+  function makeCirclingPathTL(pathElem, endDrawPercentage) {
+    // const { iconPaths: { menuTopLeftToXBottomRight } } = DOM_REFS;
+    // const { topPathStartingDrawPct: startDrawPct, topDownXDrawPct: endDrawPct } = MEASUREMENTS;
 
-    const TL = new TimelineMax({ onUpdate: updateDrawSVGForPath });
+    const TL = new TimelineMax({
+      // onUpdate: updateDrawSVGForPath,
+      // onUpdateParams: [ menuTopLeftToXBottomRight, startDrawPct, startDrawPct ], // TODO: Not sure if needed yet
+    });
 
-    const { topPathStartingDrawPct: startDrawPct, topDownXDrawPct: endDrawPct } = MEASUREMENTS;
-
-    TL.fromTo()
-
+    TL.to(pathElem, DURATIONS.toggle, { drawSVG: `${endDrawPercentage}%` });
 
     return TL;
   }
-
 
   function makeMiddlePathTL () {
+    const { iconPaths: { menuMiddle } } = DOM_REFS;
     const TL = new TimelineMax();
 
+    TL.to(
+      menuMiddle,
+      DURATIONS.toggle,
+      { drawSVG: '50% 50%' }
+    );
     return TL;
   }
-
-
-  function makeBottomPathTL () {
-    const TL = new TimelineMax();
-
-    return TL;
-  }
-
 
   function makeToggleTL () {
     const TL = new TimelineMax();
-    const { topPathStartingDrawPct, bottomPathStartingDrawPct } = MEASUREMENTS;
+    const { topDownXDrawPct: topMenuPathEndDrawPct, bottomUpXDrawPct: bottomMenuPathEndDrawPct } = MEASUREMENTS;
+    const { iconPaths: { menuTopLeftToXBottomRight: topMenuPathElem, menuBottomRightToXTopRight: bottomMenuPathElem } } = DOM_REFS;
 
     TL.add([
-      makeTopPathTL(),
+      makeCirclingPathTL(topMenuPathElem, topMenuPathEndDrawPct),
       makeMiddlePathTL(),
-      makeBottomPathTL(),
+      makeCirclingPathTL(bottomMenuPathElem, bottomMenuPathEndDrawPct),
     ]);
 
     return TL;
   }
-
 
   function initMasterTL() {
 

@@ -5,12 +5,22 @@ import DrawSVGPlugin from 'DrawSVGPlugin';
 
 const DURATIONS = {
   circlePath: 0.45,
-  middlePath: 1.55
+  middlePathHeadStart: 0.15,
+  //middlePath: 1.55
 };
 
 const EASINGS = {
   middlePathOut: Power3.easeOut,
-  middlePath: Elastic.easeOut.config(1, 0.2)
+  //middlePathIn: Elastic.easeOut.config(1, 0.2)
+  middlePathIn: RoughEase.ease.config({
+    template: Power2.easeOut,
+    strength: 1.5,
+    points: 10,
+    taper: "none",
+    randomize: false,
+    clamp: false
+  }),
+  circlePath: Power3.easeOut
 };
 
 const CLASS_NAMES = {
@@ -147,12 +157,14 @@ const Icon = (function Icon() {
       DOM_REFS.iconPaths.menuTopLeftToXBottomRight,
       {
         drawSVG: `${100 - MEASUREMENTS.topPathStartingDrawPct}% 100%`,
+        transformOrigin: '50% 50%'
       }
     );
     TweenMax.set(
       DOM_REFS.iconPaths.menuBottomRightToXTopRight,
       {
         drawSVG: `100% ${100 - MEASUREMENTS.bottomPathStartingDrawPct}%`,
+        transformOrigin: '50% 50%'
       }
     );
     TweenMax.set(
@@ -160,24 +172,12 @@ const Icon = (function Icon() {
     );
   }
 
-  // TODO: Determine if needed
-  // function updateDrawSVGForPath(pathElem, startDrawPct, endDrawPct) {
-  //   TweenMax.set(
-  //     pathElem,
-  //     {
-  //       drawSVG: `${startDrawPct}% ${endDrawPct}%`,
-  //       immediateRender: false
-  //     }
-  //   );
-  // }
-
   function makeCirclingPathTL(pathElem, endDrawPercentage) {
-    const TL = new TimelineMax({
-      // onUpdate: updateDrawSVGForPath,
-      // onUpdateParams: [ menuTopLeftToXBottomRight, startDrawPct, startDrawPct ], // TODO: Not sure if needed yet
-    });
+    const TL = new TimelineMax({});
 
-    TL.to(pathElem, DURATIONS.circlePath, { drawSVG: `${endDrawPercentage}%` });
+    TL.to(pathElem, DURATIONS.circlePath, { drawSVG: `${endDrawPercentage}%`, ease: EASINGS.circlePath }, 0);
+    TL.to(pathElem, DURATIONS.circlePath * 0.25, { scaleX: 0.7 }, 0);
+    TL.to(pathElem, DURATIONS.circlePath * 0.25, { scaleX: 1 }, `${DURATIONS.circlePath * 0.25}`);
 
     return TL;
   }
@@ -187,10 +187,10 @@ const Icon = (function Icon() {
     const TL = new TimelineMax();
 
     TL.set(menuMiddle, { transformOrigin: '50% 50%', immediateRender: false }, 0);
-    TL.to(menuMiddle, DURATIONS.middlePath * 0.15, { scaleX: 1.25, ease: EASINGS.middlePathOut }, 0);
-    TL.to(menuMiddle, DURATIONS.middlePath * 0.15, { scaleX: 1, ease: EASINGS.middlePathOut });
-    TL.to(menuMiddle, DURATIONS.middlePath * 0.7, { drawSVG: '50% 50%', ease: EASINGS.middlePath });
-    // TL.timeScale(0.2);
+    TL.to(menuMiddle, DURATIONS.middlePathHeadStart / 2, { scaleX: 1.25, ease: EASINGS.middlePathOut }, 0);
+    TL.to(menuMiddle, DURATIONS.middlePathHeadStart / 2, { scaleX: 1, ease: EASINGS.middlePathOut });
+    TL.to(menuMiddle, DURATIONS.circlePath, { drawSVG: '50% 50%', ease: EASINGS.middlePathIn });
+
     return TL;
   }
 

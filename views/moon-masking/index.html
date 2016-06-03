@@ -9,15 +9,30 @@
     <link rel="stylesheet" href="main.css">
   </head>
 
-  <body class="u-full-bleed u-full-stretch u-relative g-bg-aqua--100">
+  <body class="u-full-bleed u-full-stretch u-relative g-bg-cool-gray--500">
 
-    <header>
-      <h1 class="g-gray--500 u-flow-middle u-m4 u-align-center">Hamburger Icon Toggling</h1>
-    </header>
+    <main class="u-width-90 u-relative u-flow-middle">
 
-    <main>
+      <header class="u-fill-width">
+        <h1 class="g-blue--100 u-flow-middle u-m4 u-align-center">Phases of the Moon</h1>
+      </header>
+
+      <section class="moon-image-container u-fill-width">
+        <img src="img/moon.png" alt="Moon" title="moon" class="moon-image">
+      </section>
+
+      <section class="u-fill-width">
+        <div class="o-flex-grid o-flex-grid--justifyCenter o-flex-grid--full">
+          <label class="o-grid-cell" for="moon-phase-slider">Current Phase</label>
+          <input class="o-grid-cell" id="moom-phase-slider" type="range" name="phase-slider" value="0">
+          <div class="o-grid-cell">TODO: Place Tracker Here</div>
+        </div>
+      </section>
 
     </main>
+
+
+
 
 
 

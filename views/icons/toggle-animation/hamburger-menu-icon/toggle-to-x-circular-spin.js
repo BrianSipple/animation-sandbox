@@ -4,7 +4,13 @@ import TweenMax from "TweenMax";
 import DrawSVGPlugin from 'DrawSVGPlugin';
 
 const DURATIONS = {
-  toggle: 0.75
+  circlePath: 0.45,
+  middlePath: 1.55
+};
+
+const EASINGS = {
+  middlePathOut: Power3.easeOut,
+  middlePath: Elastic.easeOut.config(1, 0.2)
 };
 
 const CLASS_NAMES = {
@@ -154,26 +160,24 @@ const Icon = (function Icon() {
     );
   }
 
-  function updateDrawSVGForPath(pathElem, startDrawPct, endDrawPct) {
-    TweenMax.set(
-      pathElem,
-      {
-        drawSVG: `${startDrawPct}% ${endDrawPct}%`,
-        immediateRender: false
-      }
-    );
-  }
+  // TODO: Determine if needed
+  // function updateDrawSVGForPath(pathElem, startDrawPct, endDrawPct) {
+  //   TweenMax.set(
+  //     pathElem,
+  //     {
+  //       drawSVG: `${startDrawPct}% ${endDrawPct}%`,
+  //       immediateRender: false
+  //     }
+  //   );
+  // }
 
   function makeCirclingPathTL(pathElem, endDrawPercentage) {
-    // const { iconPaths: { menuTopLeftToXBottomRight } } = DOM_REFS;
-    // const { topPathStartingDrawPct: startDrawPct, topDownXDrawPct: endDrawPct } = MEASUREMENTS;
-
     const TL = new TimelineMax({
       // onUpdate: updateDrawSVGForPath,
       // onUpdateParams: [ menuTopLeftToXBottomRight, startDrawPct, startDrawPct ], // TODO: Not sure if needed yet
     });
 
-    TL.to(pathElem, DURATIONS.toggle, { drawSVG: `${endDrawPercentage}%` });
+    TL.to(pathElem, DURATIONS.circlePath, { drawSVG: `${endDrawPercentage}%` });
 
     return TL;
   }
@@ -182,11 +186,11 @@ const Icon = (function Icon() {
     const { iconPaths: { menuMiddle } } = DOM_REFS;
     const TL = new TimelineMax();
 
-    TL.to(
-      menuMiddle,
-      DURATIONS.toggle,
-      { drawSVG: '50% 50%' }
-    );
+    TL.set(menuMiddle, { transformOrigin: '50% 50%', immediateRender: false }, 0);
+    TL.to(menuMiddle, DURATIONS.middlePath * 0.15, { scaleX: 1.25, ease: EASINGS.middlePathOut }, 0);
+    TL.to(menuMiddle, DURATIONS.middlePath * 0.15, { scaleX: 1, ease: EASINGS.middlePathOut });
+    TL.to(menuMiddle, DURATIONS.middlePath * 0.7, { drawSVG: '50% 50%', ease: EASINGS.middlePath });
+    // TL.timeScale(0.2);
     return TL;
   }
 
@@ -195,11 +199,18 @@ const Icon = (function Icon() {
     const { topDownXDrawPct: topMenuPathEndDrawPct, bottomUpXDrawPct: bottomMenuPathEndDrawPct } = MEASUREMENTS;
     const { iconPaths: { menuTopLeftToXBottomRight: topMenuPathElem, menuBottomRightToXTopRight: bottomMenuPathElem } } = DOM_REFS;
 
+    TL.add(makeMiddlePathTL(), '0');
     TL.add([
       makeCirclingPathTL(topMenuPathElem, topMenuPathEndDrawPct),
-      makeMiddlePathTL(),
       makeCirclingPathTL(bottomMenuPathElem, bottomMenuPathEndDrawPct),
-    ]);
+    ], '0.2');
+
+
+    // TL.add([
+    //   makeCirclingPathTL(topMenuPathElem, topMenuPathEndDrawPct),
+    //   makeMiddlePathTL(),
+    //   makeCirclingPathTL(bottomMenuPathElem, bottomMenuPathEndDrawPct),
+    // ]);
 
     return TL;
   }

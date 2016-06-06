@@ -4,16 +4,14 @@ import TweenMax from "TweenMax";
 import DrawSVGPlugin from 'DrawSVGPlugin';
 
 const DURATIONS = {
-  circlePath: 0.45,
-  middlePathHeadStart: 0.15,
-  //middlePath: 1.55
+  circlePath: 0.55,
+  middlePathHeadStart: 0.45
 };
 
 const EASINGS = {
   middlePathOut: Power3.easeOut,
-  //middlePathIn: Elastic.easeOut.config(1, 0.2)
   middlePathIn: RoughEase.ease.config({
-    template: Power2.easeOut,
+    template: Power0.easeNone,
     strength: 1.5,
     points: 10,
     taper: "none",
@@ -187,9 +185,9 @@ const Icon = (function Icon() {
     const TL = new TimelineMax();
 
     TL.set(menuMiddle, { transformOrigin: '50% 50%', immediateRender: false }, 0);
-    TL.to(menuMiddle, DURATIONS.middlePathHeadStart / 2, { scaleX: 1.25, ease: EASINGS.middlePathOut }, 0);
-    TL.to(menuMiddle, DURATIONS.middlePathHeadStart / 2, { scaleX: 1, ease: EASINGS.middlePathOut });
-    TL.to(menuMiddle, DURATIONS.circlePath, { drawSVG: '50% 50%', ease: EASINGS.middlePathIn });
+    TL.to(menuMiddle, DURATIONS.middlePathHeadStart * 0.2, { scaleX: 1.25, ease: EASINGS.middlePathOut }, 0);
+    TL.to(menuMiddle, DURATIONS.middlePathHeadStart * 0.2, { scaleX: 1, ease: EASINGS.middlePathOut });
+    TL.to(menuMiddle, ((DURATIONS.middlePathHeadStart * 0.6) + DURATIONS.circlePath), { drawSVG: '50% 50%', ease: EASINGS.middlePathIn });
 
     return TL;
   }
@@ -203,14 +201,7 @@ const Icon = (function Icon() {
     TL.add([
       makeCirclingPathTL(topMenuPathElem, topMenuPathEndDrawPct),
       makeCirclingPathTL(bottomMenuPathElem, bottomMenuPathEndDrawPct),
-    ], '0.2');
-
-
-    // TL.add([
-    //   makeCirclingPathTL(topMenuPathElem, topMenuPathEndDrawPct),
-    //   makeMiddlePathTL(),
-    //   makeCirclingPathTL(bottomMenuPathElem, bottomMenuPathEndDrawPct),
-    // ]);
+    ], DURATIONS.middlePathHeadStart);
 
     return TL;
   }

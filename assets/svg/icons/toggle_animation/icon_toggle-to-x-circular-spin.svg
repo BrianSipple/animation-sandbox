@@ -1,0 +1,33 @@
+<svg id="toggle-to-x-circular-spin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+      }
+
+      .cls-1 {
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 3px;
+      }
+    </style>
+  </defs>
+  <title>icon</title>
+  <g id="icon">
+    <line id="menu-middle" class="cls-1" x1="11" y1="24" x2="37" y2="24"/>
+    <path id="menu-bottom-x-bl-tr" class="cls-1" d="M35.51,12.49L14.84,33.16,9.46,38.58S12.19,42.94,24,42.94s20-5.2,20-21.26C44,1,18-.19,9.94,10,1.17,21.07,2.9,31,11,31H37"/>
+    <path id="menu-top-x-tl-br" class="cls-1" d="M35.56,35.56L14.84,14.84,9.94,10s-6,7.13-6,14S6.38,42.94,23,42.94a47.71,47.71,0,0,0,10-.62,9.79,9.79,0,0,0,4.82-2.58,13.54,13.54,0,0,0,3-6,23.21,23.21,0,0,0,1-6.7,17.33,17.33,0,0,0-1.16-7.12,4.39,4.39,0,0,0-2.55-2.58A10.23,10.23,0,0,0,35.11,17H11"/>
+    <g id="control-points_control-points--x" data-name="control-points control-points--x">
+      <circle id="x-point--tl" class="cls-2" cx="12.69" cy="12.44" r="1"/>
+      <circle id="x-point--bl" class="cls-2" cx="12.69" cy="35.81" r="1"/>
+      <circle id="x-point--br" class="cls-2" cx="35.31" cy="35.81" r="1"/>
+      <circle id="x-point--tr" class="cls-2" cx="35.44" cy="12.44" r="1"/>
+    </g>
+    <g id="control-points_control-points--menu" data-name="control-points control-points--menu">
+      <circle id="menu-point--tr" class="cls-2" cx="37.04" cy="16.91" r="0.5"/>
+      <circle id="menu-point--tl" class="cls-2" cx="11.08" cy="16.91" r="0.5"/>
+      <circle id="menu-point--bl" class="cls-2" cx="11.04" cy="31" r="0.5"/>
+      <circle id="menu-point--br" class="cls-2" cx="37" cy="31" r="0.5"/>
+    </g>
+  </g>
+</svg>

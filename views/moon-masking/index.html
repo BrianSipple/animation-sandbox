@@ -11,22 +11,95 @@
 
   <body class="u-full-bleed u-full-stretch u-relative g-bg-cool-gray--500">
 
-    <main class="u-width-90 u-relative u-flow-middle">
+    <svg class="svg-defs">
+      <symbol>
+        <mask id="earth-shadow-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+          <linearGradient id="earth-shadow-gradient" gradientUnits="objectBoundingBox" x2="1" y2="0">
+            <stop stop-color="white" offset="0"/>
+            <stop stop-color="black" stop-opacity="0" offset="1"/>
+          </linearGradient>
+          <!-- The dimensions of the circle are what we need to
+               animate for a sliding shadow effect -->
+          <circle cx="-0.4" cy="0.50" r="0.8" id="earth-shadow-circle" fill="url(#earth-shadow-gradient)"></circle>
+        </mask>
+      </symbol>
+    </svg>
+    <!-- <main class="u-width-90 u-relative u-flow-middle"> -->
+    <main class="u-fill-width u-fill-height u-relative u-flow-middle">
 
-      <header class="u-fill-width">
-        <h1 class="g-blue--100 u-flow-middle u-m4 u-align-center">Phases of the Moon</h1>
+      <header class="u-fill-width u-mb2">
+        <h1 class="g-blue--100 u-flow-middle u-align-center">Phases of the Moon</h1>
       </header>
 
-      <section class="moon-image-container u-fill-width">
-        <img src="img/moon.png" alt="Moon" title="moon" class="moon-image">
-      </section>
+      <section class="main-scene-container u-flow-middle">
 
-      <section class="u-fill-width">
-        <div class="o-flex-grid o-flex-grid--justifyCenter o-flex-grid--full">
-          <label class="o-grid-cell" for="moon-phase-slider">Current Phase</label>
-          <input class="o-grid-cell" id="moom-phase-slider" type="range" name="phase-slider" value="0">
-          <div class="o-grid-cell">TODO: Place Tracker Here</div>
-        </div>
+        <section class="moon-image-container u-relative u-fill-width u-fill-height">
+
+          <svg class="o-svg moon-svg__outer-wrapper u-relative u-fill-width u-fill-height">
+            <svg id="moon-in-space" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="100%" height="100%" >
+              <defs>
+                <style>
+                  .cls-1 { fill: #312f44; } .cls-2 { fill: #fafafa; } .cls-3 { fill: #d2d3d4; } .cls-4 { fill: #4d535d; } .cls-5 { fill: #78776e; } .cls-6 { fill: #d1d3d4; } .cls-7 { fill: #4a4841; } .cls-8 { fill: #83827f; } .cls-9 { fill: #aeadaa; } .cls-10 { fill: #9d9e9f; } .cls-11 { fill: #626157; } .cls-12 { fill: #5f5e57; } .cls-13 { fill: #dadcdd; } .cls-14 { fill: #37352d; } .cls-15 { fill: #575755; }
+                </style>
+              </defs>
+              <title>
+                face-of-the-moon
+              </title>
+              <path class="cls-1 deep-space-background" d="M0 0h1440v900H0z"/>
+
+              <g id="moon" mask="url(#earth-shadow-mask)">
+                <circle class="moon-base moon-base--1 cls-2" cx="762" cy="430" r="299.5"/>
+                <ellipse class="moon-base moon-base--2 cls-3" cx="752.31" cy="423.35" rx="270.77" ry="277.45"/>
+                <g class="moon-craters">
+                  <path class="cls-4 moon-crater moon-crater--700" data-name="moon-crater moon-crater--700" d="M589.86 254.88c13 9.68 35.8 12 37.87 30.61.59 5.31-3.78 11.15-9.28 14.19-15.86 10.09-31.58 21.52-38.73 39.48-1.84 3.56-3.65 7-5.61 10-5.87 9.18-13.31 15.5-25.11 12.11a50.88 50.88 0 0 1-9.55-3.39c-26.29-13-27.95-36.16-20.66-59.57 1-3.34 2.27-6.69 3.65-10 10.14-22.29 24.65-62.19 55.66-51.16 5.77 1.79 3.77 8.87 6.45 12.58a41.86 41.86 0 0 0 5.31 5.15z"/>
+                  <path class="cls-4 moon-crater moon-crater--700" data-name="moon-crater moon-crater--700" d="M629.14 491.17c-5.23 4.22-18.84 5.78-22.35 6.1-15.9 1.46-40.92-3.35-46.63-20.83-1.07-3.28-.23-6.4-.1-9.74.57-14.58-.86-26.1-16.16-31.6-12.23-4.39-8.49-22.22-6.76-32.13 1.5-8.61 5.87-16 8.46-24.21 2-6.47 9.85-12.16 15.94-14.39 9.85-3.61 22.35-2.76 23.93 9.13 1.06 8 2.13 14.36 11.55 16.07 4 .73 8.1.3 12.15.49 5.07.23 16.12 2.24 14.38 9.34-1 3.94-5.37 6.33-7.46 9.62-3.56 5.62 1.94 6.33 3 11.5 1.61 7.53-16.33 9.35-19.38 15.49-2.48 5-6.25 15.38 1.65 17.68 11.35 3.31 19.94-10.76 31.15-8.61 7.21 1.39 10.64 10.21 10.53 16.69-.09 5.44-2.23 7.66-6.62 10.24-2.65 1.56-14.52 3.21-10.59 8.52 1.1 1.49 2.94 2.31 4.06 3.79 2.17 2.84 1.45 5.08-.75 6.85z"/>
+                  <path class="cls-4 moon-crater moon-crater--700" data-name="moon-crater moon-crater--700" d="M750.31 209.01c-5.33 3.89-11.48 7.53-13 14.43-2.57 11.83 7.08 22.14 15 29.46 3.5 3.24 7.35 6.88 7.63 11.65.26 4.41-2.64 8.35-5.31 11.92a275.08 275.08 0 0 0-20.75 32.22c-4 7.36-7.86 15.48-6.8 23.74.83 6.51 4.55 13.47 1.22 19.2-2.18 3.75-6.63 5.42-10.37 7.63s-7.37 6.29-6.05 10.38c1.75 5.42 10.34 5.72 12.82 10.23 2.07 3.77-.1 7.12-4.45 7.16h-.05a76.39 76.39 0 0 1-22.68-3.26 7.65 7.65 0 0 0-4.94.06c-6.59 2.52-3.38 10.12-3.27 16 .19 10.3-11.13 17.61-21.5 18.28-7.69.49-15.76-1.65-21.19-7s-7.58-14.18-4-21c1.4-2.67 3.58-5 3.81-8.15a4.5 4.5 0 0 0-1.52-3.88c-1.92-1.54-4.21-.58-6.29.09-13.79 4.47-29.48-4.7-34.75-18s-1.53-29 6.85-40.79c8.1-11.4 19.93-19.58 30.46-28.78a10.91 10.91 0 0 0 2.41-2.89c3.42-6.17-2.21-10.82-6.87-14.26-7.12-5.26-13.75-11.43-18.11-19.12s-6.24-17.06-3.67-25.57c3.56-11.77 14.49-19.6 22.44-29.07 5.76-6.86 10.07-14.79 15.66-21.79s12.96-13.13 21.76-14.63a24.21 24.21 0 0 1 21.21 7c5.13 5.4 8.43 13.72 15.82 15.08 9 1.66 16-8.4 24.64-11.15a2.25 2.25 0 0 1 2.9 2.78l-3.51 11.37a2.92 2.92 0 0 0 .13 2.2c1.94 3.73 8.32-2.71 11.22.88a23 23 0 0 1 4 9.63c.52 2.59.5 5.58-.94 7.92"/>
+                  <path class="cls-4 moon-crater moon-crater--500" data-name="moon-crater moon-crater--500" d="M982.62 295.03c8.41 30.09-22.26 56.46-52.12 53.81-7.9-1.36-16.5-5.76-17.92-11.83-3-17.45-22.57-22.49-24.06-38.16-4.88-25.55 30.36-37 53.9-38.19 11.77-.61 22.9 5.33 30.4 14.26 2 3.81 6 7.14 7 11.72a44.29 44.29 0 0 1 2.8 8.39z"/>
+                  <path class="cls-4 moon-crater moon-crater--500" data-name="moon-crater moon-crater--500" d="M978.75 416.97c19.13 5 30.25 24.86 27.64 43.44q-.66 2.91-1.27 5.94c-2.07 10.08-3.87 21-6.38 31.61q-.64 2.72-1.35 5.4a72.17 72.17 0 0 1-10.79 26.89q-1.32 2.15-2.75 4.19t-3 4q-2.3 2.88-4.81 5.47a69.3 69.3 0 0 1-5 4.87 34.52 34.52 0 0 1-4.17 4.19 42.42 42.42 0 0 1-5.06 3.67c-15.64 8.23-41.54 16.24-52.26-1.61-1.07-1.78-.86-5.53.41-7.49 10.35-7.31 20.71-14.62 29.1-25.65a47.72 47.72 0 0 0 3.49-6 94.7 94.7 0 0 0 4-10q.88-2.56 1.64-5.16c4.88-10.42 8.14-20.91 8.3-31.89a52.67 52.67 0 0 0-.31-6.66c-2-14-13-28.49-4.07-41.25a13.31 13.31 0 0 1 8-5.3 20.92 20.92 0 0 1 4.58-.51c4.19-1.3 7 1.26 10.52 1.23a22.26 22.26 0 0 1 3.54.62z"/>
+                  <path class="cls-4 moon-crater moon-crater--500" data-name="moon-crater moon-crater--500" d="M977.79 345.54c2.86-.23 5.72-.5 8.54-.6 5.64-.22 11.15.21 16.31 2.84 9.09 5.56 9.79 16.92 8.22 26.89a47.55 47.55 0 0 1-4.73 11.54 32.67 32.67 0 0 1-3.88 5.83c-4 3.81-7 7.4-11.23 10.3a36.56 36.56 0 0 1-5.23 2.62 45.32 45.32 0 0 1-5.36 1.79c-1.43.17-2.85.29-4.26.36s-2.8.12-4.19.09c-9.73-7-18.12-5.51-26.85-2.35a35.6 35.6 0 0 0-5.16 2.46c-7.29 3.83-8.94 17.66-18.53 14.14a12.44 12.44 0 0 1-3.29-2 18.78 18.78 0 0 1-2.58-2.66c-5.13-9.11-11.44-15.32-19.82-22-7.67-7.81-20.81-5.71-27.09-16.17a16.38 16.38 0 0 1-1.47-4.73 15.53 15.53 0 0 1 .09-5.1c.14-1.47 1.3-2.52 2.91-3.39a56.54 56.54 0 0 1 5.68-2.36c1.22-2.29 7.9-2.89 5.92-7.23a25.92 25.92 0 0 1-1.14-5.53c-.91-9.41 3.11-19.42 11.82-23.85q2.77-.65 6.18 1.44c6.07 3.39 9 8.51 11.07 14.15.42 1.13.8 2.28 1.17 3.44.72 25.47 28.79 24.69 45.07 15.13 5.12-3.11 7.83-12.39 16.37-14.18 1.67-.32 3.54-.64 5.46-.87z"/>
+                  <path class="cls-4 moon-crater moon-crater--500" data-name="moon-crater moon-crater--500" d="M805.18 561.35c-2.79 2.73-7.82 9.42-9.35 6.28-11.59-9.68-5.12-27.15-1.55-43.8.59-2.78 1.11-5.54 1.43-8.29 1.38-17 3.79-36.26-4.11-49.18a49.12 49.12 0 0 0-3.64-6.28c-2.64-2.74-.12-11-.09-15.46.39-2.76.9-5.46 1.54-8.08 2.23-9.18 6.09-17.41 12.46-23.78a39.46 39.46 0 0 1 5.27-4.42 34.16 34.16 0 0 0 6.6-1.9 67.92 67.92 0 0 0 42.09-52.58c10.69 11.9-1.33 39.7 5.26 52.71 1.65 3.25 4.46 5.58 9.08 6.5 7.44-1.95 14.41-2 21.8 1.54 2.51 1.56 4.17 5.88 6.54 6.26 24.41-.07 33.71 19.92 39.29 42.84.48 2.24.85 4.42 1.11 6.6a53.48 53.48 0 0 1-.12 13.21 24.43 24.43 0 0 1-11.11 18.92c-3 1.67-6.12 3.36-9.34 4.92-1.66.69-3.34 1.36-5 2-13.84 2.3-26.61 22.47-36.59 20.92a7.64 7.64 0 0 1-4.1-2.11c-3.06-3-4.39-7.71-5.26-12.66-.44-2.48-.77-5-1.15-7.44a13.08 13.08 0 0 1-1.69-4.52 39.54 39.54 0 0 1-.61-5.39c.7-8.83-2.77-18.63-12.2-17.74a20.11 20.11 0 0 0-5.61.71c-11.53 3-24.4 14.23-24.63 27.18.25 12.17 1.9 26.3-6.2 39.45q-1.56 2.47-3.28 4.83t-3.61 4.59z"/>
+                  <path class="cls-4 moon-crater moon-crater--500" data-name="moon-crater moon-crater--500" d="M628.56 555.47c-4.25-4.34-8.52-8.69-13.68-11.95-9.66-6.09-20.68-7.7-28.74 1.26-12.55 14-18.55 35.88-12.11 53.63 6 16.47 21.5 28.51 38.82 32.8l1.09.26c5.06 1.21 8.85 0 13.9 0 17.69-3.64 31.6-15.78 49.16-17.53 2.86-.69 5.88-1.45 9-2.3 21.64-5.94 46.93-16.3 48-39.67a16.39 16.39 0 0 0-1.74-7.13c-2.85-7-8.62-10.06-16.06-7.84-6.72 2-12.32 5.74-18.72 8.21s-14.28 2.56-21.09 2.25c-10.59-.49-22.29-.88-32.59-3.18-6.42-1.44-10.8-4.32-15.24-8.81z"/>
+                  <ellipse class="cls-2 moon-crater moon-crater--100" data-name="moon-crater moon-crater--100" cx="756.17" cy="679.26" rx="37.61" ry="37.08"/>
+                </g>
+              </g>
+
+              <g class="background-stars">
+                <circle class="cls-5 background-star" cx="323.6" cy="356.5" r="10.5"/>
+                <circle class="cls-6 background-star" data-name="background-star" cx="119" cy="430" r="12.5"/>
+                <circle class="cls-6 background-star" data-name="background-star" cx="334.1" cy="98.01" r="15"/>
+                <circle class="cls-7 background-star" data-name="background-star" cx="1313" cy="113.01" r="10"/>
+                <circle class="cls-8 background-star" data-name="background-star" cx="155.5" cy="71.01" r="16"/>
+                <circle class="cls-9 background-star" data-name="background-star" cx="1170.9" cy="571" r="11"/>
+                <circle class="cls-10 background-star" data-name="background-star" cx="901.75" cy="56.51" r="14.5"/>
+                <circle class="cls-7 background-star" data-name="background-star" cx="491.5" cy="19.51" r="14.5"/>
+                <circle class="cls-6 background-star" data-name="background-star" cx="1181.4" cy="332.5" r="10.5"/>
+                <circle class="cls-8 background-star" data-name="background-star" cx="1029.75" cy="819" r="21"/>
+                <circle class="cls-11 background-star" data-name="background-star" cx="1160.9" cy="106.51" r="13.5"/>
+                <circle class="cls-6 background-star" data-name="background-star" cx="479" cy="179.5" r="12.5"/>
+                <circle class="cls-12 background-star" data-name="background-star" cx="1292.4" cy="373" r="12"/>
+                <circle class="cls-13 background-star" data-name="background-star" cx="199" cy="649.5" r="17.5"/>
+                <circle class="cls-6 background-star" data-name="background-star" cx="1352.1" cy="729.5" r="11"/>
+                <circle class="cls-14 background-star" data-name="background-star" cx="575" cy="760.5" r="15.5"/>
+                <circle class="cls-15 background-star" data-name="background-star" cx="247.1" cy="840" r="21"/>
+              </g>
+            </svg>
+          </svg>
+        </section>
+
+        <section class="u-fill-width">
+          <div class="o-flex-grid o-flex-grid--justifyCenter o-flex-grid--full">
+
+            <label class="o-grid-cell g-font-larger u-mb2 u-align-center g-blue--100" for="moon-phase-slider">
+              Current Phase (Debug):
+              <output class="o-grid-cell" id="moon-phase-slider-output" name="moon-phase-slider-output" for="moon-phase-slider-input"></output>
+            </label>
+
+            <input class="o-grid-cell" id="moon-phase-slider-input" type="range" name="phase-slider" value="0" min="0" max="100" step="1">
+
+            <!-- <div class="o-grid-cell">TODO: Place Tracker Here</div> -->
+          </div>
+        </section>
+
       </section>
 
     </main>

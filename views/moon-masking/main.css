@@ -1,4 +1,7 @@
-.icon-container-svg--toggle-to-x-circular-spin {
-  opacity: 0;
-  visibility: hidden;
+.main-scene-container {
+  width: 80%;
+  height: 60%;
+}
+
+.moon-image-container {
 }

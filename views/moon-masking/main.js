@@ -1,10 +1,12 @@
+import TweenMax from 'TweenMax';
+
 const { assign, keys } = Object;
 
 const SELECTOR_MAP = {
   singles: {
-    phaseSliderInputElem: '#moon-phase-slider-input',
-    phaseSliderOutputElem: '#moon-phase-slider-output',
-    earthShadowMaskElem: '#earth-shadow-mask',
+    phaseSliderInputElem: '.js-moon-phase-slider__input',
+    phaseSliderOutputElem: '.js-moon-phase-slider__output',
+    earthShadowCircleMaskElem: '#earth-shadow-circle',
     moon: '#moon',
   },
   groups: {
@@ -12,7 +14,17 @@ const SELECTOR_MAP = {
   }
 };
 
+const DURATIONS = {
+  defaultPhaseLoop: 9
+};
+
 const DOM_REFS = {};
+const MEASUREMENTS = {};
+
+const masterTL = new TimelineMax({
+  repeat: -1,
+  paused: true
+});
 
 
 function cacheDOMRefs() {
@@ -24,33 +36,96 @@ function cacheDOMRefs() {
   });
 }
 
+function cacheMeasurements () {
+  const { earthShadowCircleMaskElem: maskElem } = DOM_REFS;
+
+  const horizontalMaskDist = maskElem.getAttribute('r') * 2;
+  const maskStartX = -1 * (horizontalMaskDist / 2);
+
+  MEASUREMENTS.horizontalMaskDist = horizontalMaskDist;
+  MEASUREMENTS.maskStartX = maskStartX;
+  MEASUREMENTS.maskEndX = maskStartX + horizontalMaskDist;
+}
+
+// prepareSlideMask() {
+//   const TL = new TimelineMax();
+//   const { earthShadowCircleMaskElem: maskElem } = DOM_REFS;
+//
+//   TimelineMax.set(makeElem, {attr: { cx: startX }, immediateRender: false });
+// }
+
+function updateMaskPosition(tl) {
+  debugger;
+  const horizontalPercentage = tl.progress();
+  const { earthShadowCircleMaskElem: maskElem } = DOM_REFS;
+  const { maskStartX: startX, maskEndX: endX, horizontalMaskDist: maskWidth } = MEASUREMENTS;
+
+  const currentCX = startX + (maskWidth * horizontalPercentage);
+
+  TweenMax.set(
+    maskElem,
+    {
+      attr: { cx: currentCX },
+      immediateRender: false
+    }
+  );
+}
+
+function initMaskSlideTL() {
+  const TL = new TimelineMax({
+    onUpdate: updateMaskPosition,
+    onUpdateParams: ['{self}']
+  });
+  const { phaseSliderInputElem: phaseSlider } = DOM_REFS;
+
+  TL.to(
+    phaseSlider,
+    DURATIONS.defaultPhaseLoop,
+    { value: '100' }
+  );
+
+  return TL;
+}
+
+
+function setupMasterTL() {
+  masterTL.add(initMaskSlideTL());
+}
+
+
+function setPhaseSliderOutputValue(value) {
+  DOM_REFS.phaseSliderOutputElem.value = value;
+}
+
+
+function renderInitialScene () {
+  const slidePercentage = parseFloat(DOM_REFS.phaseSliderInputElem.value);
+
+  setPhaseSliderOutputValue(slidePercentage);
+}
+
 function onPhaseSliderInput(event) {
   debugger;
   const slidePercentage = parseFloat(event.target.value);
-  DOM_REFS.phaseSliderOutputElem.value = slidePercentage;
+
+  setPhaseSliderOutputValue(slidePercentage);
 }
 
 function addListeners() {
   DOM_REFS.phaseSliderInputElem.addEventListener('input', onPhaseSliderInput, false);
 }
 
-function animateMask() {
-
-}
-
-function updatePhaseSlider() {
-
-}
 
 function initAnimation () {
-  requestAnimationFrame(initAnimation);
-
-  animateMask();
-  updatePhaseSlider();
+  //masterTL.play(0);
 }
+
 
 function run() {
   cacheDOMRefs();
+  cacheMeasurements();
+  setupMasterTL();
+  renderInitialScene();
   addListeners();
   initAnimation();
 }

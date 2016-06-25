@@ -12,22 +12,25 @@
   <body class="u-full-bleed u-full-stretch u-relative g-bg-cool-gray--500">
 
     <svg class="svg-defs">
-      <symbol>
-        <mask id="earth-shadow-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
-          <linearGradient id="earth-shadow-gradient" gradientUnits="objectBoundingBox" x2="1" y2="0">
-            <stop stop-color="white" offset="0"/>
-            <stop stop-color="black" stop-opacity="0" offset="1"/>
-          </linearGradient>
-          <!-- The dimensions of the circle are what we need to
-               animate for a sliding shadow effect -->
-          <circle cx="0" cy="0.50" r="0.8" id="earth-shadow-circle" fill="url(#earth-shadow-gradient)"></circle>
-        </mask>
-      </symbol>
+      <defs>
+        <symbol>
+          <mask id="earth-shadow-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+            <linearGradient id="earth-shadow-gradient" gradientUnits="objectBoundingBox" x2="1" y2="0">
+              <stop stop-color="white" offset="0"/>
+              <stop stop-color="black" stop-opacity="0" offset="1"/>
+            </linearGradient>
+            <!-- The dimensions of the circle are what we need to
+                 animate for a sliding shadow effect -->
+            <circle cx="0" cy="0.50" r="0.8" id="earth-shadow-circle" fill="url(#earth-shadow-gradient)"></circle>
+          </mask>
+        </symbol>
+      </defs>
     </svg>
+
     <!-- <main class="u-width-90 u-relative u-flow-middle"> -->
     <main class="u-fill-width u-fill-height u-relative u-flow-middle">
 
-      <header class="u-fill-width u-mb2">
+      <header class="page-header u-fill-width">
         <h1 class="g-blue--100 u-flow-middle u-align-center">Phases of the Moon</h1>
       </header>
 
@@ -87,10 +90,10 @@
         </section>
 
         <section class="u-fill-width">
-          <div class="o-flex-grid o-flex-grid--justifyCenter o-flex-grid--full moon-phase-slider">
+          <div class="o-flex-grid o-flex-grid--justifyCenter o-flex-grid--full moon-phase-slider-container">
 
             <label
-              class="moon-phase-slider__label
+              class="moon-phase-slider-output-label
                      o-grid-cell
                      g-font-larger
                      u-mb2
@@ -99,15 +102,15 @@
               for="moon-phase-slider">
               Current Phase (Debug):
               <output
-                class="o-grid-cell moon-phase-slider__output
-                       js-moon-phase-slider__output"
+                class="o-grid-cell moon-phase-slider-output
+                       js-moon-phase-slider-output"
                 name="moon-phase-slider-output"
                 for="moon-phase-slider-input">
             </label>
 
             <input
-              class="o-grid-cell moon-phase-slider__input
-                     js-moon-phase-slider__input"
+              class="o-grid-cell moon-phase-slider-input
+                     js-moon-phase-slider-input"
               type="range"
               name="phase-slider"
               value="0"
@@ -120,14 +123,14 @@
                 height="3rem"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                class="moon-phase-slider__indicators-container">
+                class="moon-phase-slider-indicators-container">
                 <svg
                   width="100%"
                   height="100%"
                   version="1.1"
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
-                  class="moon-phase-slider__indicators">
+                  class="moon-phase-slider-indicators">
 
                   <circle cx="10%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
                   <circle cx="30%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>

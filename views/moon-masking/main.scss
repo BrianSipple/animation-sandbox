@@ -1,0 +1,201 @@
+$height__slider-thumb: 2.5em;
+$height__slider-track: $height__slider-thumb * 0.5;
+/*   --width__slider-thumb: calc(var(--height__slider-thumb) * 0.45); */
+$width__slider-thumb: $height__slider-thumb;
+
+$background-color__slider-thumb: hsla(0, 0%, 98%, 1);
+//$background-color__slider-track--noFocus: hsla(208, 59%, 42%, 1);
+$background-color__slider-track--uncovered: hsla(180, 100%, 76%, 1.00);
+$background-color__slider-track--covered: hsla(19, 100%, 54%, 1.00);
+$background-color__slider-track--focus: hsla(206, 85%, 63%, 1);
+
+//$starting-linear-gradient__slider-track: linear-gradient(
+//  90deg,
+//  $background-color__slider-track--covered 0,
+//  /* animate this number as coverage increases */
+//  $background-color__slider-track--uncovered 0%,
+//  $background-color__slider-track--uncovered 100%
+//);
+
+$border-color__slider-thumb: 1px solid hsla(0, 0, 0, 0.95);
+$border-radius__slider-thumb: 50%;
+$border-radius__slider-track: 0.35em;
+$box-shadow__slider-thumb:
+  0.0625em 0.0625em 0.125em hsla(78, 59%, 93%, 1),
+  0 0 0.0625em hsla(206, 62%, 82%, 1);
+$box-shadow__slider-track:
+  0.0625em 0.0625em 0.0625em hsla(78, 59%, 93%, 1),
+  0 0 0.0625em hsla(206, 62%, 82%, 1);
+$border-width__slider-track: 0.125em;
+$border-color__slider-track: hsla(240, 0%, 52%, 1);
+
+.svg-defs {
+  display: none;
+}
+
+.page-header {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.main-scene-container {
+  width: 80%;
+  height: 60vh;
+}
+
+.moon-image-container {
+}
+
+.moon-phase-slider-output {
+
+}
+
+.moon-phase-slider-indicators-container {
+  /*height: 10px;*/
+  position: relative;
+}
+
+.moon-phase-slider__indicators {
+  width: 100%;
+  fill: yellow;
+  stroke: none;
+}
+
+
+
+.moon-phase-slider-input {
+  position: relative;
+
+  display: block;
+  margin: 0 auto;
+  width: 60%;
+  background-image: 0;
+  background-clip: padding-box;
+  border-radius: $border-radius__slider-track;
+
+  /* Hides the slider so that custom slider can be made */
+  -webkit-appearance: none;
+
+  /* Specific width is required for Firefox. */
+
+  /* Only remove because we're creating our own effect */
+  &:focus {
+    outline: none;
+  }
+
+  /**
+  * ------------------------------------------------------
+  * Browser-specific track and thumb styling
+  *
+  * NOTE: Selectors must be targeted individually (not within comma-separated groups)
+  * This is because browsers will drop the entire selector if
+  * they understand a part of it.
+  * ------------------------------------------------------
+  */
+
+  /* Styling for WebKit/Blink thumb */
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    cursor: pointer;
+    border: $border-color__slider-thumb;
+    height: $height__slider-thumb;
+    width: $width__slider-thumb;
+    border-radius: $border-radius__slider-thumb;
+    background-color: $background-color__slider-thumb;
+    box-shadow: $box-shadow__slider-thumb;
+
+    /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+    margin-top: -1 * ($height__slider-thumb * 0.25);
+  }
+
+  /* Styling for WebKit/Blink track */
+  &::-webkit-slider-runnable-track {
+    cursor: pointer;
+    width: 100%;
+    height: $height__slider-track;
+    box-shadow: $box-shadow__slider-track;
+    //background-image: $starting-linear-gradient__slider-track;
+    border-radius: $border-radius__slider-track;
+    border-style: solid;
+    border-color: $border-color__slider-track;
+    border-width: $border-width__slider-track;
+  }
+
+  &:focus::-webkit-slider-runnable-track {
+    background-color: $background-color__slider-track--focus;
+  }
+
+
+  /* Styling for Firefox thumb */
+  &::-moz-range-thumb {
+    cursor: pointer;
+    border: $border-color__slider-thumb;
+    height: $height__slider-thumb;
+    width: $width__slider-thumb;
+    border-radius: $border-radius__slider-thumb;
+    background-color: $background-color__slider-thumb;
+    box-shadow: $box-shadow__slider-thumb;
+  }
+
+
+  /* Styling for Firefox track */
+  &::-moz-range-track {
+    cursor: pointer;
+    width: 100%;
+    height: $height__slider-track;
+    box-shadow: $box-shadow__slider-track;
+    //background-image: $starting-linear-gradient__slider-track;
+    background-color: transparent;
+    border-radius: $border-radius__slider-track;
+    border-style: solid;
+    border-color: $border-color__slider-track;
+    border-width: $border-width__slider-track;
+  }
+
+
+  /* Styling for IE/Edge Thumb */
+  &::-ms-thumb {
+    cursor: pointer;
+    border: $border-color__slider-thumb;
+    height: $height__slider-thumb;
+    width: $width__slider-thumb;
+    border-radius: $border-radius__slider-thumb;
+    background-color: $background-color__slider-thumb;
+    box-shadow: $box-shadow__slider-thumb;
+  }
+
+  /* Styling for IE/Edge Thumb */
+  &::-ms-track {
+    width: 100%;
+    height: $height__slider-thumb;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    border-width: $height__slider-thumb * 2;
+    color: transparent;
+  }
+
+  &::-ms-fill-lower {
+    //background-image: $starting-linear-gradient__slider-track;
+    border-radius: $border-radius__slider-track;
+    border-style: solid;
+    border-color: $border-color__slider-track;
+    border-width: $border-width__slider-track;
+    box-shadow: $box-shadow__slider-track;
+  }
+  &::-ms-fill-upper {
+    //background-image: $starting-linear-gradient__slider-track;
+    border-radius: $border-radius__slider-track;
+    border-style: solid;
+    border-color: $border-color__slider-track;
+    border-width: $border-width__slider-track;
+    box-shadow: $box-shadow__slider-track;
+  }
+
+  &:focus::ms-fill-lower {
+    //background-image: $starting-linear-gradient__slider-track;
+  }
+  &:focus::ms-fill-upper {
+    //background-image: $starting-linear-gradient__slider-track;
+  }
+}

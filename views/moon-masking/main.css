@@ -1,40 +1,118 @@
+/*   --width__slider-thumb: calc(var(--height__slider-thumb) * 0.45); */
+.svg-defs {
+  display: none; }
+
+.page-header {
+  padding-top: 3rem;
+  padding-bottom: 3rem; }
+
 .main-scene-container {
   width: 80%;
-  height: 60%;
-}
+  height: 60vh; }
 
-.moon-image-container {
-}
-
-.moon-phase-slider-output {
-
-}
-
-.moon-phase-slider-input {
-  position: relative;
-}
-
-.moon-phase-slider-input::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    red 0,
-    blue
-  );
-}
-
-.moon-phase-slider__indicators-container {
+.moon-phase-slider-indicators-container {
   /*height: 10px;*/
-  position: relative;
-}
+  position: relative; }
 
 .moon-phase-slider__indicators {
   width: 100%;
   fill: yellow;
-  stroke: none;
-}
+  stroke: none; }
+
+.moon-phase-slider-input {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  width: 60%;
+  background-image: 0;
+  background-clip: padding-box;
+  border-radius: 0.35em;
+  /* Hides the slider so that custom slider can be made */
+  -webkit-appearance: none;
+  /* Specific width is required for Firefox. */
+  /* Only remove because we're creating our own effect */
+  /**
+  * ------------------------------------------------------
+  * Browser-specific track and thumb styling
+  *
+  * NOTE: Selectors must be targeted individually (not within comma-separated groups)
+  * This is because browsers will drop the entire selector if
+  * they understand a part of it.
+  * ------------------------------------------------------
+  */
+  /* Styling for WebKit/Blink thumb */
+  /* Styling for WebKit/Blink track */
+  /* Styling for Firefox thumb */
+  /* Styling for Firefox track */
+  /* Styling for IE/Edge Thumb */
+  /* Styling for IE/Edge Thumb */ }
+  .moon-phase-slider-input:focus {
+    outline: none; }
+  .moon-phase-slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.95);
+    height: 2.5em;
+    width: 2.5em;
+    border-radius: 50%;
+    background-color: #fafafa;
+    box-shadow: 0.0625em 0.0625em 0.125em #f1f8e3, 0 0 0.0625em #b5d5ee;
+    /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+    margin-top: -0.625em; }
+  .moon-phase-slider-input::-webkit-slider-runnable-track {
+    cursor: pointer;
+    width: 100%;
+    height: 1.25em;
+    box-shadow: 0.0625em 0.0625em 0.0625em #f1f8e3, 0 0 0.0625em #b5d5ee;
+    border-radius: 0.35em;
+    border-style: solid;
+    border-color: #858585;
+    border-width: 0.125em; }
+  .moon-phase-slider-input:focus::-webkit-slider-runnable-track {
+    background-color: #50abf1; }
+  .moon-phase-slider-input::-moz-range-thumb {
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.95);
+    height: 2.5em;
+    width: 2.5em;
+    border-radius: 50%;
+    background-color: #fafafa;
+    box-shadow: 0.0625em 0.0625em 0.125em #f1f8e3, 0 0 0.0625em #b5d5ee; }
+  .moon-phase-slider-input::-moz-range-track {
+    cursor: pointer;
+    width: 100%;
+    height: 1.25em;
+    box-shadow: 0.0625em 0.0625em 0.0625em #f1f8e3, 0 0 0.0625em #b5d5ee;
+    background-color: transparent;
+    border-radius: 0.35em;
+    border-style: solid;
+    border-color: #858585;
+    border-width: 0.125em; }
+  .moon-phase-slider-input::-ms-thumb {
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.95);
+    height: 2.5em;
+    width: 2.5em;
+    border-radius: 50%;
+    background-color: #fafafa;
+    box-shadow: 0.0625em 0.0625em 0.125em #f1f8e3, 0 0 0.0625em #b5d5ee; }
+  .moon-phase-slider-input::-ms-track {
+    width: 100%;
+    height: 2.5em;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    border-width: 5em;
+    color: transparent; }
+  .moon-phase-slider-input::-ms-fill-lower {
+    border-radius: 0.35em;
+    border-style: solid;
+    border-color: #858585;
+    border-width: 0.125em;
+    box-shadow: 0.0625em 0.0625em 0.0625em #f1f8e3, 0 0 0.0625em #b5d5ee; }
+  .moon-phase-slider-input::-ms-fill-upper {
+    border-radius: 0.35em;
+    border-style: solid;
+    border-color: #858585;
+    border-width: 0.125em;
+    box-shadow: 0.0625em 0.0625em 0.0625em #f1f8e3, 0 0 0.0625em #b5d5ee; }

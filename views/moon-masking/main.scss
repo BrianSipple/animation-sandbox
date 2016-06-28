@@ -30,7 +30,11 @@ $border-width__slider-track: 0.125em;
 $border-color__slider-track: hsla(240, 0%, 52%, 1);
 
 .svg-defs {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
 }
 
 .page-header {
@@ -64,11 +68,11 @@ $border-color__slider-track: hsla(240, 0%, 52%, 1);
 
 
 .moon-phase-slider-input {
-  position: relative;
+  //position: relative;
 
-  display: block;
-  margin: 0 auto;
-  width: 60%;
+  //display: block;
+  //margin: 0 auto;
+  //width: 60%;
   background-image: 0;
   background-clip: padding-box;
   border-radius: $border-radius__slider-track;

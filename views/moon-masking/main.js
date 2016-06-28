@@ -5,6 +5,7 @@ const { assign, keys } = Object;
 const SELECTOR_MAP = {
   singles: {
     phaseSliderInputElem: '.js-moon-phase-slider-input',
+    // phaseSliderOutputElem: '.js-moon-phase-slider-output',
     phaseSliderOutputElem: '.js-moon-phase-slider-output',
     earthShadowCircleMaskElem: '#earth-shadow-circle',
     moon: '#moon'
@@ -53,27 +54,29 @@ function cacheDOMRefs() {
 
 function cacheMeasurements () {
   const { earthShadowCircleMaskElem: maskElem } = DOM_REFS;
+  debugger;
+  const horizontalMaskWidth = maskElem.getAttribute('r') * 2;
+  const maskStartCX = horizontalMaskWidth * 1.5;  // start just off the right edge and sweep left
 
-  const horizontalMaskDist = maskElem.getAttribute('r') * 2;
-  const maskStartX = -1 * (horizontalMaskDist / 2);
-
-  MEASUREMENTS.horizontalMaskDist = horizontalMaskDist;
-  MEASUREMENTS.maskStartX = maskStartX;
-  MEASUREMENTS.maskEndX = maskStartX + horizontalMaskDist;
+  MEASUREMENTS.maskStartCX = maskStartCX;
+  MEASUREMENTS.maskEndCX = maskStartCX - (horizontalMaskWidth * 2);
 }
 
 // prepareSlideMask() {
 //   const TL = new TimelineMax();
 //   const { earthShadowCircleMaskElem: maskElem } = DOM_REFS;
 //
-//   TimelineMax.set(makeElem, {attr: { cx: startX }, immediateRender: false });
+//   TimelineMax.set(makeElem, {attr: { cx: startCX }, immediateRender: false });
 // }
 
-function updateMaskPosition(horizontalPercentage) {
+function updateMaskPosition(completionPercentage) {
   const { earthShadowCircleMaskElem: maskElem } = DOM_REFS;
-  const { maskStartX: startX, maskEndX: endX, horizontalMaskDist: maskWidth } = MEASUREMENTS;
+  const { maskStartCX: startCX, maskEndCX: endCX } = MEASUREMENTS;
+  const { abs } = Math;
 
-  const currentCX = startX + (maskWidth * horizontalPercentage);
+  const traveralDistance = abs(startCX - endCX);
+  debugger;
+  const currentCX = startCX - (traveralDistance * (completionPercentage / 100));
 
   TweenMax.set(
     maskElem,
@@ -99,6 +102,7 @@ function setSliderOutputValue(value) {
 function setSliderGradient(slidePercentage) {
   const selector = SELECTOR_MAP.singles.phaseSliderInputElem;
   const { styleSheet } = DOM_REFS;
+
   styleSheet.insertRule(`${selector} { background-image: ${makeSliderGradient(slidePercentage)}; }`, styleSheet.rules.length);
 }
 
@@ -144,6 +148,7 @@ function addListeners() {
 
 function initAnimation () {
   masterTL.play(0);
+  // masterTL.seek(masterTL.duration() / 2);
 }
 
 

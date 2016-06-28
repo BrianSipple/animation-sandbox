@@ -1,6 +1,10 @@
 /*   --width__slider-thumb: calc(var(--height__slider-thumb) * 0.45); */
 .svg-defs {
-  display: none; }
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0; }
 
 .page-header {
   padding-top: 3rem;
@@ -20,10 +24,6 @@
   stroke: none; }
 
 .moon-phase-slider-input {
-  position: relative;
-  display: block;
-  margin: 0 auto;
-  width: 60%;
   background-image: 0;
   background-clip: padding-box;
   border-radius: 0.35em;

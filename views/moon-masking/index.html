@@ -13,17 +13,17 @@
 
     <svg class="svg-defs">
       <defs>
-        <symbol>
           <mask id="earth-shadow-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
             <linearGradient id="earth-shadow-gradient" gradientUnits="objectBoundingBox" x2="1" y2="0">
-              <stop stop-color="white" offset="0"/>
-              <stop stop-color="black" stop-opacity="0" offset="1"/>
+              <stop stop-color="black" offset="0" stop-opacity="1"/>
+              <stop stop-color="white" offset="1" stop-opacity="0"/>
+              <stop stop-color="black" offset="2" stop-opacity="1" />
             </linearGradient>
+
             <!-- The dimensions of the circle are what we need to
                  animate for a sliding shadow effect -->
-            <circle cx="0" cy="0.50" r="0.8" id="earth-shadow-circle" fill="url(#earth-shadow-gradient)"></circle>
+            <circle cx="0" cy="0.50" r="0.5" id="earth-shadow-circle" fill="url(#earth-shadow-gradient)"></circle>
           </mask>
-        </symbol>
       </defs>
     </svg>
 
@@ -90,67 +90,63 @@
         </section>
 
         <section class="u-fill-width">
-          <div class="o-flex-grid o-flex-grid--justifyCenter o-flex-grid--full moon-phase-slider-container">
-
+          <div class="u-relative u-width-75 u-flow-middle u-mt2 u-mb2 g-truncate">
+          <!-- <div class="o-flex-grid o-flex-grid--justifyCenter o-flex-grid--full moon-phase-slider-container"> -->
             <label
               class="moon-phase-slider-output-label
-                     o-grid-cell
                      g-font-larger
                      u-mb2
                      u-align-center
                      g-blue--100"
               for="moon-phase-slider">
               Current Phase (Debug):
+            </label>
+
               <output
-                class="o-grid-cell moon-phase-slider-output
+                class="moon-phase-slider-output
                        js-moon-phase-slider-output"
                 name="moon-phase-slider-output"
                 for="moon-phase-slider-input">
-            </label>
+          </div>
+          <input
+            class="moon-phase-slider-input
+                   js-moon-phase-slider-input
+                   u-fill-width"
+            type="range"
+            name="phase-slider"
+            value="0"
+            min="0" max="100" step="1">
 
-            <input
-              class="o-grid-cell moon-phase-slider-input
-                     js-moon-phase-slider-input"
-              type="range"
-              name="phase-slider"
-              value="0"
-              min="0" max="100" step="1">
-
-            <div class="o-grid-cell u-relative">
+          <div class="o-grid-cell u-relative">
+            <svg
+              version="1.1"
+              width="100%"
+              height="3rem"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              class="moon-phase-slider-indicators-container">
               <svg
-                version="1.1"
                 width="100%"
-                height="3rem"
+                height="100%"
+                version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                class="moon-phase-slider-indicators-container">
-                <svg
-                  width="100%"
-                  height="100%"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  class="moon-phase-slider-indicators">
+                class="moon-phase-slider-indicators">
 
-                  <circle cx="10%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
-                  <circle cx="30%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
-                  <circle cx="50%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
-                  <circle cx="70%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
-                  <circle cx="90%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
-                </svg>
+                <circle cx="10%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
+                <circle cx="30%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
+                <circle cx="50%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
+                <circle cx="70%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
+                <circle cx="90%" cy="50%" r="1.5rem" mask="url(#waning-gibbus-mask)"></circle>
               </svg>
-            </div>
-
+            </svg>
           </div>
+
         </section>
 
       </section>
 
     </main>
-
-
-
-
 
 
     <script src="../../../vendor/system.js"></script>

@@ -52,6 +52,7 @@
     "gulp-util": "^3.0.6",
     "jshint-stylish": "^1.0.0",
     "jspm": "^0.16.20",
+    "jspm-server": "1.0.1",
     "karma": "^0.13.8",
     "karma-chai": "^0.1.0",
     "karma-chai-sinon": "^0.1.5",
